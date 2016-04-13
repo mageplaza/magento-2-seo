@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<referenceContainer name="after.body.start" before="-">
+			<block class="Mageplaza\Seo\Block\Seo">
+				<action method="setTemplate">
+					<argument name="template" xsi:type="string">Mageplaza_Seo::sitelinks.phtml</argument>
+				</action>
+			</block>
+			<block class="Mageplaza\Seo\Block\Richsnippets">
+				<action method="setTemplate">
+					<argument name="template" xsi:type="string">Mageplaza_Seo::richsnippets/jsonld/organization.phtml</argument>
+				</action>
+			</block>
+			<block class="Mageplaza\Seo\Block\Richsnippets">
+				<action method="setTemplate">
+					<argument name="template" xsi:type="string">Mageplaza_Seo::richsnippets/jsonld/sitename.phtml</argument>
+				</action>
+			</block>
+		</referenceContainer>
+
+		<referenceContainer name="breadcrumbs">
+				<action method="setTemplate">
+					<argument name="template" xsi:type="string">Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml</argument>
+				</action>
+		</referenceContainer>
+
+		<referenceBlock name="footer_links">
+		</referenceBlock>
+
+	</body>
+</page>

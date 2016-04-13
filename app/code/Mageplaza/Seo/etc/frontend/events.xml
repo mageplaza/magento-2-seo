@@ -9,4 +9,7 @@
     <event name="controller_action_predispatch">
         <observer name="mageplaza_seo_before_pageload" instance="Mageplaza\Seo\Observer\SeoObserver" />
     </event>
+    <event name="layout_generate_blocks_after">
+        <observer name="mageplaza_seo_generate_blocks_after" instance="Mageplaza\Seo\Observer\GenerateBlocksAfterObserver" />
+    </event>
 </config>
