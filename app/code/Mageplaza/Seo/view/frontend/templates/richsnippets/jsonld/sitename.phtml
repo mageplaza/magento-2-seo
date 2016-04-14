@@ -1,9 +1,12 @@
 <!--Include Your Site Name in Search Results by Mageplaza SEO-->
+<?php if($block->getRichsnippetsHelper('name_in_sr') && $block->getRichsnippetsHelper('enable')): ?>
+
 <script type="application/ld+json">
 {
   "@context" : "http://schema.org",
   "@type" : "WebSite",
-  "name" : "<?php echo $this->getBusinessName();?>",
-  "url" : "<?php echo $this->getBaseUrl();?>"
+  "name" : "<?php echo $block->getBusinessName();?>",
+  "url" : "<?php echo $block->getBaseUrl();?>"
 }
 </script>
+<?php endif; ?>

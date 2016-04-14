@@ -8,30 +8,40 @@ use Mageplaza\Seo\Helper\Data as HelperData;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Checkout\Model\Session;
-class Seo extends Template
-{
-    protected $storeManager;
-    protected $helperData;
-    protected $objectFactory;
-    protected $checkoutSession;
 
-    public function __construct(
-        Context $context,
-        HelperData $helperData,
-        ObjectManagerInterface $objectManager,
-        StoreManagerInterface $storeManager,
-        Session $session,
-        array $data = []
-    ) {
-        $this->helperData      = $helperData;
-        $this->objectManager   = $objectManager;
-        $this->storeManager    = $storeManager;
-        $this->checkoutSession = $session;
-        parent::__construct($context, $data);
-    }
-    public function getHelper()
+class Seo extends Abstractt
+{
+    public function getGeneralConfig($code)
     {
-        return $this->helperData;
+        return $this->helperData->getGeneralConfig($code);
+    }
+
+    public function getSitelinksApp()
+    {
+        return $this->helperData->getGeneralConfig('sitelinks_app');
+    }
+
+    public function getSitelinksAppCode()
+    {
+        return $this->helperData->getGeneralConfig('sitelinks_app_code');
+    }
+
+
+    public function getSiteLinkDomainForApp()
+    {
+        $url = $this->getBaseUrl();
+        $url = str_replace(
+            array(
+                ':',
+                '//'
+            ),
+            array(
+                '',
+                '/'
+            ),
+            $url
+        );
+        return $url;
     }
 
 }

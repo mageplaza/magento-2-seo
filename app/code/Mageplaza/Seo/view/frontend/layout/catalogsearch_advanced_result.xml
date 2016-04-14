@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<!--<referenceBlock name="head.additional">-->
+			<!--<block class="Mageplaza\Seo\Block\Robots">-->
+				<!--<action method="setTemplate">-->
+					<!--<argument name="template" xsi:type="string">Mageplaza_Seo::page/head/opengraph/cms.phtml-->
+					<!--</argument>-->
+				<!--</action>-->
+			<!--</block>-->
+		<!--</referenceBlock>-->
+	</body>
+</page>
