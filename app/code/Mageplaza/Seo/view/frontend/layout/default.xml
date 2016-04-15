@@ -2,36 +2,39 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 	<body>
+		<referenceBlock name="head.additional">
+			<block class="Mageplaza\Seo\Block\Page\Head\Page" name="mageplaza_seo_canonical"
+				   template="Mageplaza_Seo::page/head/canonical.phtml">
+			</block>
+		</referenceBlock>
+
 		<referenceContainer name="after.body.start" before="-">
-			<!--<block class="Mageplaza\Seo\Block\Seo">-->
-				<!--<action method="setTemplate" ifconfig="mageplaza_seo/general/sitelinks">-->
-					<!--<argument name="template" xsi:type="string">Mageplaza_Seo::sitelinks.phtml</argument>-->
-				<!--</action>-->
-			<!--</block>-->
-			<block class="Mageplaza\Seo\Block\Seo" name="mageplaza_seo_sitelinks" template="Mageplaza_Seo::sitelinks.phtml">
+			<block class="Mageplaza\Seo\Block\Seo" name="mageplaza_seo_sitelinks"
+				   template="Mageplaza_Seo::sitelinks.phtml">
 			</block>
-			<block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_richsnippets_basic" template="Mageplaza_Seo::richsnippets/jsonld/organization.phtml">
+			<block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_richsnippets_basic"
+				   template="Mageplaza_Seo::richsnippets/jsonld/organization.phtml">
 			</block>
-			<block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_richsnippets_sitename" template="Mageplaza_Seo::richsnippets/jsonld/sitename.phtml">
+			<block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_richsnippets_sitename"
+				   template="Mageplaza_Seo::richsnippets/jsonld/sitename.phtml">
 			</block>
 		</referenceContainer>
 
-		<!--<referenceContainer name="breadcrumbs">-->
-			<!--<action method="setTemplate" ifconfig="mageplaza_seo/richsnippets/breadcrumbs">-->
-				<!--<argument name="template" xsi:type="string">Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml-->
-				<!--</argument>-->
-			<!--</action>-->
-		<!--</referenceContainer>-->
+		<referenceBlock name="breadcrumbs">
+			<action method="setTemplate">
+				<argument name="template" xsi:type="string">Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml</argument>
+			</action>
+		</referenceBlock>
 
 		<referenceBlock name="footer_links">
 		</referenceBlock>
 		<!--<referenceBlock name="head.additional">-->
-			<!--<block class="Mageplaza\Seo\Block\Page\Head\Page">-->
-				<!--<action method="setTemplate">-->
-					<!--<argument name="template" xsi:type="string">Mageplaza_Seo::page/head/opengraph/cms.phtml-->
-					<!--</argument>-->
-				<!--</action>-->
-			<!--</block>-->
+		<!--<block class="Mageplaza\Seo\Block\Page\Head\Page">-->
+		<!--<action method="setTemplate">-->
+		<!--<argument name="template" xsi:type="string">Mageplaza_Seo::page/head/opengraph/cms.phtml-->
+		<!--</argument>-->
+		<!--</action>-->
+		<!--</block>-->
 		<!--</referenceBlock>-->
 	</body>
 </page>

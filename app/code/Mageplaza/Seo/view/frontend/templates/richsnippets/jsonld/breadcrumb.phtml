@@ -33,35 +33,35 @@
 
 <?php if($crumbs && is_array($crumbs)): ?>
 	<div class="breadcrumbs">
-    <ul>
-        <?php foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
-			<li class="<?php echo $_crumbName ?>">
-            <?php if($_crumbInfo['link']): ?>
-				<a href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->escapeHtml($_crumbInfo['title']) ?>"><?php echo $this->escapeHtml($_crumbInfo['label']) ?></a>
-			<?php elseif($_crumbInfo['last']): ?>
-				<strong><?php echo $this->escapeHtml($_crumbInfo['label']) ?></strong>
-			<?php else: ?>
-				<?php echo $this->escapeHtml($_crumbInfo['label']) ?>
-			<?php endif; ?>
-				<?php if(!$_crumbInfo['last']): ?>
-					<span>/ </span>
-				<?php endif; ?>
-            </li>
-		<?php endforeach; ?>
-    </ul>
-</div>
+		<ul>
+			<?php foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
+				<li class="<?php echo $_crumbName ?>">
+					<?php if($_crumbInfo['link']): ?>
+						<a href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->escapeHtml($_crumbInfo['title']) ?>"><?php echo $this->escapeHtml($_crumbInfo['label']) ?></a>
+					<?php elseif($_crumbInfo['last']): ?>
+						<strong><?php echo $this->escapeHtml($_crumbInfo['label']) ?></strong>
+					<?php else: ?>
+						<?php echo $this->escapeHtml($_crumbInfo['label']) ?>
+					<?php endif; ?>
+					<?php if(!$_crumbInfo['last']): ?>
+						<span>/ </span>
+					<?php endif; ?>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
 <?php endif; ?>
 
-<!--Breadcrumbs Data by Mageplaza SEO-->
+	<!--Breadcrumbs Data by Mageplaza SEO-->
 <?php if($crumbs):?>
-<script type="application/ld+json">
+	<script type="application/ld+json">
 {
   "@context": "http://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [{
   <?php $i = 0; ?>
     <?php foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
-    <?php $i++;?>
+			<?php $i++;?>
 
     "@type": "ListItem",
     "position": <?php echo $i;?>,
