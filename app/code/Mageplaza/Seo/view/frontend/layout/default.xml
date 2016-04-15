@@ -27,14 +27,12 @@
 		</referenceBlock>
 
 		<referenceBlock name="footer_links">
+			<block class="Magento\Framework\View\Element\Html\Link\Current" name="mageplaza_seo_sitemap_footer">
+				<arguments>
+					<argument name="label" xsi:type="string" translate="true">SEO SITEMAP</argument>
+					<argument name="path" xsi:type="string">seo/sitemap</argument>
+				</arguments>
+			</block>
 		</referenceBlock>
-		<!--<referenceBlock name="head.additional">-->
-		<!--<block class="Mageplaza\Seo\Block\Page\Head\Page">-->
-		<!--<action method="setTemplate">-->
-		<!--<argument name="template" xsi:type="string">Mageplaza_Seo::page/head/opengraph/cms.phtml-->
-		<!--</argument>-->
-		<!--</action>-->
-		<!--</block>-->
-		<!--</referenceBlock>-->
 	</body>
 </page>

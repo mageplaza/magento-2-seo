@@ -4,7 +4,7 @@ namespace Mageplaza\Seo\Block\Page\Head;
 
 use Mageplaza\Seo\Block\Abstractt;
 
-class Page extends Abstractt
+class Product extends Abstractt
 {
     public function getGeneralConfig($code)
     {
@@ -18,14 +18,12 @@ class Page extends Abstractt
         return $url->getCurrentUrl();
     }
 
-    public function getCurrentCms()
+    public function getRegistry($code)
     {
-        return $this->registry->registry('cms_block');
-
+        return $this->registry->registry($code);
     }
+    public function getCurrency(){
+        return $this->storeManager->getStore()->getCurrentCurrencyCode();
 
-    public function getCurrentCategory()
-    {
-        return $this->registry->registry('current_category');
     }
 }
