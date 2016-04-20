@@ -1,6 +1,6 @@
 <?php
 
-namespace Mageplaza\Seo\Block\Richsnippets\Head;
+namespace Mageplaza\Seo\Block\Richsnippets;
 
 use Mageplaza\Seo\Block\Abstractt;
 
@@ -32,6 +32,8 @@ class Product extends Abstractt
 	}
 	public function getReviewCollection()
 	{
+		return false;
+
 //		if (null === $this->_reviewsCollection) {
 //			$this->_reviewsCollection = Mage::getModel('review/review')->getCollection()
 //				->addStoreFilter(Mage::app()->getStore()->getId())
@@ -44,6 +46,8 @@ class Product extends Abstractt
 	}
 	public function getReviewCount()
 	{
+		return false;
+
 //		$count = 0;
 //		try {
 //			$count = $this->getReviewCollection()->getSize();
@@ -61,6 +65,6 @@ class Product extends Abstractt
 //		} catch (Exception $e) {
 //		}
 //		return $aggregateRating;
-
+		return false;
 	}
 }

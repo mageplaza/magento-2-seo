@@ -77,4 +77,8 @@ class Abstractt extends Template
         $resolver = strtolower($resolver);
         return $resolver;
     }
+    public function getCoreObject($helper)
+    {
+        return $this->objectManager->create($helper);
+    }
 }

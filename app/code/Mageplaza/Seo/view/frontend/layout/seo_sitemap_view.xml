@@ -1,0 +1,7 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+	<referenceBlock name="content">
+		<block class="Mageplaza\Seo\Block\Sitemap" name="mageplaza_seo_sitemap"
+			   template="Mageplaza_Seo::sitemap/html.phtml">
+		</block>
+	</referenceBlock>
+</page>

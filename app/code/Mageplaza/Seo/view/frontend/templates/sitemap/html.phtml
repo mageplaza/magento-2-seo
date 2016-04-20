@@ -1,0 +1,33 @@
+<?php
+$productCollection = $block->getProductCollection();
+//
+//foreach ($productCollection as $item) {
+//    ?>
+<!--    product id: --><?php //echo $item->getId();?>
+<!--    <br>-->
+<!--        product name: --><?php //echo $item->getName();?>
+<!--    ---------------------------------------------->
+<!---->
+<!--    <br>-->
+<!--        --><?php
+//}
+//?>
+
+<?php
+$_categories = $block->getCategoryCollection();
+$_categoryHelper = $this->getCategoryHelper();
+
+foreach ($_categories as $_category):
+    if (!$_category->getIsActive()) {
+        continue;
+    }
+
+    ?>
+    <div class="col-sm-3 col-xs-6 home-page-category-box">
+        <a href="<?php echo $_categoryHelper->getCategoryUrl($_category) ?>">
+            <div class="col-xs-12 home-page-category-heading"><?php echo $_category->getName();?></div>
+            <img src="<?php echo $_category->getImageUrl()?>" alt="<?php echo $_category->getName();?>"/>
+            <div class="home-page-category-hover"><span><?php echo $_category->getProductCount();?> DESIGNS | SEE THEM</span></div>
+        </a>
+    </div>
+<?php endforeach;?>
