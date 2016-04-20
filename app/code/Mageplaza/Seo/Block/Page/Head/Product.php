@@ -26,4 +26,9 @@ class Product extends Abstractt
         return $this->storeManager->getStore()->getCurrentCurrencyCode();
 
     }
+
+    public function getCurrentCategory()
+    {
+        return $this->registry->registry('current_category');
+    }
 }
