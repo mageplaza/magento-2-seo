@@ -159,6 +159,10 @@
 					<label>robots.txt Content</label>
 					<comment><![CDATA[  <a href="http://www.robotsgenerator.com/?utm_source=mageplaza.com&utm_medium=seo-extension&utm_campaign=configuration" target="_blank">Robots.txt generator</a> ]]></comment>
 				</field>
+				<field id="save_robot" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="0">
+					<button_label>Save robot.txt</button_label>
+					<frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Saverobot</frontend_model>
+				</field>
 			</group>
 			<group id="htmlsitemap" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
 				   showInStore="1">

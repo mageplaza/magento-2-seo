@@ -6,6 +6,7 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Mageplaza\Seo\Helper\Data as SeoHelper;
+
 class SeoObserver extends \Magento\Framework\App\Config\Value implements ObserverInterface
 {
     /**
@@ -36,24 +37,23 @@ class SeoObserver extends \Magento\Framework\App\Config\Value implements Observe
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         SeoHelper $helper,
         array $data = []
-    ) {
+    )
+    {
         $this->_directory = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
         $this->_fileRobot = 'robots.txt';
         $this->_fileHtaccess = '.htaccess';
-        $this->_helper=$helper;
+        $this->_helper = $helper;
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
 
     }
 
     public function execute(Observer $observer)
     {
-    $value=$this->_helper->getRobotsConfig('content');
-    $value=$this->_helper->getHtaccessConfig('content');
+        $value = $this->_helper->getRobotsConfig('content');
         $this->_directory->writeFile($this->_fileRobot, $value);
+        $value = $this->_helper->getHtaccessConfig('content');
         $this->_directory->writeFile($this->_fileHtaccess, $value);
-
     }
-
 
 
 }
