@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-	<body>
-		<head>
-			<block class="Mageplaza\Seo\Block\Page\Head\Page" name="mageplaza_seo_opengraph"
+		<referenceBlock name="head.additional">
+			<block class="Mageplaza\Seo\Block\Page\Head\Page" name="mageplaza_seo_opengraph" ifconfig="seo/general/opengraph"
 				   template="Mageplaza_Seo::page/head/opengraph/cms.phtml">
 			</block>
-		</head>
-	</body>
+		</referenceBlock>
 </page>
