@@ -20,7 +20,7 @@ class Page extends Abstractt
 
     public function getCurrentCms()
     {
-        return $this->registry->registry('cms_block');
+        return $this->registry->registry('cms_page');
 
     }
 
