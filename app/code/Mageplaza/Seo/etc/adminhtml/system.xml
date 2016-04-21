@@ -149,6 +149,10 @@
 					<label>.htaccess Content</label>
 					<comment><![CDATA[ Download <a href="https://github.com/mageplaza/magento-htaccess-extension/blob/master/.htaccess" target="_blank">.htaccess file</a> ]]></comment>
 				</field>
+				<field id="save_htaccess" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="0">
+					<button_label>Save .htaccess</button_label>
+					<frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Savehtaccess</frontend_model>
+				</field>
 			</group>
 
 			<group id="robots" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
