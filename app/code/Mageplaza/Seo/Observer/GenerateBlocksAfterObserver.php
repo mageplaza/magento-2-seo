@@ -10,6 +10,8 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Context;
 use Magento\Framework\App\Request\Http as Url;
+use Magento\Store\Model\Group;
+
 class GenerateBlocksAfterObserver implements ObserverInterface
 {
     protected $helper;
@@ -18,21 +20,25 @@ class GenerateBlocksAfterObserver implements ObserverInterface
     protected $urlManager;
     protected $context;
     protected $url;
+    protected $storeGroup;
+
     public function __construct(
         SeoHelper $helper,
         Registry $registry,
         ObjectManagerInterface $objectManager,
         UrlInterface $urlManager,
         Context $context,
-        Url $url
+        Url $url,
+        Group $storeGroup
     )
     {
         $this->helper = $helper;
         $this->registry = $registry;
-        $this->objectManager=$objectManager;
-        $this->urlManager=$urlManager;
-        $this->context=$context;
-        $this->url=$url;
+        $this->objectManager = $objectManager;
+        $this->urlManager = $urlManager;
+        $this->context = $context;
+        $this->url = $url;
+        $this->storeGroup=$storeGroup;
     }
 
     public function execute(Observer $observer)
@@ -41,6 +47,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
 
         return $this;
     }
+
     public function getBaseUrl()
     {
         return $this->objectManager->get('Magento\Store\Model\StoreManagerInterface')
@@ -57,12 +64,12 @@ class GenerateBlocksAfterObserver implements ObserverInterface
          * catalog_category_view
          */
         if ($action == 'catalog_category_view') {
-            $category        = $this->registry->registry('current_category');
-            $pageTitle       = $category->getName();
+            $category = $this->registry->registry('current_category');
+            $pageTitle = $category->getName();
             $pageDescription = $category->getMetaDescription();
-            $pageKeywords    = $category->getMetaKeywords();
-            $pageRobots      = $category->getMetaRobots();
-            $url             = $category->getUrl();
+            $pageKeywords = $category->getMetaKeywords();
+            $pageRobots = $category->getMetaRobots();
+            $url = $category->getUrl();
 
         }
 
@@ -70,27 +77,27 @@ class GenerateBlocksAfterObserver implements ObserverInterface
          * catalog_product_view
          */
         if ($action == 'catalog_product_view') {
-            $product         = $this->registry->registry('current_product');
-            $pageTitle       = $product->getName();
+            $product = $this->registry->registry('current_product');
+            $pageTitle = $product->getName();
 
             /**
              * Auto set page title, meta description
              */
-            if(empty($product->getMetaDescription())){
+            if (empty($product->getMetaDescription())) {
                 $pageDescription = trim(strip_tags($product->getShortDescription()));
-            } else{
+            } else {
                 $pageDescription = trim(strip_tags($product->getMetaDescription()));
             }
-            $pageKeywords    = $product->getMetaKeywords();
-            $pageRobots      = $product->getMetaRobots();
-            $url             = $product->getUrl();
+            $pageKeywords = $product->getMetaKeywords();
+            $pageRobots = $product->getMetaRobots();
+            $url = $product->getUrl();
         }
         if ($action == 'cms_index_index' OR $action == 'cms_page_view') {
             $page = $this->objectManager->get('Magento\Cms\Model\Page');
-            $pageTitle       = $page->getTitle();
+            $pageTitle = $page->getTitle();
             $pageDescription = $page->getMetaDescription();
-            $pageKeywords    = $page->getMetaKeywords();
-            $pageRobots      = $page->getMetaRobots();
+            $pageKeywords = $page->getMetaKeywords();
+            $pageRobots = $page->getMetaRobots();
             if ($action == 'cms_index_index') {
                 $url = $this->urlManager->getBaseUrl();
             } else {
@@ -103,10 +110,17 @@ class GenerateBlocksAfterObserver implements ObserverInterface
             if (!empty($pageDescription)) $head->setDescription($pageDescription);
             if (!empty($pageKeywords)) $head->setMetaKeywords($pageKeywords);
             if (!empty($pageRobots)) $head->setRobots($pageRobots);
-            if (!empty($url)) $head->addLinkRel('canonical', $url);
             if (!empty($url)) $head->addItem('link_rel', $url, 'rel="alternate" hreflang="' . $this->getLangCode() . '"');
         }
 //        $layout->generateXml();
 
+    }
+
+    public function getLangCode()
+    {
+        $code = $this->storeGroup->getDefaultStore()->getLocaleCode();
+        $code = strtolower($code);
+
+        return $code;
     }
 }
