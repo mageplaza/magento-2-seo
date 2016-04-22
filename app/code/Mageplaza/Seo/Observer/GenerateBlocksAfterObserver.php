@@ -9,6 +9,7 @@ use Magento\Framework\Registry;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Context;
+use Magento\Framework\App\Request\Http as Url;
 class GenerateBlocksAfterObserver implements ObserverInterface
 {
     protected $helper;
@@ -16,13 +17,14 @@ class GenerateBlocksAfterObserver implements ObserverInterface
     protected $objectManager;
     protected $urlManager;
     protected $context;
+    protected $url;
     public function __construct(
         SeoHelper $helper,
         Registry $registry,
         ObjectManagerInterface $objectManager,
         UrlInterface $urlManager,
-        Context $context
-
+        Context $context,
+        Url $url
     )
     {
         $this->helper = $helper;
@@ -30,6 +32,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
         $this->objectManager=$objectManager;
         $this->urlManager=$urlManager;
         $this->context=$context;
+        $this->url=$url;
     }
 
     public function execute(Observer $observer)
@@ -47,8 +50,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
 
     public function basicSetup($observer)
     {
-
-        $action = $this->context->getActionName();
+        $action = $this->url->getFullActionName();
         $layout = $observer->getEvent()->getLayout();
         /**
          * catalog_category_view
