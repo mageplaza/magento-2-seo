@@ -10,6 +10,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Checkout\Model\Session;
 use Magento\Theme\Block\Html\Header\Logo;
 use Magento\Framework\Registry;
+use Magento\Framework\UrlInterface;
 
 class Abstractt extends Template
 {
@@ -20,6 +21,7 @@ class Abstractt extends Template
     protected $checkoutSession;
     protected $logo;
     protected $registry;
+    protected $urlManager;
 
     public function __construct(
         Context $context,
@@ -29,6 +31,7 @@ class Abstractt extends Template
         Session $session,
         Registry $registry,
         Logo $logo,
+        UrlInterface $urlManager,
         array $data = []
     )
     {
@@ -36,8 +39,9 @@ class Abstractt extends Template
         $this->objectManager = $objectManager;
         $this->storeManager = $storeManager;
         $this->checkoutSession = $session;
-        $this->registry=$registry;
+        $this->registry = $registry;
         $this->logo = $logo;
+        $this->urlManager = $urlManager;
         parent::__construct($context, $data);
     }
 
@@ -55,11 +59,13 @@ class Abstractt extends Template
     {
         return $this->helperData->getConfigValue('general/store_information/phone');
     }
+
     public function getBaseUrl()
     {
-        return $this->objectManager->get('Magento\Store\Model\StoreManagerInterface')
-            ->getStore()
-            ->getBaseUrl();
+//        return $this->objectManager->get('Magento\Store\Model\StoreManagerInterface')
+//            ->getStore()
+//            ->getBaseUrl();
+        return $this->urlManager->getBaseUrl();
     }
 
     public function getTwitterAccount()
@@ -68,6 +74,7 @@ class Abstractt extends Template
         $account = $this->helperData->getGeneralConfig('twitter_account');
         return $prefix . $account;
     }
+
     public function getLangCode()
     {
         /** @var \Magento\Framework\ObjectManagerInterface $om */
@@ -77,6 +84,7 @@ class Abstractt extends Template
         $resolver = strtolower($resolver);
         return $resolver;
     }
+
     public function getCoreObject($helper)
     {
         return $this->objectManager->create($helper);

@@ -6,6 +6,7 @@ use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Framework\UrlInterface;
 
 class Data extends AbstractHelper
 {
@@ -17,15 +18,18 @@ class Data extends AbstractHelper
     const XML_PATH_HTML_SITEMAP = 'seo/htmlsitemap/';
     protected $storeManager;
     protected $objectManager;
+    protected $urlManager;
 
     public function __construct(
         Context $context,
         ObjectManagerInterface $objectManager,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        UrlInterface $urlManager
     )
     {
         $this->objectManager = $objectManager;
         $this->storeManager = $storeManager;
+        $this->urlManager = $urlManager;
         parent::__construct($context);
     }
 
