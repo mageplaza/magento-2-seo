@@ -50,8 +50,10 @@ class GenerateBlocksAfterObserver implements ObserverInterface
 
     public function basicSetup($observer)
     {
-        $action = $this->url->getFullActionName();
+//        $action = $this->url->getFullActionName();
         $layout = $observer->getEvent()->getLayout();
+        $action = $observer->getEvent()->getFullActionName();
+        \Zend_Debug::dump($action);
         /**
          * catalog_category_view
          */
@@ -85,7 +87,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
             $url             = $product->getUrl();
         }
         if ($action == 'cms_index_index' OR $action == 'cms_page_view') {
-            $page = $this->registry->registry('cms/page');
+            $page = $this->objectManager->get('Magento\Cms\Model\Page');
             $pageTitle       = $page->getTitle();
             $pageDescription = $page->getMetaDescription();
             $pageKeywords    = $page->getMetaKeywords();
