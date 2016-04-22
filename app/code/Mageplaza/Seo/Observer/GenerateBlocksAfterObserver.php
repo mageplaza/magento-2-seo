@@ -8,24 +8,28 @@ use Mageplaza\Seo\Helper\Data as SeoHelper;
 use Magento\Framework\Registry;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Context;
 class GenerateBlocksAfterObserver implements ObserverInterface
 {
     protected $helper;
     protected $registry;
     protected $objectManager;
     protected $urlManager;
-
+    protected $context;
     public function __construct(
         SeoHelper $helper,
         Registry $registry,
         ObjectManagerInterface $objectManager,
-        UrlInterface $urlManager
+        UrlInterface $urlManager,
+        Context $context
+
     )
     {
         $this->helper = $helper;
         $this->registry = $registry;
         $this->objectManager=$objectManager;
         $this->urlManager=$urlManager;
+        $this->context=$context;
     }
 
     public function execute(Observer $observer)
@@ -43,7 +47,8 @@ class GenerateBlocksAfterObserver implements ObserverInterface
 
     public function basicSetup($observer)
     {
-        $action = $this->getActionName($observer);
+
+        $action = $this->context->getActionName();
         $layout = $observer->getEvent()->getLayout();
         /**
          * catalog_category_view
@@ -98,8 +103,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
             if (!empty($url)) $head->addLinkRel('canonical', $url);
             if (!empty($url)) $head->addItem('link_rel', $url, 'rel="alternate" hreflang="' . $this->getLangCode() . '"');
         }
-
-        $layout->generateXml();
+//        $layout->generateXml();
 
     }
 }
