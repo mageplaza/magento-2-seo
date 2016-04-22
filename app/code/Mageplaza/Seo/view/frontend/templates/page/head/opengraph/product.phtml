@@ -1,6 +1,6 @@
 <!--Open Graph Protocol for Facebook by Mageplaza SEO-->
-<?php if($block->getRegistry('current_category')): ?>
-<?php $product = $block->getRegistry('current_category'); ?>
+<?php if($block->getRegistry('current_product')): ?>
+<?php $product = $block->getRegistry('current_product'); ?>
 	<meta property="og:title" content="<?php echo ($product->getName()); ?>" />
 	<meta property="og:type" content="product" />
 <!--	<meta property="og:image" content="--><?php //echo $this->helper('catalog/image')->init($product, 'small_image')->resize(200,200);?><!--" />-->
