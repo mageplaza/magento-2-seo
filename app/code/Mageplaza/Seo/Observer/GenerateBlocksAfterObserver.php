@@ -106,7 +106,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
             if (!empty($url)) $head->addLinkRel('canonical', $url);
             if (!empty($url)) $head->addItem('link_rel', $url, 'rel="alternate" hreflang="' . $this->getLangCode() . '"');
         }
-        $layout->generateXml();
+//        $layout->generateXml();
 
     }
 }
