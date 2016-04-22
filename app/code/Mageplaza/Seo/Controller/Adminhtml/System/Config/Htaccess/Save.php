@@ -8,6 +8,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Mageplaza\Seo\Helper\Data as SeoHelper;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Magento\Config\Model\Config as ConfigModel;
 
 class Save extends \Magento\Backend\App\Action
 {
@@ -31,6 +32,8 @@ class Save extends \Magento\Backend\App\Action
      */
     protected $_helper;
 
+    protected $configModel;
+
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         JsonFactory $resultJsonFactory,
@@ -38,6 +41,7 @@ class Save extends \Magento\Backend\App\Action
         \Magento\Framework\App\Config\ScopeConfigInterface $config,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
         \Magento\Framework\Filesystem $filesystem,
+        ConfigModel $configModel,
         SeoHelper $helper
 
     )
@@ -47,6 +51,7 @@ class Save extends \Magento\Backend\App\Action
         $this->_directory = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
         $this->_fileHtaccess = '.htaccess';
         $this->_helper = $helper;
+        $this->configModel = $configModel;
     }
     public function getContentHtaccesss(){
         $data=$this->getRequest()->getParam('htaccesscontent');
