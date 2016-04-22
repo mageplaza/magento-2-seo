@@ -9,10 +9,16 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Mageplaza\Seo\Helper\Data as SeoHelper;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Magento\Config\Model\ConfigFactory as ConfigModel;
+use Magento\Framework\App\Config\ValueFactory as ConfigModel;
+use Magento\Framework\App\ScopeResolverInterface;
 
 class Save extends \Magento\Backend\App\Action
 {
+    /**
+     * @var \Magento\Framework\App\ScopeResolverInterface
+     */
+    protected $_scopeResolver;
+
     protected $resultJsonFactory;
 
     /**
@@ -42,6 +48,7 @@ class Save extends \Magento\Backend\App\Action
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
         \Magento\Framework\Filesystem $filesystem,
         ConfigModel $configModel,
+        ScopeResolverInterface $scopeResolver,
         SeoHelper $helper
 
     )
@@ -51,6 +58,7 @@ class Save extends \Magento\Backend\App\Action
         $this->_directory = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
         $this->_fileRobot = 'robots.txt';
         $this->_helper = $helper;
+        $this->_scopeResolver = $scopeResolver;
         $this->configModel = $configModel;
     }
 
@@ -64,14 +72,15 @@ class Save extends \Magento\Backend\App\Action
     protected function _saveRobot()
     {
         $value = $this->getContentRobots();
+
         try {
             $this->_directory->writeFile($this->_fileRobot, $value);
-            $configModel=$this->configModel->create();
-            $configModel->load('seo/robots/content','path');
-            if($configModel && $configModel->getId()){
-                $configModel->setValue($value);
-                $configModel->save();
-            }
+            $configModel = $this->configModel->create();
+            $configModel = $configModel->getCollection()
+                ->addFieldToFilter('path', 'seo/robots/content')
+                ->getFirstItem();
+            $configModel->setValue($value);
+            $configModel->save();
             return true;
         } catch (Exception $e) {
             return false;
