@@ -4,10 +4,12 @@
  * See COPYING.txt for license details.
  */
 namespace Mageplaza\Seo\Controller\Adminhtml\System\Config\Robot;
+
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Mageplaza\Seo\Helper\Data as SeoHelper;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Magento\Config\Model\Config as ConfigModel;
 
 class Save extends \Magento\Backend\App\Action
 {
@@ -30,6 +32,7 @@ class Save extends \Magento\Backend\App\Action
      * @var string
      */
     protected $_helper;
+    protected $configModel;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -38,6 +41,7 @@ class Save extends \Magento\Backend\App\Action
         \Magento\Framework\App\Config\ScopeConfigInterface $config,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
         \Magento\Framework\Filesystem $filesystem,
+        ConfigModel $configModel,
         SeoHelper $helper
 
     )
@@ -47,12 +51,16 @@ class Save extends \Magento\Backend\App\Action
         $this->_directory = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
         $this->_fileRobot = 'robots.txt';
         $this->_helper = $helper;
+        $this->configModel = $configModel;
     }
-    public function getContentRobots(){
-        $data=$this->getRequest()->getParam('robotcontent');
-        $content=($data);
+
+    public function getContentRobots()
+    {
+        $data = $this->getRequest()->getParam('robotcontent');
+        $content = ($data);
         return $content;
     }
+
     protected function _saveRobot()
     {
         $value = $this->getContentRobots();
