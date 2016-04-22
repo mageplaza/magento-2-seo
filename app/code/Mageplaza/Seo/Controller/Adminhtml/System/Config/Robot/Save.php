@@ -9,7 +9,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Mageplaza\Seo\Helper\Data as SeoHelper;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Magento\Config\Model\Config as ConfigModel;
+use Magento\Config\Model\ConfigFactory as ConfigModel;
 
 class Save extends \Magento\Backend\App\Action
 {
@@ -66,6 +66,12 @@ class Save extends \Magento\Backend\App\Action
         $value = $this->getContentRobots();
         try {
             $this->_directory->writeFile($this->_fileRobot, $value);
+            $configModel=$this->configModel->create();
+            $configModel->load('seo/robots/content','path');
+            if($configModel && $configModel->getId()){
+                $configModel->setValue($value);
+                $configModel->save();
+            }
             return true;
         } catch (Exception $e) {
             return false;
