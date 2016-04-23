@@ -9,7 +9,4 @@
     <event name="layout_generate_blocks_after">
         <observer name="mageplaza_seo_generate_blocks_after" instance="Mageplaza\Seo\Observer\GenerateBlocksAfterObserver" />
     </event>
-    <event name="core_layout_render_element">
-        <observer name="mageplaza_seo_layout_render_element" instance="Mageplaza\Seo\Observer\LayoutRenderElementObserver" />
-    </event>
 </config>
