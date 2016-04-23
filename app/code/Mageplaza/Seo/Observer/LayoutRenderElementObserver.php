@@ -22,11 +22,11 @@ class LayoutRenderElementObserver implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-//        $elementName=$observer->getEvent()->getElementName();
-//        $layout=$observer->getEvent()->getLayout();
-//        $transport=$observer->getEvent()->getTransport();
-//        \Zend_Debug::dump($elementName);
-//        \Zend_Debug::dump($transport->getHtml());die;
+        $elementName=$observer->getEvent()->getElementName();
+        $layout=$observer->getEvent()->getLayout();
+        $transport=$observer->getEvent()->getTransport();
+        $transport->setOutput($transport->getOutput());
+        return $this;
     }
 
 

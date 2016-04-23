@@ -3,6 +3,7 @@
  * Learn more: https://developers.google.com/structured-data/rich-snippets/products#single_product_page
  */
 ?>
+
 <?php if($block->getProduct()): ?>
 <?php $product = $block->getProduct(); ?>
 <!--    Product Rich Snippets by Mageplaza SEO-->
@@ -29,8 +30,8 @@
  <?php if($block->getReviewCount()):?>
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "<?php echo $this->getRatingSummary();?>",
-    "reviewCount": "<?php echo $this->getReviewCount();?>"
+    "ratingValue": "<?php echo $block->getRatingSummary();?>",
+    "reviewCount": "<?php echo $block->getReviewCount();?>"
   },
   <?php endif;?>
 

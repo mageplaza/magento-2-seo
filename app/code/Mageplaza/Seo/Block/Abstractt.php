@@ -11,7 +11,9 @@ use Magento\Checkout\Model\Session;
 use Magento\Theme\Block\Html\Header\Logo;
 use Magento\Framework\Registry;
 use Magento\Framework\UrlInterface;
-
+use Magento\Review\Model\ResourceModel\Review\Collection as ReviewCollection;
+use Magento\Review\Model\ResourceModel\Review\CollectionFactory;
+use Magento\Review\Model\ReviewFactory;
 class Abstractt extends Template
 {
     protected $storeManager;
@@ -22,7 +24,10 @@ class Abstractt extends Template
     protected $logo;
     protected $registry;
     protected $urlManager;
-
+    protected $reviewCollection;
+    protected $reviewCollectionFactory;
+    protected $reviewFactory;
+    protected $reviewRederer;
     public function __construct(
         Context $context,
         HelperData $helperData,
@@ -32,6 +37,8 @@ class Abstractt extends Template
         Registry $registry,
         Logo $logo,
         UrlInterface $urlManager,
+        CollectionFactory $reviewCollectionFactory,
+        ReviewFactory $reviewFactory,
         array $data = []
     )
     {
@@ -42,6 +49,8 @@ class Abstractt extends Template
         $this->registry = $registry;
         $this->logo = $logo;
         $this->urlManager = $urlManager;
+        $this->reviewCollectionFactory = $reviewCollectionFactory;
+        $this->reviewFactory=$reviewFactory;
         parent::__construct($context, $data);
     }
 
