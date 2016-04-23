@@ -6,7 +6,7 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Mageplaza\Seo\Helper\Data as SeoHelper;
 use Magento\Framework\Registry;
-use Magecheckout\Seo\Model\Source\Robots;
+use Mageplaza\Seo\Model\Source\Robots;
 class MetaCmsObserver implements ObserverInterface
 {
     protected $helper;

@@ -1,5 +1,5 @@
 <?php
-namespace Magecheckout\Seo\Model\Source;
+namespace Mageplaza\Seo\Model\Source;
 
 class Robots
 {
