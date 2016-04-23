@@ -1,0 +1,12 @@
+<div class="row">
+	<h2><?php echo __('Categories');?></h2>
+
+	<?php $categories = $this->getCategoryCollection();?>
+	<?php if($categories):?>
+		<ul>
+			<?php foreach($categories as $_category):?>
+				<li><a href="<?php echo $_category->getCategoryUrl()?>"><?php echo $_category->getName();?></a> </li>
+			<?php endforeach;?>
+		</ul>
+	<?php endif;?>
+</div>

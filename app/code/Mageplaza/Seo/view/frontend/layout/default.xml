@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<referenceBlock name="head.additional">
+			<block class="Mageplaza\Seo\Block\Page\Head\Page" name="mageplaza_seo_canonical"
+				   template="Mageplaza_Seo::page/head/canonical.phtml">
+			</block>
+		</referenceBlock>
+
+		<referenceContainer name="after.body.start" before="-">
+			<block class="Mageplaza\Seo\Block\Seo" name="mageplaza_seo_sitelinks"
+				   template="Mageplaza_Seo::sitelinks.phtml">
+			</block>
+			<block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_richsnippets_basic"
+				   template="Mageplaza_Seo::richsnippets/jsonld/organization.phtml">
+			</block>
+			<block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_richsnippets_sitename"
+				   template="Mageplaza_Seo::richsnippets/jsonld/sitename.phtml">
+			</block>
+		</referenceContainer>
+
+		<referenceBlock name="breadcrumbs">
+			<action method="setTemplate">
+				<argument name="template" xsi:type="string">Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml</argument>
+			</action>
+		</referenceBlock>
+
+		<referenceBlock name="footer_links">
+			<block class="Magento\Framework\View\Element\Html\Link\Current" name="mageplaza_seo_sitemap_footer" ifconfig="seo/htmlsitemap/footer" >
+				<arguments>
+					<argument name="label" xsi:type="string" translate="true">SEO SITEMAP</argument>
+					<argument name="path" xsi:type="string">seo/sitemap/view</argument>
+				</arguments>
+			</block>
+		</referenceBlock>
+	</body>
+</page>

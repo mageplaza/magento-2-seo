@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<block class="Mageplaza\Seo\Block\Page\Head\Product" name="mageplaza_seo_opengraph"
+			   template="Mageplaza_Seo::page/head/opengraph/product.phtml">
+		</block>
+	</head>
+	<body>
+		<referenceContainer name="after.body.start" before="-">
+			<block class="Mageplaza\Seo\Block\Richsnippets\Product" name="mageplaza_seo_richsnippets_product"
+				   template="Mageplaza_Seo::richsnippets/jsonld/product.phtml">
+			</block>
+		</referenceContainer>
+	</body>
+</page>

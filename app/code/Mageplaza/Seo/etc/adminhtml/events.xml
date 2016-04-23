@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!--<event name="admin_system_config_changed_section_seo">-->
+        <!--<observer name="seo_save" instance="Mageplaza\Seo\Observer\SeoObserver"/>-->
+    <!--</event>-->
+    <event name="adminhtml_cms_page_edit_tab_meta_prepare_form">
+        <observer name="seo_edit_cms" instance="Mageplaza\Seo\Observer\MetaCmsObserver"/>
+    </event>
+</config>

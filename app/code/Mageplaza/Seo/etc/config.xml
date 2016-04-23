@@ -1,0 +1,274 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <seo>
+            <general>
+                <auto_setup>1</auto_setup>
+                <canonical>1</canonical>
+                <nofollow_sr>1</nofollow_sr>
+                <product_gallery>1</product_gallery>
+                <alternate_meta>1</alternate_meta>
+            </general>
+            <htaccess>
+                <content><![CDATA[
+                    ##### Block unwanted Crawler Bots that clog your server #####
+
+	RewriteCond %{HTTP_USER_AGENT} MJ12bot
+	RewriteRule .* - [F]
+	RewriteCond %{HTTP_USER_AGENT} 80legs [NC]
+	RewriteRule ^ - [F]
+
+
+### Protect .htaccess, .git .gitignore files, folders
+<Files ~ "^\.">
+    order allow,deny
+    deny from all
+    satisfy all
+</Files>
+
+<Files RELEASE_NOTES.txt>
+        order allow,deny
+        deny from all
+    </Files>
+
+##### Add support for SVG Images and CSS3 Pie #####
+
+	AddType image/svg+xml svg svgz
+	AddEncoding gzip svgz
+	AddType text/x-component .htc
+	DirectoryIndex index.php
+
+##### PHP Settings for your domain #####
+
+<IfModule mod_php5.c>
+	php_value memory_limit 512M
+	php_value max_execution_time 18000
+	php_flag magic_quotes_gpc off
+	php_flag session.auto_start off
+	php_flag suhosin.session.cryptua off
+	php_flag zend.ze1_compatibility_mode Off
+</IfModule>
+
+##### Search Engine redirects and rewrites for SEO purposes #####
+
+<IfModule mod_rewrite.c>
+	#RewriteCond %{HTTP_HOST} !^www.yourdomain.com$ [NC]
+	#RewriteRule ^(.*)$ http://www.yourdomain.com/$1 [R=301,L]
+
+	##### Redirect away from /index.php and /home
+	##### Warning: This index.php rewrite will prevent Magento
+	##### Connect from working. Simply comment out the
+	##### following two lines of code when using Connect.
+	##### Please note - http://www. if not using www simply use http://
+
+	RewriteCond %{REQUEST_URI}  !(downloader) [NC]
+	RewriteCond %{THE_REQUEST} ^.*/index.php
+	RewriteRule ^(.*)index.php$ http://%{SERVER_NAME}/$1 [R=301,L]
+
+  	##### Please note - http://www. if not using www simply use http://
+	redirect 301 /home http://%{SERVER_NAME}
+
+	## uncomment next line to enable light API calls processing
+
+	#    RewriteRule ^api/([a-z][0-9a-z_]+)/?$ api.php?type=$1 [QSA,L]
+
+	############################################
+	## rewrite API2 calls to api.php (by now it is REST only)
+
+	    RewriteRule ^api/rest api.php?type=rest [QSA,L]
+
+
+	Options +FollowSymLinks
+	RewriteEngine on
+	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+	RewriteCond %{REQUEST_URI} !^/(media|skin|js)/
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-l
+	RewriteRule .* index.php [L]
+</IfModule>
+
+
+##### mod_deflate compresses your output to lower the file size being sent to the client #####
+
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+	BrowserMatch ^Mozilla/4 gzip-only-text/html
+	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+	SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+	Header append Vary User-Agent env=!dont-vary
+	php_flag zlib.output_compression on
+</IfModule>
+
+<Files *.php>
+	SetOutputFilter DEFLATE
+</Files>
+
+<IfModule mod_ssl.c>
+	SSLOptions StdEnvVars
+</IfModule>
+
+
+##### Header Directives #####
+
+<ifModule mod_headers.c>
+	Header unset ETag
+	Header unset Last-Modified
+</ifModule>
+
+
+##### disable POST processing to prevent breaking image upload #####
+
+<IfModule mod_security.c>
+	SecFilterEngine Off
+	SecFilterScanPOST Off
+</IfModule>
+
+
+##### Served files compression on Apache for improved site speed #####
+
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/plain
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/xml
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE application/xml
+	AddOutputFilterByType DEFLATE application/xhtml+xml
+	AddOutputFilterByType DEFLATE application/rss+xml
+	AddOutputFilterByType DEFLATE application/javascript
+	AddOutputFilterByType DEFLATE application/x-javascript
+	BrowserMatch ^Mozilla/4 gzip-only-text/html
+	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+	SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+	Header append Vary User-Agent env=!dont-vary
+</IfModule>
+
+
+##### Improve site speed through Mod gzip and caching #####
+
+<ifModule mod_gzip.c>
+	mod_gzip_on Yes
+	mod_gzip_dechunk Yes
+	mod_gzip_item_include file \.(html?|txt|css|js|php|pl)$
+	mod_gzip_item_include handler ^cgi-script$
+	mod_gzip_item_include mime ^text/.*
+	mod_gzip_item_include mime ^application/x-javascript.*
+	mod_gzip_item_exclude mime ^image/.*
+	mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+</ifModule>
+
+
+##### Default expires headers for all file types  #####
+##### Not recommended for development environment #####
+
+<IfModule mod_expires.c>
+ ExpiresActive On
+ ExpiresDefault "access plus 2 hours"
+  # IMAGES
+ ExpiresByType image/jpg "access plus 1 week"
+ ExpiresByType image/jpeg "access plus 1 week"
+ ExpiresByType image/png "access plus 1 week"
+ ExpiresByType image/gif "access plus 1 week"
+ AddType image/x-icon .ico
+ ExpiresByType image/ico "access plus 1 week"
+ ExpiresByType image/icon "access plus 1 week"
+ ExpiresByType image/x-icon "access plus 1 week"
+  # FAVICON
+ ExpiresByType image/vnd.microsoft.icon "access plus 1 month"
+  # CSS
+ ExpiresByType text/css "access plus 1 month"
+  # HTML
+ ExpiresByType text/html "access plus 0 seconds"
+ ExpiresByType application/xhtml+xml "access plus 0 seconds"
+  # JAVASCRIPTS
+ ExpiresByType application/javascript "access plus 1 week"
+ ExpiresByType text/javascript "access plus 1 week"
+ ExpiresByType application/x-javascript "access plus 1 week"
+  # FLASH
+ ExpiresByType application/x-shockwave-flash "access plus 1 month"
+</IfModule>
+
+
+##### Mime Type Caching Magento #####
+
+<IfModule mod_mime.c>
+
+	##### AUDIO #####
+    AddType audio/mp4 m4a f4a f4b
+    AddType audio/ogg oga ogg
+
+  	##### JAVASCRIPT #####
+    # Normalize to standard type (it's sniffed in IE anyways):
+    # http://tools.ietf.org/html/rfc4329#section-7.2
+    AddType application/javascript						js jsonp
+    AddType application/json							json
+
+  	##### VIDEO #####
+    AddType video/mp4                                   mp4 m4v f4v f4p
+    AddType video/ogg                                   ogv
+    AddType video/webm                                  webm
+    AddType video/x-flv                                 flv
+
+  	##### WEB FONTS #####
+    AddType application/font-woff                       woff
+    AddType application/vnd.ms-fontobject               eot
+
+    ##### Browsers usually ignore the font MIME types	#####
+    ##### and sniff the content, however, Chrome shows 	#####
+    ##### a warning if other MIME types are used for 	#####
+	##### the following fonts.							#####
+    AddType application/x-font-ttf                      ttc ttf
+    AddType font/opentype                               otf
+
+
+  	##### OTHER #####
+    AddType application/octet-stream                    safariextz
+    AddType application/x-chrome-extension              crx
+    AddType application/x-opera-extension               oex
+    AddType application/x-shockwave-flash               swf
+    AddType application/x-web-app-manifest+json         webapp
+    AddType application/x-xpinstall                     xpi
+    AddType application/xml                             atom rdf rss xml
+    AddType image/webp                                  webp
+    AddType image/x-icon                                ico
+    AddType text/cache-manifest                         appcache manifest
+    AddType text/vtt                                    vtt
+    AddType text/x-component                            htc
+    AddType text/x-vcard                                vcf
+
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
+</IfModule>
+
+
+##### Disable ETags http://developer.yahoo.com/performance/rules.html#etags #####
+
+	FileETag None
+
+
+##### Prevent character encoding issues from server overrides #####
+
+	AddDefaultCharset Off
+	#AddDefaultCharset UTF-8
+
+
+##### Force IE8 compatibility when using IE8+         #####
+##### May cause issues within Windows Mobile Browsers #####
+
+	BrowserMatch MSIE best-standards-support
+	Header set X-UA-Compatible IE=8 env=best-standards-support
+
+
+##### By default allow all access #####
+
+	Order allow,deny
+	Allow from all
+                    ]]></content>
+            </htaccess>
+        </seo>
+    </default>
+</config>

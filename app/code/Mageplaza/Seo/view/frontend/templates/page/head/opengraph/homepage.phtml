@@ -1,0 +1,16 @@
+<!--Open Graph Protocol for Facebook by Mageplaza SEO-->
+<?php $cms = $block->getCurrentCms(); ?>
+<?php if ($cms): ?>
+	<meta property="og:title" content="<?php echo $cms->getTitle() ?>"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:url" content="<?php echo $block->getCurrentUrl(); ?>"/>
+	<?php if ($cms->getMetaDescription()) ?><meta property="og:description" content="<?php echo strip_tags($cms->getMetaDescription()) ?>"/>
+	<meta property="og:site_name" content="<?php echo $block->getBusinessName();?>"/>
+
+	<!--	Twitter Card By Mageplaza SEO-->
+	<meta name="twitter:card" content="summary"/>
+	<meta name="twitter:site" content="<?php echo $block->getTwitterAccount(); ?>"/>
+	<meta name="twitter:title" content="<?php echo $cms->getTitle() ?>"/>
+	<?php if ($cms->getMetaDescription()) ?><meta name="twitter:description" content="<?php echo trim(strip_tags($cms->getMetaDescription())); ?>"/>
+
+<?php endif; ?>

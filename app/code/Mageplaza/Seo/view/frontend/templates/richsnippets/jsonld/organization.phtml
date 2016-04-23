@@ -1,0 +1,24 @@
+<!-- Customizing Knowledge Graph by Mageplaza SEO-->
+<!--Social Profiles, Business information -->
+<?php if($block->getRichsnippetsHelper('custom') && $block->getRichsnippetsHelper('enable') ): ?>
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Organization",
+  "name" : "<?php echo $block->getBusinessName();?>",
+  "url" : "<?php echo $block->getBaseUrl();?>",
+  "logo": "<?php echo $block->getLogo();?>"
+  <?php if($block->getProfiles()): ?>
+  "sameAs" : [
+    <?php echo $block->getProfiles();?>
+  ],
+  <?php endif;?>
+  "contactPoint" : [{
+    "@type" : "ContactPoint",
+    "telephone" : "<?php echo $block->getBusinessPhone();?>",
+    "contactType" : "General contact"
+  }]
+}
+</script>
+
+<?php endif; ?>

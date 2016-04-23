@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="mageplaza" translate="label" sortOrder="400">
+			<label>mageplaza</label>
+		</tab>
+		<section id="seo" translate="label" type="text" sortOrder="550" showInDefault="1" showInWebsite="1"
+				 showInStore="1">
+			<class>separator-top</class>
+			<label>Seo</label>
+			<tab>mageplaza</tab>
+			<resource>Mageplaza_Seo::seo</resource>
+			<group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
+				   showInStore="1">
+				<label>General</label>
+				<field id="auto_setup" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Auto Setup SEO Basic</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="canonical" translate="label comment" type="select" sortOrder="15" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Add Canonical URL Meta</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="nofollow_sr" translate="label comment" type="select" sortOrder="20" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Add Nofollow meta in Search Result</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="product_gallery" translate="label comment" type="select" sortOrder="25" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Add Nofollow meta in Product Gallery</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="alternate_meta" translate="label comment" type="select" sortOrder="30" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Add Link Rel="alternate"</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ Learn more <a href="https://support.google.com/webmasters/answer/189077?hl=en">here</a>]]></comment>
+				</field>
+				<field id="opengraph" translate="label comment" type="select" sortOrder="35" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Add Open Graph and Twitter Card</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ Learn more <a href="http://ogp.me/">Open Graph</a> ]]></comment>
+				</field>
+				<field id="twitter_account" translate="label comment" type="text" sortOrder="40" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Twitter Account</label>
+					<comment><![CDATA[ Your account: twitter.com/Mark, you should fill: <strong>Mark</strong> ]]></comment>
+					<depends>
+						<field id="opengraph">1</field>
+					</depends>
+				</field>
+				<field id="sitelinks" translate="label comment" type="select" sortOrder="45" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Enable Sitelinks Search Box</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122353-sitelinks-search-box" target="_blank">Sitelinks Search Box</a> ]]></comment>
+				</field>
+				<field id="sitelinks_app" translate="label comment" type="select" sortOrder="55" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Enable Sitelinks Search Box For App</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ ]]></comment>
+					<depends>
+						<field id="sitelinks">1</field>
+					</depends>
+				</field>
+				<field id="sitelinks_app_code" translate="label comment" type="text" sortOrder="60" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Android App Code</label>
+					<comment><![CDATA[ E.g: <b>com.example</b>]]></comment>
+					<depends>
+						<field id="sitelinks">1</field>
+						<field id="sitelinks_app">1</field>
+					</depends>
+				</field>
+			</group>
+
+
+			<group id="meta" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+				   showInStore="1">
+				<label>Page title and Meta Description</label>
+				<field id="auto" translate="label comment" type="select" sortOrder="55" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Auto set page title, meta description</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ ]]></comment>
+				</field>
+			</group>
+
+			<group id="richsnippets" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+				   showInStore="1">
+				<label>Rich Snippets | Structured Data</label>
+				<field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Enable Rich Snippets</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122361--rich-snippets/">Rich Snippets</a> ]]></comment>
+				</field>
+				<field id="custom" translate="label comment" type="select" sortOrder="15" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Enable Organization Information</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122360">Customizing Your Knowledge Graph</a> ]]></comment>
+				</field>
+				<field id="social_profiles" translate="label comment" type="textarea" sortOrder="20" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Social Media Profiles</label>
+					<comment><![CDATA[ Line by line. <br> Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359">Social Profile Links</a> ]]></comment>
+					<depends>
+						<field id="custom">1</field>
+					</depends>
+				</field>
+				<field id="name_in_sr" translate="label comment" type="select" sortOrder="25" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Include Your Site Name in Search Results</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122357">Include Your Site Name in Search Results</a> ]]></comment>
+					<depends>
+						<field id="custom">1</field>
+					</depends>
+				</field>
+				<field id="breadcrumbs" translate="label comment" type="select" sortOrder="30" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Enable Breadcrumbs</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122358">Breadcrumbs</a> ]]></comment>
+					<depends>
+						<field id="custom">1</field>
+					</depends>
+				</field>
+			</group>
+
+			<group id="htaccess" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+				   showInStore="1">
+				<label>.htaccess Editor [Beta]</label>
+				<field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>.htaccess Content</label>
+					<comment><![CDATA[ Download <a href="https://github.com/mageplaza/magento-htaccess-extension/blob/master/.htaccess" target="_blank">.htaccess file</a> ]]></comment>
+				</field>
+				<field id="save_htaccess" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="0">
+					<button_label>Save .htaccess</button_label>
+					<frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Savehtaccess</frontend_model>
+				</field>
+			</group>
+
+			<group id="robots" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
+				   showInStore="1">
+				<label>Robots.txt Editor [Beta]</label>
+				<field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>robots.txt Content</label>
+					<comment><![CDATA[  <a href="http://www.robotsgenerator.com/?utm_source=mageplaza.com&utm_medium=seo-extension&utm_campaign=configuration" target="_blank">Robots.txt generator</a> ]]></comment>
+				</field>
+				<field id="save_robot" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="0">
+					<button_label>Save robot.txt</button_label>
+					<frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Saverobot</frontend_model>
+				</field>
+			</group>
+			<group id="htmlsitemap" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+				   showInStore="1">
+				<label>Enable HTML Sitemap</label>
+				<field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>robots.txt Content</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ Default URL: http://your-domain.com/seo/sitemap/ ]]></comment>
+				</field>
+				<field id="footer" translate="label comment" type="select" sortOrder="15" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Add Sitemap Link to Footer</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ ]]></comment>
+				</field>
+				<field id="category" translate="label comment" type="select" sortOrder="20" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<label>Enable Categories</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[ ]]></comment>
+					<depends>
+						<field id="enable">1</field>
+					</depends>
+				</field>
+			</group>
+
+		</section>
+	</system>
+</config>

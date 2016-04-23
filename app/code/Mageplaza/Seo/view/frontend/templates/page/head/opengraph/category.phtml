@@ -1,0 +1,19 @@
+<!--Open Graph Protocol for Facebook by Mageplaza SEO-->
+<?php if ($category = $block->getCurrentCategory()): ?>
+	<meta property="og:title" content="<?php echo $category->getName() ?>"/>
+	<meta property="og:type" content="product.group"/>
+	<meta property="og:url" content="<?php echo $block->getCurrentUrl(); ?>"/>
+	<?php if ($category->getShortDescription()): ?>
+		<meta property="og:description" content="<?php echo trim(strip_tags($category->getDescription())) ?>"/>
+	<?php endif; ?>
+	
+	<meta property="og:site_name" content="<?php echo $block->getBusinessName();?>"/>
+
+	<!--	Twitter Card By Mageplaza SEO-->
+	<meta name="twitter:card" content="summary"/>
+	<meta name="twitter:site" content="<?php echo $block->getTwitterAccount(); ?>"/>
+	<meta name="twitter:title" content="<?php echo $category->getName() ?>"/>
+	<?php if ($category->getShortDescription()): ?>
+		<meta name="twitter:description" content="<?php echo trim(strip_tags($category->getDescription())); ?>"/>
+	<?php endif; ?>
+<?php endif; ?>
