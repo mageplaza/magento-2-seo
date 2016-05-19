@@ -49,3 +49,7 @@ Features
 [Documentations](https://mageplaza.freshdesk.com/support/solutions/folders/6000216900)
 
 Any questions, issues, bugs, please create [a topic at forum](https://mageplaza.freshdesk.com/support/discussions/forums/6000241153) 
+
+## License
+
+https://www.mageplaza.com/LICENSE.txt
