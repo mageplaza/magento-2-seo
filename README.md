@@ -52,4 +52,5 @@ Any questions, issues, bugs, please create [a topic at forum](https://mageplaza.
 
 ## License
 
-https://www.mageplaza.com/LICENSE.txt
+The MIT License (MIT) 
+https://opensource.org/licenses/MIT
