@@ -23,7 +23,7 @@ Giving you direct access to the two most powerful files, from an SEO perspective
 
 SEO and Social Media are heavily intertwined, that's why this plugin also comes with a Facebook OpenGraph implementation, Twitter Card and will soon also support Google+ sharing tags.
 
-Features
+## Features
 
 - Automatically setup SEO criterials 
 - Add Canonical URL Meta 
@@ -43,6 +43,17 @@ Features
 - Page Analysis (Coming soon) 
 - Better 404 pages (Coming soon) 
 - SEO-friently URLs: Layered Navigation (Coming soon) 
+
+
+## How to install
+
+After installing magento 2, run these commands:
+
+~~~
+composer require mageplaza/magento-2-seo-extension
+php bin/magento setup:upgrade
+~~~
+
 
 ## Help
 
