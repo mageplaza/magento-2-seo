@@ -7,6 +7,7 @@ Mageplaza SEO extension will automatically optimize and greatly improve the perf
 
 Mageplaza SEO extension will support a list of new useful tools and settings that help you have own all the technical optimization with automatically optimizing and inserting the meta tags and link elements that Google or other Search Engines like so much:
 
+
 ## Meta & Link tag
 
 Mageplaza SEO extension empower you control which pages Google shows that associated with its search and which pages doesn’t show. Otherwise, by default, search engines will index all of your pages and only first page will be shown in the search results that is not useful for a user to end up on the third page of your "personal" category.
@@ -61,7 +62,11 @@ php bin/magento setup:upgrade
 
 Any questions, issues, bugs, please create [a topic at forum](https://mageplaza.freshdesk.com/support/discussions/forums/6000241153) 
 
+## Contribute to this module
+
+Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
+
 ## License
 
-The MIT License (MIT) 
-https://opensource.org/licenses/MIT
+Mageplaza License
+https://www.mageplaza.com/LICENSE.txt

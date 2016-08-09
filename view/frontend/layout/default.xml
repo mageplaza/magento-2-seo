@@ -26,10 +26,15 @@
 			</action>
 		</referenceBlock>
 
+		<!--<referenceContainer name="breadcrumbs">-->
+			<!--<block class="Magento\Backend\Block\Widget\Breadcrumbs" name="seo.breadcrumbs" as="seo.breadcrumbs" template="Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml"/>-->
+		<!--</referenceContainer>-->
+
+
 		<referenceBlock name="footer_links">
 			<block class="Magento\Framework\View\Element\Html\Link\Current" name="mageplaza_seo_sitemap_footer" ifconfig="seo/htmlsitemap/footer" >
 				<arguments>
-					<argument name="label" xsi:type="string" translate="true">SEO SITEMAP</argument>
+					<argument name="label" xsi:type="string" translate="true">Sitemap</argument>
 					<argument name="path" xsi:type="string">seo/sitemap/view</argument>
 				</arguments>
 			</block>
