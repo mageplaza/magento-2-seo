@@ -70,7 +70,7 @@
       "@id": "<?php echo $_crumbInfo['link']; ?>",
       "name": "<?php echo $_crumbInfo['label']; ?>"
     }
-    <?php (!$_crumbInfo['last'])?> ,
+    <?php if(!$_crumbInfo['last']) echo ',';?>
     <?php endforeach; ?>
   }]
 

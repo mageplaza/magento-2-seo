@@ -4,43 +4,46 @@
  */
 ?>
 
-<?php if($block->getProduct()): ?>
-<?php $product = $block->getProduct(); ?>
-<!--    Product Rich Snippets by Mageplaza SEO-->
-<script type="application/ld+json">
+<?php if ($block->getProduct()): ?>
+	<?php $product = $block->getProduct(); ?>
+	<!--    Product Rich Snippets by Mageplaza SEO-->
+	<script type="application/ld+json">
 {
   "@context": "http://schema.org/",
   "@type": "Product",
-  "name": "<?php echo $product->getName();?>",
-<!--  "image": "--><?php //echo $this->helper('catalog/image')->init($product, 'small_image')->resize(200,200);?><!--",-->
+  "name": "<?php echo $product->getName(); ?>",
   "description": "<?php echo trim(strip_tags($product->getShortDescription())); ?>",
-  <?php if($product->getMpn()):?>
-  "mpn": "<?php echo $product->getMpn();?>",
+  <?php if ($product->getMpn()): ?>
+  "mpn": "<?php echo $product->getMpn(); ?>",
   <?php endif; ?>
-  "sku": "<?php echo $product->getSku();?>",
-  "url": "<?php echo $product->getProductUrl();?>",
+  "sku": "<?php echo $product->getSku(); ?>",
+  "url": "<?php echo $product->getProductUrl(); ?>"
   <?php /*
   TO-DO: Allow select brand attribute in configuration > Get attribute label
   "brand": {
     "@type": "Thing",
     "name": "ACME"
   },
- */?>
+ */ ?>
 
- <?php if($block->getReviewCount()):?>
+ <?php if ($block->getReviewCount()): ?>
+ ,
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "<?php echo $block->getRatingSummary();?>",
-    "reviewCount": "<?php echo $block->getReviewCount();?>"
-  },
-  <?php endif;?>
+    "bestRating": 100,
+    "worstRating": 0,
+    "ratingValue": "<?php echo $block->getRatingSummary(); ?>",
+    "reviewCount": "<?php echo $block->getReviewCount(); ?>"
+  }
+  <?php endif; ?>
 
-  <?php if($product->getSpecialPrice() AND $product->getPrice() != $product->getSpecialPrice()):?>
+  <?php if ($product->getSpecialPrice() AND $product->getPrice() != $product->getSpecialPrice()): ?>
+  ,
   "offers": {
     "@type": "Offer",
-    "priceCurrency": "<?php echo $block->getCurrency();?>",
-    "price": "<?php echo $product->getSpecialPrice();?>",
-    "priceValidUntil": "<?php echo $product->getSpecialToDate();?>",
+    "priceCurrency": "<?php echo $block->getCurrency(); ?>",
+    "price": "<?php echo $product->getSpecialPrice(); ?>",
+    "priceValidUntil": "<?php echo $product->getSpecialToDate(); ?>",
     "availability": "http://schema.org/InStock",
     <?php endif; ?>
   }
