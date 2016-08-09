@@ -13,14 +13,12 @@ use Magento\Review\Model\ResourceModel\Review\CollectionFactory;
 use Magento\Review\Model\ReviewFactory;
 class Abstractt extends Template
 {
-    protected $storeManager;
     protected $objectManager;
     protected $helperData;
     protected $objectFactory;
     protected $checkoutSession;
     protected $logo;
     protected $registry;
-    protected $urlManager;
     protected $reviewCollection;
     protected $reviewCollectionFactory;
     protected $reviewFactory;
@@ -40,11 +38,9 @@ class Abstractt extends Template
     {
     $this->helperData = $helperData;
     $this->objectManager = $objectManager;
-    $this->storeManager = $storeManager;
     $this->checkoutSession = $session;
     $this->registry = $registry;
     $this->logo = $logo;
-    $this->urlManager = $urlManager;
     $this->reviewCollectionFactory = $reviewCollectionFactory;
     $this->reviewFactory=$reviewFactory;
     parent::__construct($context, $data);

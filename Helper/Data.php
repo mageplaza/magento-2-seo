@@ -13,9 +13,7 @@ class Data extends AbstractHelper
     const XML_PATH_HTACCESS = 'seo/htaccess/';
     const XML_PATH_ROBOTS = 'seo/robots/';
     const XML_PATH_HTML_SITEMAP = 'seo/htmlsitemap/';
-    protected $storeManager;
     protected $objectManager;
-    protected $urlManager;
 
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -23,8 +21,6 @@ class Data extends AbstractHelper
     )
     {
         $this->objectManager = $objectManager;
-        $this->storeManager = $storeManager;
-        $this->urlManager = $urlManager;
         parent::__construct($context);
     }
     
