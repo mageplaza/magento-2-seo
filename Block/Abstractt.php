@@ -31,6 +31,7 @@ class Abstractt extends Template
     Session $session,
     Registry $registry,
     Logo $logo,
+    \Magento\Store\Api\Data\StoreConfigInterface $storeConfig,
     CollectionFactory $reviewCollectionFactory,
     ReviewFactory $reviewFactory,
     array $data = []
@@ -43,6 +44,7 @@ class Abstractt extends Template
     $this->logo = $logo;
     $this->reviewCollectionFactory = $reviewCollectionFactory;
     $this->reviewFactory=$reviewFactory;
+    $this->storeConfig = $storeConfig;
     parent::__construct($context, $data);
     }
     
@@ -55,20 +57,13 @@ class Abstractt extends Template
     {
         return $this->helperData->getConfigValue('general/store_information/name');
     }
-    
+
+
     public function getBusinessPhone()
     {
         return $this->helperData->getConfigValue('general/store_information/phone');
     }
-    
-    public function getBaseUrl()
-    {
-    // return $this->objectManager->get('Magento\Store\Model\StoreManagerInterface')
-    // ->getStore()
-    // ->getBaseUrl();
-    return $this->urlManager->getBaseUrl();
-    }
-    
+
     public function getTwitterAccount()
     {
         $prefix = '@';
@@ -89,5 +84,15 @@ class Abstractt extends Template
     public function getCoreObject($helper)
     {
         return $this->objectManager->create($helper);
+    }
+
+    public function getCanonicalUrl(){
+
+        $url = $this->getCurrentUrl();
+
+        if($this->getGeneralConfig('https_canonical'))
+            $url = str_replace('http:','https:',$url);
+
+        return $url;
     }
 }

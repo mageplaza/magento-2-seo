@@ -30,6 +30,15 @@
 					<label>Add Canonical URL Meta</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+				<field id="https_canonical" translate="label comment" type="select" sortOrder="15" showInDefault="1"
+					   showInWebsite="1" showInStore="1">
+					<depends>
+						<field id="canonical">1</field>
+					</depends>
+					<label>Canonical points to https</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Prefer the https version of a page (a valid ssl certificate is required)]]></comment>
+				</field>
 				<field id="nofollow_sr" translate="label comment" type="select" sortOrder="20" showInDefault="1"
 					   showInWebsite="1" showInStore="1">
 					<label>Add Nofollow meta in Search Result</label>
