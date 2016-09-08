@@ -13,7 +13,7 @@
  */
 ?>
 <script>
-    require(['prototype'], function(){
+    require(['prototype'], function () {
 
 //<![CDATA[
         function saveHtaccess() {
@@ -23,7 +23,7 @@
             };
             new Ajax.Request('<?php /* @escapeNotVerified */ echo $block->getAjaxUrl() ?>', {
                 parameters: params,
-                onSuccess: function(response) {
+                onSuccess: function (response) {
                     var result = '<?php /* @escapeNotVerified */ echo __('Error during Save htaccess.txt.') ?>';
                     try {
                         if (response.responseText.isJSON()) {
@@ -50,7 +50,8 @@
 </script>
 <div class="actions actions-save-htaccess">
     <div id="saveHtaccess_result" class="message-saveHtaccess hidden"></div>
-    <button onclick="javascript:saveHtaccess(); return false;" class="action-save-htaccess" type="button" id="<?php echo $block->getHtmlId() ?>">
+    <button onclick="javascript:saveHtaccess(); return false;" class="action-save-htaccess" type="button"
+            id="<?php echo $block->getHtmlId() ?>">
         <span><?php echo $block->escapeHtml($block->getButtonLabel()) ?></span>
     </button>
 </div>

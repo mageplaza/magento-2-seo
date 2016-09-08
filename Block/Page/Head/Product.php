@@ -15,6 +15,7 @@ class Product extends Abstractt
     {
         $url = $this->objectManager
             ->get('Magento\Framework\UrlInterface');
+
         return $url->getCurrentUrl();
     }
 
@@ -22,7 +23,9 @@ class Product extends Abstractt
     {
         return $this->registry->registry($code);
     }
-    public function getCurrency(){
+
+    public function getCurrency()
+    {
         return $this->storeManager->getStore()->getCurrentCurrencyCode();
 
     }

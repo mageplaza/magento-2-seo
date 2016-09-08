@@ -15,6 +15,7 @@ class Page extends Abstractt
     {
         $url = $this->objectManager
             ->get('Magento\Framework\UrlInterface');
+
         return $url->getCurrentUrl();
     }
 

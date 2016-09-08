@@ -37,12 +37,11 @@ class SeoObserver extends \Magento\Framework\App\Config\Value implements Observe
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         SeoHelper $helper,
         array $data = []
-    )
-    {
-        $this->_directory = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
-        $this->_fileRobot = 'robots.txt';
+    ) {
+        $this->_directory    = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
+        $this->_fileRobot    = 'robots.txt';
         $this->_fileHtaccess = '.htaccess';
-        $this->_helper = $helper;
+        $this->_helper       = $helper;
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
 
     }

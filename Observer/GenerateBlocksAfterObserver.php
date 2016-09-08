@@ -30,15 +30,14 @@ class GenerateBlocksAfterObserver implements ObserverInterface
         Context $context,
         Url $url,
         Group $storeGroup
-    )
-    {
-        $this->helper = $helper;
-        $this->registry = $registry;
+    ) {
+        $this->helper        = $helper;
+        $this->registry      = $registry;
         $this->objectManager = $objectManager;
-        $this->urlManager = $urlManager;
-        $this->context = $context;
-        $this->url = $url;
-        $this->storeGroup=$storeGroup;
+        $this->urlManager    = $urlManager;
+        $this->context       = $context;
+        $this->url           = $url;
+        $this->storeGroup    = $storeGroup;
     }
 
     public function execute(Observer $observer)
@@ -64,12 +63,12 @@ class GenerateBlocksAfterObserver implements ObserverInterface
          * catalog_category_view
          */
         if ($action == 'catalog_category_view') {
-            $category = $this->registry->registry('current_category');
-            $pageTitle = $category->getName();
+            $category        = $this->registry->registry('current_category');
+            $pageTitle       = $category->getName();
             $pageDescription = $category->getMetaDescription();
-            $pageKeywords = $category->getMetaKeywords();
-            $pageRobots = $category->getMetaRobots();
-            $url = $category->getUrl();
+            $pageKeywords    = $category->getMetaKeywords();
+            $pageRobots      = $category->getMetaRobots();
+            $url             = $category->getUrl();
 
         }
 
@@ -77,7 +76,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
          * catalog_product_view
          */
         if ($action == 'catalog_product_view') {
-            $product = $this->registry->registry('current_product');
+            $product   = $this->registry->registry('current_product');
             $pageTitle = $product->getName();
 
             /**
@@ -89,15 +88,15 @@ class GenerateBlocksAfterObserver implements ObserverInterface
                 $pageDescription = trim(strip_tags($product->getMetaDescription()));
             }
             $pageKeywords = $product->getMetaKeywords();
-            $pageRobots = $product->getMetaRobots();
-            $url = $product->getUrl();
+            $pageRobots   = $product->getMetaRobots();
+            $url          = $product->getUrl();
         }
         if ($action == 'cms_index_index' OR $action == 'cms_page_view') {
-            $page = $this->objectManager->get('Magento\Cms\Model\Page');
-            $pageTitle = $page->getTitle();
+            $page            = $this->objectManager->get('Magento\Cms\Model\Page');
+            $pageTitle       = $page->getTitle();
             $pageDescription = $page->getMetaDescription();
-            $pageKeywords = $page->getMetaKeywords();
-            $pageRobots = $page->getMetaRobots();
+            $pageKeywords    = $page->getMetaKeywords();
+            $pageRobots      = $page->getMetaRobots();
             if ($action == 'cms_index_index') {
                 $url = $this->urlManager->getBaseUrl();
             } else {
@@ -106,11 +105,21 @@ class GenerateBlocksAfterObserver implements ObserverInterface
         }
 
         if ($head = $layout->getBlock('head')) {
-            if (!empty($pageTitle)) $head->setTitle($pageTitle);
-            if (!empty($pageDescription)) $head->setDescription($pageDescription);
-            if (!empty($pageKeywords)) $head->setMetaKeywords($pageKeywords);
-            if (!empty($pageRobots)) $head->setRobots($pageRobots);
-            if (!empty($url)) $head->addItem('link_rel', $url, 'rel="alternate" hreflang="' . $this->getLangCode() . '"');
+            if ( ! empty($pageTitle)) {
+                $head->setTitle($pageTitle);
+            }
+            if ( ! empty($pageDescription)) {
+                $head->setDescription($pageDescription);
+            }
+            if ( ! empty($pageKeywords)) {
+                $head->setMetaKeywords($pageKeywords);
+            }
+            if ( ! empty($pageRobots)) {
+                $head->setRobots($pageRobots);
+            }
+            if ( ! empty($url)) {
+                $head->addItem('link_rel', $url, 'rel="alternate" hreflang="' . $this->getLangCode() . '"');
+            }
         }
 //        $layout->generateXml();
 

@@ -41,6 +41,7 @@ class Seo extends Abstractt
             ),
             $url
         );
+
         return $url;
     }
 
