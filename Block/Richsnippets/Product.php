@@ -26,7 +26,7 @@ class Product extends Abstractt
 
     public function getCurrency()
     {
-        return $this->storeManager->getStore()->getCurrentCurrencyCode();
+        return $this->_storeManager->getStore()->getCurrentCurrencyCode();
 
     }
 
