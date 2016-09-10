@@ -125,6 +125,9 @@
                        showInWebsite="1" showInStore="1">
                     <label>Enable Product Structured Data</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[ Disable this feature if your theme or module implements it's own product snippets ]]>
+                    </comment>
                 </field>
                 <field id="custom" translate="label comment" type="select" sortOrder="15" showInDefault="1"
                        showInWebsite="1" showInStore="1">
