@@ -4,6 +4,7 @@
  * See COPYING.txt for license details.
  */
 namespace Mageplaza\Seo\Controller\Adminhtml\System\Config\Htaccess;
+
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Mageplaza\Seo\Helper\Data as SeoHelper;
 use Magento\Framework\Controller\Result\JsonFactory;
@@ -16,7 +17,7 @@ class Save extends \Magento\Backend\App\Action
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
-     * @param JsonFactory $resultJsonFactory
+     * @param JsonFactory                         $resultJsonFactory
      */
     /**
      * @var \Magento\Framework\Filesystem\Directory\Write
@@ -44,20 +45,23 @@ class Save extends \Magento\Backend\App\Action
         ConfigModel $configModel,
         SeoHelper $helper
 
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->_directory = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
-        $this->_fileHtaccess = '.htaccess';
-        $this->_helper = $helper;
-        $this->configModel = $configModel;
+        $this->_directory        = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
+        $this->_fileHtaccess     = '.htaccess';
+        $this->_helper           = $helper;
+        $this->configModel       = $configModel;
     }
-    public function getContentHtaccesss(){
-        $data=$this->getRequest()->getParam('htaccesscontent');
-        $content=($data);
+
+    public function getContentHtaccesss()
+    {
+        $data    = $this->getRequest()->getParam('htaccesscontent');
+        $content = ($data);
+
         return $content;
     }
+
     protected function _saveHtaccess()
     {
         $value = $this->getContentHtaccesss();
@@ -69,6 +73,7 @@ class Save extends \Magento\Backend\App\Action
                 ->getFirstItem();
             $configModel->setValue($value);
             $configModel->save();
+
             return true;
         } catch (Exception $e) {
             return false;
@@ -90,9 +95,12 @@ class Save extends \Magento\Backend\App\Action
         }
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */
         $resultJson = $this->resultJsonFactory->create();
-        return $resultJson->setData([
-            'valid' => (int)$result,
-            'message' => $message,
-        ]);
+
+        return $resultJson->setData(
+            [
+                'valid'   => (int)$result,
+                'message' => $message,
+            ]
+        );
     }
 }

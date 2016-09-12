@@ -1,20 +1,8 @@
-
-
-<?php
-$_categories = $block->getCategoryCollection();
-$_categoryHelper = $this->getCategoryHelper();
-
-foreach ($_categories as $_category):
-    if (!$_category->getIsActive()) {
-        continue;
-    }
-
-    ?>
-    <div class="col-sm-3 col-xs-6 home-page-category-box">
-        <a href="<?php echo $_categoryHelper->getCategoryUrl($_category) ?>">
-            <div class="col-xs-12 home-page-category-heading"><?php echo $_category->getName();?></div>
-            <img src="<?php echo $_category->getImageUrl()?>" alt="<?php echo $_category->getName();?>"/>
-            <div class="home-page-category-hover"><span><?php echo $_category->getProductCount();?> DESIGNS | SEE THEM</span></div>
-        </a>
+<div class="row">
+    <div class="col s6">
+        <?php echo $block->getChildHtml('mageplaza_seo_sitemap_category'); ?>
     </div>
-<?php endforeach;?>
+    <div class="col s6">
+        <?php echo $block->getChildHtml('mageplaza_seo_sitemap_product'); ?>
+    </div>
+</div>

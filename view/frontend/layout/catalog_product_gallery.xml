@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-	<referenceBlock name="head.additional">
-		<block class="Mageplaza\Seo\Block\Page\Head\Page" name="mageplaza_seo_search_result" ifconfig="seo/general/nofollow_sr"
-			   template="Mageplaza_Seo::search/result.phtml">
-		</block>
-	</referenceBlock>
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <referenceBlock name="head.additional">
+        <block class="Mageplaza\Seo\Block\Page\Head\Page" name="mageplaza_seo_search_result"
+               ifconfig="seo/general/nofollow_sr"
+               template="Mageplaza_Seo::search/result.phtml">
+        </block>
+    </referenceBlock>
 </page>

@@ -2,6 +2,13 @@
 
 [Magento 2 SEO Extension](https://www.mageplaza.com/magento-2-seo-extension/) FREE. This is SEO extension for Magento 2 by Mageplaza
 
+
+## Documentations
+
+User guide: https://docs.mageplaza.com/seo-m2/
+Installation guide: https://docs.mageplaza.com/kb/installation.html
+
+
 Improve your SEO for [Magento](https://magento.com/) site. Use Mageplaza SEO to automatically optimize your site for Search Engines.
 Mageplaza SEO extension will automatically optimize and greatly improve the performance of your Magento-based store in Search Engines. Magento 2 is great SEO-ready out-of-the-box that is really good for SEO. However it still needs some craftiness to be improved in a few areas.
 

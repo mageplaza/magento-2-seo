@@ -1,28 +1,29 @@
 <!--Open Graph Protocol for Facebook by Mageplaza SEO-->
 <?php if ($block->getRegistry('current_product')): ?>
-	<?php $product = $block->getRegistry('current_product'); ?>
-	<meta property="og:title" content="<?php echo($product->getName()); ?>"/>
-	<meta property="og:type" content="product"/>
-	<!--	<meta property="og:image" content="--><?php //echo $this->helper('catalog/image')->init($product, 'small_image')->resize(200,200);?><!--" />-->
-	<meta property="og:url" content="<?php echo $block->getRegistry('product')->getProductUrl(); ?>"/>
-	<meta property="og:description" content="<?php echo trim(strip_tags($product->getShortDescription())); ?>"/>
-	<meta property="og:site_name" content="<?php echo $block->getBusinessName(); ?>"/>
-	<meta property="product:price:amount" content="<?php echo $product->getPrice(); ?>"/>
-	<meta property="product:price:currency" content="<?php echo $block->getCurrency(); ?>"/>
-	<meta property="product:availability" content="<?php echo $product->isAvailable() ? $this->__('In stock') : $this->__('Out of stock'); ?>"/>
-	<meta property="product:retailer_item_id" content="<?php echo $product->getSku() ?>"/>
-	<?php if ($product->getSpecialPrice() AND $product->getPrice() != $product->getSpecialPrice()): ?>
-		<meta property="product:sale_price:amount" content="<?php echo $product->getSpecialPrice(); ?> "/>
-		<meta property="product:sale_price:currency" content="<?php //echo $currency;?>"/>
-		<meta property="product:sale_price_dates:start" content="<?php echo $product->getSpecialFromDate(); ?>"/>
-		<meta property="product:sale_price_dates:end" content="<?php echo $product->getSpecialToDate(); ?>"/>
-	<?php endif; ?>
+    <?php $product = $block->getRegistry('current_product'); ?>
+    <meta property="og:title" content="<?php echo($product->getName()); ?>"/>
+    <meta property="og:type" content="product"/>
+    <!--	<meta property="og:image" content="--><?php //echo $this->helper('catalog/image')->init($product, 'small_image')->resize(200,200);?><!--" />-->
+    <meta property="og:url" content="<?php echo $block->getRegistry('product')->getProductUrl(); ?>"/>
+    <meta property="og:description" content="<?php echo trim(strip_tags($product->getShortDescription())); ?>"/>
+    <meta property="og:site_name" content="<?php echo $block->getBusinessName(); ?>"/>
+    <meta property="product:price:amount" content="<?php echo $product->getPrice(); ?>"/>
+    <meta property="product:price:currency" content="<?php echo $block->getCurrency(); ?>"/>
+    <meta property="product:availability"
+          content="<?php echo $product->isAvailable() ? $this->__('In stock') : $this->__('Out of stock'); ?>"/>
+    <meta property="product:retailer_item_id" content="<?php echo $product->getSku() ?>"/>
+    <?php if ($product->getSpecialPrice() AND $product->getPrice() != $product->getSpecialPrice()): ?>
+        <meta property="product:sale_price:amount" content="<?php echo $product->getSpecialPrice(); ?> "/>
+        <meta property="product:sale_price:currency" content="<?php //echo $currency;?>"/>
+        <meta property="product:sale_price_dates:start" content="<?php echo $product->getSpecialFromDate(); ?>"/>
+        <meta property="product:sale_price_dates:end" content="<?php echo $product->getSpecialToDate(); ?>"/>
+    <?php endif; ?>
 
-	<!--	Twitter Card By Mageplaza SEO-->
-	<meta name="twitter:card" content="summary"/>
-	<meta name="twitter:site" content="<?php echo $block->getTwitterAccount(); ?>"/>
-	<meta name="twitter:title" content="<?php echo $product->getName() ?>"/>
-	<meta name="twitter:description" content="<?php echo trim(strip_tags($product->getShortDescription())); ?>"/>
-	<!--	<meta name="twitter:image" content="--><?php //echo $block->helper('catalog/image')->init($product, 'small_image')->resize(200,200);?><!--" />-->
+    <!--	Twitter Card By Mageplaza SEO-->
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="<?php echo $block->getTwitterAccount(); ?>"/>
+    <meta name="twitter:title" content="<?php echo $product->getName() ?>"/>
+    <meta name="twitter:description" content="<?php echo trim(strip_tags($product->getShortDescription())); ?>"/>
+    <!--	<meta name="twitter:image" content="--><?php //echo $block->helper('catalog/image')->init($product, 'small_image')->resize(200,200);?><!--" />-->
 
 <?php endif; ?>

@@ -15,6 +15,7 @@ class Product extends Abstractt
     {
         $url = $this->objectManager
             ->get('Magento\Framework\UrlInterface');
+
         return $url->getCurrentUrl();
     }
 
@@ -46,24 +47,27 @@ class Product extends Abstractt
                 $this->getProduct()->getId()
             )->setDateOrder();
         }
+
         return $this->reviewCollection;
     }
 
     public function getReviewCount()
     {
         $product = $this->getProduct();
-        if (!$product->getRatingSummary()) {
+        if ( ! $product->getRatingSummary()) {
             $this->reviewFactory->create()->getEntitySummary($product, $this->_storeManager->getStore()->getId());
         }
+
         return $product->getRatingSummary()->getReviewsCount();
     }
 
     public function getRatingSummary()
     {
         $product = $this->getProduct();
-        if (!$product->getRatingSummary()) {
+        if ( ! $product->getRatingSummary()) {
             $this->reviewFactory->create()->getEntitySummary($product, $this->_storeManager->getStore()->getId());
         }
+
         return $product->getRatingSummary()->getRatingSummary();
     }
 }

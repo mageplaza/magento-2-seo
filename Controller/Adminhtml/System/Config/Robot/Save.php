@@ -23,7 +23,7 @@ class Save extends \Magento\Backend\App\Action
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
-     * @param JsonFactory $resultJsonFactory
+     * @param JsonFactory                         $resultJsonFactory
      */
     /**
      * @var \Magento\Framework\Filesystem\Directory\Write
@@ -51,21 +51,21 @@ class Save extends \Magento\Backend\App\Action
         ScopeResolverInterface $scopeResolver,
         SeoHelper $helper
 
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->_directory = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
-        $this->_fileRobot = 'robots.txt';
-        $this->_helper = $helper;
-        $this->_scopeResolver = $scopeResolver;
-        $this->configModel = $configModel;
+        $this->_directory        = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
+        $this->_fileRobot        = 'robots.txt';
+        $this->_helper           = $helper;
+        $this->_scopeResolver    = $scopeResolver;
+        $this->configModel       = $configModel;
     }
 
     public function getContentRobots()
     {
-        $data = $this->getRequest()->getParam('robotcontent');
+        $data    = $this->getRequest()->getParam('robotcontent');
         $content = ($data);
+
         return $content;
     }
 
@@ -81,6 +81,7 @@ class Save extends \Magento\Backend\App\Action
                 ->getFirstItem();
             $configModel->setValue($value);
             $configModel->save();
+
             return true;
         } catch (Exception $e) {
             return false;
@@ -102,9 +103,12 @@ class Save extends \Magento\Backend\App\Action
         }
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */
         $resultJson = $this->resultJsonFactory->create();
-        return $resultJson->setData([
-            'valid' => (int)$result,
-            'message' => $message,
-        ]);
+
+        return $resultJson->setData(
+            [
+                'valid'   => (int)$result,
+                'message' => $message,
+            ]
+        );
     }
 }
