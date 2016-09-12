@@ -1,11 +1,11 @@
 <?php
 namespace Mageplaza\Seo\Helper;
 
-use Magento\Framework\App\Helper\AbstractHelper;
+use Mageplaza\Core\Helper\AbstractData;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\ScopeInterface;
 
-class Data extends AbstractHelper
+class Data extends AbstractData
 {
     const XML_PATH_GENERAL = 'seo/general/';
     const XML_PATH_META = 'seo/meta/';
