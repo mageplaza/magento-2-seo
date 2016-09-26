@@ -3,6 +3,7 @@ namespace Mageplaza\Seo\Helper;
 
 use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 use Magento\Framework\ObjectManagerInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Store\Model\ScopeInterface;
 
 class Data extends CoreHelper
