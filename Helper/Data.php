@@ -1,11 +1,11 @@
 <?php
 namespace Mageplaza\Seo\Helper;
 
-use Mageplaza\Core\Helper\AbstractData;
+use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\ScopeInterface;
 
-class Data extends AbstractData
+class Data extends CoreHelper
 {
     const XML_PATH_GENERAL = 'seo/general/';
     const XML_PATH_META = 'seo/meta/';
@@ -17,10 +17,13 @@ class Data extends AbstractData
 
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
+        StoreManagerInterface $storeManager,
         ObjectManagerInterface $objectManager
     ) {
         $this->objectManager = $objectManager;
-        parent::__construct($context);
+        $this->_storeManager = $storeManager;
+
+        parent::__construct($context, $objectManager, $storeManager);
     }
 
     public function getConfigValue($field, $storeId = null)
