@@ -2,9 +2,9 @@
 
 namespace Mageplaza\Seo\Block\Richsnippets;
 
-use Mageplaza\Seo\Block\Abstractt;
+use Mageplaza\Seo\Block\Richsnippets;
 
-class Product extends Abstractt
+class Product extends Richsnippets
 {
     public function getGeneralConfig($code)
     {

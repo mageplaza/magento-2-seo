@@ -4,7 +4,7 @@
  */
 ?>
 
-<?php if ($block->getProduct()): ?>
+<?php if ($block->getProduct() && $block->getRichsnippetsHelper('enable_product')): ?>
     <?php $product = $block->getProduct(); ?>
     <!--    Product Rich Snippets by Mageplaza SEO-->
     <script type="application/ld+json">

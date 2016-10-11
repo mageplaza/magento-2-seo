@@ -121,6 +121,14 @@
                     <comment>
                         <![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122361--rich-snippets/">Rich Snippets</a> ]]></comment>
                 </field>
+                <field id="enable_product" translate="label comment" type="select" sortOrder="11" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Product Structured Data</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[ Disable this feature if your theme or module implements it's own product snippets ]]>
+                    </comment>
+                </field>
                 <field id="custom" translate="label comment" type="select" sortOrder="15" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Enable Organization Information</label>
