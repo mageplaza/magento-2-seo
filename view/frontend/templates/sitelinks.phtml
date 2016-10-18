@@ -7,7 +7,7 @@
   "url": "<?php echo $block->getBaseUrl() ?>",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "<?php echo $block->getBaseUrl() ?>catalogsearch/result/q={search_term_string}",
+    "target": "<?php echo $block->getBaseUrl() ?>catalogsearch/result/?q={search_term_string}",
     <?php if ($block->getSitelinksApp()): ?>
 	"target": "android-app://<?php echo $block->getSitelinksAppCode(); ?>/<?php echo $block->getSiteLinkDomainForApp(
         ); ?>catalogsearch/result/?q={search_term}"
