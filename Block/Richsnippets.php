@@ -22,11 +22,11 @@ class Richsnippets extends Abstractt
         if ( ! empty($profiles)) {
             $profiles = explode("\n", $profiles);
             foreach ($profiles as $_profile) {
-                $lines .= '"' . trim($_profile) . '",' . "\n";
+                $lines .= '"' . trim($_profile) . '",';
             }
         }
 
-        return $lines;
+        return rtrim($lines,',');
 
     }
 }
