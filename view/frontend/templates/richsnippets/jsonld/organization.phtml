@@ -7,7 +7,7 @@
   "@type" : "Organization",
   "name" : "<?php echo $block->getBusinessName(); ?>",
   "url" : "<?php echo $block->getBaseUrl(); ?>",
-  "logo": "<?php echo $block->getLogo(); ?>"
+  "logo": "<?php echo $block->getLogo(); ?>",
   <?php if ($block->getProfiles()): ?>
   "sameAs" : [
     <?php echo $block->getProfiles(); ?>
@@ -16,7 +16,7 @@
   "contactPoint" : [{
     "@type" : "ContactPoint",
     "telephone" : "<?php echo $block->getBusinessPhone(); ?>",
-    "contactType" : "General contact"
+    "contactType" : "Customer service"
   }]
 }
 
