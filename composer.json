@@ -3,14 +3,8 @@
   "description": "Magento 2 SEO extension",
   "require": {
     "php": "~5.5.0|~5.6.0|~7.0.0",
-    "mageplaza/core-m2": "dev-master"
+    "mageplaza/core-m2": "master"
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url":  "https://github.com/mageplaza/core-m2.git"
-    }
-  ],
   "type": "magento2-module",
   "version": "1.1.0",
   "license": [
