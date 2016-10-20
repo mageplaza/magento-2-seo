@@ -1,0 +1,15 @@
+<?php
+$collection = $block->getPageCollection();
+?>
+<h2><?php echo __('Pages'); ?></h2>
+<?php if ($collection): ?>
+    <ul class="mp-sitemap-listing">
+        <?php foreach ($collection as $item): ?>
+            <?php if(in_array($item->getData('identifier'), $block->getExcludedPages())) continue; ?>
+            
+            <li><a href="<?php echo $block->getUrl($item->getData('identifier')) ?>"><?php echo
+                    $item->getTitle(); ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+

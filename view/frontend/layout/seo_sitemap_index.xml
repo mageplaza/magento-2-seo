@@ -1,0 +1,20 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Mageplaza_Seo::css/sitemap.css"/>
+
+    </head>
+    <referenceBlock name="content">
+        <block class="Mageplaza\Seo\Block\Sitemap" name="mageplaza_seo_sitemap"
+               template="Mageplaza_Seo::sitemap/html.phtml">
+
+            <block class="Mageplaza\Seo\Block\Sitemap" name="mageplaza_seo_sitemap_category"
+                   template="Mageplaza_Seo::sitemap/category.phtml"/>
+            <block class="Mageplaza\Seo\Block\Sitemap" name="mageplaza_seo_sitemap_product"
+                   template="Mageplaza_Seo::sitemap/product.phtml"/>
+            <block class="Mageplaza\Seo\Block\Sitemap" name="mageplaza_seo_sitemap_page"
+                   template="Mageplaza_Seo::sitemap/page.phtml"/>
+        </block>
+
+    </referenceBlock>
+</page>

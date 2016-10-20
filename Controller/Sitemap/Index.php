@@ -4,7 +4,7 @@ namespace Mageplaza\Seo\Controller\Sitemap;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\App\Action\Context;
 
-class View extends \Magento\Framework\App\Action\Action
+class Index extends \Magento\Framework\App\Action\Action
 {
     protected $pageFactory;
 
@@ -17,8 +17,9 @@ class View extends \Magento\Framework\App\Action\Action
 
     public function execute()
     {
-        $page_object = $this->pageFactory->create();;
+        $page = $this->pageFactory->create();;
+        $page->getConfig()->getTitle()->set(__('HTML Sitemap'));
 
-        return $page_object;
+        return $page;
     }
 }

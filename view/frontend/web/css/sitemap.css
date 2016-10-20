@@ -1,0 +1,8 @@
+.mp-sitemap-listing {
+    -webkit-column-width:   250px;
+    -moz-column-width:      250px;
+    -o-column-width:        250px;
+    -ms-column-width:       250px;
+    column-width:           250px;
+    list-style-type: none;
+}

@@ -1,17 +1,11 @@
-<?php
-$productCollection = $block->getProductCollection();
-?>
+<h2><?php echo __('Products'); ?></h2>
 
-<div class="row">
-    <h2><?php echo __('Products'); ?></h2>
-
-    <?php $productCollection = $block->getProductCollection(); ?>
-    <?php if ($productCollection): ?>
-        <ul>
-            <?php foreach ($productCollection as $product): ?>
-                <li><a href="<?php echo $product->getProductUrl() ?>"><?php echo $product->getName(); ?></a></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
-</div>
+<?php $productCollection = $block->getProductCollection(); ?>
+<?php if ($productCollection): ?>
+    <ul class="mp-sitemap-listing">
+        <?php foreach ($productCollection as $product): ?>
+            <li><a href="<?php echo $product->getProductUrl() ?>"><?php echo $product->getName(); ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
 
