@@ -37,7 +37,7 @@
                    ifconfig="seo/htmlsitemap/footer">
                 <arguments>
                     <argument name="label" xsi:type="string" translate="true">Sitemap</argument>
-                    <argument name="path" xsi:type="string">seo/sitemap/view</argument>
+                    <argument name="path" xsi:type="string">seo/sitemap</argument>
                 </arguments>
             </block>
         </referenceBlock>
