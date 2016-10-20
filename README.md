@@ -5,8 +5,19 @@
 
 ## Documentations
 
-User guide: https://docs.mageplaza.com/seo-m2/
-Installation guide: https://docs.mageplaza.com/kb/installation.html
+- User guide: https://docs.mageplaza.com/seo-m2/
+- Installation guide: https://docs.mageplaza.com/kb/installation.html
+
+
+## How to install
+
+After installing magento 2, run these commands:
+
+~~~
+composer require mageplaza/magento-2-seo-extension
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy
+~~~
 
 
 Improve your SEO for [Magento](https://magento.com/) site. Use Mageplaza SEO to automatically optimize your site for Search Engines.
@@ -52,15 +63,6 @@ SEO and Social Media are heavily intertwined, that's why this plugin also comes 
 - Better 404 pages (Coming soon) 
 - SEO-friently URLs: Layered Navigation (Coming soon) 
 
-
-## How to install
-
-After installing magento 2, run these commands:
-
-~~~
-composer require mageplaza/magento-2-seo-extension
-php bin/magento setup:upgrade
-~~~
 
 
 ## Help
