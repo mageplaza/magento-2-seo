@@ -14,6 +14,7 @@
 After installing magento 2, run these commands:
 
 ~~~
+composer require mageplaza/core-m2
 composer require mageplaza/magento-2-seo-extension
 php bin/magento setup:upgrade
 php bin/magento setup:static-content:deploy
