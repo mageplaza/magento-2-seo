@@ -1,8 +1,25 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza_Seo extension
+ *                     NOTICE OF LICENSE
+ *
+ *                     This source file is subject to the Mageplaza License
+ *                     that is bundled with this package in the file LICENSE.txt.
+ *                     It is also available through the world-wide-web at this URL:
+ *                     https://www.mageplaza.com/LICENSE.txt
+ *
+ *                     @category  Mageplaza
+ *                     @package   Mageplaza_Core
+ *                     @copyright Copyright (c) 2016
+ *                     @license   https://www.mageplaza.com/LICENSE.txt Mageplaza License
+ */
+-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Mageplaza_Seo::seo" title="Seo" module="Mageplaza_Seo" sortOrder="55" resource="Mageplaza_Seo::seo"/>
+        <add id="Mageplaza_Seo::seo" title="Seo" module="Mageplaza_Seo" sortOrder="55" resource="Mageplaza_Seo::seo"
+             parent="Mageplaza_Core::menu"/>
         <add id="Mageplaza_Seo::settings" title="Settings" module="Mageplaza_Seo" sortOrder="10"
              action="adminhtml/system_config/edit/section/seo" resource="Mageplaza_Seo::settings"
              parent="Mageplaza_Seo::seo"/>
