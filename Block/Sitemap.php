@@ -33,18 +33,24 @@ class Sitemap extends Template
         parent::__construct($context);
     }
 
+    /**
+     * @return \Magento\Catalog\Helper\Category
+     */
     public function getCategoryHelper()
     {
         return $this->_categoryHelper;
     }
 
+    /**
+     * get product collection
+     *
+     * @return mixed
+     */
     public function getProductCollection()
     {
 
-        $_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $collection     = $_objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection')->getCollection()
-//            ->addAttributeToFilter('status', 1)
-        ;
+        $collection = $this->objectManager->create('Magento\Catalog\Model\Product')->getCollection()
+            ->addAttributeToFilter('status', 1);
 
         return $collection;
     }
@@ -52,14 +58,20 @@ class Sitemap extends Template
     public function getCategoryCollection()
     {
 
-        $_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $collection     = $_objectManager->create('Magento\Catalog\Model\Category')->getCollection()
-//            ->addAttributeToFilter('status', 1)
-        ;
+        $collection = $this->objectManager->create('Magento\Catalog\Model\Category')->getCollection()
+            ->addAttributeToFilter('status', 1);
 
         return $collection;
     }
 
+    /**
+     * get category url
+     *
+     * @param $category
+     *
+     * @return string
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
     public function getCategoryUrl($category)
     {
         $cat = $this->categoryRepository->get($category->getId());
@@ -67,8 +79,4 @@ class Sitemap extends Template
         return $this->_categoryHelper->getCategoryUrl($cat);
     }
 
-    public function getCoreObject($helper)
-    {
-        return $this->objectManager->create($helper);
-    }
 }

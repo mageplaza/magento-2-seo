@@ -6,35 +6,12 @@ use Mageplaza\Seo\Block\Richsnippets;
 
 class Product extends Richsnippets
 {
-    public function getGeneralConfig($code)
-    {
-        return $this->helperData->getGeneralConfig($code);
-    }
 
-    public function getCurrentUrl()
-    {
-        $url = $this->objectManager
-            ->get('Magento\Framework\UrlInterface');
 
-        return $url->getCurrentUrl();
-    }
-
-    public function getRegistry($code)
-    {
-        return $this->registry->registry($code);
-    }
-
-    public function getCurrency()
-    {
-        return $this->_storeManager->getStore()->getCurrentCurrencyCode();
-
-    }
-
-    public function getProduct()
-    {
-        return $this->registry->registry('current_product');
-    }
-
+    /**
+     * get review collection
+     * @return mixed
+     */
     public function getReviewCollection()
     {
         if (null === $this->reviewCollection) {
@@ -51,6 +28,10 @@ class Product extends Richsnippets
         return $this->reviewCollection;
     }
 
+    /**
+     * get review count
+     * @return mixed
+     */
     public function getReviewCount()
     {
         $product = $this->getProduct();
@@ -61,6 +42,10 @@ class Product extends Richsnippets
         return $product->getRatingSummary()->getReviewsCount();
     }
 
+    /**
+     * get rating summary
+     * @return mixed
+     */
     public function getRatingSummary()
     {
         $product = $this->getProduct();

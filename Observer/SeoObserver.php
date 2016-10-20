@@ -27,6 +27,19 @@ class SeoObserver extends \Magento\Framework\App\Config\Value implements Observe
      */
     protected $_helper;
 
+    /**
+     * SeoObserver constructor.
+     *
+     * @param \Magento\Framework\Model\Context                             $context
+     * @param \Magento\Framework\Registry                                  $registry
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface           $config
+     * @param \Magento\Framework\App\Cache\TypeListInterface               $cacheTypeList
+     * @param \Magento\Framework\Filesystem                                $filesystem
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
+     * @param \Mageplaza\Seo\Helper\Data                                   $helper
+     * @param array                                                        $data
+     */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
@@ -46,6 +59,9 @@ class SeoObserver extends \Magento\Framework\App\Config\Value implements Observe
 
     }
 
+    /**
+     * @param \Magento\Framework\Event\Observer $observer
+     */
     public function execute(Observer $observer)
     {
         $value = $this->_helper->getRobotsConfig('content');

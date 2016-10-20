@@ -72,20 +72,22 @@ class Save extends \Magento\Backend\App\Action
     protected function _saveRobot()
     {
         $value = $this->getContentRobots();
-
-        try {
-            $this->_directory->writeFile($this->_fileRobot, $value);
-            $configModel = $this->configModel->create();
-            $configModel = $configModel->getCollection()
-                ->addFieldToFilter('path', 'seo/robots/content')
-                ->getFirstItem();
-            $configModel->setValue($value);
-            $configModel->save();
-
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+        /**
+         * DISABLE THIS FEATURE
+         */
+//        try {
+//            $this->_directory->writeFile($this->_fileRobot, $value);
+//            $configModel = $this->configModel->create();
+//            $configModel = $configModel->getCollection()
+//                ->addFieldToFilter('path', 'seo/robots/content')
+//                ->getFirstItem();
+//            $configModel->setValue($value);
+//            $configModel->save();
+//
+//            return true;
+//        } catch (Exception $e) {
+//            return false;
+//        }
     }
 
     /**

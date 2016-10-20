@@ -16,6 +16,13 @@ class Data extends CoreHelper
     const XML_PATH_HTML_SITEMAP = 'seo/htmlsitemap/';
     protected $objectManager;
 
+    /**
+     * Data constructor.
+     *
+     * @param \Magento\Framework\App\Helper\Context      $context
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Framework\ObjectManagerInterface  $objectManager
+     */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         StoreManagerInterface $storeManager,
@@ -27,6 +34,12 @@ class Data extends CoreHelper
         parent::__construct($context, $objectManager, $storeManager);
     }
 
+    /**
+     * @param      $field
+     * @param null $storeId
+     *
+     * @return mixed
+     */
     public function getConfigValue($field, $storeId = null)
     {
         return $this->scopeConfig->getValue(
@@ -36,31 +49,67 @@ class Data extends CoreHelper
         );
     }
 
+    /**
+     * @param      $code
+     * @param null $storeId
+     *
+     * @return mixed
+     */
     public function getGeneralConfig($code, $storeId = null)
     {
         return $this->getConfigValue(self::XML_PATH_GENERAL . $code, $storeId);
     }
 
+    /**
+     * @param      $code
+     * @param null $storeId
+     *
+     * @return mixed
+     */
     public function getMetaConfig($code, $storeId = null)
     {
         return $this->getConfigValue(self::XML_PATH_META . $code, $storeId);
     }
 
+    /**
+     * @param      $code
+     * @param null $storeId
+     *
+     * @return mixed
+     */
     public function getRichsnippetsConfig($code, $storeId = null)
     {
         return $this->getConfigValue(self::XML_PATH_RICHSNIPPETS . $code, $storeId);
     }
 
+    /**
+     * @param      $code
+     * @param null $storeId
+     *
+     * @return mixed
+     */
     public function getHtaccessConfig($code, $storeId = null)
     {
         return $this->getConfigValue(self::XML_PATH_HTACCESS . $code, $storeId);
     }
 
+    /**
+     * @param      $code
+     * @param null $storeId
+     *
+     * @return mixed
+     */
     public function getRobotsConfig($code, $storeId = null)
     {
         return $this->getConfigValue(self::XML_PATH_ROBOTS . $code, $storeId);
     }
 
+    /**
+     * @param      $code
+     * @param null $storeId
+     *
+     * @return mixed
+     */
     public function getHtmlsitemapConfig($code, $storeId = null)
     {
         return $this->getConfigValue(self::XML_PATH_HTML_SITEMAP . $code, $storeId);
@@ -91,8 +140,13 @@ class Data extends CoreHelper
         return $converted;
     }
 
+
+    /**
+     * get html sitemap
+     * @return string
+     */
     public function getHtmlSitemapUrl()
     {
-        $this->_getUrl('mageplaza_seo/sitemap');
+        return $this->_getUrl('mageplaza_seo/sitemap');
     }
 }

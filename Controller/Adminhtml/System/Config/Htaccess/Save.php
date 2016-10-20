@@ -64,15 +64,19 @@ class Save extends \Magento\Backend\App\Action
 
     protected function _saveHtaccess()
     {
+        /**
+         * DISABLE THIS FEATURE
+         */
+        
         $value = $this->getContentHtaccesss();
         try {
-            $this->_directory->writeFile($this->_fileHtaccess, $value);
-            $configModel = $this->configModel->create();
-            $configModel = $configModel->getCollection()
-                ->addFieldToFilter('path', 'seo/htaccess/content')
-                ->getFirstItem();
-            $configModel->setValue($value);
-            $configModel->save();
+//            $this->_directory->writeFile($this->_fileHtaccess, $value);
+//            $configModel = $this->configModel->create();
+//            $configModel = $configModel->getCollection()
+//                ->addFieldToFilter('path', 'seo/htaccess/content')
+//                ->getFirstItem();
+//            $configModel->setValue($value);
+//            $configModel->save();
 
             return true;
         } catch (Exception $e) {

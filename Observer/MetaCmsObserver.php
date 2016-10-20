@@ -24,6 +24,11 @@ class MetaCmsObserver implements ObserverInterface
         $this->robots   = $robots;
     }
 
+    /**
+     * @param \Magento\Framework\Event\Observer $observer
+     *
+     * @return $this
+     */
     public function execute(Observer $observer)
     {
         $currentCms = $this->registry->registry('cms_page');

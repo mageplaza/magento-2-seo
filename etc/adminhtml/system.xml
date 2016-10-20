@@ -14,7 +14,7 @@
         <section id="seo" translate="label" type="text" sortOrder="550" showInDefault="1" showInWebsite="1"
                  showInStore="1">
             <class>separator-top</class>
-            <label>Seo</label>
+            <label>SEO</label>
             <tab>mageplaza</tab>
             <resource>Mageplaza_Seo::seo</resource>
             <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
@@ -25,6 +25,7 @@
                     <label>Auto Setup SEO Basic</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+
                 <field id="canonical" translate="label comment" type="select" sortOrder="15" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Add Canonical URL Meta</label>
@@ -40,6 +41,17 @@
                     <comment>
                         <![CDATA[Prefer the https version of a page (a valid ssl certificate is required)]]></comment>
                 </field>
+                <field id="url_param" translate="label comment" type="select" sortOrder="16" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Disable URL parameter in canonical URL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[ We will remove parameters such as: <strong>?price=30-220&brand=abc</strong> in canonical URL. This will be avoid duplicate content. ]]></comment>
+                    <depends>
+                        <field id="canonical">1</field>
+                    </depends>
+                </field>
+
                 <field id="nofollow_sr" translate="label comment" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Add Nofollow meta in Search Result</label>
@@ -165,62 +177,65 @@
                         <field id="custom">1</field>
                     </depends>
                 </field>
+
+
+
             </group>
 
-            <!--<group id="htaccess" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"-->
-            <!--showInStore="1">-->
-            <!--<label>.htaccess Editor [Beta]</label>-->
-            <!--<field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"-->
-            <!--showInWebsite="1" showInStore="1">-->
-            <!--<label>.htaccess Content</label>-->
-            <!--<comment><![CDATA[ Download <a href="https://github.com/mageplaza/magento-htaccess-extension/blob/master/.htaccess" target="_blank">.htaccess file</a> ]]></comment>-->
-            <!--</field>-->
-            <!--<field id="save_htaccess" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="0">-->
-            <!--<button_label>Save .htaccess</button_label>-->
-            <!--<frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Savehtaccess</frontend_model>-->
-            <!--</field>-->
-            <!--</group>-->
+            <group id="htaccess" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+            showInStore="1">
+            <label>.htaccess Editor [Beta] [Disabled]</label>
+            <field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"
+            showInWebsite="1" showInStore="1">
+            <label>.htaccess Content</label>
+            <comment><![CDATA[ Download <a href="https://github.com/mageplaza/magento-htaccess-extension/blob/master/.htaccess" target="_blank">.htaccess file</a> ]]></comment>
+            </field>
+            <field id="save_htaccess" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="0">
+            <button_label>Save .htaccess</button_label>
+            <frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Savehtaccess</frontend_model>
+            </field>
+            </group>
 
-            <!--<group id="robots" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"-->
-            <!--showInStore="1">-->
-            <!--<label>Robots.txt Editor [Beta]</label>-->
-            <!--<field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"-->
-            <!--showInWebsite="1" showInStore="1">-->
-            <!--<label>robots.txt Content</label>-->
-            <!--<comment><![CDATA[  <a href="http://www.robotsgenerator.com/?utm_source=mageplaza.com&utm_medium=seo-extension&utm_campaign=configuration" target="_blank">Robots.txt generator</a> ]]></comment>-->
-            <!--</field>-->
-            <!--<field id="save_robot" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="0">-->
-            <!--<button_label>Save robot.txt</button_label>-->
-            <!--<frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Saverobot</frontend_model>-->
-            <!--</field>-->
-            <!--</group>-->
+            <group id="robots" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
+            showInStore="1">
+            <label>Robots.txt Editor [Beta] [Disabled]</label>
+            <field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"
+            showInWebsite="1" showInStore="1">
+            <label>robots.txt Content</label>
+            <comment><![CDATA[  <a href="http://www.robotsgenerator.com/?utm_source=mageplaza.com&utm_medium=seo-extension&utm_campaign=configuration" target="_blank">Robots.txt generator</a> ]]></comment>
+            </field>
+            <field id="save_robot" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="0">
+            <button_label>Save robot.txt</button_label>
+            <frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Saverobot</frontend_model>
+            </field>
+            </group>
 
 
-            <!--<group id="htmlsitemap" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"-->
-                   <!--showInStore="1">-->
-                <!--<label>HTML Sitemap</label>-->
-                <!--<field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>robots.txt Content</label>-->
-                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-                    <!--<comment><![CDATA[ Default URL: http://your-domain.com/seo/sitemap/ ]]></comment>-->
-                <!--</field>-->
-                <!--<field id="footer" translate="label comment" type="select" sortOrder="15" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Add Sitemap Link to Footer</label>-->
-                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-                    <!--<comment><![CDATA[ ]]></comment>-->
-                <!--</field>-->
-                <!--<field id="category" translate="label comment" type="select" sortOrder="20" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Enable Categories</label>-->
-                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-                    <!--<comment><![CDATA[ ]]></comment>-->
-                    <!--<depends>-->
-                        <!--<field id="enable">1</field>-->
-                    <!--</depends>-->
-                <!--</field>-->
-            <!--</group>-->
+            <group id="htmlsitemap" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>HTML Sitemap [Beta]</label>
+                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable HTML Sitemap</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[ Default URL: http://your-domain.com/seo/sitemap/ ]]></comment>
+                </field>
+                <field id="footer" translate="label comment" type="select" sortOrder="15" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Add Sitemap Link to Footer</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[ ]]></comment>
+                </field>
+                <field id="category" translate="label comment" type="select" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Categories</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[ ]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+            </group>
 
         </section>
     </system>

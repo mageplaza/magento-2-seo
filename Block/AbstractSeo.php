@@ -12,7 +12,7 @@ use Magento\Review\Model\ResourceModel\Review\Collection as ReviewCollection;
 use Magento\Review\Model\ResourceModel\Review\CollectionFactory;
 use Magento\Review\Model\ReviewFactory;
 
-class Abstractt extends Template
+class AbstractSeo extends Template
 {
     protected $objectManager;
     protected $helperData;
@@ -48,22 +48,42 @@ class Abstractt extends Template
         parent::__construct($context, $data);
     }
 
+    /**
+     * get seo helper
+     *
+     * @return \Mageplaza\Seo\Helper\Data
+     */
     public function getHelper()
     {
         return $this->helperData;
     }
 
+    /**
+     * get config: business name
+     *
+     * @return mixed
+     */
     public function getBusinessName()
     {
         return $this->helperData->getConfigValue('general/store_information/name');
     }
 
 
+    /**
+     * get config: business phone
+     *
+     * @return mixed
+     */
     public function getBusinessPhone()
     {
         return $this->helperData->getConfigValue('general/store_information/phone');
     }
 
+    /**
+     * get config: twitter account
+     *
+     * @return string
+     */
     public function getTwitterAccount()
     {
         $prefix  = '@';
@@ -72,6 +92,11 @@ class Abstractt extends Template
         return $prefix . $account;
     }
 
+    /**
+     * get language code
+     *
+     * @return \Magento\Framework\Locale\Resolver
+     */
     public function getLangCode()
     {
         /** @var \Magento\Framework\ObjectManagerInterface $om */
@@ -83,11 +108,11 @@ class Abstractt extends Template
         return $resolver;
     }
 
-    public function getCoreObject($helper)
-    {
-        return $this->objectManager->create($helper);
-    }
-
+    /**
+     * get current canonical url
+     *
+     * @return mixed
+     */
     public function getCanonicalUrl()
     {
 
@@ -99,4 +124,83 @@ class Abstractt extends Template
 
         return $url;
     }
+
+    /**
+     * get current url
+     *
+     * @return mixed
+     */
+    public function getCurrentUrl()
+    {
+        $urlObject = $this->objectManager
+            ->get('Magento\Framework\UrlInterface');
+        $url = $urlObject->getCurrentUrl();
+        if ($this->getGeneralConfig('url_param')) {
+            $position = strpos($url, '?');
+            if ($position !== false) {
+                $url = substr($url, 0, $position);
+            }
+        }
+
+        return $url;
+    }
+
+    /**
+     * get general config
+     *
+     * @param $code
+     *
+     * @return mixed
+     */
+    public function getGeneralConfig($code)
+    {
+        return $this->helperData->getGeneralConfig($code);
+    }
+
+    /**
+     * get registry value
+     *
+     * @param $code
+     *
+     * @return mixed
+     */
+    public function getRegistry($code)
+    {
+        return $this->registry->registry($code);
+    }
+
+
+    /**
+     * get currency
+     *
+     * @return mixed
+     */
+    public function getCurrency()
+    {
+        return $this->_storeManager->getStore()->getCurrentCurrencyCode();
+
+    }
+
+    /**
+     * get current product
+     *
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->registry->registry('current_product');
+    }
+
+
+    /**
+     * get current category
+     *
+     * @return mixed
+     */
+    public function getCurrentCategory()
+    {
+        return $this->registry->registry('current_category');
+    }
+
+
 }

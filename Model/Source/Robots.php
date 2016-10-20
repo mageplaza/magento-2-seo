@@ -6,6 +6,9 @@ class Robots
 
     const DEFAULT_ROBOTS = 'INDEX,FOLLOW';
 
+    /**
+     * @return array
+     */
     public function getAllOptions()
     {
         $result = array();
@@ -19,6 +22,9 @@ class Robots
         return $result;
     }
 
+    /**
+     * @return array
+     */
     public function toOptionArray()
     {
         return array(

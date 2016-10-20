@@ -40,6 +40,11 @@ class GenerateBlocksAfterObserver implements ObserverInterface
         $this->storeGroup    = $storeGroup;
     }
 
+    /**
+     * @param \Magento\Framework\Event\Observer $observer
+     *
+     * @return $this
+     */
     public function execute(Observer $observer)
     {
         $this->basicSetup($observer);
@@ -47,6 +52,9 @@ class GenerateBlocksAfterObserver implements ObserverInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getBaseUrl()
     {
         return $this->objectManager->get('Magento\Store\Model\StoreManagerInterface')
@@ -54,6 +62,9 @@ class GenerateBlocksAfterObserver implements ObserverInterface
             ->getBaseUrl();
     }
 
+    /**
+     * @param $observer
+     */
     public function basicSetup($observer)
     {
 //        $action = $this->url->getFullActionName();
@@ -125,6 +136,9 @@ class GenerateBlocksAfterObserver implements ObserverInterface
 
     }
 
+    /**
+     * @return mixed
+     */
     public function getLangCode()
     {
         $code = $this->storeGroup->getDefaultStore()->getLocaleCode();
