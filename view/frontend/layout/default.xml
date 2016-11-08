@@ -20,16 +20,17 @@
             </block>
         </referenceContainer>
 
-        <referenceBlock name="breadcrumbs">
-            <action method="setTemplate">
-                <argument name="template" xsi:type="string">Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml
-                </argument>
-            </action>
-        </referenceBlock>
+        <!--<referenceBlock name="breadcrumbs">-->
+        <!--<action method="setTemplate">-->
+        <!--<argument name="template" xsi:type="string">Mageplaza_Seo::richsnippets/jsonld/breadcrumb_default.phtml-->
+        <!--</argument>-->
+        <!--</action>-->
+        <!--</referenceBlock>-->
 
-        <!--<referenceContainer name="breadcrumbs">-->
-        <!--<block class="Magento\Backend\Block\Widget\Breadcrumbs" name="seo.breadcrumbs" as="seo.breadcrumbs" template="Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml"/>-->
-        <!--</referenceContainer>-->
+        <referenceContainer name="breadcrumbs">
+            <block class="Magento\Backend\Block\Widget\Breadcrumbs" name="mageplaza_seo_breadcrumbs" as="mageplaza.seo.breadcrumbs"
+                   template="Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml"/>
+        </referenceContainer>
 
 
         <referenceBlock name="footer_links">
