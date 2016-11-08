@@ -28,7 +28,8 @@
         <!--</referenceBlock>-->
 
         <referenceContainer name="breadcrumbs">
-            <block class="Magento\Backend\Block\Widget\Breadcrumbs" name="mageplaza_seo_breadcrumbs" as="mageplaza.seo.breadcrumbs"
+            <block class="Magento\Backend\Block\Widget\Breadcrumbs" name="mageplaza_seo_breadcrumbs"
+                   as="mageplaza.seo.breadcrumbs"
                    template="Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml"/>
         </referenceContainer>
 
