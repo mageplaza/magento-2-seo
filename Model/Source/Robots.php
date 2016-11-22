@@ -1,10 +1,22 @@
 <?php
 namespace Mageplaza\Seo\Model\Source;
 
-class Robots
+class Robots extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {
 
     const DEFAULT_ROBOTS = 'INDEX,FOLLOW';
+
+    protected $_eavAttrEntity;
+
+    /**
+     * @param \Magento\Eav\Model\ResourceModel\Entity\AttributeFactory $eavAttrEntity
+     * @codeCoverageIgnore
+     */
+    public function __construct(
+        \Magento\Eav\Model\ResourceModel\Entity\AttributeFactory $eavAttrEntity
+    ) {
+        $this->_eavAttrEntity = $eavAttrEntity;
+    }
 
     /**
      * @return array
@@ -34,4 +46,22 @@ class Robots
             'NOINDEX,NOFOLLOW'
         );
     }
+    /**
+     * Get a text for option value
+     *
+     * @param string|int $value
+     * @return string|false
+     */
+    public function getOptionText($value)
+    {
+        $options = $this->getAllOptions();
+        foreach ($options as $option) {
+            if ($option['value'] == $value) {
+                return $option['label'];
+            }
+        }
+        return false;
+    }
+
+
 }
