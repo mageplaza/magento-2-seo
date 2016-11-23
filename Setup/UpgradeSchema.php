@@ -2,7 +2,7 @@
 
 namespace Mageplaza\Seo\Setup;
 
-use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\UpgradeSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
@@ -15,9 +15,9 @@ class UpgradeSchema implements UpgradeSchemaInterface
     /**
      * UpgradeData constructor.
      *
-     * @param EavSetupFactory $eavSetupFactory
+     * @param ModuleDataSetupInterface $eavSetupFactory
      */
-    public function __construct(EavSetupFactory $eavSetupFactory)
+    public function __construct(ModuleDataSetupInterface $eavSetupFactory)
     {
         $this->eavSetupFactory = $eavSetupFactory;
     }
@@ -53,6 +53,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'backend' => '',
                 'frontend' => '',
                 'label' => 'Meta Robots',
+                'note'=> 'Added by Mageplaza.com',
                 'input' => 'select',
                 'class' => '',
                 'source' => '\Mageplaza\Seo\Model\Source\Robots',
@@ -79,6 +80,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             [
                 'type' => 'varchar',
                 'label' => 'Meta Robots',
+                'note'=> 'Added by Mageplaza.com',
                 'input' => 'select',
                 'sort_order' => 41,
                 'source' => '\Mageplaza\Seo\Model\Source\Robots',
