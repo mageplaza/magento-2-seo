@@ -8,7 +8,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="mageplaza" translate="label" sortOrder="400">
+        <tab id="mageplaza" translate="label" sortOrder="1">
             <label>mageplaza</label>
         </tab>
         <section id="seo" translate="label" type="text" sortOrder="550" showInDefault="1" showInWebsite="1"
@@ -53,7 +53,7 @@
                     </depends>
                 </field>
 
-                <field id="navigation" translate="label comment" type="select" sortOrder="16" showInDefault="1"
+                <field id="next_prev" translate="label comment" type="select" sortOrder="16" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Enable Next/Prev tag</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

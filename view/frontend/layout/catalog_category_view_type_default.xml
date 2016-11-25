@@ -2,8 +2,12 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <block class="Mageplaza\Seo\Block\Page\Head\Product" name="mageplaza_seo_opengraph"
+        <block class="Mageplaza\Seo\Block\Page\Head\Category" name="mageplaza_seo_opengraph"
                template="Mageplaza_Seo::opengraph/category.phtml">
         </block>
+        <block class="Mageplaza\Seo\Block\Navigation\Category" name="mageplaza_seo_next_prev"
+               template="Mageplaza_Seo::navigation/nextprev.phtml">
+        </block>
+
     </head>
 </page>
