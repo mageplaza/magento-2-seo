@@ -46,11 +46,23 @@
                     <label>Disable URL parameter in canonical URL</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>
-                        <![CDATA[ We will remove parameters such as: <strong>?price=30-220&brand=abc</strong> in canonical URL. This will be avoid duplicate content. ]]></comment>
+                        <![CDATA[ We will remove parameters such as: <strong>?price=30-220&brand=abc</strong>
+                        in canonical URL. This will be avoid duplicate content. ]]></comment>
                     <depends>
                         <field id="canonical">1</field>
                     </depends>
                 </field>
+
+                <field id="navigation" translate="label comment" type="select" sortOrder="16" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Next/Prev tag</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[Enable this to to indicate the relationship between component URLs in a paginated series.
+                        See <a href="https://webmasters.googleblog.com/2011/09/pagination-with-relnext-and-relprev.html">this</a>
+                        ]]></comment>
+                </field>
+
 
                 <field id="nofollow_sr" translate="label comment" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
@@ -62,6 +74,8 @@
                     <label>Add Nofollow meta in Product Gallery</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+
+
                 <field id="alternate_meta" translate="label comment" type="select" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Add Link Rel="alternate"</label>

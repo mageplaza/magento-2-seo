@@ -4,7 +4,7 @@
     <referenceBlock name="head.additional">
         <block class="Mageplaza\Seo\Block\Page\Head\Page" name="mageplaza_seo_opengraph"
                ifconfig="seo/general/opengraph"
-               template="Mageplaza_Seo::page/head/opengraph/homepage.phtml">
+               template="Mageplaza_Seo::opengraph/homepage.phtml">
         </block>
     </referenceBlock>
 </page>

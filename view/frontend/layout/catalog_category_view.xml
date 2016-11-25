@@ -4,7 +4,11 @@
     <body>
         <head>
             <block class="Mageplaza\Seo\Block\Page\Head\Product" name="mageplaza_seo_opengraph"
-                   template="Mageplaza_Seo::page/head/opengraph/product.phtml">
+                   template="Mageplaza_Seo::opengraph/product.phtml">
+            </block>
+
+            <block class="Mageplaza\Seo\Block\Navigation\Category" name="mageplaza_seo_next_prev"
+                   template="Mageplaza_Seo::navigation/nextprev.phtml">
             </block>
         </head>
     </body>

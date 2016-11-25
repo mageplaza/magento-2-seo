@@ -135,6 +135,10 @@ class AbstractSeo extends Template
         $urlObject = $this->objectManager
             ->get('Magento\Framework\UrlInterface');
         $url = $urlObject->getCurrentUrl();
+
+		/**
+		 * clean up param
+		 */
         if ($this->getGeneralConfig('url_param')) {
             $position = strpos($url, '?');
             if ($position !== false) {
@@ -202,5 +206,15 @@ class AbstractSeo extends Template
         return $this->registry->registry('current_category');
     }
 
+
+	/**
+	 * get current cms object
+	 * @return mixed
+	 */
+	public function getCurrentCms()
+	{
+		return $this->registry->registry('cms_page');
+
+	}
 
 }
