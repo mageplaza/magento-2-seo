@@ -10,13 +10,8 @@
 
 ## How to install
 
-After installing magento 2, run these commands:
-
-~~~
-composer require mageplaza/core-m2
-composer require mageplaza/magento-2-seo-extension
-php bin/magento setup:upgrade
-~~~
+Download the latest version at https://www.mageplaza.com/magento-2-seo-extension/
+then follow [installation guide](https://docs.mageplaza.com/kb/installation.html)
 
 ## Introduction
 
