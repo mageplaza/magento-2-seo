@@ -5,13 +5,23 @@
 ## Documentations
 
 - User guide: https://docs.mageplaza.com/seo-m2/
-- Installation guide: https://docs.mageplaza.com/kb/installation.html
-
+- Discuss: https://mageplaza.freshdesk.com/support/discussions/forums/6000241153
 
 ## How to install
 
+### Install Package from Mageplaza
+
 Download the latest version at https://www.mageplaza.com/magento-2-seo-extension/
 then follow [installation guide](https://docs.mageplaza.com/kb/installation.html)
+
+### Install via composer
+
+Run the following command in Magento 2 root folder
+
+```
+composer require mageplaza/magento-2-seo-extension
+php bin/magento setup:upgrade
+```
 
 ## Introduction
 
