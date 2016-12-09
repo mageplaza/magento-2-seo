@@ -23,6 +23,12 @@ composer require mageplaza/magento-2-seo-extension
 php bin/magento setup:upgrade
 ```
 
+
+## Contribute to this module
+
+Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
+
+
 ## Introduction
 
 Improve your SEO for [Magento](https://magento.com/) site. Use Mageplaza SEO to automatically optimize your site for Search Engines.
@@ -75,10 +81,6 @@ SEO and Social Media are heavily intertwined, that's why this plugin also comes 
 [Documentations](https://mageplaza.freshdesk.com/support/solutions/folders/6000216900)
 
 Any questions, issues, bugs, please create [a topic at forum](https://mageplaza.freshdesk.com/support/discussions/forums/6000241153) 
-
-## Contribute to this module
-
-Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
 
 ## License
 
