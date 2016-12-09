@@ -4,14 +4,14 @@
 
 ## Documentations
 
-- User guide: https://docs.mageplaza.com/seo-m2/
-- Discuss: https://mageplaza.freshdesk.com/support/discussions/forums/6000241153
+- [User guide](https://docs.mageplaza.com/seo-m2/)
+- [Discuss forum](https://mageplaza.freshdesk.com/support/discussions/forums/6000241153)
 
 ## How to install
 
 ### Install Package from Mageplaza
 
-Download the latest version at https://www.mageplaza.com/magento-2-seo-extension/
+Download the latest version at [Mageplaza SEO for Magento 2](https://www.mageplaza.com/magento-2-seo-extension/)
 then follow [installation guide](https://docs.mageplaza.com/kb/installation.html)
 
 ### Install via composer
