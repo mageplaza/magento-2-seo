@@ -24,9 +24,15 @@ class GenerateBlocksAfterObserver implements ObserverInterface
     protected $url;
     protected $storeGroup;
 
-    public function __construct(SeoHelper $helper, Config $pageConfig,
-        Registry $registry, ObjectManagerInterface $objectManager,
-        UrlInterface $urlManager, Context $context, Url $url, Group $storeGroup
+    public function __construct(
+    	SeoHelper $helper,
+		Config $pageConfig,
+        Registry $registry,
+		ObjectManagerInterface $objectManager,
+        UrlInterface $urlManager,
+		Context $context,
+		Url $url,
+		Group $storeGroup
     ) {
         $this->helper        = $helper;
         $this->pageConfig    = $pageConfig;
@@ -65,7 +71,6 @@ class GenerateBlocksAfterObserver implements ObserverInterface
      */
     public function basicSetup($observer)
     {
-//        $action = $this->url->getFullActionName();
         /**
          * @var \Magento\Framework\View\LayoutInterface
          */
@@ -104,9 +109,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
                     strip_tags($product->getMetaDescription())
                 );
             }
-            $pageKeywords = $product->getMetaKeywords();
             $pageRobots   = $product->getMpMetaRobots();
-            $url          = $product->getUrl();
         }
 
         /**
@@ -116,10 +119,6 @@ class GenerateBlocksAfterObserver implements ObserverInterface
             $page            = $this->objectManager->get(
                 'Magento\Cms\Model\Page'
             );
-//            $pageTitle       = $page->getTitle();
-//            $pageDescription = $page->getMetaDescription();
-//            $pageKeywords    = $page->getMetaKeywords();
-//            $pageRobots      = $page->getMetaRobots();
             if ($action == 'cms_index_index') {
                 $url = $this->urlManager->getBaseUrl();
             } else {
@@ -127,18 +126,6 @@ class GenerateBlocksAfterObserver implements ObserverInterface
             }
         }
 
-        /**
-         * set meta data for head block
-         */
-//        if ( ! empty($pageTitle)) {
-//            $this->pageConfig->setTitle($pageTitle);
-//        }
-//        if ( ! empty($pageDescription)) {
-//            $this->pageConfig->setDescription($pageDescription);
-//        }
-//        if ( ! empty($pageKeywords)) {
-//            $this->pageConfig->setMetaKeywords($pageKeywords);
-//        }
         if ( ! empty($pageRobots)) {
             $this->pageConfig->setRobots($pageRobots);
         }

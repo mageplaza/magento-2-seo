@@ -93,7 +93,7 @@
                     <comment><![CDATA[]]></comment>
                 </field>
 
-                <field id="meta_description" translate="label comment" type="text" sortOrder="72" showInDefault="1"
+                <field id="meta_description" translate="label comment" type="textarea" sortOrder="72" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Store Meta Description</label>
                     <comment><![CDATA[]]></comment>
