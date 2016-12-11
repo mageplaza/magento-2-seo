@@ -1,25 +1,35 @@
 # Magento 2 SEO Extension by Mageplaza
 
-[Magento 2 SEO Extension](https://www.mageplaza.com/magento-2-seo-extension/) FREE. This is SEO extension for Magento 2 by Mageplaza
-
+[Magento 2 SEO Extension](https://www.mageplaza.com/magento-2-seo-extension/) FREE. This is SEO extension for Magento 2 stores.
 
 ## Documentations
 
-- User guide: https://docs.mageplaza.com/seo-m2/
-- Installation guide: https://docs.mageplaza.com/kb/installation.html
-
+- [User guide](https://docs.mageplaza.com/seo-m2/)
+- [Discuss forum](https://mageplaza.freshdesk.com/support/discussions/forums/6000241153)
 
 ## How to install
 
-After installing magento 2, run these commands:
+### Install Package from Mageplaza
 
-~~~
-composer require mageplaza/core-m2
+Download the latest version at [Mageplaza SEO for Magento 2](https://www.mageplaza.com/magento-2-seo-extension/)
+then follow [installation guide](https://docs.mageplaza.com/kb/installation.html)
+
+### Install via composer
+
+Run the following command in Magento 2 root folder
+
+```
 composer require mageplaza/magento-2-seo-extension
 php bin/magento setup:upgrade
-php bin/magento setup:static-content:deploy
-~~~
+```
 
+
+## Contribute to this module
+
+Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
+
+
+## Introduction
 
 Improve your SEO for [Magento](https://magento.com/) site. Use Mageplaza SEO to automatically optimize your site for Search Engines.
 Mageplaza SEO extension will automatically optimize and greatly improve the performance of your Magento-based store in Search Engines. Magento 2 is great SEO-ready out-of-the-box that is really good for SEO. However it still needs some craftiness to be improved in a few areas.
@@ -71,10 +81,6 @@ SEO and Social Media are heavily intertwined, that's why this plugin also comes 
 [Documentations](https://mageplaza.freshdesk.com/support/solutions/folders/6000216900)
 
 Any questions, issues, bugs, please create [a topic at forum](https://mageplaza.freshdesk.com/support/discussions/forums/6000241153) 
-
-## Contribute to this module
-
-Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
 
 ## License
 
