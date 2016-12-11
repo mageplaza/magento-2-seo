@@ -82,11 +82,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
          */
         if ($action == 'catalog_category_view') {
             $category        = $this->registry->registry('current_category');
-            $pageTitle       = $category->getName();
-            $pageDescription = $category->getMetaDescription();
-            $pageKeywords    = $category->getMetaKeywords();
             $pageRobots      = $category->getMpMetaRobots();
-            $url             = $category->getUrl();
         }
 
         /**
@@ -95,20 +91,6 @@ class GenerateBlocksAfterObserver implements ObserverInterface
          */
         if ($action == 'catalog_product_view') {
             $product   = $this->registry->registry('current_product');
-            $pageTitle = $product->getName();
-
-            /**
-             * Auto set page title, meta description
-             */
-            if (empty($product->getMetaDescription())) {
-                $pageDescription = trim(
-                    strip_tags($product->getShortDescription())
-                );
-            } else {
-                $pageDescription = trim(
-                    strip_tags($product->getMetaDescription())
-                );
-            }
             $pageRobots   = $product->getMpMetaRobots();
         }
 
@@ -129,14 +111,6 @@ class GenerateBlocksAfterObserver implements ObserverInterface
         if ( ! empty($pageRobots)) {
             $this->pageConfig->setRobots($pageRobots);
         }
-//        if ($head = $layout->getBlock('head')) {
-//            if ( ! empty($url)) {
-//                $head->addItem(
-//                    'link_rel', $url,
-//                    'rel="alternate" hreflang="' . $this->getLangCode() . '"'
-//                );
-//            }
-//        }
 
 
 

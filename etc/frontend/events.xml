@@ -10,4 +10,9 @@
     <event name="layout_generate_blocks_after">
         <observer name="mageplaza_seo_generate_blocks_after" instance="Mageplaza\Seo\Observer\GenerateBlocksAfterObserver"/>
     </event>
+
+    <!--<event name="cms_page_load_after">-->
+        <!--<observer name="mageplaza_seo_cms_page_load_after" instance="Mageplaza\Seo\Observer\CmsPageLoadAfter"/>-->
+    <!--</event>-->
+
 </config>
