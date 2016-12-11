@@ -14,197 +14,228 @@ use Magento\Review\Model\ReviewFactory;
 
 class AbstractSeo extends Template
 {
-    protected $objectManager;
-    protected $helperData;
-    protected $objectFactory;
-    protected $checkoutSession;
-    protected $logo;
-    protected $registry;
-    protected $reviewCollection;
-    protected $reviewCollectionFactory;
-    protected $reviewFactory;
-    protected $reviewRederer;
+	protected $objectManager;
+	protected $helperData;
+	protected $objectFactory;
+	protected $checkoutSession;
+	protected $logo;
+	protected $registry;
+	protected $reviewCollection;
+	protected $reviewCollectionFactory;
+	protected $reviewFactory;
+	protected $reviewRederer;
 
-    public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        HelperData $helperData,
-        ObjectManagerInterface $objectManager,
-        Session $session,
-        Registry $registry,
-        Logo $logo,
-        \Magento\Store\Api\Data\StoreConfigInterface $storeConfig,
-        CollectionFactory $reviewCollectionFactory,
-        ReviewFactory $reviewFactory,
-        array $data = []
-    ) {
-        $this->helperData              = $helperData;
-        $this->objectManager           = $objectManager;
-        $this->checkoutSession         = $session;
-        $this->registry                = $registry;
-        $this->logo                    = $logo;
-        $this->reviewCollectionFactory = $reviewCollectionFactory;
-        $this->reviewFactory           = $reviewFactory;
-        $this->storeConfig             = $storeConfig;
-        parent::__construct($context, $data);
-    }
+	public function __construct(
+		\Magento\Framework\View\Element\Template\Context $context,
+		HelperData $helperData,
+		ObjectManagerInterface $objectManager,
+		Session $session,
+		Registry $registry,
+		Logo $logo,
+		\Magento\Store\Api\Data\StoreConfigInterface $storeConfig,
+		CollectionFactory $reviewCollectionFactory,
+		ReviewFactory $reviewFactory,
+		array $data = []
+	)
+	{
+		$this->helperData              = $helperData;
+		$this->objectManager           = $objectManager;
+		$this->checkoutSession         = $session;
+		$this->registry                = $registry;
+		$this->logo                    = $logo;
+		$this->reviewCollectionFactory = $reviewCollectionFactory;
+		$this->reviewFactory           = $reviewFactory;
+		$this->storeConfig             = $storeConfig;
+		parent::__construct($context, $data);
+	}
 
-    /**
-     * get seo helper
-     *
-     * @return \Mageplaza\Seo\Helper\Data
-     */
-    public function getHelper()
-    {
-        return $this->helperData;
-    }
+	/**
+	 * get seo helper
+	 *
+	 * @return \Mageplaza\Seo\Helper\Data
+	 */
+	public function getHelper()
+	{
+		return $this->helperData;
+	}
 
-    /**
-     * get config: business name
-     *
-     * @return mixed
-     */
-    public function getBusinessName()
-    {
-        return $this->helperData->getConfigValue('general/store_information/name');
-    }
+	/**
+	 * get config: business name
+	 *
+	 * @return mixed
+	 */
+	public function getBusinessName()
+	{
+		return $this->helperData->getInfoConfig('business_name');
+	}
 
 
-    /**
-     * get config: business phone
-     *
-     * @return mixed
-     */
-    public function getBusinessPhone()
-    {
-        return $this->helperData->getConfigValue('general/store_information/phone');
-    }
+	/**
+	 * get config: business phone
+	 *
+	 * @return mixed
+	 */
+	public function getBusinessPhone()
+	{
+		return $this->helperData->getInfoConfig('phone');
+	}
 
-    /**
-     * get config: twitter account
-     *
-     * @return string
-     */
-    public function getTwitterAccount()
-    {
-        $prefix  = '@';
-        $account = $this->helperData->getGeneralConfig('twitter_account');
+	/**
+	 * get config: business phone
+	 * @return mixed
+	 */
+	public function getBusinessSalesPhone()
+	{
+		return $this->helperData->getInfoConfig('sales_phone');
+	}
 
-        return $prefix . $account;
-    }
+	/**
+	 * get support phone number
+	 * @return mixed
+	 */
+	public function getBusinessSupportPhone()
+	{
+		return $this->helperData->getInfoConfig('technical_support_phone');
+	}
 
-    /**
-     * get language code
-     *
-     * @return \Magento\Framework\Locale\Resolver
-     */
-    public function getLangCode()
-    {
-        /** @var \Magento\Framework\ObjectManagerInterface $om */
-        $om = $this->objectManager;
-        /** @var \Magento\Framework\Locale\Resolver $resolver */
-        $resolver = $om->get('Magento\Framework\Locale\Resolver');
-        $resolver = strtolower($resolver);
 
-        return $resolver;
-    }
+	/**
+	 * get config: twitter account
+	 *
+	 * @return string
+	 */
+	public function getTwitterAccount()
+	{
+		$prefix  = '@';
+		$account = $this->helperData->getGeneralConfig('twitter_account');
 
-    /**
-     * get current canonical url
-     *
-     * @return mixed
-     */
-    public function getCanonicalUrl()
-    {
+		return $prefix . $account;
+	}
 
-        $url = $this->getCurrentUrl();
+	/**
+	 * get language code
+	 *
+	 * @return \Magento\Framework\Locale\Resolver
+	 */
+	public function getLangCode()
+	{
+		/** @var \Magento\Framework\ObjectManagerInterface $om */
+		$om = $this->objectManager;
+		/** @var \Magento\Framework\Locale\Resolver $resolver */
+		$resolver = $om->get('Magento\Framework\Locale\Resolver');
+		$resolver = strtolower($resolver);
 
-        if ($this->getGeneralConfig('https_canonical')) {
-            $url = str_replace('http:', 'https:', $url);
-        }
+		return $resolver;
+	}
 
-        return $url;
-    }
+	/**
+	 * get current canonical url
+	 *
+	 * @return mixed
+	 */
+	public function getCanonicalUrl()
+	{
 
-    /**
-     * get current url
-     *
-     * @return mixed
-     */
-    public function getCurrentUrl()
-    {
-        $urlObject = $this->objectManager
-            ->get('Magento\Framework\UrlInterface');
-        $url = $urlObject->getCurrentUrl();
+		$url = $this->getCurrentUrl();
+
+		if ($this->helperData->getDuplicateConfig('https_canonical')) {
+			$url = str_replace('http:', 'https:', $url);
+		}
+
+		return $url;
+	}
+
+	/**
+	 * get current url
+	 *
+	 * @return mixed
+	 */
+	public function getCurrentUrl()
+	{
+		$urlObject = $this->objectManager
+			->get('Magento\Framework\UrlInterface');
+		$url       = $urlObject->getCurrentUrl();
 
 		/**
 		 * clean up param
 		 */
-        if ($this->getGeneralConfig('url_param')) {
-            $position = strpos($url, '?');
-            if ($position !== false) {
-                $url = substr($url, 0, $position);
-            }
-        }
+		if ($this->getGeneralConfig('url_param')) {
+			$position = strpos($url, '?');
+			if ($position !== false) {
+				$url = substr($url, 0, $position);
+			}
+		}
 
-        return $url;
-    }
+		return $url;
+	}
 
-    /**
-     * get general config
-     *
-     * @param $code
-     *
-     * @return mixed
-     */
-    public function getGeneralConfig($code)
-    {
-        return $this->helperData->getGeneralConfig($code);
-    }
+	/**
+	 * get general config
+	 *
+	 * @param $code
+	 *
+	 * @return mixed
+	 */
+	public function getGeneralConfig($code)
+	{
+		return $this->helperData->getGeneralConfig($code);
+	}
 
-    /**
-     * get registry value
-     *
-     * @param $code
-     *
-     * @return mixed
-     */
-    public function getRegistry($code)
-    {
-        return $this->registry->registry($code);
-    }
+	/**
+	 * get duplicate content config
+	 * @param $code
+	 * @return mixed
+	 */
+	public function getDuplicateConfig($code)
+	{
+		return $this->helperData->getDuplicateConfig($code);
 
+	}
 
-    /**
-     * get currency
-     *
-     * @return mixed
-     */
-    public function getCurrency()
-    {
-        return $this->_storeManager->getStore()->getCurrentCurrencyCode();
-
-    }
-
-    /**
-     * get current product
-     *
-     * @return mixed
-     */
-    public function getProduct()
-    {
-        return $this->registry->registry('current_product');
-    }
+	/**
+	 * get registry value
+	 *
+	 * @param $code
+	 *
+	 * @return mixed
+	 */
+	public function getRegistry($code)
+	{
+		return $this->registry->registry($code);
+	}
 
 
-    /**
-     * get current category
-     *
-     * @return mixed
-     */
-    public function getCurrentCategory()
-    {
-        return $this->registry->registry('current_category');
-    }
+	/**
+	 * get currency
+	 *
+	 * @return mixed
+	 */
+	public function getCurrency()
+	{
+		return $this->_storeManager->getStore()->getCurrentCurrencyCode();
+
+	}
+
+	/**
+	 * get current product
+	 *
+	 * @return mixed
+	 */
+	public function getProduct()
+	{
+		return $this->registry->registry('current_product');
+	}
+
+
+	/**
+	 * get current category
+	 *
+	 * @return mixed
+	 */
+	public function getCurrentCategory()
+	{
+		return $this->registry->registry('current_category');
+	}
 
 
 	/**

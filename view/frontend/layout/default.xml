@@ -12,7 +12,7 @@
             <block class="Mageplaza\Seo\Block\Seo" name="mageplaza_seo_sitelinks"
                    template="Mageplaza_Seo::sitelinks.phtml">
             </block>
-            <block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_richsnippets_basic"
+            <block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_organization"
                    template="Mageplaza_Seo::richsnippets/jsonld/organization.phtml">
             </block>
             <block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_richsnippets_sitename"

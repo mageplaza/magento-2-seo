@@ -115,6 +115,51 @@ class Data extends CoreHelper
         return $this->getConfigValue(self::XML_PATH_HTML_SITEMAP . $code, $storeId);
     }
 
+
+	/**
+	 * info config
+	 * @param null $code
+	 * @return mixed
+	 */
+	public function getInfoConfig($code = null)
+	{
+		return $this->getConfigValue('seo/info/' . $code);
+	}
+
+	/**
+	 * get social share config
+	 * @param null $code
+	 * @return mixed
+	 */
+	public function getSocialShares($code = null)
+	{
+		return $this->getConfigValue('seo/social_shares/' . $code);
+	}
+
+
+
+	/**
+	 * social profiles config
+	 * @param null $code
+	 * @return mixed
+	 */
+	public function getSocialProfiles($code = null)
+	{
+		return $this->getConfigValue('seo/social_profiles/' . $code);
+	}
+
+	/**
+	 * get duplicate content config
+	 * @param null $code
+	 * @return mixed
+	 */
+	public function getDuplicateConfig($code = null)
+	{
+		return $this->getConfigValue('seo/duplicate/' . $code);
+	}
+
+
+
     /**
      * convert array to options
      *

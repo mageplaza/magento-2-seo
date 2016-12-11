@@ -6,6 +6,9 @@ use Mageplaza\Seo\Block\AbstractSeo;
 
 class Product extends AbstractSeo
 {
-
+	public function getDefaultContent()
+	{
+		return null;
+	}
 
 }

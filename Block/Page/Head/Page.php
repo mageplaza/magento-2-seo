@@ -6,4 +6,9 @@ use Mageplaza\Seo\Block\AbstractSeo;
 
 class Page extends AbstractSeo
 {
+	public function getDefaultContent()
+	{
+		return null;
+	}
+
 }
