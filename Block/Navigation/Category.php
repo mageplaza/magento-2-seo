@@ -2,9 +2,9 @@
 
 namespace Mageplaza\Seo\Block\Navigation;
 
-use Mageplaza\Seo\Block\AbstractNavigation;
+use Mageplaza\Seo\Block\Navigation\AbstractNavigation as Navigation;
 
-class Category extends AbstractNavigation
+class Category extends Navigation
 {
 
 	public function getPager()

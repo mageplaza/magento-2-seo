@@ -1,27 +1,6 @@
 <?php $cms = $block->getRegistry('cms_page'); ?>
 <?php if ($cms): ?>
 
-	<?php if ($block->getHelper()->getSocialShares('opengraph')): ?>
-		<!--Open Graph Protocol for Facebook by Mageplaza SEO-->
-		<meta property="og:title" content="<?php echo $cms->getTitle() ?>"/>
-		<meta property="og:type" content="article"/>
-		<meta property="og:url" content="<?php echo $block->getCurrentUrl(); ?>"/>
-		<?php if ($cms->getMetaDescription()) ?><meta property="og:description" content="<?php echo strip_tags(
-			$cms->getMetaDescription()
-		) ?>"/>
-		<meta property="og:site_name" content="<?php echo $block->getBusinessName(); ?>"/>
-	<?php endif; ?>
-
-	<?php if ($block->getHelper()->getSocialShares('twitter_card') && $block->getHelper()->getSocialShares('twitter_account')): ?>
-		<!--	Twitter Card By Mageplaza SEO-->
-		<meta name="twitter:card" content="summary"/>
-		<meta name="twitter:site" content="<?php echo $block->getTwitterAccount(); ?>"/>
-		<meta name="twitter:title" content="<?php echo $cms->getTitle() ?>"/>
-		<?php if ($cms->getMetaDescription()) ?><meta name="twitter:description" content="<?php echo trim(
-			strip_tags($cms->getMetaDescription())
-		); ?>"/>
-	<?php endif; ?>
-
 	<?php if ($pinterest = $block->getHelper()->getSocialShares('pinterest')): ?>
 		<meta name="p:domain_verify" content="<?php echo $pinterest; ?>"/>
 	<?php endif; ?>

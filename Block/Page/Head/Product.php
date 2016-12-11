@@ -6,9 +6,19 @@ use Mageplaza\Seo\Block\AbstractSeo;
 
 class Product extends AbstractSeo
 {
-	public function getDefaultContent()
+
+	protected $imageHelper;
+
+
+
+	public function getProductImage()
 	{
-		return null;
+
+		$imageUrl = $this->objectManager->get('Magento\Catalog\Helper\Image')
+			->init($this->getProduct(), 'product_base_image')
+			->getUrl();
+
+		return $imageUrl;
 	}
 
 }

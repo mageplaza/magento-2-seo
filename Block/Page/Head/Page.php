@@ -11,4 +11,14 @@ class Page extends AbstractSeo
 		return null;
 	}
 
+	/**
+	 * get store description
+	 * @return mixed
+	 */
+	public function getStoreDescription()
+	{
+		return $this->getGeneralConfig('meta_description');
+
+	}
+
 }

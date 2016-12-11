@@ -8,6 +8,8 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Checkout\Model\Session;
 use Magento\Theme\Block\Html\Header\Logo;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Store\Api\Data\StoreConfigInterface;
 use Magento\Review\Model\ResourceModel\Review\Collection as ReviewCollection;
 use Magento\Review\Model\ResourceModel\Review\CollectionFactory;
 use Magento\Review\Model\ReviewFactory;
@@ -26,13 +28,13 @@ class AbstractSeo extends Template
 	protected $reviewRederer;
 
 	public function __construct(
-		\Magento\Framework\View\Element\Template\Context $context,
+		Context $context,
 		HelperData $helperData,
 		ObjectManagerInterface $objectManager,
 		Session $session,
 		Registry $registry,
 		Logo $logo,
-		\Magento\Store\Api\Data\StoreConfigInterface $storeConfig,
+		StoreConfigInterface $storeConfig,
 		CollectionFactory $reviewCollectionFactory,
 		ReviewFactory $reviewFactory,
 		array $data = []
@@ -107,7 +109,7 @@ class AbstractSeo extends Template
 	public function getTwitterAccount()
 	{
 		$prefix  = '@';
-		$account = $this->helperData->getGeneralConfig('twitter_account');
+		$account = $this->helperData->getSocialShares('twitter_account');
 
 		return $prefix . $account;
 	}
@@ -159,7 +161,7 @@ class AbstractSeo extends Template
 		/**
 		 * clean up param
 		 */
-		if ($this->getGeneralConfig('url_param')) {
+		if ($this->getDuplicateConfig('url_param')) {
 			$position = strpos($url, '?');
 			if ($position !== false) {
 				$url = substr($url, 0, $position);
@@ -246,6 +248,69 @@ class AbstractSeo extends Template
 	{
 		return $this->registry->registry('cms_page');
 
+	}
+
+	/**
+	 * get base url
+	 * @return mixed
+	 */
+	public function getBaseUrl()
+	{
+		return $this->objectManager->get(
+			'Magento\Store\Model\StoreManagerInterface'
+		)->getStore()->getBaseUrl();
+	}
+
+	public function getBaseDomain()
+	{
+		$baseUrl = $this->getBaseUrl();
+		/**
+		 * parser
+		 */
+	}
+
+
+	/**
+	 * Get Store name
+	 *
+	 * @return string
+	 */
+	public function getStoreName()
+	{
+		return $this->_storeManager->getStore()->getName();
+	}
+
+
+	/**
+	 * Get current url for store
+	 *
+	 * @param bool|string $fromStore Include/Exclude from_store parameter from URL
+	 * @return string
+	 */
+	public function getStoreUrl($fromStore = true)
+	{
+		return $this->_storeManager->getStore()->getCurrentUrl($fromStore);
+	}
+
+
+	/**
+	 * Get website identifier
+	 *
+	 * @return string|int|null
+	 */
+	public function getWebsiteId()
+	{
+		return $this->_storeManager->getStore()->getWebsiteId();
+	}
+
+	/**
+	 * Get Store code
+	 *
+	 * @return string
+	 */
+	public function getStoreCode()
+	{
+		return $this->_storeManager->getStore()->getCode();
 	}
 
 }

@@ -1,6 +1,5 @@
 <!-- Customizing Knowledge Graph by Mageplaza SEO-->
 <!--Social Profiles, Business information -->
-<?php echo $block->getProfiles(); ?>
 <?php if ($block->getHelper()->getInfoConfig('enable')): ?>
     <script type="application/ld+json">
 {
@@ -10,8 +9,7 @@
   "url" : "<?php echo $block->getBaseUrl(); ?>",
   "logo": "<?php echo $block->getLogo(); ?>"
   <?php if ($block->getProfiles()): ?>
-  ,"sameAs" : [
-    <?php echo $block->getProfiles(); ?>
+  ,"sameAs" : [<?php echo $block->getProfiles(); ?>
   ]
   <?php endif; ?>
   <?php if($block->getBusinessPhone()): ?>

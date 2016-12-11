@@ -32,10 +32,12 @@ class Richsnippets extends AbstractSeo
 	{
 		$config   = $this->helperData;
 		$profiles = $config->getConfigValue('seo/social_profiles');
-		var_dump($profiles);die;
-		$lines    = '';
+		$lines    = [];
 		if ($profiles) {
-			$lines = implode(',', $profiles);
+			foreach ($profiles as $_profile) {
+				$lines[] = '"'.  $_profile . '"';
+			}
+			$lines = implode(",\n", $lines);
 		}
 
 		return $lines;
