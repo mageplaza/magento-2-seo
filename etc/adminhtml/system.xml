@@ -107,6 +107,28 @@
                 <!--</field>-->
 
 
+                <!--<field id="add_sitename" translate="label comment" type="select" sortOrder="80" showInDefault="1"-->
+                       <!--showInWebsite="1" showInStore="1">-->
+                    <!--<label>Auto-add website name at the end of page title</label>-->
+                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                    <!--<comment><![CDATA[]]></comment>-->
+                <!--</field>-->
+
+                <!--<field id="title_separator" translate="label comment" type="text" sortOrder="81" showInDefault="1"-->
+                       <!--showInWebsite="1" showInStore="1">-->
+                    <!--<label>Title Separator</label>-->
+                    <!--<comment><![CDATA[]]></comment>-->
+                    <!--<depends>-->
+                        <!--<field id="add_sitename">1</field>-->
+                    <!--</depends>-->
+                <!--</field>-->
+
+                <field id="noroute" translate="label comment" type="select" sortOrder="90" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Use noindex for the 404 page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[]]></comment>
+                </field>
 
 
             </group>
@@ -382,7 +404,7 @@
 
 
 
-            <group id="store" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1"
+            <group id="store" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
                    showInStore="1">
             <label>Breadcrumbs</label>
 
@@ -399,39 +421,41 @@
 
             </group>
 
-
-
-
-
-            <group id="htaccess" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+            <group id="verification" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
                    showInStore="1">
-                <label>.htaccess Editor [Beta] [Depreciated]</label>
-                <field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"
+            <label>Verification</label>
+
+                <field id="google" translate="label comment" type="text" sortOrder="10" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>.htaccess Content</label>
-                    <comment><![CDATA[ Download <a href="https://github.com/mageplaza/magento-htaccess-extension/blob/master/.htaccess" target="_blank">.htaccess file</a> ]]></comment>
+                    <label>Google Search Console Verification</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
                 </field>
-                <field id="save_htaccess" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1"
-                       showInStore="0">
-                    <button_label>Save .htaccess</button_label>
-                    <frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Savehtaccess</frontend_model>
+
+                <field id="bing" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Bing Webmaster Tools Verification</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
                 </field>
+
+                <field id="pinterest" translate="label comment" type="text" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Pinterest Verification</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
+                </field>
+
+
+
+
+
+
+
             </group>
 
-            <group id="robots" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
-                   showInStore="1">
-                <label>Robots.txt Editor [Beta] [Depreciated]</label>
-                <field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>robots.txt Content</label>
-                    <comment><![CDATA[  <a href="http://www.robotsgenerator.com/?utm_source=mageplaza.com&utm_medium=seo-extension&utm_campaign=configuration" target="_blank">Robots.txt generator</a> ]]></comment>
-                </field>
-                <field id="save_robot" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1"
-                       showInStore="0">
-                    <button_label>Save robot.txt</button_label>
-                    <frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Saverobot</frontend_model>
-                </field>
-            </group>
+
+
+
+
+
 
 
             <group id="htmlsitemap" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"

@@ -1,0 +1,11 @@
+
+<!--Search engine verification by Mageplaza_SEO-->
+<?php if($block->getGoogleVerificationCode()):?>
+<meta name="google-site-verification" content="<?php echo $block->getGoogleVerificationCode()?>">
+<?php endif;?>
+<?php if($block->getBingVerificationCode()):?>
+<meta name="msvalidate.01" content="<?php echo $block->getBingVerificationCode()?>">
+<?php endif;?>
+<?php if($block->getPinterestVerificationCode()):?>
+<meta name="p:domain_verify" content="<?php echo $block->getPinterestVerificationCode(); ?>"/>
+<?php endif;?>
