@@ -130,6 +130,24 @@
                     <comment><![CDATA[]]></comment>
                 </field>
 
+                <field id="no_dmoz" translate="label comment" type="select" sortOrder="100" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Do NOT use titles and descriptions from DMOZ</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[]]></comment>
+                </field>
+
+                <field id="no_yahoo_dir" translate="label comment" type="select" sortOrder="101" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Do NOT use titles and descriptions from  Yahoo Directory</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[]]></comment>
+                </field>
+
+
+
+
+
 
             </group>
 
