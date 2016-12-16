@@ -445,21 +445,29 @@
 
                 <field id="google" translate="label comment" type="text" sortOrder="10" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Google Search Console Verification</label>
+                    <label>Google Search Console</label>
                     <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
                 </field>
 
                 <field id="bing" translate="label comment" type="text" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Bing Webmaster Tools Verification</label>
+                    <label>Bing Webmaster Tools</label>
                     <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
                 </field>
 
                 <field id="pinterest" translate="label comment" type="text" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Pinterest Verification</label>
+                    <label>Pinterest</label>
                     <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
                 </field>
+
+                <field id="yandex" translate="label comment" type="text" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Yandex Webmaster Tools</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
+                </field>
+
+
 
 
 

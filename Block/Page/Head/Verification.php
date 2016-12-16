@@ -37,6 +37,18 @@ class Verification extends AbstractSeo
 
 	}
 
+	/**
+	 * get Yandex verification code
+	 * @return mixed
+	 */
+	public function getYandexVerificationCode()
+	{
+		return $this->getHelper()->getVerficationConfig('yandex');
+
+	}
+
+
+
 
 
 
