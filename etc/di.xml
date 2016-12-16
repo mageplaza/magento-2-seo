@@ -1,0 +1,5 @@
+<config>
+    <!--<type name="Magento\Framework\View\Page\Title">-->
+        <!--<plugin name="Mageplaza_Seo_Page_Title" type="Mageplaza\Seo\Plugin\Title" sortOrder="99" disabled="false"/>-->
+    <!--</type>-->
+</config>

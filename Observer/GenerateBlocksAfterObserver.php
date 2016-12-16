@@ -99,26 +99,42 @@ class GenerateBlocksAfterObserver implements ObserverInterface
 		 * home page cms page
 		 */
 		if ($action == 'cms_index_index' OR $action == 'cms_page_view') {
-			$page = $this->objectManager->get(
-				'Magento\Cms\Model\Page'
-			);
+
+			/**
+			 * override meta data from Mage2 default
+			 */
 			if ($action == 'cms_index_index') {
-				$url = $this->urlManager->getBaseUrl();
-			} else {
-				$url = $this->urlManager->getUrl($page->getIdentifier());
+				$metaTitle = $this->helper->getGeneralConfig('meta_title');
+				if ($metaTitle) {
+					$this->pageConfig->getTitle()->set($metaTitle);
+				}
+
+				$metaDescription = $this->helper->getGeneralConfig('meta_description');
+				if ($metaDescription) {
+					$this->pageConfig->setDescription($metaDescription);
+				}
+
+				$metaKeywords = $this->helper->getGeneralConfig('meta_keywords');
+				if ($metaKeywords) {
+					$this->pageConfig->setKeywords($metaKeywords);
+				}
+
 			}
 		}
 
+		/**
+		 * set Noindex for noroute 404 page
+		 */
 		if (in_array($action, ['cms_index_noroute', 'cms_index_defaultnoroute'])
 			&& $this->helper->getGeneralConfig('noroute')
 		) {
 			$pageRobots = 'NOINDEX';
 		}
 
-
 		if (!empty($pageRobots)) {
 			$this->pageConfig->setRobots($pageRobots);
 		}
+
 
 
 	}
