@@ -26,8 +26,8 @@ class Data extends CoreHelper
 	 */
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
-		StoreManagerInterface $storeManager,
-		ObjectManagerInterface $objectManager
+		ObjectManagerInterface $objectManager,
+		StoreManagerInterface $storeManager
 	)
 	{
 		$this->objectManager = $objectManager;
