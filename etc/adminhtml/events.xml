@@ -13,4 +13,10 @@
     <event name="adminhtml_cms_page_edit_tab_meta_prepare_form">
         <observer name="seo_edit_cms" instance="Mageplaza\Seo\Observer\MetaCmsObserver"/>
     </event>
+    <event name="adminhtml_store_edit_form_prepare_form">
+        <observer name="seo_edit_cms" instance="Mageplaza\Seo\Observer\StoreForm"/>
+    </event>
+    <event name="controller_action_catalog_product_save_entity_after">
+        <observer name="seo_edit_cms" instance="Mageplaza\Seo\Observer\Product"/>
+    </event>
 </config>
