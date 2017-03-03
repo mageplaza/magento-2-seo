@@ -21,4 +21,9 @@ class Page extends AbstractSeo
 
 	}
 
+	public function entityEnable()
+	{
+		return $this->hreflang->hasEnableForEntity('enable_page');
+	}
+
 }

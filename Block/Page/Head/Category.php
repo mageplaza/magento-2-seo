@@ -12,4 +12,9 @@ class Category extends AbstractSeo
 	{
 		return null;
 	}
+
+	public function entityEnable()
+	{
+		return $this->hreflang->hasEnableForEntity('enable_category');
+	}
 }

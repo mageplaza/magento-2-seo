@@ -18,4 +18,9 @@ class Product extends AbstractSeo
 		return $imageUrl;
 	}
 
+	public function entityEnable()
+	{
+		return $this->hreflang->hasEnableForEntity('enable_product');
+	}
+
 }

@@ -494,13 +494,13 @@
                    showInStore="1">
                 <label>Hreflang Tag</label>
 
-                <field id="enable_hreflang_url" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                <field id="enable_hreflang_url" translate="label comment" type="select" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Enable Hreflang Url</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
 
-                <field id="enable_product" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                <field id="enable_product" translate="label comment" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Enable For Product</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -509,7 +509,7 @@
                     </depends>
                 </field>
 
-                <field id="enable_category" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                <field id="enable_category" translate="label comment" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Enable For Category</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -518,7 +518,7 @@
                     </depends>
                 </field>
 
-                <field id="enable_page" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                <field id="enable_page" translate="label comment" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Enable For Pages</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -527,14 +527,14 @@
                     </depends>
                 </field>
 
-                <field id="add_country_code" translate="label comment" type="select" sortOrder="10" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Add Country Code</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <depends>
-                        <field id="enable_hreflang_url">1</field>
-                    </depends>
-                </field>
+                <!--<field id="add_country_code" translate="label comment" type="select" sortOrder="10" showInDefault="1"-->
+                       <!--showInWebsite="1" showInStore="1">-->
+                    <!--<label>Add Country Code</label>-->
+                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                    <!--<depends>-->
+                        <!--<field id="enable_hreflang_url">1</field>-->
+                    <!--</depends>-->
+                <!--</field>-->
 
                 <field id="x_default" translate="label comment" type="select" sortOrder="10" showInDefault="1"
                        showInWebsite="1" showInStore="1">

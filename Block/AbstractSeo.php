@@ -319,13 +319,12 @@ class AbstractSeo extends Template
 		return $this->_storeManager->getStore()->getCode();
 	}
 
-	public function getHrefLang($storeId)
+	public function getHrefLang($storeId=null)
 	{
-		if ($this->hreflang->addCountryCode()) {
-			return $this->helperData->getConfigValue(self::XML_PATH_GENERAL_LOCALE_CODE, $storeId);
-		}
+		if ($storeId == null)
+			return null;
 
-		return null;
+		return $this->helperData->getConfigValue(self::XML_PATH_GENERAL_LOCALE_CODE, $storeId);
 	}
 
 	public function setHreflang($storeId)
@@ -348,6 +347,8 @@ class AbstractSeo extends Template
 
 	public function getUrls()
 	{
+		if(!$this->entityEnable())
+			return null;
 		$arr = [];
 		foreach ($this->getAllStore() as $store) {
 			$arr[] = [
