@@ -1,3 +1,6 @@
+<?php foreach ($block->getUrls() as $url):?>
+	<link rel="alternate" href="<?php echo $url['href']?>" hrefLang="<?php echo $url['hrefLang']?>" />
+<?php endforeach;?>
 <?php if ($product = $block->getRegistry('current_product')): ?>
 
 	<?php if ($block->getHelper()->getSocialShares('opengraph')): ?>

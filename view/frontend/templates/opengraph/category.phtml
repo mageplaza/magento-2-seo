@@ -1,3 +1,6 @@
+<?php foreach ($block->getUrls() as $url):?>
+	<link rel="alternate" href="<?php echo $url['href']?>" hrefLang="<?php echo $url['hrefLang']?>" />
+<?php endforeach;?>
 <?php if ($category = $block->getCurrentCategory()): ?>
 
 	<?php if ($block->getHelper()->getSocialShares('opengraph')): ?>
@@ -30,3 +33,5 @@
 	<?php endif; ?>
 
 <?php endif; ?>
+
+<?php

@@ -14,6 +14,7 @@ class Data extends CoreHelper
     const XML_PATH_HTACCESS = 'seo/htaccess/';
     const XML_PATH_ROBOTS = 'seo/robots/';
     const XML_PATH_HTML_SITEMAP = 'seo/htmlsitemap/';
+	const XML_PATH_HREFLANG_TAG = 'seo/hreflang/';
     protected $objectManager;
 
     /**
@@ -194,4 +195,10 @@ class Data extends CoreHelper
     {
         return $this->_getUrl('mageplaza_seo/sitemap');
     }
+
+
+	public function getHreflang($code = null)
+	{
+		return $this->getConfigValue(self::XML_PATH_HREFLANG_TAG. $code);
+	}
 }

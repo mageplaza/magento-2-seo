@@ -253,7 +253,6 @@
 
             </group>
 
-
             <!--Business information-->
             <group id="info" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1"
                    showInStore="1">
@@ -379,9 +378,6 @@
 
             </group>
 
-
-
-
             <group id="store" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1"
                    showInStore="1">
             <label>Breadcrumbs</label>
@@ -398,10 +394,6 @@
                 </field>
 
             </group>
-
-
-
-
 
             <group id="htaccess" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
                    showInStore="1">
@@ -432,7 +424,6 @@
                     <frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Saverobot</frontend_model>
                 </field>
             </group>
-
 
             <group id="htmlsitemap" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
                    showInStore="1">
@@ -494,6 +485,63 @@
                     <comment><![CDATA[ ]]></comment>
                     <depends>
                         <field id="enable">1</field>
+                    </depends>
+                </field>
+
+            </group>
+
+            <group id="hreflang" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Hreflang Tag</label>
+
+                <field id="enable_hreflang_url" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Hreflang Url</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="enable_product" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable For Product</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enable_hreflang_url">1</field>
+                    </depends>
+                </field>
+
+                <field id="enable_category" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable For Category</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enable_hreflang_url">1</field>
+                    </depends>
+                </field>
+
+                <field id="enable_page" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable For Pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enable_hreflang_url">1</field>
+                    </depends>
+                </field>
+
+                <field id="add_country_code" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Add Country Code</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enable_hreflang_url">1</field>
+                    </depends>
+                </field>
+
+                <field id="x_default" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>X-Default</label>
+                    <source_model>Mageplaza\Seo\Model\Source\Store</source_model>
+                    <depends>
+                        <field id="enable_hreflang_url">1</field>
                     </depends>
                 </field>
 

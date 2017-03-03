@@ -6,11 +6,8 @@ use Mageplaza\Seo\Block\AbstractSeo;
 
 class Product extends AbstractSeo
 {
-
 	protected $imageHelper;
-
-
-
+	
 	public function getProductImage()
 	{
 
