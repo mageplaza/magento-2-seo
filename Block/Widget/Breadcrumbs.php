@@ -22,7 +22,7 @@ class Breadcrumbs extends WidgetBreadcrumbs
 	{
 		$this->_helperData = $helperData;
 
-		return parent::_construct();
+//		return parent::_construct();
 	}
 
 

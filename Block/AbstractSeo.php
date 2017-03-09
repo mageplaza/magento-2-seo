@@ -319,6 +319,10 @@ class AbstractSeo extends Template
 		return $this->_storeManager->getStore()->getCode();
 	}
 
+	/**
+	 * @param null $storeId
+	 * @return mixed|null
+	 */
 	public function getHrefLang($storeId=null)
 	{
 		if ($storeId == null)
@@ -327,29 +331,51 @@ class AbstractSeo extends Template
 		return $this->helperData->getConfigValue(self::XML_PATH_GENERAL_LOCALE_CODE, $storeId);
 	}
 
+	/**
+	 * @param $storeId
+	 * @return string
+	 */
 	public function setHreflang($storeId)
 	{
 		if($this->hreflang->getXDeFault() == $storeId)
 			return 'x-default';
 
-		return $this->getHrefLang($storeId);
+		return str_replace('_','-',$this->getHrefLang($storeId));
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getStoreBaseUrl()
 	{
 		return $this->_urlBuilder->getUrl();
 	}
 
+	/**
+	 * @return \Magento\Store\Api\Data\StoreInterface[]
+	 */
 	public function getAllStore()
 	{
 		return $this->_storeManager->getStores();
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function entityEnable()
+	{
+		return false;
+	}
+
+	/**
+	 * @return array
+	 */
 	public function getUrls()
 	{
-		if(!$this->entityEnable())
-			return null;
 		$arr = [];
+		if(!$this->entityEnable())
+			return $arr;
+		
 		foreach ($this->getAllStore() as $store) {
 			$arr[] = [
 				'href'     => str_replace($this->getStoreBaseUrl(), $store->getBaseUrl(), $this->getCanonicalUrl()),

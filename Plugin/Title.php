@@ -80,7 +80,7 @@ class Title extends \Magento\Framework\View\Page\Title
 	protected function getTitleSeparator()
 	{
 		$titleSeparatorValue =  $this->scopeConfig->getValue(
-			'design/head/title_separator',
+			'seo/general/title_separator',
 			\Magento\Store\Model\ScopeInterface::SCOPE_STORE
 		);
 		if($titleSeparatorValue == null)

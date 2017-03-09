@@ -101,6 +101,7 @@ class GenerateBlocksAfterObserver implements ObserverInterface
             $page            = $this->objectManager->get(
                 'Magento\Cms\Model\Page'
             );
+            $pageRobots   = $page->getMpMetaRobots();
             if ($action == 'cms_index_index') {
                 $url = $this->urlManager->getBaseUrl();
             } else {

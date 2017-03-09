@@ -29,7 +29,7 @@ class StopWords
 	public function _getStopWords($storeId)
 	{
 		if($storeId == 0 )
-			return [];
+			return ObjectManager::getInstance()->create('\Mageplaza\Seo\Helper\StopWords\En')->getStopWords();//default EN
 		$packetLang = $this->_storeManagerInterface->getStore($storeId)->getMpLang();
 		switch ($packetLang){
 			case Language::DE:
@@ -48,7 +48,6 @@ class StopWords
 
 	public function filterStopWords($url,$storeId)
 	{
-
 		$stopWords = $this->_getStopWords($storeId);
 		$arrWordUrl = $this->convertUrlToArray($url);
 		foreach ($arrWordUrl as $index => $item)

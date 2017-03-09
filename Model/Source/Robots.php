@@ -21,31 +21,61 @@ class Robots extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
     /**
      * @return array
      */
+//    public function getAllOptions()
+//    {
+//        $result = array();
+//        foreach ($this->toOptionArray() as $k => $v) {
+//            $result[] = array(
+//                'value' => $v,
+//                'label' => $v,
+//            );
+//        }
+//
+//        return $result;
+//    }
+//
+//    /**
+//     * @return array
+//     */
+//    public function toOptionArray()
+//    {
+//        return array(
+//            'INDEX,FOLLOW',
+//            'NOINDEX,FOLLOW',
+//            'INDEX,NOFOLLOW',
+//            'NOINDEX,NOFOLLOW'
+//        );
+//    }
+
+
     public function getAllOptions()
     {
-        $result = array();
-        foreach ($this->toOptionArray() as $k => $v) {
-            $result[] = array(
-                'value' => $v,
-                'label' => $v,
-            );
+        if ($this->_options === null) {
+            $this->_options = [
+                ['label' => __('INDEX,FOLLOW'), 'value' => 'INDEX,FOLLOW'],
+                ['label' => __('NOINDEX,FOLLOW'), 'value' => 'NOINDEX,FOLLOW'],
+                ['label' => __('INDEX,NOFOLLOW'), 'value' => 'INDEX,NOFOLLOW'],
+                ['label' => __('NOINDEX,NOFOLLOW'), 'value' => 'NOINDEX,NOFOLLOW'],
+            ];
         }
-
-        return $result;
+        return $this->_options;
     }
 
     /**
+     * Retrieve option array
+     *
      * @return array
      */
-    public function toOptionArray()
+    public function getOptionArray()
     {
-        return array(
-            'INDEX,FOLLOW',
-            'NOINDEX,FOLLOW',
-            'INDEX,NOFOLLOW',
-            'NOINDEX,NOFOLLOW'
-        );
+        $_options = [];
+        foreach ($this->getAllOptions() as $option) {
+            $_options[$option['value']] = $option['label'];
+        }
+        return $_options;
     }
+
+
     /**
      * Get a text for option value
      *
