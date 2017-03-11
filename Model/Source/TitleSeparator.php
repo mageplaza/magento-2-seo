@@ -30,20 +30,12 @@ class TitleSeparator implements \Magento\Framework\Option\ArrayInterface
 	 */
 	public function toOptionArray()
 	{
-		return [
-			['value' => 0, 'label' => __('.')],
-			['value' => 1, 'label' => __('✰')],
-			['value' => 2, 'label' => __('-')],
-			['value' => 3, 'label' => __('_')],
-			['value' => 4, 'label' => __('*')],
-			['value' => 5, 'label' => __('«')],
-			['value' => 6, 'label' => __('»')],
-			['value' => 7, 'label' => __('●')],
-			['value' => 8, 'label' => __('>')],
-			['value' => 9, 'label' => __('<')],
-			['value' => 10, 'label' => __('~')],
-			['value' => 11, 'label' => __('|')],
-		];
+		$separators = [];
+		foreach ($this->toArray() as $k=>$v)
+		{
+			$separators[] = ['value' => $k, 'label' => $v];
+		}
+		return $separators;
 	}
 
 	/**
