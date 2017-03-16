@@ -2,10 +2,10 @@
 
 <?php $productCollection = $block->getProductCollection(); ?>
 <?php if ($productCollection): ?>
-    <ul class="mp-sitemap-listing">
+	<ul class="mp-sitemap-listing">
         <?php foreach ($productCollection as $product): ?>
-            <li><a href="<?php echo $product->getProductUrl() ?>"><?php echo $product->getName(); ?></a></li>
-        <?php endforeach; ?>
+			<li><a href="<?php echo $product->getProductUrl() ?>"><?php echo $product->getName(); ?></a></li>
+		<?php endforeach; ?>
     </ul>
 <?php endif; ?>
 

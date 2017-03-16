@@ -58,13 +58,13 @@ class CmsPageLoadAfter implements ObserverInterface
 
 			$page = $observer->getData('page');
 
-			$metaTitle = $this->helper->getGeneralConfig('meta_title');
+			$metaTitle       = $this->helper->getGeneralConfig('meta_title');
 			$metaDescription = $this->helper->getGeneralConfig('meta_description');
 
-			if($metaTitle){
+			if ($metaTitle) {
 				$page->setMetaTitle($metaTitle);
 			}
-			if($metaDescription){
+			if ($metaDescription) {
 				$page->setMetaDescription($metaDescription);
 			}
 

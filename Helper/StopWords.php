@@ -18,7 +18,7 @@ class StopWords
 		\Magento\Store\Model\StoreManagerInterface $storeManagerInterface
 	)
 	{
-		$this->_lang = $language;
+		$this->_lang                  = $language;
 		$this->_storeManagerInterface = $storeManagerInterface;
 	}
 
@@ -28,10 +28,10 @@ class StopWords
 	 */
 	public function _getStopWords($storeId)
 	{
-		if($storeId == 0 )
+		if ($storeId == 0)
 			return ObjectManager::getInstance()->create('\Mageplaza\Seo\Helper\StopWords\En')->getStopWords();//default EN
 		$packetLang = $this->_storeManagerInterface->getStore($storeId)->getMpLang();
-		switch ($packetLang){
+		switch ($packetLang) {
 			case Language::DE:
 				return ObjectManager::getInstance()->create('\Mageplaza\Seo\Helper\StopWords\De')->getStopWords();
 			case Language::EN:
@@ -46,30 +46,31 @@ class StopWords
 		}
 	}
 
-	public function filterStopWords($url,$storeId)
+	public function filterStopWords($url, $storeId)
 	{
-		$stopWords = $this->_getStopWords($storeId);
+		$stopWords  = $this->_getStopWords($storeId);
 		$arrWordUrl = $this->convertUrlToArray($url);
 		foreach ($arrWordUrl as $index => $item)
-			if(in_array($item,$stopWords))
-			{
+			if (in_array($item, $stopWords)) {
 				unset($arrWordUrl[$index]);
 			}
+
 		return $this->convertArrayToUrl($arrWordUrl);
 	}
 
 	public function convertUrlToArray($url)
 	{
-		return explode('-',$url);
+		return explode('-', $url);
 	}
 
 	public function convertArrayToUrl($arr)
 	{
-		$url ='';
-		foreach ($arr as $item){
-			$url = $url.'-'.$item;
+		$url = '';
+		foreach ($arr as $item) {
+			$url = $url . '-' . $item;
 		}
-		return substr($url,1);
+
+		return substr($url, 1);
 	}
 
 }

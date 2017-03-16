@@ -39,12 +39,13 @@ class Title extends \Magento\Framework\View\Page\Title
 	public function __construct(
 		\Mageplaza\Seo\Model\Source\TitleSeparator $titleSeparator,
 		App\Config\ScopeConfigInterface $scopeConfig
-	) {
+	)
+	{
 		$this->_titleSeparator = $titleSeparator;
-		$this->scopeConfig = $scopeConfig;
+		$this->scopeConfig     = $scopeConfig;
 		parent::__construct($scopeConfig);
 	}
-	
+
 	/**
 	 * @param string $title
 	 * @return string
@@ -52,15 +53,16 @@ class Title extends \Magento\Framework\View\Page\Title
 	protected function addConfigValues($title)
 	{
 		$preparedTitle = $this->getTitlePrefix()
-			. ($this->getTitlePrefix()? ' '.$this->getTitleSeparator().' ':'')
+			. ($this->getTitlePrefix() ? ' ' . $this->getTitleSeparator() . ' ' : '')
 			. $title
-			. ($this->getTitleSuffix()? ' '.$this->getTitleSeparator().' ':'')
+			. ($this->getTitleSuffix() ? ' ' . $this->getTitleSeparator() . ' ' : '')
 			. $this->getTitleSuffix();
+
 		return trim($preparedTitle);
 
 	}
-	
-	
+
+
 	protected function getTitleSuffix()
 	{
 		return $this->scopeConfig->getValue(
@@ -68,7 +70,7 @@ class Title extends \Magento\Framework\View\Page\Title
 			\Magento\Store\Model\ScopeInterface::SCOPE_STORE
 		);
 	}
-	
+
 	protected function getTitlePrefix()
 	{
 		return $this->scopeConfig->getValue(
@@ -79,12 +81,13 @@ class Title extends \Magento\Framework\View\Page\Title
 
 	protected function getTitleSeparator()
 	{
-		$titleSeparatorValue =  $this->scopeConfig->getValue(
+		$titleSeparatorValue = $this->scopeConfig->getValue(
 			'seo/general/title_separator',
 			\Magento\Store\Model\ScopeInterface::SCOPE_STORE
 		);
-		if($titleSeparatorValue == null)
+		if ($titleSeparatorValue == null)
 			return null;
+
 		return $this->_titleSeparator->toArray()[$titleSeparatorValue];
 	}
 }

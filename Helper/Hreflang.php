@@ -26,10 +26,10 @@ class Hreflang
 	const ENABLE_PRODUCT = 'enable_product';
 	const ENABLE_CATEGORY = 'enable_category';
 	const ENABLE_PAGE = 'enable_page';
-	
-	
+
+
 	protected $_helper;
-	
+
 	public function __construct(
 		\Mageplaza\Seo\Helper\Data $helper
 	)
@@ -40,30 +40,33 @@ class Hreflang
 	public function hasEnableHreflangUrl()
 	{
 		$enableHreflangUrl = $this->_helper->getHreflang('enable_hreflang_url');
-		if($enableHreflangUrl)
+		if ($enableHreflangUrl)
 			return true;
+
 		return false;
 	}
 
 	public function hasEnableForEntity($entity = null)
 	{
-		if(!$this->hasEnableHreflangUrl())
+		if (!$this->hasEnableHreflangUrl())
 			return false;
-		if($this->_helper->getHreflang($entity))
+		if ($this->_helper->getHreflang($entity))
 			return true;
+
 		return false;
 	}
 
 	public function addCountryCode()
 	{
-		if($this->_helper->getHreflang('add_country_code'))	
+		if ($this->_helper->getHreflang('add_country_code'))
 			return true;
+
 		return false;
 	}
 
 	public function getXDeFault()
 	{
-		return $this->_helper->getHreflang('x_default');	
+		return $this->_helper->getHreflang('x_default');
 	}
-	
+
 }

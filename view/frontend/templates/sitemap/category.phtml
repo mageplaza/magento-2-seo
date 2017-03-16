@@ -2,9 +2,9 @@
 
 <?php $categories = $this->getCategoryCollection(); ?>
 <?php if ($categories): ?>
-    <ul class="mp-sitemap-listing">
+	<ul class="mp-sitemap-listing">
         <?php foreach ($categories as $_category): ?>
-            <li><a href="<?php echo $block->getCategoryUrl($_category) ?>"><?php echo $_category->getName(); ?></a></li>
-        <?php endforeach; ?>
+			<li><a href="<?php echo $block->getCategoryUrl($_category) ?>"><?php echo $_category->getName(); ?></a></li>
+		<?php endforeach; ?>
     </ul>
 <?php endif; ?>

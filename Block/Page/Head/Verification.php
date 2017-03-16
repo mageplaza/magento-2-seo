@@ -48,9 +48,4 @@ class Verification extends AbstractSeo
 	}
 
 
-
-
-
-
-
 }

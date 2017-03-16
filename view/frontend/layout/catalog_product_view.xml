@@ -3,7 +3,7 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
 
-        <referenceBlock name="opengraph.general" remove="true" />
+        <referenceBlock name="opengraph.general" remove="true"/>
 
         <referenceBlock name="head.additional">
             <block class="Mageplaza\Seo\Block\Page\Head\Product" name="mageplaza_seo_open_graph"

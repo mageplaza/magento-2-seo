@@ -9,7 +9,7 @@
 
 
 <?php if ($block->getHelper()->getSocialShares('twitter_card') && $block->getHelper()->getSocialShares('twitter_account')): ?>
-<!--	Twitter Card By Mageplaza_SEO-->
+	<!--	Twitter Card By Mageplaza_SEO-->
 	<meta name="twitter:card" content="summary"/>
 	<meta name="twitter:site" content="<?php echo $block->getTwitterAccount(); ?>"/>
 	<meta name="twitter:title" content="<?php echo $block->getStoreName() ?>"/>
@@ -17,11 +17,11 @@
 <?php endif; ?>
 
 <?php if ($pinterest = $block->getHelper()->getSocialShares('pinterest')): ?>
-<!--	Pinterest-->
+	<!--	Pinterest-->
 	<meta name="p:domain_verify" content="<?php echo $pinterest; ?>"/>
 <?php endif; ?>
 
 <?php if ($googlePlus = $block->getHelper()->getSocialShares('google_plus')): ?>
-<!--	Google Plus Publisher-->
+	<!--	Google Plus Publisher-->
 	<link rel="publisher" href="<?php echo $googlePlus; ?>"/>
 <?php endif; ?>

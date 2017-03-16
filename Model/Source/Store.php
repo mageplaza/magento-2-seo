@@ -24,7 +24,7 @@ namespace Mageplaza\Seo\Model\Source;
 class Store
 {
 	protected $_storeManager;
-	
+
 	public function __construct(
 		\Magento\Store\Model\StoreManagerInterface $storeManager
 	)
@@ -41,10 +41,10 @@ class Store
 	public function toOptionArray()
 	{
 		$arr = [];
-		foreach ($this->getStoreCollection() as $item)
-		{
-			$arr[] = ['value' => $item->getId(),'label' => $item->getName()];
+		foreach ($this->getStoreCollection() as $item) {
+			$arr[] = ['value' => $item->getId(), 'label' => $item->getName()];
 		}
+
 		return $arr;
 	}
 
@@ -56,11 +56,11 @@ class Store
 	public function toArray()
 	{
 		$arr = [];
-		foreach ($this->getStoreCollection() as $item)
-		{
+		foreach ($this->getStoreCollection() as $item) {
 			$arr[] = $item->getName();
 		}
+
 		return $arr;
 	}
-	
+
 }

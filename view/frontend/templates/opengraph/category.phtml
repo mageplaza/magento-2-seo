@@ -1,6 +1,6 @@
-<?php foreach ($block->getUrls() as $url):?>
-	<link rel="alternate" href="<?php echo $url['href']?>" hrefLang="<?php echo $url['hrefLang']?>" />
-<?php endforeach;?>
+<?php foreach ($block->getUrls() as $url): ?>
+	<link rel="alternate" href="<?php echo $url['href'] ?>" hrefLang="<?php echo $url['hrefLang'] ?>"/>
+<?php endforeach; ?>
 <?php if ($category = $block->getCurrentCategory()): ?>
 
 	<?php if ($block->getHelper()->getSocialShares('opengraph')): ?>
@@ -29,7 +29,7 @@
 	<?php endif; ?>
 
 	<?php if ($googlePlus = $block->getHelper()->getSocialShares('google_plus')): ?>
-		<link rel="publisher" href="<?php echo $googlePlus; ?>" />
+		<link rel="publisher" href="<?php echo $googlePlus; ?>"/>
 	<?php endif; ?>
 
 <?php endif; ?>

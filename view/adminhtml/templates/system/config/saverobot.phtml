@@ -16,42 +16,42 @@
     require(['prototype'], function () {
 
 //<![CDATA[
-        function saveRobot() {
-            var saveRobotMessage = $('saveRobot_result');
-            params = {
-                robotcontent: ($('seo_robots_content').value)
-            };
-            new Ajax.Request('<?php /* @escapeNotVerified */ echo $block->getAjaxUrl() ?>', {
-                parameters: params,
-                onSuccess: function (response) {
-                    var result = '<?php /* @escapeNotVerified */ echo __('Error during Save robot.txt.') ?>';
-                    try {
-                        if (response.responseText.isJSON()) {
-                            response = response.responseText.evalJSON();
-                            result = response.message;
-                        }
-                        if (response.valid == 1) {
-                            saveRobotMessage.removeClassName('hidden').addClassName('success')
-                        } else {
-                            saveRobotMessage.removeClassName('hidden').addClassName('error')
-                        }
-                    } catch (e) {
-                        saveRobotMessage.removeClassName('hidden').addClassName('error')
-                    }
-                    saveRobotMessage.update(result);
-                }
-            });
-        }
+		function saveRobot() {
+			var saveRobotMessage = $('saveRobot_result');
+			params = {
+				robotcontent: ($('seo_robots_content').value)
+			};
+			new Ajax.Request('<?php /* @escapeNotVerified */ echo $block->getAjaxUrl() ?>', {
+				parameters: params,
+				onSuccess: function (response) {
+					var result = '<?php /* @escapeNotVerified */ echo __('Error during Save robot.txt.') ?>';
+					try {
+						if (response.responseText.isJSON()) {
+							response = response.responseText.evalJSON();
+							result = response.message;
+						}
+						if (response.valid == 1) {
+							saveRobotMessage.removeClassName('hidden').addClassName('success')
+						} else {
+							saveRobotMessage.removeClassName('hidden').addClassName('error')
+						}
+					} catch (e) {
+						saveRobotMessage.removeClassName('hidden').addClassName('error')
+					}
+					saveRobotMessage.update(result);
+				}
+			});
+		}
 
-        window.saveRobot = saveRobot;
+		window.saveRobot = saveRobot;
 //]]>
 
-    });
+	});
 </script>
 <div class="actions actions-save-robot">
     <div id="saveRobot_result" class="message-saveRobot hidden"></div>
     <button onclick="javascript:saveRobot(); return false;" class="action-save-robot" type="button"
-            id="<?php echo $block->getHtmlId() ?>">
+			id="<?php echo $block->getHtmlId() ?>">
         <span><?php echo $block->escapeHtml($block->getButtonLabel()) ?></span>
     </button>
 </div>

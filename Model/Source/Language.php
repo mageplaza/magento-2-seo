@@ -27,7 +27,7 @@ class Language
 	const DE = 1;
 	const ES = 2;
 	const FR = 3;
-	const OTHER  = 4;
+	const OTHER = 4;
 
 	public function toOptionArray()
 	{

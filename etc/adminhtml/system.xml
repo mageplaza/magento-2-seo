@@ -27,8 +27,6 @@
                 <!--</field>-->
 
 
-
-
                 <field id="next_prev" translate="label comment" type="select" sortOrder="16" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Enable Next/Prev tag</label>
@@ -84,25 +82,23 @@
                 </field>
 
                 <!--<field id="meta_title" translate="label comment" type="text" sortOrder="70" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Store Meta Title</label>-->
-                    <!--<comment><![CDATA[]]></comment>-->
+                <!--showInWebsite="1" showInStore="1">-->
+                <!--<label>Store Meta Title</label>-->
+                <!--<comment><![CDATA[]]></comment>-->
                 <!--</field>-->
 
 
                 <!--<field id="meta_description" translate="label comment" type="textarea" sortOrder="72" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Store Meta Description</label>-->
-                    <!--<comment><![CDATA[]]></comment>-->
+                <!--showInWebsite="1" showInStore="1">-->
+                <!--<label>Store Meta Description</label>-->
+                <!--<comment><![CDATA[]]></comment>-->
                 <!--</field>-->
 
                 <!--<field id="meta_robots" translate="label comment" type="text" sortOrder="73" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Store Meta Title</label>-->
-                    <!--<comment><![CDATA[]]></comment>-->
+                <!--showInWebsite="1" showInStore="1">-->
+                <!--<label>Store Meta Title</label>-->
+                <!--<comment><![CDATA[]]></comment>-->
                 <!--</field>-->
-
-
 
 
             </group>
@@ -190,18 +186,17 @@
                 </field>
 
 
-
             </group>
 
             <!--<group id="meta" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"-->
-                   <!--showInStore="1">-->
-                <!--<label>Page title and Meta Description</label>-->
-                <!--<field id="auto" translate="label comment" type="select" sortOrder="55" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Auto set page title, meta description</label>-->
-                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-                    <!--<comment><![CDATA[ ]]></comment>-->
-                <!--</field>-->
+            <!--showInStore="1">-->
+            <!--<label>Page title and Meta Description</label>-->
+            <!--<field id="auto" translate="label comment" type="select" sortOrder="55" showInDefault="1"-->
+            <!--showInWebsite="1" showInStore="1">-->
+            <!--<label>Auto set page title, meta description</label>-->
+            <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+            <!--<comment><![CDATA[ ]]></comment>-->
+            <!--</field>-->
             <!--</group>-->
 
 
@@ -228,7 +223,7 @@
                     <label>Enable Organization Information</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <!--<comment>-->
-                        <!--<![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122360">Customizing Your Knowledge Graph</a> ]]></comment>-->
+                    <!--<![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122360">Customizing Your Knowledge Graph</a> ]]></comment>-->
                 </field>
 
 
@@ -237,14 +232,11 @@
                     <label>Include Your Site Name in Search Results</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <!--<comment>-->
-                        <!--<![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122357">Include Your Site Name in Search Results</a> ]]></comment>-->
+                    <!--<![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122357">Include Your Site Name in Search Results</a> ]]></comment>-->
                     <depends>
                         <field id="custom">1</field>
                     </depends>
                 </field>
-
-
-
 
 
             </group>
@@ -377,7 +369,7 @@
 
             <group id="store" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1"
                    showInStore="1">
-            <label>Breadcrumbs</label>
+                <label>Breadcrumbs</label>
 
                 <field id="enable" translate="label comment" type="select" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
@@ -391,9 +383,6 @@
                 </field>
 
             </group>
-
-
-
 
 
             <group id="htaccess" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"

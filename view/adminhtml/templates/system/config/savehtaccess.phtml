@@ -16,42 +16,42 @@
     require(['prototype'], function () {
 
 //<![CDATA[
-        function saveHtaccess() {
-            var saveHtaccessMessage = $('saveHtaccess_result');
-            params = {
-                htaccesscontent: ($('seo_htaccess_content').value)
-            };
-            new Ajax.Request('<?php /* @escapeNotVerified */ echo $block->getAjaxUrl() ?>', {
-                parameters: params,
-                onSuccess: function (response) {
-                    var result = '<?php /* @escapeNotVerified */ echo __('Error during Save htaccess.txt.') ?>';
-                    try {
-                        if (response.responseText.isJSON()) {
-                            response = response.responseText.evalJSON();
-                            result = response.message;
-                        }
-                        if (response.valid == 1) {
-                            saveHtaccessMessage.removeClassName('hidden').addClassName('success')
-                        } else {
-                            saveHtaccessMessage.removeClassName('hidden').addClassName('error')
-                        }
-                    } catch (e) {
-                        saveHtaccessMessage.removeClassName('hidden').addClassName('error')
-                    }
-                    saveHtaccessMessage.update(result);
-                }
-            });
-        }
+		function saveHtaccess() {
+			var saveHtaccessMessage = $('saveHtaccess_result');
+			params = {
+				htaccesscontent: ($('seo_htaccess_content').value)
+			};
+			new Ajax.Request('<?php /* @escapeNotVerified */ echo $block->getAjaxUrl() ?>', {
+				parameters: params,
+				onSuccess: function (response) {
+					var result = '<?php /* @escapeNotVerified */ echo __('Error during Save htaccess.txt.') ?>';
+					try {
+						if (response.responseText.isJSON()) {
+							response = response.responseText.evalJSON();
+							result = response.message;
+						}
+						if (response.valid == 1) {
+							saveHtaccessMessage.removeClassName('hidden').addClassName('success')
+						} else {
+							saveHtaccessMessage.removeClassName('hidden').addClassName('error')
+						}
+					} catch (e) {
+						saveHtaccessMessage.removeClassName('hidden').addClassName('error')
+					}
+					saveHtaccessMessage.update(result);
+				}
+			});
+		}
 
-        window.saveHtaccess = saveHtaccess;
+		window.saveHtaccess = saveHtaccess;
 //]]>
 
-    });
+	});
 </script>
 <div class="actions actions-save-htaccess">
     <div id="saveHtaccess_result" class="message-saveHtaccess hidden"></div>
     <button onclick="javascript:saveHtaccess(); return false;" class="action-save-htaccess" type="button"
-            id="<?php echo $block->getHtmlId() ?>">
+			id="<?php echo $block->getHtmlId() ?>">
         <span><?php echo $block->escapeHtml($block->getButtonLabel()) ?></span>
     </button>
 </div>

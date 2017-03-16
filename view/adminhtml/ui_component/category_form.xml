@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <!--
-        /**
-         * Copyright © 2016 Magento. All rights reserved.
-         * See COPYING.txt for license details.
-         */
-        -->
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <fieldset name="search_engine_optimization">

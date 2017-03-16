@@ -1,6 +1,6 @@
-<?php foreach ($block->getUrls() as $url):?>
-	<link rel="alternate" href="<?php echo $url['href']?>" hrefLang="<?php echo $url['hrefLang']?>" />
-<?php endforeach;?>
+<?php foreach ($block->getUrls() as $url): ?>
+	<link rel="alternate" href="<?php echo $url['href'] ?>" hrefLang="<?php echo $url['hrefLang'] ?>"/>
+<?php endforeach; ?>
 <?php if ($product = $block->getRegistry('current_product')): ?>
 
 	<?php if ($block->getHelper()->getSocialShares('opengraph')): ?>
@@ -8,15 +8,15 @@
 		<!-- Open Graph Protocol by Mageplaza_SEO -->
 		<meta property="og:type" content="product"/>
 		<meta property="og:title" content="<?php echo $block->escapeHtml($product->getName()); ?>"/>
-		<meta property="og:image" content="<?php echo $block->escapeUrl($block->getProductImage()); ?>" />
+		<meta property="og:image" content="<?php echo $block->escapeUrl($block->getProductImage()); ?>"/>
 		<meta property="og:url" content="<?php echo $block->escapeUrl($block->getProduct()->getProductUrl()); ?>"/>
 		<meta property="og:description" content="<?php echo $block->escapeHtml($block->getProduct()->getShortDescription()); ?>"/>
 		<meta property="product:retailer_item_id" content="<?php echo $product->getSku() ?>"/>
 		<meta property="og:site_name" content="<?php echo $block->getBusinessName(); ?>"/>
-		<?php if ($priceAmount = $block->getProduct()->getFinalPrice()):?>
+		<?php if ($priceAmount = $block->getProduct()->getFinalPrice()): ?>
 			<meta property="product:price:amount" content="<?php echo $priceAmount; ?>"/>
 			<?php echo $block->getChildHtml('meta.currency'); ?>
-		<?php endif;?>
+		<?php endif; ?>
 
 	<?php endif; ?>
 
@@ -35,7 +35,7 @@
 	<?php endif; ?>
 
 	<?php if ($googlePlus = $block->getHelper()->getSocialShares('google_plus')): ?>
-		<link rel="publisher" href="<?php echo $googlePlus; ?>" />
+		<link rel="publisher" href="<?php echo $googlePlus; ?>"/>
 	<?php endif; ?>
 
 <?php endif; ?>

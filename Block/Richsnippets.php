@@ -35,7 +35,7 @@ class Richsnippets extends AbstractSeo
 		$lines    = [];
 		if ($profiles) {
 			foreach ($profiles as $_profile) {
-				$lines[] = '"'.  $_profile . '"';
+				$lines[] = '"' . $_profile . '"';
 			}
 			$lines = implode(",\n", $lines);
 		}

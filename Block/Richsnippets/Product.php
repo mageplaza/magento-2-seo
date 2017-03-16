@@ -8,51 +8,51 @@ class Product extends Richsnippets
 {
 
 
-    /**
-     * get review collection
-     * @return mixed
-     */
-    public function getReviewCollection()
-    {
-        if (null === $this->reviewCollection) {
-            $this->reviewCollection = $this->registry->create()->addStoreFilter(
-                $this->_storeManager->getStore()->getId()
-            )->addStatusFilter(
-                \Magento\Review\Model\Review::STATUS_APPROVED
-            )->addEntityFilter(
-                'product',
-                $this->getProduct()->getId()
-            )->setDateOrder();
-        }
+	/**
+	 * get review collection
+	 * @return mixed
+	 */
+	public function getReviewCollection()
+	{
+		if (null === $this->reviewCollection) {
+			$this->reviewCollection = $this->registry->create()->addStoreFilter(
+				$this->_storeManager->getStore()->getId()
+			)->addStatusFilter(
+				\Magento\Review\Model\Review::STATUS_APPROVED
+			)->addEntityFilter(
+				'product',
+				$this->getProduct()->getId()
+			)->setDateOrder();
+		}
 
-        return $this->reviewCollection;
-    }
+		return $this->reviewCollection;
+	}
 
-    /**
-     * get review count
-     * @return mixed
-     */
-    public function getReviewCount()
-    {
-        $product = $this->getProduct();
-        if ( ! $product->getRatingSummary()) {
-            $this->reviewFactory->create()->getEntitySummary($product, $this->_storeManager->getStore()->getId());
-        }
+	/**
+	 * get review count
+	 * @return mixed
+	 */
+	public function getReviewCount()
+	{
+		$product = $this->getProduct();
+		if (!$product->getRatingSummary()) {
+			$this->reviewFactory->create()->getEntitySummary($product, $this->_storeManager->getStore()->getId());
+		}
 
-        return $product->getRatingSummary()->getReviewsCount();
-    }
+		return $product->getRatingSummary()->getReviewsCount();
+	}
 
-    /**
-     * get rating summary
-     * @return mixed
-     */
-    public function getRatingSummary()
-    {
-        $product = $this->getProduct();
-        if ( ! $product->getRatingSummary()) {
-            $this->reviewFactory->create()->getEntitySummary($product, $this->_storeManager->getStore()->getId());
-        }
+	/**
+	 * get rating summary
+	 * @return mixed
+	 */
+	public function getRatingSummary()
+	{
+		$product = $this->getProduct();
+		if (!$product->getRatingSummary()) {
+			$this->reviewFactory->create()->getEntitySummary($product, $this->_storeManager->getStore()->getId());
+		}
 
-        return $product->getRatingSummary()->getRatingSummary();
-    }
+		return $product->getRatingSummary()->getRatingSummary();
+	}
 }

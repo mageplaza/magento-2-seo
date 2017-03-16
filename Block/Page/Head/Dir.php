@@ -26,10 +26,4 @@ class Dir extends AbstractSeo
 	}
 
 
-
-
-
-
-
-
 }

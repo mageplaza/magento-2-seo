@@ -22,14 +22,14 @@ class Category extends Navigation
 		$pager = $this->getPager();
 
 		//if has 1 page
-		if($pager->getTotalNum()  <= 1) return null;
+		if ($pager->getTotalNum() <= 1) return null;
 
-		if(!$pager->isLastPage()){
+		if (!$pager->isLastPage()) {
 			return $pager->getNextPageUrl();
 		}
+
 		return null;
 	}
-
 
 
 	/**
@@ -41,11 +41,12 @@ class Category extends Navigation
 		$pager = $this->getPager();
 
 		//if has 1 page
-		if($pager->getTotalNum()  <= 1) return null;
+		if ($pager->getTotalNum() <= 1) return null;
 
-		if(!$pager->isFirstPage()){
+		if (!$pager->isFirstPage()) {
 			return $pager->getPreviousPageUrl();
 		}
+
 		return null;
 	}
 

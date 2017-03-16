@@ -18,7 +18,7 @@ use Mageplaza\Seo\Helper\Hreflang;
 class AbstractSeo extends Template
 {
 	const XML_PATH_GENERAL_LOCALE_CODE = 'general/locale/code';
-	
+
 	protected $hreflang;
 	protected $objectManager;
 	protected $helperData;
@@ -327,7 +327,7 @@ class AbstractSeo extends Template
 	 * @param null $storeId
 	 * @return mixed|null
 	 */
-	public function getHrefLang($storeId=null)
+	public function getHrefLang($storeId = null)
 	{
 		if ($storeId == null)
 			return null;
@@ -341,10 +341,10 @@ class AbstractSeo extends Template
 	 */
 	public function setHreflang($storeId)
 	{
-		if($this->hreflang->getXDeFault() == $storeId)
+		if ($this->hreflang->getXDeFault() == $storeId)
 			return 'x-default';
 
-		return str_replace('_','-',$this->getHrefLang($storeId));
+		return str_replace('_', '-', $this->getHrefLang($storeId));
 	}
 
 	/**
@@ -377,9 +377,9 @@ class AbstractSeo extends Template
 	public function getUrls()
 	{
 		$arr = [];
-		if(!$this->entityEnable())
+		if (!$this->entityEnable())
 			return $arr;
-		
+
 		foreach ($this->getAllStore() as $store) {
 			$arr[] = [
 				'href'     => str_replace($this->getStoreBaseUrl(), $store->getBaseUrl(), $this->getCanonicalUrl()),

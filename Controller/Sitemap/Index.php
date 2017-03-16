@@ -6,20 +6,20 @@ use Magento\Framework\App\Action\Context;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
-    protected $pageFactory;
+	protected $pageFactory;
 
-    public function __construct(Context $context, PageFactory $pageFactory)
-    {
-        $this->pageFactory = $pageFactory;
+	public function __construct(Context $context, PageFactory $pageFactory)
+	{
+		$this->pageFactory = $pageFactory;
 
-        return parent::__construct($context);
-    }
+		return parent::__construct($context);
+	}
 
-    public function execute()
-    {
-        $page = $this->pageFactory->create();;
-        $page->getConfig()->getTitle()->set(__('HTML Sitemap'));
+	public function execute()
+	{
+		$page = $this->pageFactory->create();;
+		$page->getConfig()->getTitle()->set(__('HTML Sitemap'));
 
-        return $page;
-    }
+		return $page;
+	}
 }
