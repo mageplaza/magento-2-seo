@@ -15,6 +15,7 @@ class Data extends CoreHelper
 	const XML_PATH_ROBOTS = 'seo/robots/';
 	const XML_PATH_HTML_SITEMAP = 'seo/htmlsitemap/';
 	const XML_PATH_HREFLANG_TAG = 'seo/hreflang/';
+	const XML_PATH_VERIFICATION = 'seo/verification/';
 	protected $objectManager;
 
 	/**
@@ -73,6 +74,17 @@ class Data extends CoreHelper
 		return $this->getConfigValue(self::XML_PATH_META . $code, $storeId);
 	}
 
+
+	/**
+	 * @param $code
+	 * @param null $storeId
+	 * @return mixed
+	 */
+	public function getVerficationConfig($code, $storeId = null)
+	{
+		return $this->getConfigValue(self::XML_PATH_VERIFICATION . $code, $storeId);
+	}
+
 	/**
 	 * @param      $code
 	 * @param null $storeId
@@ -105,6 +117,9 @@ class Data extends CoreHelper
 	{
 		return $this->getConfigValue(self::XML_PATH_ROBOTS . $code, $storeId);
 	}
+
+
+
 
 	/**
 	 * @param      $code
