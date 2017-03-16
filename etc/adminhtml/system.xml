@@ -20,14 +20,6 @@
             <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>General</label>
-                <!--<field id="auto_setup" translate="label comment" type="select" sortOrder="10" showInDefault="1"-->
-                <!--showInWebsite="1" showInStore="1">-->
-                <!--<label>Auto Setup SEO Basic</label>-->
-                <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-                <!--</field>-->
-
-
-
 
                 <field id="next_prev" translate="label comment" type="select" sortOrder="16" showInDefault="1"
                        showInWebsite="1" showInStore="1">
@@ -87,26 +79,54 @@
                     </depends>
                 </field>
 
-                <!--<field id="meta_title" translate="label comment" type="text" sortOrder="70" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Store Meta Title</label>-->
-                    <!--<comment><![CDATA[]]></comment>-->
-                <!--</field>-->
+
+                <!--Set meta data for Homepage-->
+                <field id="meta_title" translate="label comment" type="text" sortOrder="70" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Store Meta Title</label>
+                    <comment><![CDATA[]]></comment>
+                </field>
 
 
-                <!--<field id="meta_description" translate="label comment" type="textarea" sortOrder="72" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Store Meta Description</label>-->
-                    <!--<comment><![CDATA[]]></comment>-->
-                <!--</field>-->
+                <field id="meta_description" translate="label comment" type="textarea" sortOrder="72" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Store Meta Description</label>
+                    <comment><![CDATA[]]></comment>
+                </field>
 
-                <!--<field id="meta_robots" translate="label comment" type="text" sortOrder="73" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Store Meta Title</label>-->
-                    <!--<comment><![CDATA[]]></comment>-->
-                <!--</field>-->
+                <field id="meta_keywords" translate="label comment" type="textarea" sortOrder="73" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Store Meta Keywords</label>
+                    <comment><![CDATA[]]></comment>
+                </field>
+
+                <field id="meta_robots" translate="label comment" type="text" sortOrder="74" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Store Meta Title</label>
+                    <comment><![CDATA[]]></comment>
+                </field>
 
 
+                <field id="noroute" translate="label comment" type="select" sortOrder="90" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Use noindex for the 404 page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[]]></comment>
+                </field>
+
+                <field id="no_dmoz" translate="label comment" type="select" sortOrder="100" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Do NOT use titles and descriptions from DMOZ</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[]]></comment>
+                </field>
+
+                <field id="no_yahoo_dir" translate="label comment" type="select" sortOrder="101" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Do NOT use titles and descriptions from Yahoo Directory</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[]]></comment>
+                </field>
 
 
             </group>
@@ -194,19 +214,7 @@
                 </field>
 
 
-
             </group>
-
-            <!--<group id="meta" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"-->
-                   <!--showInStore="1">-->
-                <!--<label>Page title and Meta Description</label>-->
-                <!--<field id="auto" translate="label comment" type="select" sortOrder="55" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Auto set page title, meta description</label>-->
-                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-                    <!--<comment><![CDATA[ ]]></comment>-->
-                <!--</field>-->
-            <!--</group>-->
 
 
             <group id="richsnippets" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
@@ -246,9 +254,6 @@
                         <field id="custom">1</field>
                     </depends>
                 </field>
-
-
-
 
 
             </group>
@@ -380,11 +385,9 @@
             </group>
 
 
-
-
-            <group id="store" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1"
+            <group id="store" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
                    showInStore="1">
-            <label>Breadcrumbs</label>
+                <label>Breadcrumbs</label>
 
                 <field id="enable" translate="label comment" type="select" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
@@ -399,38 +402,35 @@
 
             </group>
 
-
-
-
-
-            <group id="htaccess" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+            <group id="verification" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
                    showInStore="1">
-                <label>.htaccess Editor [Beta] [Depreciated]</label>
-                <field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>.htaccess Content</label>
-                    <comment><![CDATA[ Download <a href="https://github.com/mageplaza/magento-htaccess-extension/blob/master/.htaccess" target="_blank">.htaccess file</a> ]]></comment>
-                </field>
-                <field id="save_htaccess" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1"
-                       showInStore="0">
-                    <button_label>Save .htaccess</button_label>
-                    <frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Savehtaccess</frontend_model>
-                </field>
-            </group>
+                <label>Verification</label>
 
-            <group id="robots" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
-                   showInStore="1">
-                <label>Robots.txt Editor [Beta] [Depreciated]</label>
-                <field id="content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1"
+                <field id="google" translate="label comment" type="text" sortOrder="10" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>robots.txt Content</label>
-                    <comment><![CDATA[  <a href="http://www.robotsgenerator.com/?utm_source=mageplaza.com&utm_medium=seo-extension&utm_campaign=configuration" target="_blank">Robots.txt generator</a> ]]></comment>
+                    <label>Google Search Console</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
                 </field>
-                <field id="save_robot" translate="button_label" sortOrder="62" showInDefault="1" showInWebsite="1"
-                       showInStore="0">
-                    <button_label>Save robot.txt</button_label>
-                    <frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Saverobot</frontend_model>
+
+                <field id="bing" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Bing Webmaster Tools</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
                 </field>
+
+                <field id="pinterest" translate="label comment" type="text" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Pinterest</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
+                </field>
+
+                <field id="yandex" translate="label comment" type="text" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Yandex Webmaster Tools</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
+                </field>
+
+
             </group>
 
 

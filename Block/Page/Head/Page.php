@@ -18,7 +18,6 @@ class Page extends AbstractSeo
 	public function getStoreDescription()
 	{
 		return $this->getGeneralConfig('meta_description');
-
 	}
 
 }

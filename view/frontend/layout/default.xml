@@ -6,6 +6,14 @@
             <block class="Mageplaza\Seo\Block\Page\Head\Page" name="mageplaza_seo_canonical"
                    template="Mageplaza_Seo::page/head/canonical.phtml">
             </block>
+
+            <block class="Mageplaza\Seo\Block\Page\Head\Verification" name="mageplaza_seo_site_verification"
+                   template="Mageplaza_Seo::page/head/verification.phtml">
+            </block>
+
+            <block class="Mageplaza\Seo\Block\Page\Head\Dir" name="mageplaza_seo_site_no_dmoz_dir"
+                   template="Mageplaza_Seo::page/head/dir.phtml">
+            </block>
         </referenceBlock>
 
         <referenceContainer name="after.body.start" before="-">
