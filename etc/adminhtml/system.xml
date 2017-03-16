@@ -370,6 +370,38 @@
             </group>
 
 
+            <group id="verification" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Verification</label>
+
+                <field id="google" translate="label comment" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Google Search Console</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
+                </field>
+
+                <field id="bing" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Bing Webmaster Tools</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
+                </field>
+
+                <field id="pinterest" translate="label comment" type="text" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Pinterest</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
+                </field>
+
+                <field id="yandex" translate="label comment" type="text" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Yandex Webmaster Tools</label>
+                    <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
+                </field>
+
+
+            </group>
+
+
             <group id="htmlsitemap" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>HTML Sitemap</label>
