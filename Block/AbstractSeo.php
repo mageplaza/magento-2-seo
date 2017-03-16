@@ -13,9 +13,13 @@ use Magento\Store\Api\Data\StoreConfigInterface;
 use Magento\Review\Model\ResourceModel\Review\Collection as ReviewCollection;
 use Magento\Review\Model\ResourceModel\Review\CollectionFactory;
 use Magento\Review\Model\ReviewFactory;
+use Mageplaza\Seo\Helper\Hreflang;
 
 class AbstractSeo extends Template
 {
+	const XML_PATH_GENERAL_LOCALE_CODE = 'general/locale/code';
+	
+	protected $hreflang;
 	protected $objectManager;
 	protected $helperData;
 	protected $objectFactory;
@@ -28,6 +32,7 @@ class AbstractSeo extends Template
 	protected $reviewRederer;
 
 	public function __construct(
+		Hreflang $hreflang,
 		Context $context,
 		HelperData $helperData,
 		ObjectManagerInterface $objectManager,
@@ -40,6 +45,7 @@ class AbstractSeo extends Template
 		array $data = []
 	)
 	{
+		$this->hreflang                = $hreflang;
 		$this->helperData              = $helperData;
 		$this->objectManager           = $objectManager;
 		$this->checkoutSession         = $session;
@@ -315,6 +321,73 @@ class AbstractSeo extends Template
 	public function getStoreCode()
 	{
 		return $this->_storeManager->getStore()->getCode();
+	}
+
+	/**
+	 * @param null $storeId
+	 * @return mixed|null
+	 */
+	public function getHrefLang($storeId=null)
+	{
+		if ($storeId == null)
+			return null;
+
+		return $this->helperData->getConfigValue(self::XML_PATH_GENERAL_LOCALE_CODE, $storeId);
+	}
+
+	/**
+	 * @param $storeId
+	 * @return string
+	 */
+	public function setHreflang($storeId)
+	{
+		if($this->hreflang->getXDeFault() == $storeId)
+			return 'x-default';
+
+		return str_replace('_','-',$this->getHrefLang($storeId));
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getStoreBaseUrl()
+	{
+		return $this->_urlBuilder->getUrl();
+	}
+
+	/**
+	 * @return \Magento\Store\Api\Data\StoreInterface[]
+	 */
+	public function getAllStore()
+	{
+		return $this->_storeManager->getStores();
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function entityEnable()
+	{
+		return false;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getUrls()
+	{
+		$arr = [];
+		if(!$this->entityEnable())
+			return $arr;
+		
+		foreach ($this->getAllStore() as $store) {
+			$arr[] = [
+				'href'     => str_replace($this->getStoreBaseUrl(), $store->getBaseUrl(), $this->getCanonicalUrl()),
+				'hrefLang' => $this->setHreflang($store->getId())
+			];
+		}
+
+		return $arr;
 	}
 
 }

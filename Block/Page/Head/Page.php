@@ -20,4 +20,9 @@ class Page extends AbstractSeo
 		return $this->getGeneralConfig('meta_description');
 	}
 
+	public function entityEnable()
+	{
+		return $this->hreflang->hasEnableForEntity('enable_page');
+	}
+
 }

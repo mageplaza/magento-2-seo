@@ -1,3 +1,6 @@
+<?php foreach ($block->getUrls() as $url):?>
+	<link rel="alternate" href="<?php echo $url['href']?>" hrefLang="<?php echo $url['hrefLang']?>" />
+<?php endforeach;?>
 <?php $cms = $block->getRegistry('cms_page'); ?>
 <?php if ($cms): ?>
 

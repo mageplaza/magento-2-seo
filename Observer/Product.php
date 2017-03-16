@@ -6,8 +6,10 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Mageplaza\Seo\Helper\Data as SeoHelper;
+use Mageplaza\Seo\Model\Source\Language;
+use Mageplaza\Seo\Plugin\Title;
 
-class SeoObserver extends \Magento\Framework\App\Config\Value implements ObserverInterface
+class Product extends \Magento\Framework\App\Config\Value implements ObserverInterface
 {
     /**
      * @var \Magento\Framework\Filesystem\Directory\Write
@@ -27,6 +29,10 @@ class SeoObserver extends \Magento\Framework\App\Config\Value implements Observe
      */
     protected $_helper;
 
+    protected $_language;
+
+    protected $_stopWord;
+
     /**
      * SeoObserver constructor.
      *
@@ -41,6 +47,8 @@ class SeoObserver extends \Magento\Framework\App\Config\Value implements Observe
      * @param array                                                        $data
      */
     public function __construct(
+        \Mageplaza\Seo\Helper\StopWords $stopWords,
+        \Mageplaza\Seo\Model\Source\Language $language,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Config\ScopeConfigInterface $config,
@@ -50,13 +58,15 @@ class SeoObserver extends \Magento\Framework\App\Config\Value implements Observe
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         SeoHelper $helper,
         array $data = []
-    ) {
+    )
+    {
+        $this->_stopWord     = $stopWords;
+        $this->_language     = $language;
         $this->_directory    = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
         $this->_fileRobot    = 'robots.txt';
         $this->_fileHtaccess = '.htaccess';
         $this->_helper       = $helper;
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
-
     }
 
     /**
@@ -64,11 +74,10 @@ class SeoObserver extends \Magento\Framework\App\Config\Value implements Observe
      */
     public function execute(Observer $observer)
     {
-        $value = $this->_helper->getRobotsConfig('content');
-        $this->_directory->writeFile($this->_fileRobot, $value);
-        $value = $this->_helper->getHtaccessConfig('content');
-        $this->_directory->writeFile($this->_fileHtaccess, $value);
+        $storeId = $observer->getController()->getRequest()->getParam('store');
+        $product = $observer->getProduct();
+        $product->setUrlKey($this->_stopWord->filterStopWords($product->getUrlKey(),$storeId));
+        $product->save();
     }
-
-
+    
 }

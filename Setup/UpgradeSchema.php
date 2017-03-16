@@ -18,8 +18,44 @@ class UpgradeSchema implements UpgradeSchemaInterface
      */
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
+        $installer = $setup;
         $setup->startSetup();
+        if (version_compare($context->getVersion(), '1.1.2') < 0) {
+            $this->addColumn($installer);
+        }
         $setup->endSetup();
+    }
+
+    public function addColumn($installer)
+    {
+        $tableName = $installer->getTable('cms_page');
+        $columns   = [
+            'mp_meta_robots' => [
+                'type'     => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                255,
+                'nullable' => true,
+                'comment'  => 'meta robot',
+            ],
+        ];
+
+        $connection = $installer->getConnection();
+        foreach ($columns as $name => $definition) {
+            $connection->addColumn($tableName, $name, $definition);
+        }
+        
+        $tableName = $installer->getTable('store');
+        $columns   = [
+            'mp_lang' => [
+                'type'     => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                'nullable' => false,
+                'comment'  => 'language',
+            ],
+        ];
+        
+        $connection = $installer->getConnection();
+        foreach ($columns as $name => $definition) {
+            $connection->addColumn($tableName, $name, $definition);
+        }
     }
 
 

@@ -6,11 +6,8 @@ use Mageplaza\Seo\Block\AbstractSeo;
 
 class Product extends AbstractSeo
 {
-
 	protected $imageHelper;
-
-
-
+	
 	public function getProductImage()
 	{
 
@@ -19,6 +16,11 @@ class Product extends AbstractSeo
 			->getUrl();
 
 		return $imageUrl;
+	}
+
+	public function entityEnable()
+	{
+		return $this->hreflang->hasEnableForEntity('enable_product');
 	}
 
 }

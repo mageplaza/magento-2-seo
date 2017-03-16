@@ -1,5 +1,21 @@
-<config>
-    <!--<type name="Magento\Framework\View\Page\Title">-->
-        <!--<plugin name="Mageplaza_Seo_Page_Title" type="Mageplaza\Seo\Plugin\Title" sortOrder="99" disabled="false"/>-->
-    <!--</type>-->
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza
+ *                     Mageplaza_SeoSiteMap extension
+ *                     NOTICE OF LICENSE
+ *
+ *                     This source file is subject to the Mageplaza License
+ *                     that is bundled with this package in the file LICENSE.txt.
+ *                     It is also available through the world-wide-web at this URL:
+ *                     https://www.mageplaza.com/LICENSE.txt
+ *
+ *                     @category  Mageplaza
+ *                     @package   Mageplaza_Seo
+ *                     @copyright Copyright (c) 2017
+ *                     @license   https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Magento\Framework\View\Page\Title" type="Mageplaza\Seo\Plugin\Title" />
 </config>
