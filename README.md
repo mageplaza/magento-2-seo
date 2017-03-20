@@ -5,7 +5,7 @@
 ## Documentations
 
 - User Guide: https://docs.mageplaza.com/seo-m2/
-- Discuss forum: https://github.com/mageplaza/magento-2-seo-extension/issues
+- Get Support: https://github.com/mageplaza/magento-2-seo-extension/issues
 - Contribute on Github: https://github.com/mageplaza/magento-2-seo-extension
 
 ## How to install
