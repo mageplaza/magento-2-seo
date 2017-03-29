@@ -24,7 +24,7 @@
         <!--<add id="Mageplaza_Seo::dashboard" title="Dashboard" module="Mageplaza_Seo" sortOrder="1"-->
         <!--action="Mageplaza_Seo/index/index" resource="Mageplaza_Seo::dashboard"/>-->
 
-        <add id="Mageplaza_Seo::settings" title="Settings" module="Mageplaza_Seo" sortOrder="10"
+        <add id="Mageplaza_Seo::settings" title="Settings" module="Mageplaza_Seo" sortOrder="999"
              action="adminhtml/system_config/edit/section/seo" resource="Mageplaza_Seo::settings"
              parent="Mageplaza_Seo::seo"/>
     </menu>
