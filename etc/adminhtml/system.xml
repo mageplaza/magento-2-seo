@@ -70,31 +70,11 @@
                     </depends>
                 </field>
 
-                <field id="title_separator" translate="label comment" type="select" sortOrder="65" showInDefault="1"
+                <field id="stop_word" translate="label comment" type="select" sortOrder="70" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Title Separator</label>
-                    <source_model>Mageplaza\Seo\Model\Source\TitleSeparator</source_model>
+                    <label>Stop Words Package</label>
+                    <source_model>Mageplaza\Seo\Model\Source\Language</source_model>
                 </field>
-
-                <!--<field id="meta_title" translate="label comment" type="text" sortOrder="70" showInDefault="1"-->
-                <!--showInWebsite="1" showInStore="1">-->
-                <!--<label>Store Meta Title</label>-->
-                <!--<comment><![CDATA[]]></comment>-->
-                <!--</field>-->
-
-
-                <!--<field id="meta_description" translate="label comment" type="textarea" sortOrder="72" showInDefault="1"-->
-                <!--showInWebsite="1" showInStore="1">-->
-                <!--<label>Store Meta Description</label>-->
-                <!--<comment><![CDATA[]]></comment>-->
-                <!--</field>-->
-
-                <!--<field id="meta_robots" translate="label comment" type="text" sortOrder="73" showInDefault="1"-->
-                <!--showInWebsite="1" showInStore="1">-->
-                <!--<label>Store Meta Title</label>-->
-                <!--<comment><![CDATA[]]></comment>-->
-                <!--</field>-->
-
 
             </group>
 
@@ -121,17 +101,17 @@
                         <![CDATA[Prefer the https version of a page (a valid ssl certificate is required)]]></comment>
                 </field>
 
-                <field id="url_param" translate="label comment" type="select" sortOrder="20" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Disable URL parameter in canonical URL</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>
-                        <![CDATA[ We will remove parameters such as: <strong>?price=30-220&brand=abc</strong>
-                        in canonical URL. This will be avoid duplicate content. ]]></comment>
-                    <depends>
-                        <field id="canonical">1</field>
-                    </depends>
-                </field>
+                <!--<field id="url_param" translate="label comment" type="select" sortOrder="20" showInDefault="1"-->
+                       <!--showInWebsite="1" showInStore="1">-->
+                    <!--<label>Disable URL parameter in canonical URL</label>-->
+                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                    <!--<comment>-->
+                        <!--<![CDATA[ We will remove parameters such as: <strong>?price=30-220&brand=abc</strong>-->
+                        <!--in canonical URL. This will be avoid duplicate content. ]]></comment>-->
+                    <!--<depends>-->
+                        <!--<field id="canonical">1</field>-->
+                    <!--</depends>-->
+                <!--</field>-->
 
             </group>
 
@@ -244,36 +224,54 @@
                        showInWebsite="1" showInStore="1">
                     <label>Website Name</label>
                     <comment><![CDATA[]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
 
                 <field id="alt_name" translate="label comment" type="text" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Alternate Name</label>
                     <comment><![CDATA[]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
 
                 <field id="business_name" translate="label comment" type="text" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Business Name</label>
                     <comment><![CDATA[]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
 
                 <field id="logo" translate="label comment" type="text" sortOrder="40" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Business Logo</label>
                     <comment><![CDATA[Logo URL, e.g: https://www.mageplaza.com/logo.jpg]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
 
                 <field id="phone" translate="label comment" type="text" sortOrder="50" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Business Phone Number</label>
                     <comment><![CDATA[]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
 
                 <field id="sales_phone" translate="label comment" type="text" sortOrder="51" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Sales Phone Number</label>
                     <comment><![CDATA[]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
 
                 <field id="technical_support_phone" translate="label comment" type="text" sortOrder="52"
@@ -281,6 +279,9 @@
                        showInWebsite="1" showInStore="1">
                     <label>Technical support</label>
                     <comment><![CDATA[]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
             </group>
 
@@ -372,7 +373,7 @@
 
             <group id="verification" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
                    showInStore="1">
-                <label>Verification</label>
+                <label>Verifications</label>
 
                 <field id="google" translate="label comment" type="text" sortOrder="10" showInDefault="1"
                        showInWebsite="1" showInStore="1">
@@ -467,9 +468,9 @@
 
             </group>
 
-            <group id="hreflang" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+            <group id="hreflang" translate="label" type="text" sortOrder="99" showInDefault="1" showInWebsite="1"
                    showInStore="1">
-                <label>Hreflang Tag</label>
+                <label>Hreflang Tags</label>
 
                 <field id="enable_hreflang_url" translate="label comment" type="select" sortOrder="1" showInDefault="1"
                        showInWebsite="1" showInStore="1">

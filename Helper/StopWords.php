@@ -13,11 +13,15 @@ class StopWords
 
 	protected $_lang;
 
+	protected $_helper;
+
 	public function __construct(
+		\Mageplaza\Seo\Helper\Data $helper,
 		\Mageplaza\Seo\Model\Source\Language $language,
 		\Magento\Store\Model\StoreManagerInterface $storeManagerInterface
 	)
 	{
+		$this->_helper                = $helper;
 		$this->_lang                  = $language;
 		$this->_storeManagerInterface = $storeManagerInterface;
 	}
@@ -30,8 +34,9 @@ class StopWords
 	{
 		if ($storeId == 0)
 			return ObjectManager::getInstance()->create('\Mageplaza\Seo\Helper\StopWords\En')->getStopWords();//default EN
-		$packetLang = $this->_storeManagerInterface->getStore($storeId)->getMpLang();
-		switch ($packetLang) {
+		$packageLang = $this->_helper->getGeneralConfig('stop_word',$storeId);
+//		$packageLang = $this->_storeManagerInterface->getStore($storeId)->getMpLang();//TODO get from config
+		switch ($packageLang) {
 			case Language::DE:
 				return ObjectManager::getInstance()->create('\Mageplaza\Seo\Helper\StopWords\De')->getStopWords();
 			case Language::EN:

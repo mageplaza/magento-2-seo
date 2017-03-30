@@ -69,24 +69,24 @@ class StoreForm extends \Magento\Framework\App\Config\Value implements ObserverI
 	 */
 	public function execute(Observer $observer)
 	{
-		$block    = $observer->getEvent()->getBlock();
-		$form     = $block->getForm();
-		$fieldset = $form->addFieldset('mp_store_fieldset', []);
-		$fieldset->addField(
-			'mp_lang',
-			'select',
-			[
-				'name'     => 'mp_lang',
-				'required' => true,
-				'label'    => __('Language'),
-				'title'    => __('Language'),
-				'values'   => $this->_language->toOptionArray(),
-				'class'    => 'select',
-				'note'     => 'Added by Mageplaza.com',
-			]
-		);
-
-		return $this;
+//		$block    = $observer->getEvent()->getBlock();
+//		$form     = $block->getForm();
+//		$fieldset = $form->addFieldset('mp_store_fieldset', []);
+//		$fieldset->addField(
+//			'mp_lang',
+//			'select',
+//			[
+//				'name'     => 'mp_lang',
+//				'required' => true,
+//				'label'    => __('Language'),
+//				'title'    => __('Language'),
+//				'values'   => $this->_language->toOptionArray(),
+//				'class'    => 'select',
+//				'note'     => 'Added by Mageplaza.com',
+//			]
+//		);
+//
+//		return $this;
 	}
 
 }
