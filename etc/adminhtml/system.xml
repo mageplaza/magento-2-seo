@@ -72,35 +72,9 @@
 
                 <field id="stop_word" translate="label comment" type="select" sortOrder="70" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Stopword Package</label>
+                    <label>Stop Words Package</label>
                     <source_model>Mageplaza\Seo\Model\Source\Language</source_model>
                 </field>
-
-                <!--<field id="title_separator" translate="label comment" type="select" sortOrder="65" showInDefault="1"-->
-                       <!--showInWebsite="1" showInStore="1">-->
-                    <!--<label>Title Separator</label>-->
-                    <!--<source_model>Mageplaza\Seo\Model\Source\TitleSeparator</source_model>-->
-                <!--</field>-->
-
-                <!--<field id="meta_title" translate="label comment" type="text" sortOrder="70" showInDefault="1"-->
-                <!--showInWebsite="1" showInStore="1">-->
-                <!--<label>Store Meta Title</label>-->
-                <!--<comment><![CDATA[]]></comment>-->
-                <!--</field>-->
-
-
-                <!--<field id="meta_description" translate="label comment" type="textarea" sortOrder="72" showInDefault="1"-->
-                <!--showInWebsite="1" showInStore="1">-->
-                <!--<label>Store Meta Description</label>-->
-                <!--<comment><![CDATA[]]></comment>-->
-                <!--</field>-->
-
-                <!--<field id="meta_robots" translate="label comment" type="text" sortOrder="73" showInDefault="1"-->
-                <!--showInWebsite="1" showInStore="1">-->
-                <!--<label>Store Meta Title</label>-->
-                <!--<comment><![CDATA[]]></comment>-->
-                <!--</field>-->
-
 
             </group>
 
@@ -399,7 +373,7 @@
 
             <group id="verification" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
                    showInStore="1">
-                <label>Verification</label>
+                <label>Verifications</label>
 
                 <field id="google" translate="label comment" type="text" sortOrder="10" showInDefault="1"
                        showInWebsite="1" showInStore="1">
@@ -496,7 +470,7 @@
 
             <group id="hreflang" translate="label" type="text" sortOrder="99" showInDefault="1" showInWebsite="1"
                    showInStore="1">
-                <label>Hreflang Tag</label>
+                <label>Hreflang Tags</label>
 
                 <field id="enable_hreflang_url" translate="label comment" type="select" sortOrder="1" showInDefault="1"
                        showInWebsite="1" showInStore="1">
