@@ -15,6 +15,7 @@ class Sitemap extends Template
 	protected $collection;
 	protected $categoryRepository;
 	protected $_helper;
+	protected $_stockFilter;
 
 	/**
 	 * Sitemap constructor.
@@ -38,7 +39,8 @@ class Sitemap extends Template
 		\Magento\Catalog\Model\ResourceModel\Category\Collection $collection,
 		\Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollection,
 		\Magento\Catalog\Model\CategoryRepository $categoryRepository,
-		\Mageplaza\Seo\Helper\Data $helper
+		\Mageplaza\Seo\Helper\Data $helper,
+		\Magento\CatalogInventory\Helper\Stock $stockFilter
 	)
 	{
 		$this->objectManager       = $objectManager;
@@ -47,6 +49,7 @@ class Sitemap extends Template
 		$this->_categoryCollection = $categoryCollection;
 		$this->categoryRepository  = $categoryRepository;
 		$this->_helper             = $helper;
+		$this->_stockFilter        = $stockFilter;
 
 		parent::__construct($context);
 	}
@@ -101,7 +104,7 @@ class Sitemap extends Template
 			->addTaxPercents()
 			->setPageSize($limit)
 			->addAttributeToSelect('*');
-
+		$this->_stockFilter->addInStockFilterToCollection($collection);
 
 		return $collection;
 	}
@@ -178,7 +181,7 @@ class Sitemap extends Template
 
 		$result = array();
 		foreach ($allLink as $link) {
-			$component      = explode(',', $link);
+			$component             = explode(',', $link);
 			$result[$component[0]] = $component[1];
 		}
 
