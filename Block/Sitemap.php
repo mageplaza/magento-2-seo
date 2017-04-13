@@ -148,7 +148,7 @@ class Sitemap extends Template
 		/** @var \Magento\Cms\Model\ResourceModel\Page\Collection $collection */
 		$collection = $this->objectManager->create('\Magento\Cms\Model\ResourceModel\Page\Collection');
 		$collection->addFieldToFilter('is_active', \Magento\Cms\Model\Page::STATUS_ENABLED)
-			->addFieldToFilter('page_id', array(
+			->addFieldToFilter('identifier', array(
 					'nin' => $this->getExcludedPages())
 			);
 

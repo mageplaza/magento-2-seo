@@ -44,7 +44,7 @@ class Page
 	{
 		$arr = [];
 		foreach ($this->getStoreCollection() as $item) {
-			$arr[] = ['value' => $item->getPageId(), 'label' => $item->getTitle()];
+			$arr[] = ['value' => $item->getIdentifier(), 'label' => $item->getTitle()];
 		}
 
 		return $arr;
