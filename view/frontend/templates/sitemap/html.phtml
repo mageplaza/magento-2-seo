@@ -12,11 +12,15 @@
     </div>
 	<?php endif; ?>
 
-
-
 	<?php if ($block->getSitemapConfig('product')): ?>
 		<div class="row">
         <?php echo $block->getChildHtml('mageplaza_seo_sitemap_product'); ?>
+    </div>
+	<?php endif; ?>
+
+	<?php if ($block->getSitemapConfig('enable_add_links')): ?>
+		<div class="row">
+        <?php echo $block->getChildHtml('mageplaza_seo_sitemap_link'); ?>
     </div>
 	<?php endif; ?>
 
