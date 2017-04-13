@@ -1,10 +1,6 @@
-<!--- Provide a general summary of the Pull Request in the Title above -->
-
 ### Description
-<!--- Provide a description of the changes proposed in the pull request -->
 
 ### Fixed Issues (if relevant)
-<!--- Provide a list of fixed issues in the format magento/magento2#<issue_number>, if relevant  -->
 1. https://github.com/mageplaza/magento-2-seo/<issue_number>: Issue title
 2. ...
 
