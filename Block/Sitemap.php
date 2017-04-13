@@ -147,8 +147,7 @@ class Sitemap extends Template
 		$collection->addFieldToFilter('is_active', \Magento\Cms\Model\Page::STATUS_ENABLED)
 			->addFieldToFilter('page_id', array(
 					'nin' => $this->getExcludedPages())
-			)
-		;
+			);
 
 		return $collection;
 	}
@@ -162,6 +161,27 @@ class Sitemap extends Template
 		if ($this->getSitemapConfig('exclude_page'))
 			return explode(',', $this->getSitemapConfig('exclude_page_listing'));
 
-		return [''];
+		return [
+			'home',
+			'no-route'
+		];
+	}
+
+	/**
+	 * get addition link collection
+	 * @return mixed
+	 */
+	public function getAdditionLinksCollection()
+	{
+		$additionLinks = $this->getSitemapConfig('additional_links');
+		$allLink       = explode("\n", $additionLinks);
+
+		$result = array();
+		foreach ($allLink as $link) {
+			$component      = explode(',', $link);
+			$result[$component[0]] = $component[1];
+		}
+
+		return $result;
 	}
 }

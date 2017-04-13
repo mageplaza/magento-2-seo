@@ -476,6 +476,34 @@
                     </depends>
                 </field>
 
+                <field id="enable_add_links" translate="label comment" type="select" sortOrder="550" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Additional Links</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[ ]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="additional_links" translate="label comment" type="textarea" sortOrder="555" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Additional Links</label>
+                    <comment>
+                        <![CDATA[
+                         - A comma-delimited list of links and link labels to append to sitemap.</br>
+                         - One link per line.</br>
+                         <b>Example:</b></br>
+                         <div style="margin-left: 30px; font-size: 12px">
+                            http://www.mageplaza.com/,Mageplaza</br>
+                            https://magento.com/,Magento
+                         </div>
+                         ]]>
+                    </comment>
+                    <depends>
+                        <field id="enable_add_links">1</field>
+                    </depends>
+                </field>
 
                 <field id="footer" translate="label comment" type="select" sortOrder="600" showInDefault="1"
                        showInWebsite="1" showInStore="1">
