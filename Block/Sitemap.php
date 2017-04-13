@@ -142,9 +142,13 @@ class Sitemap extends Template
 	 */
 	public function getPageCollection()
 	{
+		/** @var \Magento\Cms\Model\ResourceModel\Page\Collection $collection */
 		$collection = $this->objectManager->create('\Magento\Cms\Model\ResourceModel\Page\Collection');
-		$collection->addFieldToFilter('is_active', \Magento\Cms\Model\Page::STATUS_ENABLED);
-		$pages = [];
+		$collection->addFieldToFilter('is_active', \Magento\Cms\Model\Page::STATUS_ENABLED)
+			->addFieldToFilter('page_id', array(
+					'nin' => $this->getExcludedPages())
+			)
+		;
 
 		return $collection;
 	}
@@ -155,9 +159,9 @@ class Sitemap extends Template
 	 */
 	public function getExcludedPages()
 	{
-		return [
-			'home',
-			'no-route',
-		];
+		if ($this->getSitemapConfig('exclude_page'))
+			return explode(',', $this->getSitemapConfig('exclude_page_listing'));
+
+		return [''];
 	}
 }
