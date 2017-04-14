@@ -28,10 +28,31 @@ class Markup implements ObserverInterface
 			);
 		}
 
+		$afterBodyStartContainer = $this->renderContainer('after.body.start', $layout);
+		$afterBodyStartContainer = str_replace(' ', '', $afterBodyStartContainer);
+		$afterBodyStartContainer = str_replace("\n", "", $afterBodyStartContainer);
+		echo $afterBodyStartContainer;
+		/**
+		 * Add rich snippets organization
+		 */
+		$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org","@type":"Organization"';
+		if (strpos($afterBodyStartContainer, $subString) === false) {
+			$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Organization', 'mageplaza_seo_organization', 'after.body.start', '');
+		}
+
+		/**
+		 * Add rich snippets sitename, sitelinks
+		 */
+		$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org","@type":"WebSite"';
+		if (strpos($afterBodyStartContainer, $subString) === false) {
+			$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Sitename', 'mageplaza_seo_richsnippets_sitename', 'after.body.start', '');
+			$layout->addBlock('\Mageplaza\Seo\Block\Sitelinks', 'mageplaza_seo_sitelinks', 'after.body.start', '');
+		}
+
 		/**
 		 * Add markup data to specify action
 		 */
-		switch($action){
+		switch ($action) {
 			case 'catalog_category_view':
 				if (strpos($headBlock->toHtml(), 'hrefLang') === false) {
 					$headBlock->addChild(
@@ -67,6 +88,13 @@ class Markup implements ObserverInterface
 						['template' => 'opengraph/product.phtml']
 					);
 				}
+				/**
+				 * Add rich snippet product
+				 */
+				$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org/","@type":"Product"';
+				if (strpos($afterBodyStartContainer, $subString) === false) {
+					$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Product', 'mageplaza_seo_richsnippets_product', 'after.body.start', '');
+				}
 				break;
 		}
 
@@ -85,5 +113,23 @@ class Markup implements ObserverInterface
 		$blocks = $layout->getAllBlocks();
 
 		return isset($blocks[$name]) ? $blocks[$name] : false;
+	}
+
+	/**
+	 * Get block by name
+	 *
+	 * @param string $name
+	 * @param \Magento\Framework\View\LayoutInterface $layout
+	 * @return string
+	 */
+	public function renderContainer($name, $layout)
+	{
+		$html     = '';
+		$children = $layout->getChildNames($name);
+		foreach ($children as $child) {
+			$html .= $layout->renderElement($child);
+		}
+
+		return $html;
 	}
 }
