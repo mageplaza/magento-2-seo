@@ -31,7 +31,6 @@ class Markup implements ObserverInterface
 		$afterBodyStartContainer = $this->renderContainer('after.body.start', $layout);
 		$afterBodyStartContainer = str_replace(' ', '', $afterBodyStartContainer);
 		$afterBodyStartContainer = str_replace("\n", "", $afterBodyStartContainer);
-		echo $afterBodyStartContainer;
 		/**
 		 * Add rich snippets organization
 		 */
