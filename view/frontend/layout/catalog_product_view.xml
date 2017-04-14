@@ -8,13 +8,9 @@
         <referenceBlock name="head.additional">
                 <block class="Magento\Directory\Block\Currency" name="opengraph.currency" as="meta.currency"
                        template="Magento_Catalog::product/view/opengraph/currency.phtml"/>
-            </block>
         </referenceBlock>
 
         <referenceContainer name="after.body.start" before="-">
-            <block class="Mageplaza\Seo\Block\Richsnippets\Product" name="mageplaza_seo_richsnippets_product"
-                   template="Mageplaza_Seo::richsnippets/jsonld/product.phtml">
-            </block>
         </referenceContainer>
     </body>
 </page>
