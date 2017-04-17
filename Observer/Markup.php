@@ -20,7 +20,7 @@ class Markup implements ObserverInterface
 		 * Add Canonical tag
 		 */
 		$headBlock = $this->getBlock('head.additional', $layout);
-		if (strpos($headBlock->toHtml(), 'rel="canonical"') === false) {
+		if (strpos($headBlock->toHtml(), '<link type="hrefLang"') === false) {
 			$headBlock->addChild(
 				'mageplaza_seo_canonical',
 				'\Mageplaza\Seo\Block\Page\Head\Page',
@@ -29,8 +29,8 @@ class Markup implements ObserverInterface
 		}
 
 		$afterBodyStartContainer = $this->renderContainer('after.body.start', $layout);
-		$afterBodyStartContainer = str_replace(' ', '', $afterBodyStartContainer);
-		$afterBodyStartContainer = str_replace("\n", "", $afterBodyStartContainer);
+		$afterBodyStartContainer = str_replace([' ', "\n"], ['',''], $afterBodyStartContainer);
+
 		/**
 		 * Add rich snippets organization
 		 */
