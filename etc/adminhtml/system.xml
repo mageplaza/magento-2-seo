@@ -90,7 +90,7 @@
                     <comment>Avoid duplicate content.</comment>
                 </field>
 
-                <field id="https_canonical" translate="label comment" type="select" sortOrder="15" showInDefault="1"
+                <field id="https_canonical" translate="label comment" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <depends>
                         <field id="canonical">1</field>
