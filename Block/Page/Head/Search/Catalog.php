@@ -36,7 +36,7 @@ class Catalog extends Template
 	 */
 	protected function _prepareLayout()
 	{
-		$this->_corePageConfig->setRobots('NOINDEX,FOLLOW');
+		$this->_corePageConfig->setRobots('NOINDEX,NOFOLLOW');
 
 		return parent::_prepareLayout();
 	}
