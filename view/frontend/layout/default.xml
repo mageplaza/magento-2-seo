@@ -3,9 +3,6 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="head.additional">
-            <block class="Mageplaza\Seo\Block\Page\Head\Page" name="mageplaza_seo_canonical"
-                   template="Mageplaza_Seo::page/head/canonical.phtml">
-            </block>
 
             <block class="Mageplaza\Seo\Block\Page\Head\Verification" name="mageplaza_seo_site_verification"
                    template="Mageplaza_Seo::page/head/verification.phtml">
@@ -17,15 +14,6 @@
         </referenceBlock>
 
         <referenceContainer name="after.body.start" before="-">
-            <block class="Mageplaza\Seo\Block\Seo" name="mageplaza_seo_sitelinks"
-                   template="Mageplaza_Seo::sitelinks.phtml">
-            </block>
-            <block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_organization"
-                   template="Mageplaza_Seo::richsnippets/jsonld/organization.phtml">
-            </block>
-            <block class="Mageplaza\Seo\Block\Richsnippets" name="mageplaza_seo_richsnippets_sitename"
-                   template="Mageplaza_Seo::richsnippets/jsonld/sitename.phtml">
-            </block>
         </referenceContainer>
 
         <referenceContainer name="page.breadcrumbs">

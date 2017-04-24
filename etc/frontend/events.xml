@@ -10,6 +10,8 @@
     <event name="layout_generate_blocks_after">
         <observer name="mageplaza_seo_generate_blocks_after"
                   instance="Mageplaza\Seo\Observer\GenerateBlocksAfterObserver"/>
+        <observer name="mageplaza_seo_add_markup_data"
+                  instance="Mageplaza\Seo\Observer\Markup"/>
     </event>
 
     <!--<event name="cms_page_load_after">-->

@@ -15,6 +15,7 @@ class Sitemap extends Template
 	protected $collection;
 	protected $categoryRepository;
 	protected $_helper;
+	protected $_stockFilter;
 
 	/**
 	 * Sitemap constructor.
@@ -38,7 +39,8 @@ class Sitemap extends Template
 		\Magento\Catalog\Model\ResourceModel\Category\Collection $collection,
 		\Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollection,
 		\Magento\Catalog\Model\CategoryRepository $categoryRepository,
-		\Mageplaza\Seo\Helper\Data $helper
+		\Mageplaza\Seo\Helper\Data $helper,
+		\Magento\CatalogInventory\Helper\Stock $stockFilter
 	)
 	{
 		$this->objectManager       = $objectManager;
@@ -47,6 +49,7 @@ class Sitemap extends Template
 		$this->_categoryCollection = $categoryCollection;
 		$this->categoryRepository  = $categoryRepository;
 		$this->_helper             = $helper;
+		$this->_stockFilter        = $stockFilter;
 
 		parent::__construct($context);
 	}
@@ -101,7 +104,7 @@ class Sitemap extends Template
 			->addTaxPercents()
 			->setPageSize($limit)
 			->addAttributeToSelect('*');
-
+		$this->_stockFilter->addInStockFilterToCollection($collection);
 
 		return $collection;
 	}
@@ -142,9 +145,12 @@ class Sitemap extends Template
 	 */
 	public function getPageCollection()
 	{
+		/** @var \Magento\Cms\Model\ResourceModel\Page\Collection $collection */
 		$collection = $this->objectManager->create('\Magento\Cms\Model\ResourceModel\Page\Collection');
-		$collection->addFieldToFilter('is_active', \Magento\Cms\Model\Page::STATUS_ENABLED);
-		$pages = [];
+		$collection->addFieldToFilter('is_active', \Magento\Cms\Model\Page::STATUS_ENABLED)
+			->addFieldToFilter('identifier', array(
+					'nin' => $this->getExcludedPages())
+			);
 
 		return $collection;
 	}
@@ -155,9 +161,30 @@ class Sitemap extends Template
 	 */
 	public function getExcludedPages()
 	{
+		if ($this->getSitemapConfig('exclude_page'))
+			return explode(',', $this->getSitemapConfig('exclude_page_listing'));
+
 		return [
 			'home',
-			'no-route',
+			'no-route'
 		];
+	}
+
+	/**
+	 * get addition link collection
+	 * @return mixed
+	 */
+	public function getAdditionLinksCollection()
+	{
+		$additionLinks = $this->getSitemapConfig('additional_links');
+		$allLink       = explode("\n", $additionLinks);
+
+		$result = array();
+		foreach ($allLink as $link) {
+			$component             = explode(',', $link);
+			$result[$component[0]] = $component[1];
+		}
+
+		return $result;
 	}
 }

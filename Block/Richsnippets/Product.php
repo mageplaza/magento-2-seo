@@ -6,7 +6,7 @@ use Mageplaza\Seo\Block\Richsnippets;
 
 class Product extends Richsnippets
 {
-
+	protected $_template = 'richsnippets/jsonld/product.phtml';
 
 	/**
 	 * get review collection
