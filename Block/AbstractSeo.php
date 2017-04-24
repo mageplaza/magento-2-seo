@@ -150,6 +150,11 @@ class AbstractSeo extends Template
 			$url = str_replace('http:', 'https:', $url);
 		}
 
+		if ($this->getRequest()->getModuleName() == 'catalogsearch') {
+			$position = strrpos($url, "catalogsearch");
+			$url      = substr($url, 0, $position + 14);
+		}
+
 		return $url;
 	}
 
