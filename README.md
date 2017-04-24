@@ -20,8 +20,7 @@ then follow [installation guide](https://docs.mageplaza.com/kb/installation.html
 Run the following command in Magento 2 root folder
 
 ```
-composer require mageplaza/core-m2
-composer require mageplaza/magento-2-seo
+composer require mageplaza/magento-2-seo-extension
 php bin/magento setup:upgrade
 ```
 
