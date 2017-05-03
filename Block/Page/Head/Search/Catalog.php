@@ -25,7 +25,7 @@ class Catalog extends Template
 		array $data = []
 	)
 	{
-		$this->_corePageConfig = $corePageConfig;
+		$this->_corePageConfig = $context->getPageConfig();
 		parent::__construct($context, $data);
 	}
 
