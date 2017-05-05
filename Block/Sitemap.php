@@ -112,14 +112,7 @@ class Sitemap extends Template
 	public function getCategoryCollection()
 	{
 
-		$collection = $this->objectManager->create('Magento\Catalog\Model\ResourceModel\Category\Collection')
-			->addAttributeToFilter(
-				'entity_id', [
-					'nin' => [1, 2]
-				]
-			)
-			->addAttributeToFilter('is_active', 1)
-			->addAttributeToSelect('*');
+		$collection = $this->_categoryHelper->getStoreCategories(false, true, true);
 
 		return $collection;
 	}
