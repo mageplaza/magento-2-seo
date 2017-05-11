@@ -84,23 +84,24 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 		$product->setUrlKey($this->_stopWord->filterStopWords($product->getUrlKey(), $storeId));
 		$product->save();
 
-		$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+		if ($product->getTypeId() == \Magento\Bundle\Model\Product\Type::TYPE_CODE) {
+			$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 
-		$connection = $_objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
-		$selections = $connection->fetchAll("SELECT * FROM catalog_product_bundle_selection WHERE parent_product_id =" . $product->getId());;
-		$optionIds = array();
-		foreach ($selections as $selection) {
-			$optionIds[] = $selection["option_id"];
-		}
+			$connection = $_objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+			$selections = $connection->fetchAll("SELECT * FROM catalog_product_bundle_selection WHERE parent_product_id =" . $product->getId());;
+			$optionIds = array();
+			foreach ($selections as $selection) {
+				$optionIds[] = $selection["option_id"];
+			}
 
-		$collectionOptions = $_objectManager->get('Magento\Bundle\Model\ResourceModel\Option\Collection')
-			->addFieldToFilter('parent_id', $product->getId())
-			->addFieldToFilter('option_id', array(
-					'nin' => $optionIds)
-			);
-		foreach($collectionOptions as $option){
-			$option->delete();
+			$collectionOptions = $_objectManager->get('Magento\Bundle\Model\ResourceModel\Option\Collection')
+				->addFieldToFilter('parent_id', $product->getId())
+				->addFieldToFilter('option_id', array(
+						'nin' => $optionIds)
+				);
+			foreach ($collectionOptions as $option) {
+				$option->delete();
+			}
 		}
 	}
-
 }
