@@ -33,6 +33,8 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 
 	protected $_stopWord;
 
+	protected $_productFactory;
+
 	/**
 	 * SeoObserver constructor.
 	 *
@@ -54,18 +56,20 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 		\Magento\Framework\App\Config\ScopeConfigInterface $config,
 		\Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
 		\Magento\Framework\Filesystem $filesystem,
+		\Magento\Catalog\Model\ProductFactory $productFactory,
 		\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
 		\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
 		SeoHelper $helper,
 		array $data = []
 	)
 	{
-		$this->_stopWord     = $stopWords;
-		$this->_language     = $language;
-		$this->_directory    = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
-		$this->_fileRobot    = 'robots.txt';
-		$this->_fileHtaccess = '.htaccess';
-		$this->_helper       = $helper;
+		$this->_stopWord       = $stopWords;
+		$this->_language       = $language;
+		$this->_directory      = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
+		$this->_fileRobot      = 'robots.txt';
+		$this->_fileHtaccess   = '.htaccess';
+		$this->_helper         = $helper;
+		$this->_productFactory = $productFactory;
 		parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
 	}
 
@@ -75,9 +79,28 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 	public function execute(Observer $observer)
 	{
 		$storeId = $observer->getController()->getRequest()->getParam('store');
+		/** @type \Magento\Catalog\Model\Product $product */
 		$product = $observer->getProduct();
 		$product->setUrlKey($this->_stopWord->filterStopWords($product->getUrlKey(), $storeId));
 		$product->save();
+
+		$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+		$connection = $_objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+		$selections = $connection->fetchAll("SELECT * FROM catalog_product_bundle_selection WHERE parent_product_id =" . $product->getId());;
+		$optionIds = array();
+		foreach ($selections as $selection) {
+			$optionIds[] = $selection["option_id"];
+		}
+
+		$collectionOptions = $_objectManager->get('Magento\Bundle\Model\ResourceModel\Option\Collection')
+			->addFieldToFilter('parent_id', $product->getId())
+			->addFieldToFilter('option_id', array(
+					'nin' => $optionIds)
+			);
+		foreach($collectionOptions as $option){
+			$option->delete();
+		}
 	}
 
 }
