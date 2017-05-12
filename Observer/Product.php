@@ -81,6 +81,5 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 		/** @type \Magento\Catalog\Model\Product $product */
 		$product = $observer->getProduct();
 		$product->setUrlKey($this->_stopWord->filterStopWords($product->getUrlKey(), $product->getStoreId()));
-		$product->save();
 	}
 }
