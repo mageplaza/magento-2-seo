@@ -78,30 +78,9 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 	 */
 	public function execute(Observer $observer)
 	{
-		$storeId = $observer->getController()->getRequest()->getParam('store');
 		/** @type \Magento\Catalog\Model\Product $product */
 		$product = $observer->getProduct();
-		$product->setUrlKey($this->_stopWord->filterStopWords($product->getUrlKey(), $storeId));
+		$product->setUrlKey($this->_stopWord->filterStopWords($product->getUrlKey(), $product->getStoreId()));
 		$product->save();
-
-		if ($product->getTypeId() == \Magento\Bundle\Model\Product\Type::TYPE_CODE) {
-			$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-
-			$connection = $_objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
-			$selections = $connection->fetchAll("SELECT * FROM catalog_product_bundle_selection WHERE parent_product_id =" . $product->getId());;
-			$optionIds = array();
-			foreach ($selections as $selection) {
-				$optionIds[] = $selection["option_id"];
-			}
-
-			$collectionOptions = $_objectManager->get('Magento\Bundle\Model\ResourceModel\Option\Collection')
-				->addFieldToFilter('parent_id', $product->getId())
-				->addFieldToFilter('option_id', array(
-						'nin' => $optionIds)
-				);
-			foreach ($collectionOptions as $option) {
-				$option->delete();
-			}
-		}
 	}
 }
