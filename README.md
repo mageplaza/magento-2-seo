@@ -61,11 +61,11 @@ SEO and Social Media are heavily intertwined, that's why this plugin also comes 
 - Add Canonical URL Meta 
 - Add Nofollow meta in Search Result 
 - Add Nofollow meta in Product Gallery 
-- Add Option: Follow/Nofollow/Noindex for Product, Category, CMS Page (Featured) - Add Link Rel="alternate" 
+- Add Option: Follow/Nofollow/Noindex for Product, Category, CMS Page (Featured) 
+- Add Link Rel="alternate" 
 - Automatically setup page title, meta description 
 - .htaccess editor 
 - robots.txt editor 
-- Quick save .htaccess, robots.txt file 
 - Optimize Breadcrumbs 
 - Social Integration 
 - Support multistores 
@@ -76,13 +76,6 @@ SEO and Social Media are heavily intertwined, that's why this plugin also comes 
 - Better 404 pages (Coming soon) 
 - SEO-friently URLs: Layered Navigation (Coming soon) 
 
-
-
-## Help
-
-[Documentations](https://mageplaza.freshdesk.com/support/solutions/folders/6000216900)
-
-Any questions, issues, bugs, please create [a topic at forum](https://mageplaza.freshdesk.com/support/discussions/forums/6000241153) 
 
 ## License
 
