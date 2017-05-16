@@ -4,11 +4,11 @@
 
     <body>
 
-        <referenceBlock name="head.additional">
-            <block class="Mageplaza\Seo\Block\Navigation\Category" name="mageplaza_seo_next_prev"
-                   template="Mageplaza_Seo::navigation/nextprev.phtml">
-            </block>
-        </referenceBlock>
+        <!--<referenceBlock name="head.additional">-->
+            <!--<block class="Mageplaza\Seo\Block\Navigation\Category" name="mageplaza_seo_next_prev"-->
+                   <!--template="Mageplaza_Seo::navigation/nextprev.phtml">-->
+            <!--</block>-->
+        <!--</referenceBlock>-->
 
     </body>
 </page>

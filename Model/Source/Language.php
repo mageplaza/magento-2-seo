@@ -33,12 +33,12 @@ class Language
 	{
 		$options = [
 			[
-				'value' => self::DE,
-				'label' => 'De'
-			],
-			[
 				'value' => self::EN,
 				'label' => 'En'
+			],
+			[
+				'value' => self::DE,
+				'label' => 'De'
 			],
 			[
 				'value' => self::ES,
