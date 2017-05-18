@@ -174,8 +174,8 @@ class Sitemap extends Template
 
 		$result = array();
 		foreach ($allLink as $link) {
-			$component             = explode(',', $link);
-			$result[$component[0]] = $component[1];
+			if (count($component = explode(',', $link)) > 1)
+				$result[$component[0]] = $component[1];
 		}
 
 		return $result;
