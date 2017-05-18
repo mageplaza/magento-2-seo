@@ -22,15 +22,15 @@
                 <label>General</label>
 
 
-                <field id="next_prev" translate="label comment" type="select" sortOrder="16" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Enable Next/Prev tag</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>
-                        <![CDATA[Enable this to to indicate the relationship between component URLs in a paginated series.
-                        See <a href="https://webmasters.googleblog.com/2011/09/pagination-with-relnext-and-relprev.html">this</a>
-                        ]]></comment>
-                </field>
+                <!--<field id="next_prev" translate="label comment" type="select" sortOrder="16" showInDefault="1"-->
+                       <!--showInWebsite="1" showInStore="1">-->
+                    <!--<label>Enable Next/Prev tag</label>-->
+                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                    <!--<comment>-->
+                        <!--<![CDATA[Enable this to to indicate the relationship between component URLs in a paginated series.-->
+                        <!--See <a href="https://webmasters.googleblog.com/2011/09/pagination-with-relnext-and-relprev.html">this</a>-->
+                        <!--]]></comment>-->
+                <!--</field>-->
 
 
                 <field id="nofollow_sr" translate="label comment" type="select" sortOrder="20" showInDefault="1"
@@ -49,7 +49,7 @@
                     <label>Enable Sitelinks Search Box</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>
-                        <![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122353-sitelinks-search-box" target="_blank">Sitelinks Search Box</a> ]]></comment>
+                        <![CDATA[ Learn more <a href="https://developers.google.com/search/docs/data-types/sitelinks-searchbox" target="_blank">Sitelinks Search Box</a> ]]></comment>
                 </field>
                 <field id="sitelinks_app" translate="label comment" type="select" sortOrder="55" showInDefault="1"
                        showInWebsite="1" showInStore="1">
@@ -72,7 +72,7 @@
 
                 <field id="stop_word" translate="label comment" type="select" sortOrder="70" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Stop Words Package</label>
+                    <label>Stop Words</label>
                     <source_model>Mageplaza\Seo\Model\Source\Language</source_model>
                 </field>
 
@@ -167,20 +167,20 @@
 
             <group id="richsnippets" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
                    showInStore="1">
-                <label>Rich Snippets | Structured Data</label>
+                <label>Structured Data</label>
                 <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Enable Rich Snippets</label>
+                    <label>Enable Structured Data</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>
-                        <![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122361--rich-snippets/">Rich Snippets</a> ]]></comment>
+                        <![CDATA[ Learn more <a href="https://developers.google.com/search/docs/guides/intro-structured-data">Rich Snippets</a> ]]></comment>
                 </field>
                 <field id="enable_product" translate="label comment" type="select" sortOrder="11" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Enable Product Structured Data</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>
-                        <![CDATA[ Disable this feature if your theme or module implements it's own product snippets ]]>
+                        <![CDATA[ Disable this feature if your theme or module implements it's own product snippets. <a href="https://developers.google.com/search/docs/data-types/products" target="_blank">Learn more</a> ]]>
                     </comment>
                 </field>
                 <field id="custom" translate="label comment" type="select" sortOrder="15" showInDefault="1"
@@ -188,7 +188,7 @@
                     <label>Enable Organization Information</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <!--<comment>-->
-                    <!--<![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122360">Customizing Your Knowledge Graph</a> ]]></comment>-->
+                    <!--<![CDATA[ Learn more <a href="https://developers.google.com/search/docs/data-types/corporate-contacts">here</a> ]]></comment>-->
                 </field>
 
 
@@ -196,8 +196,8 @@
                        showInWebsite="1" showInStore="1">
                     <label>Include Your Site Name in Search Results</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <!--<comment>-->
-                    <!--<![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122357">Include Your Site Name in Search Results</a> ]]></comment>-->
+                    <comment>
+                    <![CDATA[ Learn more <a href="https://developers.google.com/search/docs/data-types/sitename">Include Your Site Name in Search Results</a> ]]></comment>
                     <depends>
                         <field id="custom">1</field>
                     </depends>
@@ -217,7 +217,7 @@
                     <label>Enable Business information</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>
-                        <![CDATA[ ]]></comment>
+                        <![CDATA[ Learn more <a href="https://developers.google.com/search/docs/data-types/corporate-contacts" target="_blank">here</a> ]]></comment>
                 </field>
 
                 <field id="website_name" translate="label comment" type="text" sortOrder="10" showInDefault="1"
@@ -293,61 +293,61 @@
                 <field id="facebook" translate="label comment" type="text" sortOrder="10" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Facebook</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
                 <field id="twitter" translate="label comment" type="text" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Twitter</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
                 <field id="google" translate="label comment" type="text" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Google+</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
                 <field id="instagram" translate="label comment" type="text" sortOrder="40" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Instagram</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
                 <field id="youtube" translate="label comment" type="text" sortOrder="50" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>YouTube</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
                 <field id="linkedin" translate="label comment" type="text" sortOrder="60" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>LinkedIn</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
                 <field id="myspace" translate="label comment" type="text" sortOrder="70" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Myspace</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
                 <field id="pinterest" translate="label comment" type="text" sortOrder="80" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Pinterest</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
                 <field id="soundcloud" translate="label comment" type="text" sortOrder="90" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>SoundCloud</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
                 <field id="tumblr" translate="label comment" type="text" sortOrder="100" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Tumblr</label>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122359-social-profile-links">Learn more</a>]]></comment>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
 
 
@@ -362,7 +362,7 @@
                     <label>Enable Breadcrumbs Rich Snippet</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>
-                        <![CDATA[ Learn more <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000122358">Breadcrumbs</a> ]]></comment>
+                        <![CDATA[ Learn more <a href="https://developers.google.com/search/docs/data-types/breadcrumbs">Breadcrumbs</a> ]]></comment>
                     <depends>
                         <field id="custom">1</field>
                     </depends>
@@ -403,119 +403,6 @@
             </group>
 
 
-            <group id="htmlsitemap" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
-                   showInStore="1">
-                <label>HTML Sitemap</label>
-
-                <field id="enable" translate="label comment" type="select" sortOrder="100" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Enable HTML Sitemap</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[ Default URL: http://your-domain.com/seo/sitemap/ ; See <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000155072-html-sitemap" target="_blank">this article</a> ]]></comment>
-                </field>
-
-
-                <field id="category" translate="label comment" type="select" sortOrder="200" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Enable Categories Sitemap</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[ ]]></comment>
-                    <depends>
-                        <field id="enable">1</field>
-                    </depends>
-                </field>
-
-                <field id="product" translate="label comment" type="select" sortOrder="400" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Enable Products Sitemap</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[ ]]></comment>
-                    <depends>
-                        <field id="enable">1</field>
-                    </depends>
-                </field>
-
-                <field id="product_limit" translate="label comment" type="text" sortOrder="500" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Limit Product Sitemap</label>
-                    <comment><![CDATA[ Default is 100 ]]></comment>
-                    <depends>
-                        <field id="product">1</field>
-                    </depends>
-                </field>
-
-
-                <field id="page" translate="label comment" type="select" sortOrder="300" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Enable Pages Sitemap</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[ ]]></comment>
-                    <depends>
-                        <field id="enable">1</field>
-                    </depends>
-                </field>
-
-                <field id="exclude_page" translate="label comment" type="select" sortOrder="310" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Enable Exclude Pages Sitemap</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[ ]]></comment>
-                    <depends>
-                        <field id="enable">1</field>
-                        <field id="page">1</field>
-                    </depends>
-                </field>
-
-                <field id="exclude_page_listing" translate="label" type="multiselect" sortOrder="320" showInDefault="1">
-                    <label>Filter Cms Pages</label>
-                    <source_model>Mageplaza\Seo\Model\Source\Page</source_model>
-                    <depends>
-                        <field id="enable">1</field>
-                        <field id="page">1</field>
-                        <field id="exclude_page">1</field>
-                    </depends>
-                </field>
-
-                <field id="enable_add_links" translate="label comment" type="select" sortOrder="550" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Enable Additional Links</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[ ]]></comment>
-                    <depends>
-                        <field id="enable">1</field>
-                    </depends>
-                </field>
-
-                <field id="additional_links" translate="label comment" type="textarea" sortOrder="555" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Additional Links</label>
-                    <comment>
-                        <![CDATA[
-                         - A comma-delimited list of links and link labels to append to sitemap.</br>
-                         - One link per line.</br>
-                         <b>Example:</b></br>
-                         <div style="margin-left: 30px; font-size: 12px">
-                            http://www.mageplaza.com/,Mageplaza</br>
-                            https://magento.com/,Magento
-                         </div>
-                         ]]>
-                    </comment>
-                    <depends>
-                        <field id="enable_add_links">1</field>
-                    </depends>
-                </field>
-
-                <field id="footer" translate="label comment" type="select" sortOrder="600" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Add Sitemap Link to Footer</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[ ]]></comment>
-                    <depends>
-                        <field id="enable">1</field>
-                    </depends>
-                </field>
-
-            </group>
 
             <group id="hreflang" translate="label" type="text" sortOrder="99" showInDefault="1" showInWebsite="1"
                    showInStore="1">
@@ -525,6 +412,7 @@
                        showInWebsite="1" showInStore="1">
                     <label>Enable Hreflang Url</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[ Learn more <a href="https://support.google.com/webmasters/answer/189077?hl=en">Hreflang</a>]]></comment>
                 </field>
 
                 <field id="enable_product" translate="label comment" type="select" sortOrder="21" showInDefault="1"

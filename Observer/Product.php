@@ -33,6 +33,8 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 
 	protected $_stopWord;
 
+	protected $_productFactory;
+
 	/**
 	 * SeoObserver constructor.
 	 *
@@ -54,18 +56,20 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 		\Magento\Framework\App\Config\ScopeConfigInterface $config,
 		\Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
 		\Magento\Framework\Filesystem $filesystem,
+		\Magento\Catalog\Model\ProductFactory $productFactory,
 		\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
 		\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
 		SeoHelper $helper,
 		array $data = []
 	)
 	{
-		$this->_stopWord     = $stopWords;
-		$this->_language     = $language;
-		$this->_directory    = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
-		$this->_fileRobot    = 'robots.txt';
-		$this->_fileHtaccess = '.htaccess';
-		$this->_helper       = $helper;
+		$this->_stopWord       = $stopWords;
+		$this->_language       = $language;
+		$this->_directory      = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
+		$this->_fileRobot      = 'robots.txt';
+		$this->_fileHtaccess   = '.htaccess';
+		$this->_helper         = $helper;
+		$this->_productFactory = $productFactory;
 		parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
 	}
 
@@ -74,10 +78,8 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 	 */
 	public function execute(Observer $observer)
 	{
-		$storeId = $observer->getController()->getRequest()->getParam('store');
+		/** @type \Magento\Catalog\Model\Product $product */
 		$product = $observer->getProduct();
-		$product->setUrlKey($this->_stopWord->filterStopWords($product->getUrlKey(), $storeId));
-		$product->save();
+		$product->setUrlKey($this->_stopWord->filterStopWords($product->getUrlKey(), $product->getStoreId()));
 	}
-
 }

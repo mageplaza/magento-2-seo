@@ -16,7 +16,7 @@
     <event name="adminhtml_store_edit_form_prepare_form">
         <observer name="seo_edit_cms" instance="Mageplaza\Seo\Observer\StoreForm"/>
     </event>
-    <event name="controller_action_catalog_product_save_entity_after">
+    <event name="catalog_product_save_before">
         <observer name="seo_edit_cms" instance="Mageplaza\Seo\Observer\Product"/>
     </event>
 </config>
