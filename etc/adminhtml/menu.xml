@@ -1,31 +1,28 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Mageplaza_Seo extension
- *                     NOTICE OF LICENSE
+ * Mageplaza
  *
- *                     This source file is subject to the Mageplaza License
- *                     that is bundled with this package in the file LICENSE.txt.
- *                     It is also available through the world-wide-web at this URL:
- *                     https://www.mageplaza.com/LICENSE.txt
+ * NOTICE OF LICENSE
  *
- *                     @category  Mageplaza
- *                     @package   Mageplaza_Core
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt Mageplaza License
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Seo
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Mageplaza_Seo::seo" title="SEO" module="Mageplaza_Seo" sortOrder="55" resource="Mageplaza_Seo::seo"
-             parent="Mageplaza_Core::menu"/>
-
-        <!--<add id="Mageplaza_Seo::dashboard" title="Dashboard" module="Mageplaza_Seo" sortOrder="1"-->
-        <!--action="Mageplaza_Seo/index/index" resource="Mageplaza_Seo::dashboard"/>-->
-
-        <add id="Mageplaza_Seo::settings" title="Settings" module="Mageplaza_Seo" sortOrder="999"
-             action="adminhtml/system_config/edit/section/seo" resource="Mageplaza_Seo::settings"
-             parent="Mageplaza_Seo::seo"/>
+        <add id="Mageplaza_Seo::seo" title="SEO" module="Mageplaza_Seo" sortOrder="55" resource="Mageplaza_Seo::seo" parent="Mageplaza_Core::menu"/>
+        <add id="Mageplaza_Seo::configuration" title="Configuration" module="Mageplaza_Seo" sortOrder="999" action="adminhtml/system_config/edit/section/seo" resource="Mageplaza_Seo::configuration" parent="Mageplaza_Seo::seo"/>
     </menu>
 </config>
