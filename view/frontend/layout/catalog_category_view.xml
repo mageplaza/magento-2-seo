@@ -3,11 +3,11 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
 
-        <referenceBlock name="head.additional">
+<!--         <referenceBlock name="head.additional">
             <block class="Mageplaza\Seo\Block\Navigation\Category" name="mageplaza_seo_next_prev"
                    template="Mageplaza_Seo::navigation/nextprev.phtml">
             </block>
-        </referenceBlock>
+        </referenceBlock> -->
 
     </body>
 </page>
