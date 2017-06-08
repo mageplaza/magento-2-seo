@@ -2,6 +2,7 @@
 /**
  * Learn more: https://developers.google.com/structured-data/rich-snippets/products#single_product_page
  */
+/** @var \Mageplaza\Seo\Block\Richsnippets\Product $block */
 ?>
 
 <?php if ($block->getProduct() && $block->getRichsnippetsHelper('enable_product')): ?>
@@ -17,7 +18,11 @@
   "mpn": "<?php echo $product->getMpn(); ?>",
   <?php endif; ?>
   "sku": "<?php echo $product->getSku(); ?>",
+  <?php if ($label = $block->getBrandLabel()): ?>
+  "brand": "<?php echo $label ?>",
+  <?php endif; ?>
   "url": "<?php echo $product->getProductUrl(); ?>"
+
   <?php /*
   TO-DO: Allow select brand attribute in configuration > Get attribute label
   "brand": {
