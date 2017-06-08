@@ -37,7 +37,7 @@ class Markup implements ObserverInterface
 			 * Add rich snippets organization
 			 */
 			$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org","@type":"Organization"';
-			if (strpos($afterBodyStartContainer, $subString) === false) {
+			if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
 				$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Organization', 'mageplaza_seo_organization', 'after.body.start', '');
 			}
 
@@ -45,7 +45,7 @@ class Markup implements ObserverInterface
 			 * Add rich snippets sitename, sitelinks
 			 */
 			$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org","@type":"WebSite"';
-			if (strpos($afterBodyStartContainer, $subString) === false) {
+			if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
 				$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Sitename', 'mageplaza_seo_richsnippets_sitename', 'after.body.start', '');
 				$layout->addBlock('\Mageplaza\Seo\Block\Sitelinks', 'mageplaza_seo_sitelinks', 'after.body.start', '');
 			}
@@ -93,7 +93,7 @@ class Markup implements ObserverInterface
 					 * Add rich snippet product
 					 */
 					$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org/","@type":"Product"';
-					if (strpos($afterBodyStartContainer, $subString) === false) {
+					if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
 						$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Product', 'mageplaza_seo_richsnippets_product', 'after.body.start', '');
 					}
 					break;
