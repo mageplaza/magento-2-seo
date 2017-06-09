@@ -12,4 +12,15 @@ use Magento\Checkout\Model\Session;
 class Sitelinks extends Seo
 {
 	protected $_template = 'sitelinks.phtml';
+
+	/**
+	 * get rich snippet config
+	 * @param $code
+	 *
+	 * @return mixed
+	 */
+	public function getRichsnippetsHelper($code)
+	{
+		return $this->helperData->getRichsnippetsConfig($code);
+	}
 }

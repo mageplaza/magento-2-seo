@@ -1,10 +1,17 @@
-<?php if ($block->getGeneralConfig('sitelinks')): ?>
-
-	<script type="application/ld+json">
+<?php
+/** @var \Mageplaza\Seo\Block\Sitelinks $block */
+?>
+<script type="application/ld+json">
+<?php if ($block->getGeneralConfig('sitelinks') || ($block->getRichsnippetsHelper('name_in_sr') && $block->getRichsnippetsHelper('enable'))): ?>
 {
   "@context": "http://schema.org",
   "@type": "WebSite",
-  "url": "<?php echo $block->getBaseUrl() ?>",
+  "url" : "<?php echo $block->getBaseUrl(); ?>",
+<?php endif; ?>
+<?php if ($block->getRichsnippetsHelper('name_in_sr') && $block->getRichsnippetsHelper('enable')): ?>
+  "name" : "<?php echo $block->getBusinessName(); ?>",
+<?php endif; ?>
+<?php if ($block->getGeneralConfig('sitelinks')): ?>
   "potentialAction": {
     "@type": "SearchAction",
     "target": "<?php echo $block->getBaseUrl() ?>catalogsearch/result/?q={search_term_string}",
@@ -14,6 +21,5 @@
     "query-input": "required name=search_term_string"
   }
 }
-
-    </script>
 <?php endif; ?>
+</script>
