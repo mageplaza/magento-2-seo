@@ -66,8 +66,6 @@ class Product extends \Magento\Framework\App\Config\Value implements ObserverInt
 		$this->_stopWord       = $stopWords;
 		$this->_language       = $language;
 		$this->_directory      = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
-		$this->_fileRobot      = 'robots.txt';
-		$this->_fileHtaccess   = '.htaccess';
 		$this->_helper         = $helper;
 		$this->_productFactory = $productFactory;
 		parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);

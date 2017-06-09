@@ -174,14 +174,11 @@ class AbstractSeo extends Template
 		 * - layered navigation: ?price=200-300
 		 * - category: ?p=2
 		 */
-		if ($this->getDuplicateConfig('url_param')) {
-			$position = strpos($url, '?');
-			if ($position !== false) {
-				$url = substr($url, 0, $position);
-			}
-
-
+		$position = strpos($url, '?');
+		if ($position !== false) {
+			$url = substr($url, 0, $position);
 		}
+
 
 		return $url;
 	}

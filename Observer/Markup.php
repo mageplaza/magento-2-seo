@@ -22,13 +22,6 @@ class Markup implements ObserverInterface
 		$headBlock = $this->getBlock('head.additional', $layout);
 
 		if ($headBlock != false) {
-			if (strpos($headBlock->toHtml(), '<link type="hrefLang"') === false) {
-				$headBlock->addChild(
-					'mageplaza_seo_canonical',
-					'\Mageplaza\Seo\Block\Page\Head\Page',
-					['template' => 'page/head/canonical.phtml']
-				);
-			}
 
 			$afterBodyStartContainer = $this->renderContainer('after.body.start', $layout);
 			$afterBodyStartContainer = str_replace([' ', "\n"], ['', ''], $afterBodyStartContainer);
@@ -82,13 +75,11 @@ class Markup implements ObserverInterface
 					}
 					break;
 				case 'catalog_product_view':
-					if (strpos($headBlock->toHtml(), 'hrefLang') === false) {
-						$headBlock->addChild(
-							'mageplaza_seo_open_graph',
-							'\Mageplaza\Seo\Block\Page\Head\Product',
-							['template' => 'opengraph/product.phtml']
-						);
-					}
+					$headBlock->addChild(
+						'mageplaza_seo_open_graph',
+						'\Mageplaza\Seo\Block\Page\Head\Product',
+						['template' => 'opengraph/product.phtml']
+					);
 					/**
 					 * Add rich snippet product
 					 */
@@ -135,7 +126,7 @@ class Markup implements ObserverInterface
 
 	protected $logger;
 
-	function __construct(\Psr\Log\LoggerInterface $logger)
+	public function __construct(\Psr\Log\LoggerInterface $logger)
 	{
 		$this->logger = $logger;
 	}

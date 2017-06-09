@@ -23,6 +23,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="layout_generate_blocks_after">
         <observer name="mageplaza_seo_generate_blocks_after" instance="Mageplaza\Seo\Observer\GenerateBlocksAfterObserver"/>
+        <observer name="mageplaza_seo_duplicate_content" instance="Mageplaza\Seo\Observer\DuplicateContent"/>
         <observer name="mageplaza_seo_add_markup_data" instance="Mageplaza\Seo\Observer\Markup"/>
     </event>
 </config>

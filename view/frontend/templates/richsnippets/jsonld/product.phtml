@@ -5,9 +5,9 @@
 /** @var \Mageplaza\Seo\Block\Richsnippets\Product $block */
 ?>
 
-<?php if ($block->getProduct() && $block->getRichsnippetsHelper('enable_product')): ?>
+<?php if ($block->getProduct() && $block->getRichsnippetsHelper('enable_product') OR 1): ?>
 	<?php $product = $block->getProduct(); ?>
-	<!--    Product Rich Snippets by Mageplaza SEO-->
+	<!--    Product Structured Data by Mageplaza SEO-->
 	<script type="application/ld+json">
 {
   "@context": "http://schema.org/",

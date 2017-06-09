@@ -58,8 +58,6 @@ class StoreForm extends \Magento\Framework\App\Config\Value implements ObserverI
 	{
 		$this->_language     = $language;
 		$this->_directory    = $filesystem->getDirectoryWrite(DirectoryList::ROOT);
-		$this->_fileRobot    = 'robots.txt';
-		$this->_fileHtaccess = '.htaccess';
 		$this->_helper       = $helper;
 		parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
 	}
