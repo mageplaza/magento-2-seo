@@ -6,8 +6,8 @@
 ## Documentations
 
 - User Guide: https://docs.mageplaza.com/seo-m2/
-- Get Support: https://github.com/mageplaza/magento-2-seo-extension/issues
-- Contribute on Github: https://github.com/mageplaza/magento-2-seo-extension
+- Support: https://github.com/mageplaza/magento-2-seo/issues
+- Contribute on Github: https://github.com/mageplaza/magento-2-seo
 
 ## How to install
 
@@ -64,17 +64,15 @@ SEO and Social Media are heavily intertwined, that's why this plugin also comes 
 - Add Option: Follow/Nofollow/Noindex for Product, Category, CMS Page (Featured) 
 - Add Link Rel="alternate" 
 - Automatically setup page title, meta description 
-- .htaccess editor 
-- robots.txt editor 
 - Optimize Breadcrumbs 
-- Social Integration 
+- Social Sharing snippet Integration (Opengraph, Twitter card)
 - Support multistores 
 - RSS Optimization 
 - HTML Sitemaps (Featured) 
-- Better Rich Snippets Schema.org (Featured) 
-- Page Analysis (Coming soon) 
-- Better 404 pages (Coming soon) 
-- SEO-friently URLs: Layered Navigation (Coming soon) 
+- Structured Data (Featured) 
+- Page Analysis (Ultimate edition)
+- 404 pages report (Ultimate edition)
+- SEO-friently URLs: Layered Navigation (Pro edition)
 
 
 ## License
