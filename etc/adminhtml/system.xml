@@ -237,7 +237,7 @@
                     <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
             </group>
-            <group id="store" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="breadcrumbs" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Breadcrumbs</label>
                 <field id="enable" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Breadcrumbs Rich Snippet</label>

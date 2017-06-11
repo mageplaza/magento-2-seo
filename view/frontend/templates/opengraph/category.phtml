@@ -1,6 +1,3 @@
-<?php foreach ($block->getUrls() as $url): ?>
-	<link rel="alternate" href="<?php echo $url['href'] ?>" hrefLang="<?php echo $url['hrefLang'] ?>"/>
-<?php endforeach; ?>
 <?php if ($category = $block->getCurrentCategory()): ?>
 
 	<?php if ($block->getHelper()->getSocialShares('opengraph')): ?>
@@ -9,7 +6,7 @@
 		<meta property="og:title" content="<?php echo $block->escapeHtml($category->getName()) ?>"/>
 		<meta property="og:url" content="<?php echo $block->escapeHtml($block->getCurrentUrl()); ?>"/>
 		<?php if ($category->getShortDescription()): ?>
-			<meta property="og:description" content="<?php echo $block->escapeHtml($category->getDescription()) ?>"/>
+			<meta property="og:description" content="<?php echo $block->escapeHtml($block->getCategoryDescription()) ?>"/>
 		<?php endif; ?>
 		<meta property="og:site_name" content="<?php echo $block->escapeHtml($block->getBusinessName()); ?>"/>
 	<?php endif; ?>
@@ -20,12 +17,8 @@
 		<meta name="twitter:site" content="<?php echo $block->escapeHtml($block->getTwitterAccount()); ?>"/>
 		<meta name="twitter:title" content="<?php echo $block->escapeHtml($category->getName()) ?>"/>
 		<?php if ($category->getShortDescription()): ?>
-			<meta name="twitter:description" content="<?php echo $block->escapeHtml($category->getDescription()); ?>"/>
+			<meta name="twitter:description" content="<?php echo $block->escapeHtml($block->getCategoryDescription()); ?>"/>
 		<?php endif; ?>
-	<?php endif; ?>
-
-	<?php if ($pinterest = $block->getHelper()->getSocialShares('pinterest')): ?>
-		<meta name="p:domain_verify" content="<?php echo $pinterest; ?>"/>
 	<?php endif; ?>
 
 	<?php if ($googlePlus = $block->getHelper()->getSocialShares('google_plus')): ?>

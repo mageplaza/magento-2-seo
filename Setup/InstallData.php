@@ -47,7 +47,7 @@ class InstallData implements InstallDataInterface
 				'input'                   => 'select',
 				'class'                   => '',
 				'source'                  => '\Mageplaza\Seo\Model\Source\Robots',
-				'global'                  => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+				'global'                  => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
 				'visible'                 => true,
 				'required'                => false,
 				'user_defined'            => false,
@@ -81,6 +81,43 @@ class InstallData implements InstallDataInterface
 				'default'      => null,
 				'group'        => 'General Information',
 				'backend'      => ''
+			]
+		);
+	}
+
+
+	/**
+	 * add open graph / Twitter card custom fields
+	 * @param $setup
+	 */
+	public function addOgColumns($setup){
+		$eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+
+		$eavSetup->addAttribute(
+			\Magento\Catalog\Model\Product::ENTITY,
+			'mp_seo_og_description',
+			[
+				'type'                    => 'varchar',
+				'backend'                 => '',
+				'frontend'                => '',
+				'label'                   => 'Description for Open Graph/Twitter card.',
+				'note'                    => 'Added by Mageplaza SEO',
+				'input'                   => 'text',
+				'class'                   => '',
+				'global'                  => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+				'visible'                 => true,
+				'required'                => false,
+				'user_defined'            => false,
+				'default'                 => '',
+				'searchable'              => false,
+				'filterable'              => false,
+				'comparable'              => false,
+				'visible_on_front'        => false,
+				'used_in_product_listing' => true,
+				'unique'                  => false,
+				'group'                   => 'Search Engine Optimization',
+				'sort_order'              => 102,
+				'apply_to'                => '',
 			]
 		);
 	}

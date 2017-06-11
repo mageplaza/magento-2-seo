@@ -1,9 +1,9 @@
 <?php
 namespace Mageplaza\Seo\Block\Widget;
 
-use Magento\Backend\Block\Widget\Breadcrumbs as WidgetBreadcrumbs;
+use Magento\Theme\Block\Html\Breadcrumbs as HtmlBreadcrumbs;
 
-class Breadcrumbs extends WidgetBreadcrumbs
+class Breadcrumbs extends HtmlBreadcrumbs
 {
 	/**
 	 * @var string
@@ -11,4 +11,10 @@ class Breadcrumbs extends WidgetBreadcrumbs
 	protected $_template = 'Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml';
 
 
+	/**
+	 * @return array
+	 */
+	public function getBreadcrumbLinks(){
+		return $this->_crumbs;
+	}
 }
