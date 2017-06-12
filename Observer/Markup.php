@@ -39,7 +39,6 @@ class Markup implements ObserverInterface
 			 */
 			$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org","@type":"WebSite"';
 			if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
-//				$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Sitename', 'mageplaza_seo_richsnippets_sitename', 'after.body.start', '');
 				$layout->addBlock('\Mageplaza\Seo\Block\Sitelinks', 'mageplaza_seo_sitelinks', 'after.body.start', '');
 			}
 
