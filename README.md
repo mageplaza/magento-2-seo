@@ -131,3 +131,153 @@ A huge advantage when you have Megaplaza SEO extension is that it’s fully supp
 ## Pricing table
 
 ![seo pricing](https://i.imgur.com/0rWRnwC.png)
+
+
+
+## Changelog
+
+
+### Release Version 1.4.0
+Released on  2017-05-23
+Release notes: 
+
+- Release Seo Crosslinks
+- Fixed minor bugs
+
+
+
+### Release Version 1.3.1
+Released on  2017-05-23
+Release notes: 
+
+- Fixed issue on bundle products
+- Fixed Remove inject object in Search/Catalog block
+- Optimize config object
+- Optimize Search Nofollow
+
+
+
+### Release Version 1.3.0
+Released on  2017-04-24
+Release notes: 
+
+#### SEO Core , Sitemap
+
+* Exclude CMS pages in HTML Sitemap
++ Include custom links in HTML Sitemap
+* Opt to exclude out-of-stock in HTML, XML Sitemap
+* Opptimize canonical tag, rich snippet, hreflang, alternate
+
+#### Rule templates
++ Compatible with Layered Navigation
++ Add Mageplaza_Blog posts meta data template
++ Optimzie template rule: products, categories, cms pages.
++ Preview rule template
+
+
+
+
+### Release Version 1.2.2
+Released on  2017-04-24
+Release notes: 
+
+- Edit composer.json to require mageplaza/module-core instead of mageplaza/core-m2
+
+
+
+### Release v1.2.1
+Released on  2017-04-09
+Release notes: 
+
+
+
+
+### Release Release v1.2.0
+Released on  2017-04-09
+Release notes: 
+
+## Features
++ Add Verification configuration
++ Add Stop words feature
++ Hreflang tags feature
+
+## Bug fixes
+- Performance optimization
+- Group SEO menu
+- Optimize Configuration options
+
+
+
+
+### Release 
+Released on  2016-11-23
+Release notes: 
+
+- Fix Upgrade issue
+
+
+
+
+### Release v1.1.2
+Released on  2016-11-22
+Release notes: 
+
+- Improve Robots meta tags: categories, products, cms pages
+
+
+
+
+### Release Version 1.1.1
+Released on  2016-10-20
+Release notes: 
+
+- add HTML Sitemap features
+
+
+
+
+### Release Version 1.1.0
+Released on  2016-10-20
+Release notes: 
+
+## Improvement
+- Optimize code and performance
+- Comment code
+
+## Features
+- Add config: Disable URL parameter in canonical URL
+
+## Bug fixing
+- Fix bug canonical url
+
+
+
+
+### Release Compatible Magento 2.1
+Released on  2016-08-09
+Release notes: 
+
+- Compatible Magento 2.1
+- Fix bug Dependency 
+- Fix JSONLD broken tags
+- Optimize Review rating value
+
+
+
+
+### Release 
+Released on  2016-07-20
+Release notes: 
+
+- Add composer and packagist.org
+
+
+
+### Release Release 1.0.0-beta
+Released on  2016-04-23
+Release notes: 
+
+- Release first version
+
+
+
