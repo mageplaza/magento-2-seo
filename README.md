@@ -137,7 +137,7 @@ A huge advantage when you have Megaplaza SEO extension is that it’s fully supp
 ## Changelog
 
 
-### Release Version 1.4.0
+### SEO Version 1.4.0
 Released on  2017-05-23
 Release notes: 
 
@@ -146,7 +146,7 @@ Release notes:
 
 
 
-### Release Version 1.3.1
+### SEO Version 1.3.1
 Released on  2017-05-23
 Release notes: 
 
@@ -157,7 +157,7 @@ Release notes:
 
 
 
-### Release Version 1.3.0
+### SEO Version 1.3.0
 Released on  2017-04-24
 Release notes: 
 
@@ -177,7 +177,7 @@ Release notes:
 
 
 
-### Release Version 1.2.2
+### SEO Version 1.2.2
 Released on  2017-04-24
 Release notes: 
 
@@ -188,6 +188,7 @@ Release notes:
 ### Release v1.2.1
 Released on  2017-04-09
 Release notes: 
+
 
 
 
@@ -227,7 +228,7 @@ Release notes:
 
 
 
-### Release Version 1.1.1
+### SEO Version 1.1.1
 Released on  2016-10-20
 Release notes: 
 
@@ -236,7 +237,7 @@ Release notes:
 
 
 
-### Release Version 1.1.0
+### SEO Version 1.1.0
 Released on  2016-10-20
 Release notes: 
 
@@ -278,6 +279,8 @@ Released on  2016-04-23
 Release notes: 
 
 - Release first version
+
+
 
 
 
