@@ -31,7 +31,7 @@ class Markup implements ObserverInterface
 			 */
 			$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org","@type":"Organization"';
 			if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
-				$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Organization', 'mageplaza_seo_organization', 'after.body.start', '');
+				$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Organization', 'mageplaza_seo_organization', 'head.additional', '');
 			}
 
 			/**
@@ -39,7 +39,7 @@ class Markup implements ObserverInterface
 			 */
 			$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org","@type":"WebSite"';
 			if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
-				$layout->addBlock('\Mageplaza\Seo\Block\Sitelinks', 'mageplaza_seo_sitelinks', 'after.body.start', '');
+				$layout->addBlock('\Mageplaza\Seo\Block\Sitelinks', 'mageplaza_seo_sitelinks', 'head.additional', '');
 			}
 
 			/**
@@ -80,12 +80,7 @@ class Markup implements ObserverInterface
 					$layout->addBlock(
 						'\Mageplaza\Seo\Block\Richsnippets\Product',
 						'mageplaza_seo_richsnippets_product',
-						'after.body.start', '');
-
-//					$subString = '<script type="application/ld+json">{"@context":"http://schema.org/","@type":"Product"';
-//					if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
-//					}
-
+						'head.additional', '');
 					break;
 			}
 		}
