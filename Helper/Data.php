@@ -35,13 +35,12 @@ class Data extends CoreHelper
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
 		StoreManagerInterface $storeManager,
-		ObjectManagerInterface $objectManager,
-		\Magento\Framework\Module\Manager $moduleManager
+		ObjectManagerInterface $objectManager
 	)
 	{
 		$this->objectManager = $objectManager;
 		$this->_storeManager = $storeManager;
-		$this->_moduleManager = $moduleManager;
+		$this->_moduleManager = $context->getModuleManager();
 
 		parent::__construct($context, $objectManager, $storeManager);
 	}
