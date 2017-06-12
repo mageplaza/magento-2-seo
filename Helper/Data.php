@@ -16,8 +16,15 @@ class Data extends CoreHelper
 	const XML_PATH_HTML_SITEMAP = 'seo/htmlsitemap/';
 	const XML_PATH_HREFLANG_TAG = 'seo/hreflang/';
 	const XML_PATH_VERIFICATION = 'seo/verification/';
+	/**
+	 * @type \Magento\Framework\ObjectManagerInterface
+	 */
 	protected $objectManager;
 
+	/**
+	 * @type \Magento\Framework\Module\Manager
+	 */
+	protected $_moduleManager;
 	/**
 	 * Data constructor.
 	 *
@@ -33,6 +40,7 @@ class Data extends CoreHelper
 	{
 		$this->objectManager = $objectManager;
 		$this->_storeManager = $storeManager;
+		$this->_moduleManager = $context->getModuleManager();
 
 		parent::__construct($context, $objectManager, $storeManager);
 	}
@@ -210,9 +218,44 @@ class Data extends CoreHelper
 		return $this->_getUrl('mageplaza_seo/sitemap');
 	}
 
-
+	/**
+	 * @param null $code
+	 * @return mixed
+	 */
 	public function getHreflang($code = null)
 	{
 		return $this->getConfigValue(self::XML_PATH_HREFLANG_TAG . $code);
+	}
+
+	/**
+	 * Whether a module is enabled in the configuration or not
+	 *
+	 * @param string $moduleName Fully-qualified module name
+	 * @return boolean
+	 */
+	public function isModuleEnabled($moduleName)
+	{
+		return $this->_moduleManager->isEnabled($moduleName);
+	}
+
+	/**
+	 * Whether a module output is permitted by the configuration or not
+	 *
+	 * @param string $moduleName Fully-qualified module name
+	 * @return boolean
+	 */
+	public function isOutputEnabled($moduleName)
+	{
+		return $this->_moduleManager->isOutputEnabled($moduleName);
+	}
+
+
+	/**
+	 * check module active
+	 * @param $moduleName
+	 * @return bool
+	 */
+	public function checkModuleActive($moduleName){
+		return ($this->isModuleEnabled($moduleName) && $this->isOutputEnabled($moduleName));
 	}
 }

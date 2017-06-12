@@ -7,7 +7,7 @@
 
 <?php if ($block->getProduct() && $block->getRichsnippetsHelper('enable_product') OR 1): ?>
 	<?php $product = $block->getProduct(); ?>
-	<!--    Product Structured Data by Mageplaza SEO-->
+<!-- Product Structured Data by Mageplaza SEO-->
 	<script type="application/ld+json">
 {
   "@context": "http://schema.org/",
@@ -22,14 +22,6 @@
   "brand": "<?php echo $label ?>",
   <?php endif; ?>
   "url": "<?php echo $product->getProductUrl(); ?>"
-
-  <?php /*
-  TO-DO: Allow select brand attribute in configuration > Get attribute label
-  "brand": {
-    "@type": "Thing",
-    "name": "ACME"
-  },
- */ ?>
 
  <?php if ($block->getReviewCount()): ?>
  ,

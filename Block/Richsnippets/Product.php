@@ -16,6 +16,10 @@ use Mageplaza\Seo\Helper\Hreflang;
 use Magento\Framework\Module\Manager;
 use Magento\Framework\App\ObjectManager;
 
+/**
+ * Class Product
+ * @package Mageplaza\Seo\Block\Richsnippets
+ */
 class Product extends Richsnippets
 {
 	/**
@@ -23,6 +27,9 @@ class Product extends Richsnippets
 	 */
 	const SHOP_BY_BRAND_EXTENSION = 'Mageplaza_Shopbybrand';
 
+	/**
+	 * @type string - template
+	 */
 	protected $_template = 'richsnippets/jsonld/product.phtml';
 
 	/**
@@ -139,15 +146,18 @@ class Product extends Richsnippets
 	 */
 	public function getProductBrand()
 	{
-		/** @type \Mageplaza\Shopbybrand\Helper\Data $helper */
-		$helper = $this->_objectManager->create('Mageplaza\Shopbybrand\Helper\Data');
+		if(!$this->isMageplazaBrandEnabled()) return null;
 
-		if (!$helper->isEnabled()) {
+
+		/** @type \Mageplaza\Shopbybrand\Helper\Data $helper */
+		$brandHelper = $this->_objectManager->create('Mageplaza\Shopbybrand\Helper\Data');
+
+		if (!$brandHelper->isEnabled()) {
 			return null;
 		}
 
 		$product = $this->getProduct();
-		$attCode = $helper->getAttributeCode();
+		$attCode = $brandHelper->getAttributeCode();
 		if ($optionId = $product->getData($attCode)) {
 			/** @type \Mageplaza\Shopbybrand\Model\Brand $brand */
 			$brand = $this->_objectManager->create('Mageplaza\Shopbybrand\Model\Brand');
@@ -157,4 +167,13 @@ class Product extends Richsnippets
 
 		return null;
 	}
+
+	/**
+	 * check Mageplaza shop by brand enable
+	 * @return bool
+	 */
+	public function isMageplazaBrandEnabled(){
+		return $this->helperData->checkModuleActive('Mageplaza_Shopbybrand');
+	}
+
 }
