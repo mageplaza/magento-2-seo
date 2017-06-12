@@ -29,12 +29,22 @@
             <resource>Mageplaza_Seo::configuration</resource>
             <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
+
+                <field id="head" translate="label" type="button" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Mageplaza\Core\Block\Adminhtml\System\Config\Head</frontend_model>
+                    <comment><![CDATA[
+                        <ul class="mageplaza-head">
+                            <li><a href="https://docs.mageplaza.com/seo-m2/index.html" target="_blank">User Guide</a>    </li>
+                            <li><a href="https://mageplaza.freshdesk.com/" target="_blank">Helpdesk</a> </li>
+                            <li><a href="https://www.mageplaza.com/magento-2-seo-extension/?utm_source=magento2&utm_medium=documents&utm_campaign=m2-seo" target="_blank">On Mageplaza</a> </li>
+                            <li><a href="https://goo.gl/forms/SrTm7YUxZoCzixhH3" target="_blank">Request features</a> </li>
+                        </ul>
+                        ]]></comment>
+                </field>
+
+
                 <field id="nofollow_sr" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Add Nofollow meta in Search Result</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="product_gallery" translate="label comment" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Add Nofollow meta in Product Gallery</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="sitelinks" translate="label comment" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -60,6 +70,7 @@
                 <field id="stop_word" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Stop Words</label>
                     <source_model>Mageplaza\Seo\Model\Source\Language</source_model>
+                    <comment>It is useful for generate product, category and page URL key.</comment>
                 </field>
             </group>
             <group id="duplicate" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -226,7 +237,7 @@
                     <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
             </group>
-            <group id="store" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="breadcrumbs" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Breadcrumbs</label>
                 <field id="enable" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Breadcrumbs Rich Snippet</label>
@@ -256,42 +267,42 @@
                     <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
                 </field>
             </group>
-            <group id="hreflang" translate="label" type="text" sortOrder="99" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Hreflang Tags</label>
-                <field id="enable_hreflang_url" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable Hreflang Url</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[ Learn more <a href="https://support.google.com/webmasters/answer/189077?hl=en">Hreflang</a>]]></comment>
-                </field>
-                <field id="enable_product" translate="label comment" type="select" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable For Product</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <depends>
-                        <field id="enable_hreflang_url">1</field>
-                    </depends>
-                </field>
-                <field id="enable_category" translate="label comment" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable For Category</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <depends>
-                        <field id="enable_hreflang_url">1</field>
-                    </depends>
-                </field>
-                <field id="enable_page" translate="label comment" type="select" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable For Pages</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <depends>
-                        <field id="enable_hreflang_url">1</field>
-                    </depends>
-                </field>
-                <field id="x_default" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>X-Default</label>
-                    <source_model>Mageplaza\Seo\Model\Source\Store</source_model>
-                    <depends>
-                        <field id="enable_hreflang_url">1</field>
-                    </depends>
-                </field>
-            </group>
+            <!--<group id="hreflang" translate="label" type="text" sortOrder="99" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                <!--<label>Hreflang Tags</label>-->
+                <!--<field id="enable_hreflang_url" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                    <!--<label>Enable Hreflang Url</label>-->
+                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                    <!--<comment><![CDATA[ Learn more <a href="https://support.google.com/webmasters/answer/189077?hl=en">Hreflang</a>]]></comment>-->
+                <!--</field>-->
+                <!--<field id="enable_product" translate="label comment" type="select" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                    <!--<label>Enable For Product</label>-->
+                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                    <!--<depends>-->
+                        <!--<field id="enable_hreflang_url">1</field>-->
+                    <!--</depends>-->
+                <!--</field>-->
+                <!--<field id="enable_category" translate="label comment" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                    <!--<label>Enable For Category</label>-->
+                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                    <!--<depends>-->
+                        <!--<field id="enable_hreflang_url">1</field>-->
+                    <!--</depends>-->
+                <!--</field>-->
+                <!--<field id="enable_page" translate="label comment" type="select" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                    <!--<label>Enable For Pages</label>-->
+                    <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                    <!--<depends>-->
+                        <!--<field id="enable_hreflang_url">1</field>-->
+                    <!--</depends>-->
+                <!--</field>-->
+                <!--<field id="x_default" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                    <!--<label>X-Default</label>-->
+                    <!--<source_model>Mageplaza\Seo\Model\Source\Store</source_model>-->
+                    <!--<depends>-->
+                        <!--<field id="enable_hreflang_url">1</field>-->
+                    <!--</depends>-->
+                <!--</field>-->
+            <!--</group>-->
         </section>
     </system>
 </config>

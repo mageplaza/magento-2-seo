@@ -16,8 +16,9 @@
         <referenceContainer name="after.body.start" before="-">
         </referenceContainer>
 
-        <referenceContainer name="page.breadcrumbs">
+        <referenceContainer name="page.top">
             <block class="Mageplaza\Seo\Block\Widget\Breadcrumbs" name="mageplaza_seo_breadcrumbs"
+                   after="-"
                    as="mageplaza.seo.breadcrumbs"
                    template="Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml"/>
         </referenceContainer>
