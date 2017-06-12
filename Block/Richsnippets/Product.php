@@ -16,6 +16,10 @@ use Mageplaza\Seo\Helper\Hreflang;
 use Magento\Framework\Module\Manager;
 use Magento\Framework\App\ObjectManager;
 
+/**
+ * Class Product
+ * @package Mageplaza\Seo\Block\Richsnippets
+ */
 class Product extends Richsnippets
 {
 	/**
@@ -23,6 +27,9 @@ class Product extends Richsnippets
 	 */
 	const SHOP_BY_BRAND_EXTENSION = 'Mageplaza_Shopbybrand';
 
+	/**
+	 * @type string - template
+	 */
 	protected $_template = 'richsnippets/jsonld/product.phtml';
 
 	/**

@@ -13,7 +13,7 @@ use Magento\Framework\App\ObjectManager;
 class Breadcrumbs extends HtmlBreadcrumbs
 {
 	/**
-	 * @var string
+	 * @var string - Template
 	 */
 	protected $_template = 'Mageplaza_Seo::richsnippets/jsonld/breadcrumb.phtml';
 
