@@ -39,7 +39,6 @@ class Markup implements ObserverInterface
 			 */
 			$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org","@type":"WebSite"';
 			if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
-//				$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Sitename', 'mageplaza_seo_richsnippets_sitename', 'after.body.start', '');
 				$layout->addBlock('\Mageplaza\Seo\Block\Sitelinks', 'mageplaza_seo_sitelinks', 'after.body.start', '');
 			}
 
@@ -48,31 +47,25 @@ class Markup implements ObserverInterface
 			 */
 			switch ($action) {
 				case 'catalog_category_view':
-					if (strpos($headBlock->toHtml(), 'hrefLang') === false) {
-						$headBlock->addChild(
-							'mageplaza_seo_open_graph',
-							'\Mageplaza\Seo\Block\Page\Head\Category',
-							['template' => 'opengraph/category.phtml']
-						);
-					}
+					$headBlock->addChild(
+						'mageplaza_seo_open_graph',
+						'\Mageplaza\Seo\Block\Page\Head\Category',
+						['template' => 'opengraph/category.phtml']
+					);
 					break;
 				case 'catalog_category_view_type_default':
-					if (strpos($headBlock->toHtml(), 'hrefLang') === false) {
-						$headBlock->addChild(
-							'mageplaza_seo_open_graph',
-							'\Mageplaza\Seo\Block\Page\Head\Category',
-							['template' => 'opengraph/category.phtml']
-						);
-					}
+					$headBlock->addChild(
+						'mageplaza_seo_open_graph',
+						'\Mageplaza\Seo\Block\Page\Head\Category',
+						['template' => 'opengraph/category.phtml']
+					);
 					break;
 				case 'cms_page_view':
-					if (strpos($headBlock->toHtml(), 'hrefLang') === false) {
-						$headBlock->addChild(
-							'mageplaza_seo_open_graph',
-							'\Mageplaza\Seo\Block\Page\Head\Page',
-							['template' => 'opengraph/cms.phtml']
-						);
-					}
+					$headBlock->addChild(
+						'mageplaza_seo_open_graph',
+						'\Mageplaza\Seo\Block\Page\Head\Page',
+						['template' => 'opengraph/cms.phtml']
+					);
 					break;
 				case 'catalog_product_view':
 					$headBlock->addChild(
@@ -83,10 +76,16 @@ class Markup implements ObserverInterface
 					/**
 					 * Add rich snippet product
 					 */
-					$subString = '<scripttype="application/ld+json">{"@context":"http://schema.org/","@type":"Product"';
-					if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
-						$layout->addBlock('\Mageplaza\Seo\Block\Richsnippets\Product', 'mageplaza_seo_richsnippets_product', 'after.body.start', '');
-					}
+
+					$layout->addBlock(
+						'\Mageplaza\Seo\Block\Richsnippets\Product',
+						'mageplaza_seo_richsnippets_product',
+						'after.body.start', '');
+
+//					$subString = '<script type="application/ld+json">{"@context":"http://schema.org/","@type":"Product"';
+//					if (!$afterBodyStartContainer || strpos($afterBodyStartContainer, $subString) === false) {
+//					}
+
 					break;
 			}
 		}

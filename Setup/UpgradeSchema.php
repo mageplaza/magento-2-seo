@@ -34,7 +34,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
 				'type'     => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
 				255,
 				'nullable' => true,
-				'comment'  => 'meta robot',
+				'comment'  => 'Meta robot',
 			],
 		];
 

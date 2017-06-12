@@ -1,12 +1,5 @@
-<?php foreach ($block->getUrls() as $url): ?>
-	<link rel="alternate" href="<?php echo $url['href'] ?>" hrefLang="<?php echo $url['hrefLang'] ?>"/>
-<?php endforeach; ?>
 <?php $cms = $block->getRegistry('cms_page'); ?>
 <?php if ($cms): ?>
-
-	<?php if ($pinterest = $block->getHelper()->getSocialShares('pinterest')): ?>
-		<meta name="p:domain_verify" content="<?php echo $pinterest; ?>"/>
-	<?php endif; ?>
 
 	<?php if ($googlePlus = $block->getHelper()->getSocialShares('google_plus')): ?>
 		<link rel="publisher" href="<?php echo $googlePlus; ?>"/>
