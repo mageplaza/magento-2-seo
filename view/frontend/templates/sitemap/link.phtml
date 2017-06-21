@@ -2,12 +2,11 @@
 /** @type \Mageplaza\Seo\Block\Sitemap $block */
 $collection = $block->getAdditionLinksCollection();
 ?>
-	<h2><?php echo __('More...'); ?></h2>
+	<h2><?php echo __('Additional links'); ?></h2>
 <?php if ($collection): ?>
 	<ul class="mp-sitemap-listing">
         <?php foreach ($collection as $url => $label): ?>
-			<li><a href="<?php echo __($url) ?>"><?php echo
-					__($label); ?></a></li>
-		<?php endforeach; ?>
+		<li><a href="<?php echo __($url) ?>"><?php echo __($label); ?></a></li>
+	<?php endforeach; ?>
     </ul>
 <?php endif; ?>
