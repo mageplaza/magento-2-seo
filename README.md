@@ -3,11 +3,19 @@
 [Mageplaza SEO for Magento 2](https://www.mageplaza.com/magento-2-seo-extension/) is a bundle of outstanding features that are auto-active when you install it from Mageplaza without any code modifications. It is also friendly with your store if you need to insert meta keywords and meta descriptions for your product. It will do perfectly for your better SEO.
 
 
-## Documentations
+## Documentation
 
 - User Guide: https://docs.mageplaza.com/seo-m2/
-- Support: https://github.com/mageplaza/magento-2-seo/issues
+- Download from our Live site: https://www.mageplaza.com/magento-2-social-login-extension/
+- Get Support: https://github.com/mageplaza/magento-2-seo/issues
 - Contribute on Github: https://github.com/mageplaza/magento-2-seo
+- Changelog: https://www.mageplaza.com/changelog/m2-seo.txt
+
+## FAQs
+
+#### Q: I got error: `Mageplaza_Core has been already defined`
+A: Read solution: https://github.com/mageplaza/module-core/issues/3
+
 
 ## How to install
 
