@@ -17,7 +17,7 @@ class Page extends AbstractSeo
 	 */
 	public function getStoreDescription()
 	{
-		return $this->getGeneralConfig('meta_description');
+		return $this->helperData->getInfoConfig('business_description');
 	}
 
 	public function entityEnable()

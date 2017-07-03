@@ -168,6 +168,12 @@
                         <field id="enable">1</field>
                     </depends>
                 </field>
+                <field id="business_description" translate="label comment" type="textarea" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Business Description</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
                 <field id="logo" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Business Logo</label>
                     <comment><![CDATA[Logo URL, e.g: https://www.mageplaza.com/logo.jpg]]></comment>
