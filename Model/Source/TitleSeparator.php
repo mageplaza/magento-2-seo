@@ -23,41 +23,41 @@ namespace Mageplaza\Seo\Model\Source;
 
 class TitleSeparator implements \Magento\Framework\Option\ArrayInterface
 {
-	/**
-	 * Options getter
-	 *
-	 * @return array
-	 */
-	public function toOptionArray()
-	{
-		$separators = [];
-		foreach ($this->toArray() as $k => $v) {
-			$separators[] = ['value' => $k, 'label' => $v];
-		}
+    /**
+     * Options getter
+     *
+     * @return array
+     */
+    public function toOptionArray()
+    {
+        $separators = [];
+        foreach ($this->toArray() as $k => $v) {
+            $separators[] = ['value' => $k, 'label' => $v];
+        }
 
-		return $separators;
-	}
+        return $separators;
+    }
 
-	/**
-	 * Get options in "key-value" format
-	 *
-	 * @return array
-	 */
-	public function toArray()
-	{
-		return [
-			0  => __('.'),
-			1  => __('✰'),
-			2  => __('-'),
-			3  => __('_'),
-			4  => __('*'),
-			5  => __('«'),
-			6  => __('»'),
-			7  => __('●'),
-			8  => __('>'),
-			9  => __('<'),
-			10 => __('~'),
-			11 => __('|'),
-		];
-	}
+    /**
+     * Get options in "key-value" format
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            0  => __('.'),
+            1  => __('✰'),
+            2  => __('-'),
+            3  => __('_'),
+            4  => __('*'),
+            5  => __('«'),
+            6  => __('»'),
+            7  => __('●'),
+            8  => __('>'),
+            9  => __('<'),
+            10 => __('~'),
+            11 => __('|'),
+        ];
+    }
 }

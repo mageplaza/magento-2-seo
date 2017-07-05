@@ -26,43 +26,43 @@ use \Magento\Framework\Registry;
 class Product
 {
 
-	/**
-	 * @var \Magento\Framework\Registry
-	 */
-	protected $registry;
+    /**
+     * @var \Magento\Framework\Registry
+     */
+    protected $registry;
 
-	public function __construct(
-		Registry $registry
-	)
-	{
-		$this->registry   = $registry;
+    public function __construct(
+        Registry $registry
+    ) {
+    
+        $this->registry   = $registry;
+    }
 
-	}
+    /**
+     * @return string
+     */
+    public function getCanonicalUrl()
+    {
+        $currentProduct = $this->registry->registry('current_product');
 
-	/**
-	 * @return string
-	 */
-	public function getCanonicalUrl()
-	{
-		$currentProduct = $this->registry->registry('current_product');
+        if ($currentProduct == null) {
+            return null;
+        }
 
-		if($currentProduct == null) return null;
+        /**
+         * get real product url, without param
+         */
 
-		/**
-		 * get real product url, without param
-		 */
+        $url = $currentProduct->getUrlModel()->getUrl($currentProduct);
 
-		$url = $currentProduct->getUrlModel()->getUrl($currentProduct);
-
-		/**
-		 *  Fix cocktail.html?gclid=ABCD
-		 */
+        /**
+         *  Fix cocktail.html?gclid=ABCD
+         */
 //		$position = strpos($url, '?');
 //		if ($position !== false) {
 //			$url = substr($url, 0, $position);
 //		}
 
-		return $url;
-
-	}
+        return $url;
+    }
 }

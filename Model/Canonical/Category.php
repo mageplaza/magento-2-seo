@@ -27,55 +27,53 @@ use Magento\Framework\ObjectManagerInterface;
 class Category
 {
 
-	/**
-	 * @var \Magento\Framework\Registry
-	 */
-	protected $registry;
+    /**
+     * @var \Magento\Framework\Registry
+     */
+    protected $registry;
 
 
-	/**
-	 * @var \Magento\Framework\ObjectManagerInterface
-	 */
-	protected $objectManager;
+    /**
+     * @var \Magento\Framework\ObjectManagerInterface
+     */
+    protected $objectManager;
 
-	public function __construct(
-		Registry $registry,
-		ObjectManagerInterface $objectManager
+    public function __construct(
+        Registry $registry,
+        ObjectManagerInterface $objectManager
+    ) {
+    
+        $this->registry      = $registry;
+        $this->objectManager = $objectManager;
+    }
 
-	)
-	{
-		$this->registry      = $registry;
-		$this->objectManager = $objectManager;
+    /**
+     * get canonical url
+     * @return null|string
+     */
+    public function getCanonicalUrl()
+    {
+        $currentCategory = $this->registry->registry('current_category');
 
-	}
+        if ($currentCategory == null) {
+            return null;
+        }
 
-	/**
-	 * get canonical url
-	 * @return null|string
-	 */
-	public function getCanonicalUrl()
-	{
-		$currentCategory = $this->registry->registry('current_category');
+        $urlObject = $this->objectManager
+            ->get('Magento\Framework\UrlInterface');
+        $url       = $urlObject->getCurrentUrl();
 
-		if ($currentCategory == null) return null;
-
-		$urlObject = $this->objectManager
-			->get('Magento\Framework\UrlInterface');
-		$url       = $urlObject->getCurrentUrl();
-
-		/**
-		 * clean up param:
-		 * - layered navigation: ?price=200-300
-		 * - category: ?p=2
-		 */
-		$position = strpos($url, '?');
-		if ($position !== false) {
-			$url = substr($url, 0, $position);
-		}
-
-
-		return $url;
+        /**
+         * clean up param:
+         * - layered navigation: ?price=200-300
+         * - category: ?p=2
+         */
+        $position = strpos($url, '?');
+        if ($position !== false) {
+            $url = substr($url, 0, $position);
+        }
 
 
-	}
+        return $url;
+    }
 }

@@ -23,44 +23,43 @@ namespace Mageplaza\Seo\Model\Source;
 
 class Store
 {
-	protected $_storeManager;
+    protected $_storeManager;
 
-	public function __construct(
-		\Magento\Store\Model\StoreManagerInterface $storeManager
-	)
-	{
-		$this->_storeManager = $storeManager;
-	}
+    public function __construct(
+        \Magento\Store\Model\StoreManagerInterface $storeManager
+    ) {
+    
+        $this->_storeManager = $storeManager;
+    }
 
-	public function getStoreCollection()
-	{
-		return $this->_storeManager->getStores();
-	}
+    public function getStoreCollection()
+    {
+        return $this->_storeManager->getStores();
+    }
 
 
-	public function toOptionArray()
-	{
-		$arr = [];
-		foreach ($this->getStoreCollection() as $item) {
-			$arr[] = ['value' => $item->getId(), 'label' => $item->getName()];
-		}
+    public function toOptionArray()
+    {
+        $arr = [];
+        foreach ($this->getStoreCollection() as $item) {
+            $arr[] = ['value' => $item->getId(), 'label' => $item->getName()];
+        }
 
-		return $arr;
-	}
+        return $arr;
+    }
 
-	/**
-	 * Get options in "key-value" format
-	 *
-	 * @return array
-	 */
-	public function toArray()
-	{
-		$arr = [];
-		foreach ($this->getStoreCollection() as $item) {
-			$arr[] = $item->getName();
-		}
+    /**
+     * Get options in "key-value" format
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $arr = [];
+        foreach ($this->getStoreCollection() as $item) {
+            $arr[] = $item->getName();
+        }
 
-		return $arr;
-	}
-
+        return $arr;
+    }
 }

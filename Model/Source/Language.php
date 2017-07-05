@@ -23,37 +23,37 @@ namespace Mageplaza\Seo\Model\Source;
 
 class Language
 {
-	const EN = 0;
-	const DE = 1;
-	const ES = 2;
-	const FR = 3;
-	const OTHER = 4;
+    const EN = 0;
+    const DE = 1;
+    const ES = 2;
+    const FR = 3;
+    const OTHER = 4;
 
-	public function toOptionArray()
-	{
-		$options = [
-			[
-				'value' => self::EN,
-				'label' => 'En'
-			],
-			[
-				'value' => self::DE,
-				'label' => 'De'
-			],
-			[
-				'value' => self::ES,
-				'label' => 'Es'
-			],
-			[
-				'value' => self::FR,
-				'label' => 'Fr'
-			],
-			[
-				'value' => self::OTHER,
-				'label' => 'Other'
-			],
-		];
+    public function toOptionArray()
+    {
+        $options = [
+            [
+                'value' => self::EN,
+                'label' => 'En'
+            ],
+            [
+                'value' => self::DE,
+                'label' => 'De'
+            ],
+            [
+                'value' => self::ES,
+                'label' => 'Es'
+            ],
+            [
+                'value' => self::FR,
+                'label' => 'Fr'
+            ],
+            [
+                'value' => self::OTHER,
+                'label' => 'Other'
+            ],
+        ];
 
-		return $options;
-	}
+        return $options;
+    }
 }

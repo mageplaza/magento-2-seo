@@ -25,28 +25,28 @@ use Magento\Cms\Model\PageFactory;
 
 class Page
 {
-	protected $_pageFactory;
+    protected $_pageFactory;
 
-	public function __construct(
-		PageFactory $pageFactory
-	)
-	{
-		$this->_pageFactory = $pageFactory;
-	}
+    public function __construct(
+        PageFactory $pageFactory
+    ) {
+    
+        $this->_pageFactory = $pageFactory;
+    }
 
-	public function getStoreCollection()
-	{
-		return $this->_pageFactory->create()->getCollection();
-	}
+    public function getStoreCollection()
+    {
+        return $this->_pageFactory->create()->getCollection();
+    }
 
 
-	public function toOptionArray()
-	{
-		$arr = [];
-		foreach ($this->getStoreCollection() as $item) {
-			$arr[] = ['value' => $item->getIdentifier(), 'label' => $item->getTitle()];
-		}
+    public function toOptionArray()
+    {
+        $arr = [];
+        foreach ($this->getStoreCollection() as $item) {
+            $arr[] = ['value' => $item->getIdentifier(), 'label' => $item->getTitle()];
+        }
 
-		return $arr;
-	}
+        return $arr;
+    }
 }

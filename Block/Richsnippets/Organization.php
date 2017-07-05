@@ -10,8 +10,8 @@ use Mageplaza\Seo\Block\Richsnippets;
  */
 class Organization extends Richsnippets
 {
-	/**
-	 * @type string - template
-	 */
-	protected $_template = 'richsnippets/jsonld/organization.phtml';
+    /**
+     * @type string - template
+     */
+    protected $_template = 'richsnippets/jsonld/organization.phtml';
 }

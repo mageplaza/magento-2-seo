@@ -23,50 +23,53 @@ namespace Mageplaza\Seo\Helper;
 
 class Hreflang
 {
-	const ENABLE_PRODUCT = 'enable_product';
-	const ENABLE_CATEGORY = 'enable_category';
-	const ENABLE_PAGE = 'enable_page';
+    const ENABLE_PRODUCT = 'enable_product';
+    const ENABLE_CATEGORY = 'enable_category';
+    const ENABLE_PAGE = 'enable_page';
 
 
-	protected $_helper;
+    protected $_helper;
 
-	public function __construct(
-		\Mageplaza\Seo\Helper\Data $helper
-	)
-	{
-		$this->_helper = $helper;
-	}
+    public function __construct(
+        \Mageplaza\Seo\Helper\Data $helper
+    ) {
+    
+        $this->_helper = $helper;
+    }
 
-	public function hasEnableHreflangUrl()
-	{
-		$enableHreflangUrl = $this->_helper->getHreflang('enable_hreflang_url');
-		if ($enableHreflangUrl)
-			return true;
+    public function hasEnableHreflangUrl()
+    {
+        $enableHreflangUrl = $this->_helper->getHreflang('enable_hreflang_url');
+        if ($enableHreflangUrl) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	public function hasEnableForEntity($entity = null)
-	{
-		if (!$this->hasEnableHreflangUrl())
-			return false;
-		if ($this->_helper->getHreflang($entity))
-			return true;
+    public function hasEnableForEntity($entity = null)
+    {
+        if (!$this->hasEnableHreflangUrl()) {
+            return false;
+        }
+        if ($this->_helper->getHreflang($entity)) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	public function addCountryCode()
-	{
-		if ($this->_helper->getHreflang('add_country_code'))
-			return true;
+    public function addCountryCode()
+    {
+        if ($this->_helper->getHreflang('add_country_code')) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	public function getXDeFault()
-	{
-		return $this->_helper->getHreflang('x_default');
-	}
-
+    public function getXDeFault()
+    {
+        return $this->_helper->getHreflang('x_default');
+    }
 }

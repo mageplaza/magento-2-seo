@@ -26,68 +26,68 @@ use Magento\Framework\App;
 class Title extends \Magento\Framework\View\Page\Title
 {
 
-	/**
-	 * @var \Magento\Framework\App\Config\ScopeConfigInterface
-	 */
-	private $scopeConfig;
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    private $scopeConfig;
 
-	protected $_titleSeparator;
+    protected $_titleSeparator;
 
-	/**
-	 * @param App\Config\ScopeConfigInterface $scopeConfig
-	 */
-	public function __construct(
-		\Mageplaza\Seo\Model\Source\TitleSeparator $titleSeparator,
-		App\Config\ScopeConfigInterface $scopeConfig
-	)
-	{
-		$this->_titleSeparator = $titleSeparator;
-		$this->scopeConfig     = $scopeConfig;
-		parent::__construct($scopeConfig);
-	}
+    /**
+     * @param App\Config\ScopeConfigInterface $scopeConfig
+     */
+    public function __construct(
+        \Mageplaza\Seo\Model\Source\TitleSeparator $titleSeparator,
+        App\Config\ScopeConfigInterface $scopeConfig
+    ) {
+    
+        $this->_titleSeparator = $titleSeparator;
+        $this->scopeConfig     = $scopeConfig;
+        parent::__construct($scopeConfig);
+    }
 
-	/**
-	 * @param string $title
-	 * @return string
-	 */
-	protected function addConfigValues($title)
-	{
-		$preparedTitle = $this->getTitlePrefix()
-			. ($this->getTitlePrefix() ? ' ' . $this->getTitleSeparator() . ' ' : '')
-			. $title
-			. ($this->getTitleSuffix() ? ' ' . $this->getTitleSeparator() . ' ' : '')
-			. $this->getTitleSuffix();
+    /**
+     * @param string $title
+     * @return string
+     */
+    protected function addConfigValues($title)
+    {
+        $preparedTitle = $this->getTitlePrefix()
+            . ($this->getTitlePrefix() ? ' ' . $this->getTitleSeparator() . ' ' : '')
+            . $title
+            . ($this->getTitleSuffix() ? ' ' . $this->getTitleSeparator() . ' ' : '')
+            . $this->getTitleSuffix();
 
-		return trim($preparedTitle);
+        return trim($preparedTitle);
+    }
 
-	}
 
+    protected function getTitleSuffix()
+    {
+        return $this->scopeConfig->getValue(
+            'design/head/title_suffix',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+    }
 
-	protected function getTitleSuffix()
-	{
-		return $this->scopeConfig->getValue(
-			'design/head/title_suffix',
-			\Magento\Store\Model\ScopeInterface::SCOPE_STORE
-		);
-	}
+    protected function getTitlePrefix()
+    {
+        return $this->scopeConfig->getValue(
+            'design/head/title_prefix',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+    }
 
-	protected function getTitlePrefix()
-	{
-		return $this->scopeConfig->getValue(
-			'design/head/title_prefix',
-			\Magento\Store\Model\ScopeInterface::SCOPE_STORE
-		);
-	}
+    protected function getTitleSeparator()
+    {
+        $titleSeparatorValue = $this->scopeConfig->getValue(
+            'seo/general/title_separator',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+        if ($titleSeparatorValue == null) {
+            return null;
+        }
 
-	protected function getTitleSeparator()
-	{
-		$titleSeparatorValue = $this->scopeConfig->getValue(
-			'seo/general/title_separator',
-			\Magento\Store\Model\ScopeInterface::SCOPE_STORE
-		);
-		if ($titleSeparatorValue == null)
-			return null;
-
-		return $this->_titleSeparator->toArray()[$titleSeparatorValue];
-	}
+        return $this->_titleSeparator->toArray()[$titleSeparatorValue];
+    }
 }
