@@ -2,7 +2,7 @@
 
 - Installation guide: https://docs.mageplaza.com/kb/installation.html
 - User Guide: https://docs.mageplaza.com/seo-m2/
-- Download from our Live site: https://www.mageplaza.com/magento-2-social-login-extension/
+- Download from our Live site: https://www.mageplaza.com/magento-2-seo-extension/
 - Support: https://github.com/mageplaza/magento-2-seo/issues
 - Contribute on Github: https://github.com/mageplaza/magento-2-seo
 - Changelog: https://www.mageplaza.com/changelog/m2-seo.txt
