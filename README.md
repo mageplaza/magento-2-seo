@@ -2,11 +2,6 @@
 
 [Mageplaza SEO for Magento 2](https://www.mageplaza.com/magento-2-seo-extension/) is a bundle of outstanding features that are auto-active when you install it from Mageplaza without any code modifications. It is also friendly with your store if you need to insert meta keywords and meta descriptions for your product. It will do perfectly for your better SEO.
 
-## Magento SEO Services
-We recommend SEO service from **Creare**
-
-- Creare https://goo.gl/NJUN8f
-
 ## Documentation
 
 - Installation guide: https://www.mageplaza.com/install-magento-2-extension/
@@ -15,6 +10,11 @@ We recommend SEO service from **Creare**
 - Get Support: https://github.com/mageplaza/magento-2-seo/issues
 - Contribute on Github: https://github.com/mageplaza/magento-2-seo
 - Changelog: https://www.mageplaza.com/changelog/m2-seo.txt
+
+## Magento SEO Services
+We recommend SEO service from **Creare**
+
+- Creare https://goo.gl/NJUN8f
 
 ## FAQs
 
