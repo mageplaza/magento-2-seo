@@ -57,6 +57,8 @@ class Breadcrumbs extends HtmlBreadcrumbs
             $this->_crumbs[key($this->_crumbs)]['first'] = true;
             end($this->_crumbs);
             $this->_crumbs[key($this->_crumbs)]['last'] = true;
+            $key = key($this->_crumbs);
+            $this->_crumbs[$key]["link"] = $this->_urlBuilder->getCurrentUrl();
         }
         $this->assign('crumbs', $this->_crumbs);
 

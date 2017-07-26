@@ -13,6 +13,7 @@
   "@context": "http://schema.org/",
   "@type": "Product",
   "name": "<?php echo $product->getName(); ?>",
+  "image": "<?php echo $block->getUrl('pub/media/catalog').'product'.$product->getImage() ?>",
   "description": "<?php echo trim(strip_tags($product->getShortDescription())); ?>",
   <?php if ($product->getMpn()): ?>
   "mpn": "<?php echo $product->getMpn(); ?>",
