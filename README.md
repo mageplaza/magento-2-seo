@@ -17,7 +17,7 @@
 ## Magento SEO Services
 We recommend SEO service from **Creare**
 
-- Creare https://goo.gl/NJUN8f
+- Creare https://www.creare.co.uk
 
 ## FAQs
 
