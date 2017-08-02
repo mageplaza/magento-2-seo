@@ -2,8 +2,8 @@
 /** @var \Mageplaza\Seo\Block\Sitelinks $block */
 ?>
 <script type="application/ld+json">
-<?php if ($block->getGeneralConfig('sitelinks') || ($block->getRichsnippetsHelper('name_in_sr') && $block->getRichsnippetsHelper('enable'))): ?>
 {
+<?php if ($block->getGeneralConfig('sitelinks') || ($block->getRichsnippetsHelper('name_in_sr') && $block->getRichsnippetsHelper('enable'))): ?>
   "@context": "http://schema.org",
   "@type": "WebSite",
   "url" : "<?php echo $block->getBaseUrl(); ?>",
