@@ -31,10 +31,19 @@ class Product
      */
     protected $registry;
 
+    /**
+     * Url Builder
+     *
+     * @var \Magento\Framework\UrlInterface
+     */
+    protected $_urlBuilder;
+
     public function __construct(
-        Registry $registry
+        Registry $registry,
+        \Magento\Framework\UrlInterface $interface
     ) {
-    
+
+        $this->_urlBuilder = $interface;
         $this->registry   = $registry;
     }
 
@@ -53,7 +62,7 @@ class Product
          * get real product url, without param
          */
 
-        $url = $currentProduct->getUrlModel()->getUrl($currentProduct);
+        $url = $this->_urlBuilder->getCurrentUrl();
 
         /**
          *  Fix cocktail.html?gclid=ABCD
