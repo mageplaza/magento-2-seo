@@ -25,6 +25,7 @@
         <sequence>
             <module name="Magento_Backend"/>
             <module name="Mageplaza_Core"/>
+            <module name="Magento_GoogleAnalytics"/>
         </sequence>
     </module>
 </config>
