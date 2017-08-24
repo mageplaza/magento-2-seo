@@ -14,10 +14,7 @@
 - Contribute on Github: https://github.com/mageplaza/magento-2-seo
 - Changelog: https://www.mageplaza.com/changelog/m2-seo.txt
 
-## Magento SEO Services
-We recommend SEO service from **Creare**
 
-- Creare https://www.creare.co.uk
 
 ## FAQs
 
@@ -50,7 +47,10 @@ then follow [installation guide](https://www.mageplaza.com/install-magento-2-ext
 
 Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
 
+## Magento SEO Services
+We recommend SEO service from **Creare**
 
+- Creare [https://www.creare.co.uk](https://www.creare.co.uk/?utm_source=mageplaza.com&utm_medium=link&utm_campaign=related-services)
 
 
 ## SWEET MAGEPLAZA EXTENSIONS TO BRING YOU MORE MONEY
@@ -79,6 +79,14 @@ Feel free to **Fork** and contrinute to this module and create a pull request so
 
 ☞ Support Custom Options and all product types
 
+
+### [✓ Gift Card](https://www.mageplaza.com/magento-2-gift-card-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
+
+☞ Physical, virtual or combined gift cards
+ 
+☞ Different gift card values from prices
+
+☞ Send cards via email, SMS, post office or messenger
 
 ### [✓ Who Bought This Also Bought](https://www.mageplaza.com/magento-2-who-bought-this-also-bought/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
 
