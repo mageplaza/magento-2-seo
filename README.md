@@ -5,7 +5,7 @@
 [![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-seo-extension/v/stable)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 [![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-seo-extension/downloads)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 
-## Documentation
+## 1. Documentation
 
 - Installation guide: https://www.mageplaza.com/install-magento-2-extension/
 - User Guide: https://docs.mageplaza.com/seo-m2/
@@ -16,7 +16,7 @@
 
 
 
-## FAQs
+## 2. FAQs
 
 #### Q: I got error: `Mageplaza_Core has been already defined`
 A: Read solution: https://github.com/mageplaza/module-core/issues/3
@@ -25,7 +25,7 @@ A: Read solution: https://github.com/mageplaza/module-core/issues/3
 A: Please follow this guide: https://www.mageplaza.com/blog/magento-site-down.html
 
 
-## How to install
+## 3. How to install
 
 ### Install via composer (recommend)
 
@@ -43,17 +43,17 @@ then follow [installation guide](https://www.mageplaza.com/install-magento-2-ext
 
 
 
-## Contribute to this module
+## 4. Contribute to this module
 
 Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
 
-## Magento SEO Services
+## 5. Magento SEO Services
 We recommend SEO service from **Creare**
 
 - Creare [https://www.creare.co.uk](https://www.creare.co.uk/?utm_source=mageplaza.com&utm_medium=link&utm_campaign=related-services)
 
 
-## SWEET MAGEPLAZA EXTENSIONS TO BRING YOU MORE MONEY
+## 6. SWEET MAGEPLAZA EXTENSIONS TO BRING YOU MORE MONEY
 
 ### [✓ One Step Checkout](https://www.mageplaza.com/magento-2-one-step-checkout-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
 
@@ -150,7 +150,7 @@ We recommend SEO service from **Creare**
 
 
 
-## Introduction
+## 7. Introduction
 
 Improve your SEO for [Magento](https://magento.com/) site. Use Mageplaza SEO to automatically optimize your site for Search Engines.
 Mageplaza SEO extension will automatically optimize and greatly improve the performance of your Magento-based store in Search Engines. Magento 2 is great SEO-ready out-of-the-box that is really good for SEO. However it still needs some craftiness to be improved in a few areas.
@@ -253,7 +253,7 @@ A huge advantage when you have Megaplaza SEO extension is that it’s fully supp
 
 
 
-## CHANGELOG
+## 8. CHANGELOG
 
 
 ### SEO v1.4.1
