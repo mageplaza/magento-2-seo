@@ -253,75 +253,89 @@ A huge advantage when you have Megaplaza SEO extension is that it’s fully supp
 
 
 
-## Changelog
+## CHANGELOG
 
 
-### SEO Version 1.4.0
+### SEO v1.4.1
+Released on  2017-06-12
+Release notes: 
+
+- Optimize Structured Data ld-json
+- Optimize Social share Open graph (Google+ and Pinterest) and twitter card
+- Fixed Breadcrumbs issue
+- Fixed canonical link issue
+
+
+
+### SEO v1.4.0
 Released on  2017-05-23
 Release notes: 
 
-- Release Seo Crosslinks
+- Released Seo Crosslinks
 - Fixed minor bugs
 
 
 
-### SEO Version 1.3.1
+### SEO v1.3.1
 Released on  2017-05-23
 Release notes: 
 
 - Fixed issue on bundle products
-- Fixed Remove inject object in Search/Catalog block
+- Fixed Remove inject object in Search and Catalog block
 - Optimize config object
 - Optimize Search Nofollow
 
 
 
-### SEO Version 1.3.0
+### SEO v1.3.0
 Released on  2017-04-24
 Release notes: 
 
-#### SEO Core , Sitemap
+**SEO Core , Sitemap**
 
 * Exclude CMS pages in HTML Sitemap
 + Include custom links in HTML Sitemap
 * Opt to exclude out-of-stock in HTML, XML Sitemap
-* Opptimize canonical tag, rich snippet, hreflang, alternate
+* Optimize canonical tag, rich snippet, hrefLang, alternate
 
-#### Rule templates
+**Rule templates**
+
 + Compatible with Layered Navigation
 + Add Mageplaza_Blog posts meta data template
-+ Optimzie template rule: products, categories, cms pages.
++ Optimize template rule products, categories, CMS pages.
 + Preview rule template
 
 
 
 
-### SEO Version 1.2.2
+### SEO v1.2.2
 Released on  2017-04-24
 Release notes: 
 
-- Edit composer.json to require mageplaza/module-core instead of mageplaza/core-m2
+- Edit composer.json to require mageplazamodule-core instead of mageplazacore-m2
 
 
 
-### Release v1.2.1
+### SEO v1.2.1
 Released on  2017-04-09
 Release notes: 
 
+- Fix composer issue
 
 
 
-
-### Release Release v1.2.0
+### SEO v1.2.0
 Released on  2017-04-09
 Release notes: 
 
-## Features
+**Features**
+
 + Add Verification configuration
 + Add Stop words feature
 + Hreflang tags feature
 
-## Bug fixes
+**Bug fixes**
+
 - Performance optimization
 - Group SEO menu
 - Optimize Configuration options
@@ -329,7 +343,7 @@ Release notes:
 
 
 
-### Release 
+### SEO v1.1.4
 Released on  2016-11-23
 Release notes: 
 
@@ -338,16 +352,16 @@ Release notes:
 
 
 
-### Release v1.1.2
+### SEO v1.1.2
 Released on  2016-11-22
 Release notes: 
 
-- Improve Robots meta tags: categories, products, cms pages
+- Improve Robots meta tags categories, products, cms pages
 
 
 
 
-### SEO Version 1.1.1
+### SEO v1.1.1
 Released on  2016-10-20
 Release notes: 
 
@@ -356,7 +370,7 @@ Release notes:
 
 
 
-### SEO Version 1.1.0
+### SEO v1.1.0
 Released on  2016-10-20
 Release notes: 
 
@@ -365,7 +379,7 @@ Release notes:
 - Comment code
 
 ## Features
-- Add config: Disable URL parameter in canonical URL
+- Add config Disable URL parameter in canonical URL
 
 ## Bug fixing
 - Fix bug canonical url
@@ -373,7 +387,7 @@ Release notes:
 
 
 
-### Release Compatible Magento 2.1
+### SEO v1.0.2
 Released on  2016-08-09
 Release notes: 
 
@@ -385,7 +399,7 @@ Release notes:
 
 
 
-### Release 
+### SEO v1.0.1
 Released on  2016-07-20
 Release notes: 
 
@@ -393,13 +407,10 @@ Release notes:
 
 
 
-### Release Release 1.0.0-beta
+### SEO v1.0.0-beta
 Released on  2016-04-23
 Release notes: 
 
 - Release first version
-
-
-
 
 
