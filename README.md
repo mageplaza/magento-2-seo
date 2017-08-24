@@ -132,20 +132,6 @@ We recommend SEO service from **Creare**
 
 
 
-## Mageplaza extensions on Magento Marketplace
-
-☞ [Magento 2 One Step Checkout extension](https://marketplace.magento.com/mageplaza-magento-2-one-step-checkout-extension.html)
-
-☞ [Magento 2 Blog extension](https://marketplace.magento.com/mageplaza-magento-2-blog-extension.html)
-
-☞ [Magento 2 Layered Navigation extension](https://marketplace.magento.com/mageplaza-layered-navigation-m2.html)
-
-☞ [Magento One Step Checkout](https://github.com/magento-2/one-step-checkout)
-
-
-
-
-
 
 
 
@@ -528,5 +514,36 @@ Released on  2016-04-23
 Release notes: 
 
 - Release first version
+
+
+
+
+
+
+
+## Mageplaza extensions on Magento Marketplace, Github
+
+
+☞ [Magento 2 One Step Checkout extension](https://marketplace.magento.com/mageplaza-magento-2-one-step-checkout-extension.html)
+
+☞ [Magento 2 Blog extension](https://marketplace.magento.com/mageplaza-magento-2-blog-extension.html)
+
+☞ [Magento 2 Layered Navigation extension](https://marketplace.magento.com/mageplaza-layered-navigation-m2.html)
+
+☞ [Magento One Step Checkout](https://github.com/magento-2/one-step-checkout)
+
+☞ [Magento 2 Blog on Github](https://github.com/mageplaza/magento-2-blog)
+
+☞ [Magento 2 Social Login on Github](https://github.com/mageplaza/magento-2-social-login)
+
+☞ [Magento 2 SEO on Github](https://github.com/mageplaza/magento-2-seo)
+
+☞ [Magento 2 SMTP on Github](https://github.com/mageplaza/magento-2-smtp)
+
+☞ [Magento 2 Product Slider on Github](https://github.com/mageplaza/magento-2-product-slider)
+
+☞ [Magento 2 Banner on Github](https://github.com/mageplaza/magento-2-banner-slider)
+
+
 
 
