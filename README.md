@@ -43,7 +43,7 @@ then follow [installation guide](https://www.mageplaza.com/install-magento-2-ext
 
 
 
-## 4. Contribute to this module
+## 4. Contribute to this SEO module
 
 Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
 
@@ -213,7 +213,7 @@ Make your site content to be easier readable by the search engines by adding opt
 A huge advantage when you have Megaplaza SEO extension is that it’s fully supported by Layered Navigation to make the SEO performance even better.
 
 
-## Features
+## Full features of Magento 2 SEO
 
 - Automatically avoid duplicate content			
 - Advanced Structured Data			
