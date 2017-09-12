@@ -267,6 +267,9 @@ class SeoRender
 
 		if($currentProduct = $this->getProduct()) {
 			try{
+
+				$availability = $this->getProductStock($currentProduct->getId())->getIsInStock() ? 'InStock' : 'OutOfStock';
+				$priceValidUntil = $currentProduct->getSpecialToDate();
 				$productStructuredData = array(
 					'@context'    => 'http://schema.org/',
 					'@type'       => 'Product',
@@ -278,12 +281,14 @@ class SeoRender
 					'offers'      => array(
 						'@type'           => 'Offer',
 						'priceCurrency'   => $this->_storeManager->getStore()->getCurrentCurrencyCode(),
-						'price'           => $currentProduct->getPrice(),
-						'priceValidUntil' => $currentProduct->getSpecialToDate(),
+						'price'           => $currentProduct->getPriceInfo()->getPrice('final_price')->getValue(),
 						'itemOffered'     => $this->getProductStock($currentProduct->getId())->getQty(),
-						'availability'    => 'http://schema.org/' . $this->getProductStock($currentProduct->getId())->getIsInStock() ? 'InStock' : 'OutOfStock'
+						'availability'    => 'http://schema.org/' . $availability
 					)
 				);
+				if(!empty($priceValidUntil)){
+					$productStructuredData['offers']['priceValidUntil'] = $priceValidUntil;
+				}
 				if($brand = $this->getProductBrand()){
 					$productStructuredData['brand']['@type'] = "Thing";
 					$productStructuredData['brand']['name']  = $brand->getValue();
