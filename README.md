@@ -1,6 +1,6 @@
 # Magento 2 SEO Extension FREE 
 
-[Mageplaza SEO for Magento 2](https://www.mageplaza.com/magento-2-seo-extension/) is a bundle of outstanding features that are auto-active when you install it from Mageplaza without any code modifications. It is also friendly with your store if you need to insert meta keywords and meta descriptions for your product. It will do perfectly for your better SEO.
+**Mageplaza SEO for Magento 2** is a bundle of outstanding features that are auto-active when you install it from Mageplaza without any code modifications. It is also friendly with your store if you need to insert meta keywords and meta descriptions for your product. It will do perfectly for your better SEO.
 
 [![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-seo-extension/v/stable)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 [![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-seo-extension/downloads)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
@@ -9,7 +9,7 @@
 
 - Installation guide: https://www.mageplaza.com/install-magento-2-extension/
 - User Guide: https://docs.mageplaza.com/seo-m2/
-- Download from our Live site: https://www.mageplaza.com/magento-2-social-login-extension/
+- Download from our Live site: https://www.mageplaza.com/magento-2-seo-extension/
 - Get Support: https://github.com/mageplaza/magento-2-seo/issues
 - Contribute on Github: https://github.com/mageplaza/magento-2-seo
 - Changelog: https://www.mageplaza.com/changelog/m2-seo.txt
