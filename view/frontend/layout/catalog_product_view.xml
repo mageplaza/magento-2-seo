@@ -9,8 +9,5 @@
                 <block class="Magento\Directory\Block\Currency" name="opengraph.currency" as="meta.currency"
                        template="Magento_Catalog::product/view/opengraph/currency.phtml"/>
         </referenceBlock>
-
-        <referenceContainer name="after.body.start" before="-">
-        </referenceContainer>
     </body>
 </page>

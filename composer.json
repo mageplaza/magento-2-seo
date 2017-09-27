@@ -5,7 +5,6 @@
     "mageplaza/module-core": "*"
   },
   "type": "magento2-module",
-  "version": "1.4.1",
   "license": "Mageplaza License",
   "keywords": [
       "magento 2",
