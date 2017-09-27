@@ -13,9 +13,6 @@
             </block>
         </referenceBlock>
 
-        <referenceContainer name="after.body.start" before="-">
-        </referenceContainer>
-
         <referenceContainer name="page.top">
             <block class="Mageplaza\Seo\Block\Widget\Breadcrumbs" name="mageplaza_seo_breadcrumbs"
                    after="-"
