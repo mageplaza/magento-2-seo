@@ -20,16 +20,19 @@
  */
 
 namespace Mageplaza\Seo\Plugin;
+
 use Magento\Framework\View\Page\Config as PageConfig;
 use Magento\Framework\App\Request\Http;
 use Mageplaza\Seo\Helper\Data as HelperData;
 use Magento\Framework\App\ObjectManager;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
-use Magento\Framework\Exception\InputException;
 use Magento\Framework\Registry;
 use Magento\Review\Model\ReviewFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\UrlInterface;
+use Magento\Catalog\Model\Product;
+use Magento\Framework\Message\ManagerInterface;
+
 /**
  * Class SeoBeforeRender
  * @package Mageplaza\Seo\Plugin
@@ -37,9 +40,9 @@ use Magento\Framework\UrlInterface;
 class SeoRender
 {
 	const GOOLE_SITE_VERIFICATION = 'google-site-verification';
-	const MSVALIDATE_01			  = 'msvalidate.01';
-	const P_DOMAIN_VERIFY		  = 'p:domain_verify';
-	const YANDEX_VERIFICATION	  = 'yandex-verification';
+	const MSVALIDATE_01 = 'msvalidate.01';
+	const P_DOMAIN_VERIFY = 'p:domain_verify';
+	const YANDEX_VERIFICATION = 'yandex-verification';
 	const SHOP_BY_BRAND_EXTENSION = 'Mageplaza_Shopbybrand';
 
 	/**
@@ -88,7 +91,17 @@ class SeoRender
 	protected $_urlBuilder;
 
 	/**
-	 * seoRender constructor.
+	 * @var \Magento\Catalog\Model\Product
+	 */
+	protected $product;
+
+	/**
+	 * @var \Magento\Framework\Message\ManagerInterface
+	 */
+	protected $messageManager;
+
+	/**
+	 * SeoRender constructor.
 	 * @param \Magento\Framework\View\Page\Config $pageConfig
 	 * @param \Magento\Framework\App\Request\Http $request
 	 * @param \Mageplaza\Seo\Helper\Data $helpData
@@ -97,6 +110,8 @@ class SeoRender
 	 * @param \Magento\Review\Model\ReviewFactory $reviewFactory
 	 * @param \Magento\Store\Model\StoreManagerInterface $storeManager
 	 * @param \Magento\Framework\UrlInterface $urlBuilder
+	 * @param \Magento\Catalog\Model\Product $product
+	 * @param \Magento\Framework\Message\ManagerInterface $messageManager
 	 */
 	function __construct(
 		PageConfig $pageConfig,
@@ -106,9 +121,12 @@ class SeoRender
 		Registry $registry,
 		ReviewFactory $reviewFactory,
 		StoreManagerInterface $storeManager,
-		UrlInterface $urlBuilder
+		UrlInterface $urlBuilder,
+		Product $product,
+		ManagerInterface $messageManager
 
-	) {
+	)
+	{
 
 		$this->pageConfig          = $pageConfig;
 		$this->request             = $request;
@@ -119,6 +137,8 @@ class SeoRender
 		$this->_storeManager       = $storeManager;
 		$this->reviewFactory       = $reviewFactory;
 		$this->_urlBuilder         = $urlBuilder;
+		$this->product             = $product;
+		$this->messageManager      = $messageManager;
 	}
 
 	/**
@@ -134,8 +154,8 @@ class SeoRender
 			'cms_noroute_index',
 			'catalogsearch_advanced_result'
 		);
-		if(in_array($this->getFullActionName(),$pages)){
-			$this->pageConfig->setMetadata('robots','NOINDEX,NOFOLLOW');
+		if (in_array($this->getFullActionName(), $pages)) {
+			$this->pageConfig->setMetadata('robots', 'NOINDEX,NOFOLLOW');
 		}
 
 	}
@@ -145,30 +165,33 @@ class SeoRender
 	 * @param $result
 	 * @return string
 	 */
-	public function afterRenderHeadContent(\Magento\Framework\View\Page\Config\Renderer $subject,$result)
+	public function afterRenderHeadContent(\Magento\Framework\View\Page\Config\Renderer $subject, $result)
 	{
 		$productStructuredData = '';
-		if($this->getFullActionName() == 'catalog_product_view'){
+		if ($this->getFullActionName() == 'catalog_product_view') {
 			$productStructuredData = $this->showProductStructuredData();
 		}
-		return $result.$productStructuredData;
+
+		return $result . $productStructuredData;
 	}
 
 	/**
 	 *  Show verifications from config
 	 */
-	public function showVerifications(){
-		$this->pageConfig->setMetadata(self::GOOLE_SITE_VERIFICATION,$this->helperData->getVerficationConfig('google'));
-		$this->pageConfig->setMetadata(self::MSVALIDATE_01,$this->helperData->getVerficationConfig('bing'));
-		$this->pageConfig->setMetadata(self::P_DOMAIN_VERIFY,$this->helperData->getVerficationConfig('pinterest'));
-		$this->pageConfig->setMetadata(self::YANDEX_VERIFICATION,$this->helperData->getVerficationConfig('yandex'));
+	public function showVerifications()
+	{
+		$this->pageConfig->setMetadata(self::GOOLE_SITE_VERIFICATION, $this->helperData->getVerficationConfig('google'));
+		$this->pageConfig->setMetadata(self::MSVALIDATE_01, $this->helperData->getVerficationConfig('bing'));
+		$this->pageConfig->setMetadata(self::P_DOMAIN_VERIFY, $this->helperData->getVerficationConfig('pinterest'));
+		$this->pageConfig->setMetadata(self::YANDEX_VERIFICATION, $this->helperData->getVerficationConfig('yandex'));
 	}
 
 	/**
 	 * Get full action name
 	 * @return string
 	 */
-	public function getFullActionName(){
+	public function getFullActionName()
+	{
 		return $this->request->getFullActionName();
 	}
 
@@ -197,7 +220,8 @@ class SeoRender
 	 * @param $productId
 	 * @return \Magento\CatalogInventory\Api\Data\StockItemInterface
 	 */
-	public function getProductStock($productId){
+	public function getProductStock($productId)
+	{
 		return $this->stockItemRepository->get($productId);
 	}
 
@@ -210,6 +234,7 @@ class SeoRender
 		if (!$this->getProduct()->getRatingSummary()) {
 			$this->getEntitySummary($this->getProduct());
 		}
+
 		return $this->getProduct()->getRatingSummary()->getReviewsCount();
 	}
 
@@ -230,7 +255,8 @@ class SeoRender
 	 * Get entity summary
 	 * @param $product
 	 */
-	public function getEntitySummary($product){
+	public function getEntitySummary($product)
+	{
 		$this->reviewFactory->create()->getEntitySummary($product, $this->_storeManager->getStore()->getId());
 	}
 
@@ -251,25 +277,30 @@ class SeoRender
 		if ($optionId = $this->getProduct()->getData($brandHelper->getAttributeCode())) {
 			/** @type \Mageplaza\Shopbybrand\Model\Brand $brand */
 			$brand = $this->objectManager->create('Mageplaza\Shopbybrand\Model\Brand');
+
 			return $brand->loadByOption($optionId);
 		}
+
 		return null;
 	}
 
 	/**
 	 * Show product structured data
 	 * @return string
-	 * @throws \Magento\Framework\Exception\InputException
 	 *
 	 * Learn more: https://developers.google.com/structured-data/rich-snippets/products#single_product_page
 	 */
-	public function showProductStructuredData(){
+	public function showProductStructuredData()
+	{
 
-		if($currentProduct = $this->getProduct()) {
-			try{
+		if ($currentProduct = $this->getProduct()) {
+			try {
+				$productId = $currentProduct->getId() ? $currentProduct->getId() : $this->request->getParam('id');
 
-				$availability = $this->getProductStock($currentProduct->getId())->getIsInStock() ? 'InStock' : 'OutOfStock';
-				$priceValidUntil = $currentProduct->getSpecialToDate();
+				$product      = $this->product->load($productId);
+				$availability = $product->isAvailable() ? 'InStock' : 'OutOfStock';
+
+				$priceValidUntil       = $currentProduct->getSpecialToDate();
 				$productStructuredData = array(
 					'@context'    => 'http://schema.org/',
 					'@type'       => 'Product',
@@ -279,31 +310,32 @@ class SeoRender
 					'url'         => $currentProduct->getProductUrl(),
 					'image'       => $this->getUrl('pub/media/catalog') . 'product' . $currentProduct->getImage(),
 					'offers'      => array(
-						'@type'           => 'Offer',
-						'priceCurrency'   => $this->_storeManager->getStore()->getCurrentCurrencyCode(),
-						'price'           => $currentProduct->getPriceInfo()->getPrice('final_price')->getValue(),
-						'itemOffered'     => $this->getProductStock($currentProduct->getId())->getQty(),
-						'availability'    => 'http://schema.org/' . $availability
+						'@type'         => 'Offer',
+						'priceCurrency' => $this->_storeManager->getStore()->getCurrentCurrencyCode(),
+						'price'         => $currentProduct->getPriceInfo()->getPrice('final_price')->getValue(),
+						'itemOffered'   => $this->getProductStock($currentProduct->getId())->getQty(),
+						'availability'  => 'http://schema.org/' . $availability
 					)
 				);
-				if(!empty($priceValidUntil)){
+				if (!empty($priceValidUntil)) {
 					$productStructuredData['offers']['priceValidUntil'] = $priceValidUntil;
 				}
-				if($brand = $this->getProductBrand()){
+				if ($brand = $this->getProductBrand()) {
 					$productStructuredData['brand']['@type'] = "Thing";
 					$productStructuredData['brand']['name']  = $brand->getValue();
 
 				}
-				if($this->getReviewCount()){
-					$productStructuredData['aggregateRating']['@type'] 		 = 'AggregateRating';
+				if ($this->getReviewCount()) {
+					$productStructuredData['aggregateRating']['@type']       = 'AggregateRating';
 					$productStructuredData['aggregateRating']['bestRating']  = 100;
 					$productStructuredData['aggregateRating']['worstRating'] = 0;
 					$productStructuredData['aggregateRating']['ratingValue'] = $this->getRatingSummary();
 					$productStructuredData['aggregateRating']['reviewCount'] = $this->getReviewCount();
 				}
-				return $this->helperData->createStructuredData($productStructuredData,'<!-- Product Structured Data by Mageplaza SEO-->');
+
+				return $this->helperData->createStructuredData($productStructuredData, '<!-- Product Structured Data by Mageplaza SEO-->');
 			} catch (\Exception $e) {
-				throw new InputException(__('Can not add structured data'));
+				$this->messageManager->addError(__('Can not add structured data'));
 			}
 		}
 	}
