@@ -53,7 +53,7 @@ class UpgradeData implements UpgradeDataInterface
 	 */
 	public function upgrade( ModuleDataSetupInterface $setup, ModuleContextInterface $context ) {
 		$eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
-		if (version_compare($context->getVersion(), '1.1.2', '<' )) {
+		if (version_compare($context->getVersion(), '2.0.0', '<' )) {
 			$this->removeAttribute($eavSetup,\Magento\Catalog\Model\Product::ENTITY,'mp_meta_robots');
 			$this->removeAttribute($eavSetup,\Magento\Catalog\Model\Product::ENTITY,'mp_seo_og_description');
 			$this->removeAttribute($eavSetup,\Magento\Catalog\Model\Category::ENTITY,'mp_meta_robots');
