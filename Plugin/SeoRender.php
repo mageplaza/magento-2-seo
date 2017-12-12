@@ -32,6 +32,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\Message\ManagerInterface;
+use Magento\CatalogInventory\Api\StockRegistryInterface;
 
 /**
  * Class SeoBeforeRender
@@ -99,7 +100,12 @@ class SeoRender
 	 * @var \Magento\Framework\Message\ManagerInterface
 	 */
 	protected $messageManager;
-
+	
+	/**
+	 * @var \Magento\CatalogInventory\Api\StockRegistryInterface
+	 */
+	protected $stockState;
+	
 	/**
 	 * SeoRender constructor.
 	 * @param \Magento\Framework\View\Page\Config $pageConfig
@@ -123,7 +129,8 @@ class SeoRender
 		StoreManagerInterface $storeManager,
 		UrlInterface $urlBuilder,
 		Product $product,
-		ManagerInterface $messageManager
+		ManagerInterface $messageManager,
+		StockRegistryInterface $stockState
 
 	)
 	{
@@ -139,6 +146,7 @@ class SeoRender
 		$this->_urlBuilder         = $urlBuilder;
 		$this->product             = $product;
 		$this->messageManager      = $messageManager;
+		$this->stockState          = $stockState;
 	}
 
 	/**
@@ -299,7 +307,10 @@ class SeoRender
 
 				$product      = $this->product->load($productId);
 				$availability = $product->isAvailable() ? 'InStock' : 'OutOfStock';
-
+				$stockItem    = $this->stockState->getStockItem(
+						$product->getId(),
+						$product->getStore()->getWebsiteId()
+						);
 				$priceValidUntil       = $currentProduct->getSpecialToDate();
 				$productStructuredData = array(
 					'@context'    => 'http://schema.org/',
@@ -313,7 +324,7 @@ class SeoRender
 						'@type'         => 'Offer',
 						'priceCurrency' => $this->_storeManager->getStore()->getCurrentCurrencyCode(),
 						'price'         => $currentProduct->getPriceInfo()->getPrice('final_price')->getValue(),
-						'itemOffered'   => $this->getProductStock($currentProduct->getId())->getQty(),
+						'itemOffered'   => $stockItem->getQty(),
 						'availability'  => 'http://schema.org/' . $availability
 					)
 				);
