@@ -176,7 +176,7 @@ class SeoRender
 	public function afterRenderHeadContent(\Magento\Framework\View\Page\Config\Renderer $subject, $result)
 	{
 		$productStructuredData = '';
-		if ($this->getFullActionName() == 'catalog_product_view') {
+		if ($this->getFullActionName() == 'catalog_product_view' && $this->helperData->getGeneralConfig('enable_product')) {
 			$productStructuredData = $this->showProductStructuredData();
 		}
 
