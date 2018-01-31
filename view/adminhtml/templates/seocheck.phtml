@@ -1,0 +1,21 @@
+<button id="seo-check" title="Seo Check" type="button" class="action- scalable action-secondary save" style="display:none;">
+    <span><?php echo __('Check On-page'); ?></span>
+</button>
+<form id="mageplaza-seo-form" target="_blank" method="post" action="http://localhost.com/seo-tool/home/">
+    <input title="" type="hidden" name="mageplazaSeoData" value='<?php echo $block->getSeoData(); ?>'>
+</form>
+<script>
+    require([
+        'jquery'
+    ], function ($) {
+        $(window).ajaxStart(function () {
+
+            $('.page-actions-buttons').append($('#seo-check'));
+            var seochek = $('#seo-check');
+            seochek.show();
+            seochek.click(function () {
+                $('#mageplaza-seo-form').submit();
+            });
+        });
+    })
+</script>
