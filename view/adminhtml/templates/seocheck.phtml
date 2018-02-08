@@ -10,7 +10,7 @@
     ], function ($) {
         $(window).ajaxStart(function () {
 
-            $('.page-actions-buttons').append($('#seo-check'));
+            $('.page-actions-buttons').append($('.page-main-actions > #seo-check'));
             var seochek = $('#seo-check');
             seochek.show();
             seochek.click(function () {
