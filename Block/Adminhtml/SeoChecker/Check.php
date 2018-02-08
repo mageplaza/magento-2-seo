@@ -24,7 +24,11 @@ namespace Mageplaza\Seo\Block\Adminhtml\SeoChecker;
 use Magento\Framework\View\Element\Template;
 use Mageplaza\Seo\Helper\Data;
 
-class Check extends \Magento\Framework\View\Element\Template
+/**
+ * Class Check
+ * @package Mageplaza\Seo\Block\Adminhtml\SeoChecker
+ */
+class Check extends Template
 {
     /**
      * @var string
@@ -32,44 +36,44 @@ class Check extends \Magento\Framework\View\Element\Template
     protected $_template = 'seocheck.phtml';
 
     /**
-     * @var \Magento\Framework\Url
-     */
-    public $url;
-
-    /**
      * @var \Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder
      */
-    public $cmsUrl;
+    protected $cmsUrl;
 
     /**
      * @var \Magento\Cms\Model\PageFactory
      */
-    public $cmsPageFactory;
+    protected $cmsPageFactory;
+
+    /**
+     * @var \Magento\Catalog\Model\ProductFactory 
+     */
+    protected $productFactory;
 
     /**
      * @var \Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory
      */
-    public $sitemapCollection;
+    protected $sitemapCollection;
 
     /**
      * @var \Magento\Framework\Json\Helper\Data
      */
-    public $jsonHelper;
+    protected $jsonHelper;
 
     /**
      * @var \Magento\Catalog\Api\ProductRepositoryInterface
      */
-    public $productRepository;
+    protected $productRepository;
 
     /**
      * @var \Magento\Catalog\Api\CategoryRepositoryInterface
      */
-    public $categoryRepository;
+    protected $categoryRepository;
 
     /**
-     * @var \\Mageplaza\Seo\Helper\Data
+     * @var \Mageplaza\Seo\Helper\Data
      */
-    public $helper;
+    protected $helper;
 
     /**
      * Check constructor.
@@ -102,12 +106,12 @@ class Check extends \Magento\Framework\View\Element\Template
         $this->helper = $helper;
         $this->productFactory = $productFactory;
         $this->categoryRepository = $categoryRepository;
-        $this->url = $url;
         $this->cmsUrl = $cmsUrl;
         $this->cmsPageFactory = $cmsPageFactory;
         $this->sitemapCollection = $sitemapCollection;
         $this->jsonHelper = $jsonHelper;
         $this->productRepository = $productRepository;
+
         parent::__construct($context, $data);
     }
 
@@ -153,11 +157,15 @@ class Check extends \Magento\Framework\View\Element\Template
     public function sitemap()
     {
         $sitemapLinks = [];
-        if ($this->_storeManager->getStore()->getId() == '0') {
-            $sitemap = $this->sitemapCollection->create();
-        } else {
-            $sitemap = $this->sitemapCollection->create()->addStoreFilter([$this->_storeManager->getStore()->getId()]);
+
+        /** @var \Magento\Sitemap\Model\ResourceModel\Sitemap\Collection $sitemap */
+        $sitemap = $this->sitemapCollection->create();
+
+        $storeId = $this->_storeManager->getStore()->getId();
+        if ($storeId) {
+            $sitemap->addStoreFilter([$storeId]);
         }
+
         foreach ($sitemap as $item) {
             $sitemapLinks[] = $this->getBaseUrl() . ltrim($item->getSitemapPath(), '/') . $item->getSitemapFilename();
         }
@@ -176,6 +184,7 @@ class Check extends \Magento\Framework\View\Element\Template
         $data['link'] = $this->getLink();
         $data['sitemap'] = $this->sitemap();
         $data['baseUrl'] = $this->getBaseUrl();
+
         return $this->jsonHelper->jsonEncode($data);
     }
 
@@ -186,7 +195,6 @@ class Check extends \Magento\Framework\View\Element\Template
      */
     public function getSeoToolUrl()
     {
-        return $this->helper->getGeneralConfig('seo_tool_url');
+        return $this->helper->getConfigGeneral('seo_tool_url');
     }
-
 }

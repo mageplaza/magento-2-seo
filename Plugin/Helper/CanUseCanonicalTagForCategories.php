@@ -56,6 +56,7 @@ class CanUseCanonicalTagForCategories
         if ($this->_helper->isEnabled()) {
             return $this->_helper->getDuplicateConfig('category_canonical_tag');
         }
+
         return $result;
     }
 }

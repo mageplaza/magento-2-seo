@@ -21,20 +21,21 @@
 
 namespace Mageplaza\Seo\Plugin;
 
-use Magento\Framework\View\Page\Config as PageConfig;
-use Magento\Framework\App\Request\Http;
-use Mageplaza\Seo\Helper\Data as HelperData;
-use Magento\Framework\App\ObjectManager;
-use Magento\CatalogInventory\Model\Stock\StockItemRepository;
-use Magento\Framework\Registry;
-use Magento\Review\Model\ReviewFactory;
-use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\UrlInterface;
-use Magento\Catalog\Model\Product;
-use Magento\Framework\Message\ManagerInterface;
+use Magento\Catalog\Model\ProductFactory;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
-use Magento\Search\Helper\Data as SearchHelper;
+use Magento\CatalogInventory\Model\Stock\StockItemRepository;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\App\Request\Http;
+use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\Pricing\Helper\Data as PriceHelper;
+use Magento\Framework\Registry;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Page\Config as PageConfig;
+use Magento\Framework\View\Page\Config\Renderer;
+use Magento\Review\Model\ReviewFactory;
+use Magento\Search\Helper\Data as SearchHelper;
+use Magento\Store\Model\StoreManagerInterface;
+use Mageplaza\Seo\Helper\Data as HelperData;
 
 /**
  * Class SeoBeforeRender
@@ -94,9 +95,9 @@ class SeoRender
     protected $_urlBuilder;
 
     /**
-     * @var \Magento\Catalog\Model\Product
+     * @var ProductFactory
      */
-    protected $product;
+    protected $productFactory;
 
     /**
      * @var \Magento\Framework\Message\ManagerInterface
@@ -128,7 +129,7 @@ class SeoRender
      * @param ReviewFactory $reviewFactory
      * @param StoreManagerInterface $storeManager
      * @param UrlInterface $urlBuilder
-     * @param Product $product
+     * @param ProductFactory $productFactory
      * @param ManagerInterface $messageManager
      * @param StockRegistryInterface $stockState
      * @param SearchHelper $searchHelper
@@ -143,15 +144,13 @@ class SeoRender
         ReviewFactory $reviewFactory,
         StoreManagerInterface $storeManager,
         UrlInterface $urlBuilder,
-        Product $product,
+        ProductFactory $productFactory,
         ManagerInterface $messageManager,
         StockRegistryInterface $stockState,
         SearchHelper $searchHelper,
         PriceHelper $priceHelper
-
     )
     {
-
         $this->pageConfig = $pageConfig;
         $this->request = $request;
         $this->helperData = $helpData;
@@ -161,7 +160,7 @@ class SeoRender
         $this->_storeManager = $storeManager;
         $this->reviewFactory = $reviewFactory;
         $this->_urlBuilder = $urlBuilder;
-        $this->product = $product;
+        $this->productFactory = $productFactory;
         $this->messageManager = $messageManager;
         $this->stockState = $stockState;
         $this->_searchHelper = $searchHelper;
@@ -169,11 +168,10 @@ class SeoRender
     }
 
     /**
-     * @param \Magento\Framework\View\Page\Config\Renderer $subject
+     * @param Renderer $subject
      */
-    public function beforeRenderMetadata(\Magento\Framework\View\Page\Config\Renderer $subject)
+    public function beforeRenderMetadata(Renderer $subject)
     {
-
         $this->showVerifications();
 
         $pages = array(
@@ -184,27 +182,23 @@ class SeoRender
         if (in_array($this->getFullActionName(), $pages)) {
             $this->pageConfig->setMetadata('robots', 'NOINDEX,NOFOLLOW');
         }
-
     }
 
     /**
-     * @param \Magento\Framework\View\Page\Config\Renderer $subject
+     * @param Renderer $subject
      * @param $result
      * @return string
      */
-    public function afterRenderHeadContent(\Magento\Framework\View\Page\Config\Renderer $subject, $result)
+    public function afterRenderHeadContent(Renderer $subject, $result)
     {
-
-        $productStructuredData = '';
         $fullActionname = $this->getFullActionName();
-
         switch ($fullActionname) {
             case 'catalog_product_view':
                 if ($this->helperData->getRichsnippetsConfig('enable_product')) {
                     $productStructuredData = $this->showProductStructuredData();
                     $result = $result . $productStructuredData;
                 }
-                return $result;
+                break;
             case 'cms_index_index':
                 if ($this->helperData->getInfoConfig('enable')) {
                     $result = $result . $this->showBusinessStructuredData();
@@ -212,9 +206,8 @@ class SeoRender
                 if ($this->helperData->getRichsnippetsConfig('enable_site_link')) {
                     $result = $result . $this->showSiteLinksStructuredData();
                 }
-                return $result;
+                break;
         }
-
 
         return $result;
     }
@@ -260,9 +253,9 @@ class SeoRender
     }
 
     /**
-     * Get product stock
      * @param $productId
      * @return \Magento\CatalogInventory\Api\Data\StockItemInterface
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getProductStock($productId)
     {
@@ -296,8 +289,8 @@ class SeoRender
     }
 
     /**
-     * Get entity summary
      * @param $product
+     * @return mixed
      */
     public function getEntitySummary($product)
     {
@@ -310,7 +303,6 @@ class SeoRender
      */
     public function getProductBrand()
     {
-
         if (!$this->helperData->checkModuleActive(self::SHOP_BY_BRAND_EXTENSION)) {
             return null;
         }
@@ -340,7 +332,7 @@ class SeoRender
             try {
                 $productId = $currentProduct->getId() ? $currentProduct->getId() : $this->request->getParam('id');
 
-                $product = $this->product->load($productId);
+                $product = $this->productFactory->create()->load($productId);
                 $availability = $product->isAvailable() ? 'InStock' : 'OutOfStock';
                 $stockItem = $this->stockState->getStockItem(
                     $product->getId(),
@@ -474,7 +466,6 @@ class SeoRender
         }
 
         return $lines;
-
     }
 
     /**
@@ -494,6 +485,7 @@ class SeoRender
                 'query-input' => 'required name=searchbox_target'
             ]
         );
+
         return $this->helperData->createStructuredData($siteLinksStructureData, '<!-- Sitelinks Searchbox Structured Data by Mageplaza SEO-->');
     }
 
@@ -512,7 +504,7 @@ class SeoRender
         $typeInstance = $currentProduct->getTypeInstance();
         $childProductCollection = $typeInstance->getAssociatedProducts($currentProduct);
         foreach ($childProductCollection as $child) {
-            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)
+            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
@@ -529,8 +521,10 @@ class SeoRender
         $productStructuredData['offers']['lowPrice'] = min($childrenPrice);
         unset($productStructuredData['offers']['price']);
 
-        if (!empty($offerData))
+        if (!empty($offerData)) {
             $productStructuredData['offers']['offers'] = $offerData;
+        }
+
         return $productStructuredData;
     }
 
@@ -549,7 +543,6 @@ class SeoRender
         $childProductCollection = $typeInstance->getLinks($currentProduct);
         $childrenPrice = [];
         foreach ($childProductCollection as $child) {
-
             $offerData[] = [
                 '@type' => "Offer",
                 'name' => $child->getTitle(),
@@ -560,8 +553,10 @@ class SeoRender
         $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
         $productStructuredData['offers']['lowPrice'] = min($childrenPrice);
 
-        if (!empty($offerData))
+        if (!empty($offerData)) {
             $productStructuredData['offers']['offers'] = $offerData;
+        }
+
         return $productStructuredData;
     }
 
@@ -581,7 +576,7 @@ class SeoRender
         $typeInstance = $currentProduct->getTypeInstance();
         $childProductCollection = $typeInstance->getUsedProductCollection($currentProduct)->addAttributeToSelect('*');
         foreach ($childProductCollection as $child) {
-            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)
+            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
@@ -592,10 +587,11 @@ class SeoRender
                 'image' => $imageUrl
             ];
         }
-        if (!empty($offerData))
+        if (!empty($offerData)) {
             $productStructuredData['offers']['offers'] = $offerData;
-        return $productStructuredData;
+        }
 
+        return $productStructuredData;
     }
 
     /**
@@ -607,7 +603,6 @@ class SeoRender
      */
     public function getBundleProductStructuredData($currentProduct, $productStructuredData)
     {
-
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
         $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaximalPrice()->getValue();
         $productStructuredData['offers']['lowPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinimalPrice()->getValue();
@@ -616,7 +611,7 @@ class SeoRender
         $typeInstance = $currentProduct->getTypeInstance();
         $childProductCollection = $typeInstance->getSelectionsCollection($typeInstance->getOptionsIds($currentProduct), $currentProduct);
         foreach ($childProductCollection as $child) {
-            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)
+            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
@@ -627,8 +622,10 @@ class SeoRender
                 'image' => $imageUrl
             ];
         }
-        if (!empty($offerData))
+        if (!empty($offerData)) {
             $productStructuredData['offers']['offers'] = $offerData;
+        }
+
         return $productStructuredData;
     }
 

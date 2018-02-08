@@ -16,12 +16,12 @@
  *
  * @category    Mageplaza
  * @package     Mageplaza_Seo
- * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @copyright   Copyright (c) 2018 Mageplaza (http://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Mageplaza_Seo" setup_version="2.1.0">
+    <module name="Mageplaza_Seo" setup_version="2.0.1">
         <sequence>
             <module name="Magento_Backend"/>
             <module name="Mageplaza_Core"/>

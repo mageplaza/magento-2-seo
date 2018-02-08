@@ -16,19 +16,19 @@
  *
  * @category    Mageplaza
  * @package     Mageplaza_Seo
- * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @copyright   Copyright (c) 2018 Mageplaza (http://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <seo>
-            <general>
-                <seo_tool_url>http://localhost.com/seo-tool/home/</seo_tool_url>
-            </general>
             <module>
                 <type>1</type>
             </module>
+            <general>
+                <seo_tool_url>http://localhost.com/seo-tool/home/</seo_tool_url>
+            </general>
         </seo>
         <catalog>
             <seo>

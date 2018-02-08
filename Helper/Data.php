@@ -24,6 +24,7 @@ namespace Mageplaza\Seo\Helper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Theme\Block\Html\Header\Logo;
 use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 
 /**
@@ -34,7 +35,6 @@ class Data extends CoreHelper
 {
     const CONFIG_MODULE_PATH = 'seo';
 
-    const XML_PATH_GENERAL = 'seo/general/';
     const XML_PATH_META = 'seo/meta/';
     const XML_PATH_RICHSNIPPETS = 'seo/richsnippets/';
     const XML_PATH_HTACCESS = 'seo/htaccess/';
@@ -44,12 +44,7 @@ class Data extends CoreHelper
     const XML_PATH_VERIFICATION = 'seo/verification/';
 
     /**
-     * @type \Magento\Framework\Module\Manager
-     */
-    protected $_moduleManager;
-
-    /**
-     * @var \Magento\Theme\Block\Html\Header\Logo
+     * @var Logo
      */
     protected $_logo;
 
@@ -58,28 +53,29 @@ class Data extends CoreHelper
      * @param Context $context
      * @param StoreManagerInterface $storeManager
      * @param ObjectManagerInterface $objectManager
-     * @param \Magento\Theme\Block\Html\Header\Logo $logo
+     * @param Logo $logo
      */
     public function __construct(
         Context $context,
         StoreManagerInterface $storeManager,
         ObjectManagerInterface $objectManager,
-        \Magento\Theme\Block\Html\Header\Logo $logo
+        Logo $logo
     )
     {
-        $this->_moduleManager = $context->getModuleManager();
         $this->_logo = $logo;
+
         parent::__construct($context, $objectManager, $storeManager);
     }
 
     /**
-     * @param $code
+     * check Module enable
+     *
      * @param null $storeId
-     * @return mixed
+     * @return bool
      */
-    public function getGeneralConfig($code, $storeId = null)
+    public function isEnabled($storeId = null)
     {
-        return $this->getConfigValue(self::XML_PATH_GENERAL . $code, $storeId);
+        return $this->isModuleOutputEnabled();
     }
 
     /**
@@ -89,7 +85,9 @@ class Data extends CoreHelper
      */
     public function getMetaConfig($code, $storeId = null)
     {
-        return $this->getConfigValue(self::XML_PATH_META . $code, $storeId);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/meta' . $code, $storeId);
     }
 
     /**
@@ -99,7 +97,9 @@ class Data extends CoreHelper
      */
     public function getVerficationConfig($code, $storeId = null)
     {
-        return $this->getConfigValue(self::XML_PATH_VERIFICATION . $code, $storeId);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/verification' . $code, $storeId);
     }
 
     /**
@@ -109,7 +109,9 @@ class Data extends CoreHelper
      */
     public function getRichsnippetsConfig($code, $storeId = null)
     {
-        return $this->getConfigValue(self::XML_PATH_RICHSNIPPETS . $code, $storeId);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/richsnippets' . $code, $storeId);
     }
 
     /**
@@ -119,7 +121,9 @@ class Data extends CoreHelper
      */
     public function getHtaccessConfig($code, $storeId = null)
     {
-        return $this->getConfigValue(self::XML_PATH_HTACCESS . $code, $storeId);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/htaccess' . $code, $storeId);
     }
 
     /**
@@ -129,7 +133,9 @@ class Data extends CoreHelper
      */
     public function getRobotsConfig($code, $storeId = null)
     {
-        return $this->getConfigValue(self::XML_PATH_ROBOTS . $code, $storeId);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/robots' . $code, $storeId);
     }
 
     /**
@@ -139,47 +145,57 @@ class Data extends CoreHelper
      */
     public function getHtmlsitemapConfig($code, $storeId = null)
     {
-        return $this->getConfigValue(self::XML_PATH_HTML_SITEMAP . $code, $storeId);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/htmlsitemap' . $code, $storeId);
     }
 
     /**
-     * Info config
      * @param null $code
+     * @param null $storeId
      * @return mixed
      */
-    public function getInfoConfig($code = null)
+    public function getInfoConfig($code = null, $storeId = null)
     {
-        return $this->getConfigValue('seo/info/' . $code);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/info' . $code, $storeId);
     }
 
     /**
-     * Get social shares
      * @param null $code
+     * @param null $storeId
      * @return mixed
      */
-    public function getSocialShares($code = null)
+    public function getSocialShares($code = null, $storeId = null)
     {
-        return $this->getConfigValue('seo/social_shares/' . $code);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/social_shares' . $code, $storeId);
     }
 
     /**
-     * Get Social profiles
      * @param null $code
+     * @param null $storeId
      * @return mixed
      */
-    public function getSocialProfiles($code = null)
+    public function getSocialProfiles($code = null, $storeId = null)
     {
-        return $this->getConfigValue('seo/social_profiles/' . $code);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/social_profiles' . $code, $storeId);
     }
 
     /**
-     * Get duplicate content config
      * @param null $code
+     * @param null $storeId
      * @return mixed
      */
-    public function getDuplicateConfig($code = null)
+    public function getDuplicateConfig($code = null, $storeId = null)
     {
-        return $this->getConfigValue('seo/duplicate/' . $code);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/duplicate' . $code, $storeId);
     }
 
     /**
@@ -214,11 +230,14 @@ class Data extends CoreHelper
 
     /**
      * @param null $code
+     * @param null $storeId
      * @return mixed
      */
-    public function getHreflang($code = null)
+    public function getHreflang($code = null, $storeId = null)
     {
-        return $this->getConfigValue(self::XML_PATH_HREFLANG_TAG . $code);
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/hreflang' . $code, $storeId);
     }
 
     /**
@@ -246,17 +265,6 @@ class Data extends CoreHelper
         $applicationLdJson .= $subfixComment;
 
         return $applicationLdJson;
-    }
-
-    /**
-     * check Module enable
-     *
-     * @param null $storeId
-     * @return bool
-     */
-    public function isEnabled($storeId = null)
-    {
-        return $this->isModuleOutputEnabled();
     }
 
     /**

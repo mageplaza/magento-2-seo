@@ -16,7 +16,7 @@
  *
  * @category    Mageplaza
  * @package     Mageplaza_Seo
- * @copyright   Copyright (c) 2017 Mageplaza (http://www.mageplaza.com/)
+ * @copyright   Copyright (c) 2018 Mageplaza (http://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
@@ -44,7 +44,6 @@
                 <field id="seo_tool_url" type="hidden" sortOrder="1">
                 </field>
             </group>
-
             <group id="duplicate" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Duplicate Content</label>
                 <field id="category_canonical_tag" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -78,14 +77,12 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[ Learn more <a href="https://developers.google.com/search/docs/data-types/corporate-contacts" target="_blank">here</a> ]]></comment>
                 </field>
-
                 <field id="business_name" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Business Name</label>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
                 </field>
-
                 <field id="customer_service_phone" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Customer Service Phone</label>
                     <depends>
@@ -140,8 +137,6 @@
                         <field id="enable">1</field>
                     </depends>
                 </field>
-
-
             </group>
             <!--Social Profiles-->
             <group id="social_profiles" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">

@@ -53,10 +53,10 @@ class CanUseCanonicalTagForProducts
      */
     public function afterCanUseCanonicalTag(\Magento\Catalog\Helper\Product $product, $result)
     {
-
         if ($this->_helper->isEnabled()) {
             return $this->_helper->getDuplicateConfig('product_canonical_tag');
         }
+
         return $result;
     }
 }
