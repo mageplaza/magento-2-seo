@@ -15,7 +15,7 @@
  *
  * @category    Mageplaza
  * @package     Mageplaza_Seo
- * @copyright   Copyright (c) 2016 Mageplaza (https://www.mageplaza.com/)
+ * @copyright   Copyright (c) 2018 Mageplaza (https://www.mageplaza.com/)
  * @license     http://mageplaza.com/LICENSE.txt
  */
 
@@ -336,7 +336,6 @@ class SeoRender
      */
     public function showProductStructuredData()
     {
-
         if ($currentProduct = $this->getProduct()) {
             try {
                 $productId = $currentProduct->getId() ? $currentProduct->getId() : $this->request->getParam('id');
@@ -508,11 +507,10 @@ class SeoRender
     public function getGroupedProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
-        unset($productStructuredData['offers']['price']);
-        $productStructuredData['offers']['lowPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinimalPrice()->getValue();
+        $childrenPrice = [];
         $offerData = array();
         $typeInstance = $currentProduct->getTypeInstance();
-        $childProductCollection = $typeInstance->getSelectionsCollection($typeInstance->getOptionsIds($currentProduct), $currentProduct);
+        $childProductCollection = $typeInstance->getAssociatedProducts($currentProduct);
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
@@ -524,7 +522,13 @@ class SeoRender
                 'sku' => $child->getSku(),
                 'image' => $imageUrl
             ];
+            $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
         }
+
+        $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
+        $productStructuredData['offers']['lowPrice'] = min($childrenPrice);
+        unset($productStructuredData['offers']['price']);
+
         if (!empty($offerData))
             $productStructuredData['offers']['offers'] = $offerData;
         return $productStructuredData;
@@ -539,9 +543,9 @@ class SeoRender
      */
     public function getDownloadableProductStructuredData($currentProduct, $productStructuredData)
     {
-        $typeInstance = $currentProduct->getTypeInstance();
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
 
+        $typeInstance = $currentProduct->getTypeInstance();
         $childProductCollection = $typeInstance->getLinks($currentProduct);
         $childrenPrice = [];
         foreach ($childProductCollection as $child) {
@@ -571,13 +575,11 @@ class SeoRender
     public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
-        $childrenPrice = [];
-
-
+        $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaxRegularAmount()->getValue();
+        $productStructuredData['offers']['lowPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinRegularAmount()->getValue();
         $offerData = array();
         $typeInstance = $currentProduct->getTypeInstance();
-
-        $childProductCollection = $typeInstance->getAssociatedProducts($currentProduct);
+        $childProductCollection = $typeInstance->getUsedProductCollection($currentProduct)->addAttributeToSelect('*');
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
@@ -589,13 +591,7 @@ class SeoRender
                 'sku' => $child->getSku(),
                 'image' => $imageUrl
             ];
-            $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
         }
-
-        $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice'] = min($childrenPrice);
-        unset($productStructuredData['offers']['price']);
-
         if (!empty($offerData))
             $productStructuredData['offers']['offers'] = $offerData;
         return $productStructuredData;
@@ -611,10 +607,11 @@ class SeoRender
      */
     public function getBundleProductStructuredData($currentProduct, $productStructuredData)
     {
+
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
-        unset($productStructuredData['offers']['price']);
         $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaximalPrice()->getValue();
         $productStructuredData['offers']['lowPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinimalPrice()->getValue();
+        unset($productStructuredData['offers']['price']);
         $offerData = array();
         $typeInstance = $currentProduct->getTypeInstance();
         $childProductCollection = $typeInstance->getSelectionsCollection($typeInstance->getOptionsIds($currentProduct), $currentProduct);
