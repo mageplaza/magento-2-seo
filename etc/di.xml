@@ -24,4 +24,7 @@
     <type name="\Magento\Catalog\Helper\Category">
         <plugin name="canonicalTagCategories" type="Mageplaza\Seo\Plugin\Helper\CanUseCanonicalTagForCategories" />
     </type>
+    <type name="\Magento\Catalog\Helper\Product">
+        <plugin name="canonicalTagCategories" type="Mageplaza\Seo\Plugin\Helper\CanUseCanonicalTagForProducts" />
+    </type>
 </config>

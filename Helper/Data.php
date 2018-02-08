@@ -49,19 +49,26 @@ class Data extends CoreHelper
     protected $_moduleManager;
 
     /**
+     * @var \Magento\Theme\Block\Html\Header\Logo
+     */
+    protected $_logo;
+
+    /**
      * Data constructor.
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param Context $context
+     * @param StoreManagerInterface $storeManager
+     * @param ObjectManagerInterface $objectManager
+     * @param \Magento\Theme\Block\Html\Header\Logo $logo
      */
     public function __construct(
         Context $context,
         StoreManagerInterface $storeManager,
-        ObjectManagerInterface $objectManager
+        ObjectManagerInterface $objectManager,
+        \Magento\Theme\Block\Html\Header\Logo $logo
     )
     {
         $this->_moduleManager = $context->getModuleManager();
-
+        $this->_logo = $logo;
         parent::__construct($context, $objectManager, $storeManager);
     }
 
@@ -239,5 +246,26 @@ class Data extends CoreHelper
         $applicationLdJson .= $subfixComment;
 
         return $applicationLdJson;
+    }
+
+    /**
+     * check Module enable
+     *
+     * @param null $storeId
+     * @return bool
+     */
+    public function isEnabled($storeId = null)
+    {
+        return $this->isModuleOutputEnabled();
+    }
+
+    /**
+     * get Logo image url
+     *
+     * @return string
+     */
+    public function getLogo()
+    {
+        return $this->_logo->getLogoSrc();
     }
 }

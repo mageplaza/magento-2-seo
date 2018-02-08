@@ -1,19 +1,43 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: nghia
- * Date: 25/01/2018
- * Time: 09:09
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Seo
+ * @copyright   Copyright (c) 2018 Mageplaza (https://www.mageplaza.com/)
+ * @license     http://mageplaza.com/LICENSE.txt
  */
 
 namespace Mageplaza\Seo\Plugin\Helper;
 
 use Mageplaza\Seo\Helper\Data as HelperData;
 
+/**
+ * Class CanUseCanonicalTagForProducts
+ * @package Mageplaza\Seo\Plugin\Helper
+ */
 class CanUseCanonicalTagForProducts
 {
+    /**
+     * @var \Mageplaza\Seo\Helper\Data
+     */
     protected $_helper;
 
+    /**
+     * CanUseCanonicalTagForProducts constructor.
+     * @param HelperData $helper
+     */
     function __construct
     (
         HelperData $helper
@@ -22,8 +46,14 @@ class CanUseCanonicalTagForProducts
         $this->_helper = $helper;
     }
 
+    /**
+     * @param \Magento\Catalog\Helper\Product $product
+     * @param $result
+     * @return mixed
+     */
     public function afterCanUseCanonicalTag(\Magento\Catalog\Helper\Product $product, $result)
     {
+
         if ($this->_helper->isEnabled()) {
             return $this->_helper->getDuplicateConfig('product_canonical_tag');
         }

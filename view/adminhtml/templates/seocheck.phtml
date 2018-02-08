@@ -1,7 +1,7 @@
 <button id="seo-check" title="Seo Check" type="button" class="action- scalable action-secondary save" style="display:none;">
     <span><?php echo __('Check On-page'); ?></span>
 </button>
-<form id="mageplaza-seo-form" target="_blank" method="post" action="http://localhost.com/seo-tool/home/">
+<form id="mageplaza-seo-form" target="_blank" method="post" action="<?php echo $block->getSeoToolUrl() ?>">
     <input title="" type="hidden" name="mageplazaSeoData" value='<?php echo $block->getSeoData(); ?>'>
 </form>
 <script>

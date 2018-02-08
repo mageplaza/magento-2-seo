@@ -23,6 +23,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <seo>
+            <general>
+                <seo_tool_url>http://localhost.com/seo-tool/home/</seo_tool_url>
+            </general>
             <module>
                 <type>1</type>
             </module>
