@@ -397,7 +397,7 @@ class SeoRender
 
         );
         if (!empty($this->getSocialProfiles()))
-            $businessStructuredData['sameAs'] = [$this->getSocialProfiles()];
+            $businessStructuredData['sameAs'] = $this->getSocialProfiles();
         $businessStructuredData['contactPoint'] = array();
 
         // get customer service info
@@ -460,9 +460,8 @@ class SeoRender
         if ($profiles) {
             foreach ($profiles as $_profile) {
                 if ($_profile)
-                    $lines[] = '"' . $_profile . '"';
+                    $lines[] = $_profile;
             }
-            $lines = implode(",\n", $lines);
         }
 
         return $lines;
