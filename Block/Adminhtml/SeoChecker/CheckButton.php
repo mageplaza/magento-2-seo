@@ -22,17 +22,37 @@
 namespace Mageplaza\Seo\Block\Adminhtml\SeoChecker;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+use Mageplaza\Seo\Helper\Data;
 
 /**
- * Class ResetButton
+ * Class CheckButton
+ * @package Mageplaza\Seo\Block\Adminhtml\SeoChecker
  */
 class CheckButton implements ButtonProviderInterface
 {
+    /**
+     * @var Data
+     */
+    protected $helper;
+
+    /**
+     * CheckButton constructor.
+     * @param Data $helper
+     */
+    public function __construct(Data $helper)
+    {
+        $this->helper = $helper;
+    }
+
     /**
      * @return array
      */
     public function getButtonData()
     {
+        if (!$this->helper->isEnabled()) {
+            return [];
+        }
+
         return [
             'label' => __('Check On-page'),
             'class' => 'action-secondary save',
