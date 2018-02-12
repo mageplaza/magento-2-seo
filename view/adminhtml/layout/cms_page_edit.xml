@@ -24,7 +24,7 @@
     <update handle="editor"/>
     <body>
         <referenceContainer name="page.main.actions">
-            <block class="Mageplaza\Seo\Block\Adminhtml\SeoChecker\Check" name="seo-checker" after="-" />
+            <block class="Mageplaza\Seo\Block\Adminhtml\SeoChecker\Check" name="seo-checker" after="-" ifconfig="seo/general/enabled"/>
         </referenceContainer>
     </body>
 </page>

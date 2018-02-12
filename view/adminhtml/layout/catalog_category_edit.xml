@@ -23,7 +23,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="page.main.actions">
-            <block class="Mageplaza\Seo\Block\Adminhtml\SeoChecker\Check" name="seo-checker" after="-" />
+            <block class="Mageplaza\Seo\Block\Adminhtml\SeoChecker\Check" name="seo-checker" after="-" ifconfig="seo/general/enabled"/>
         </referenceContainer>
     </body>
 </page>
