@@ -35,14 +35,6 @@ class Data extends CoreHelper
 {
     const CONFIG_MODULE_PATH = 'seo';
 
-    const XML_PATH_META = 'seo/meta/';
-    const XML_PATH_RICHSNIPPETS = 'seo/richsnippets/';
-    const XML_PATH_HTACCESS = 'seo/htaccess/';
-    const XML_PATH_ROBOTS = 'seo/robots/';
-    const XML_PATH_HTML_SITEMAP = 'seo/htmlsitemap/';
-    const XML_PATH_HREFLANG_TAG = 'seo/hreflang/';
-    const XML_PATH_VERIFICATION = 'seo/verification/';
-
     /**
      * @var Logo
      */

@@ -38,10 +38,7 @@ class CanUseCanonicalTagForProducts
      * CanUseCanonicalTagForProducts constructor.
      * @param HelperData $helper
      */
-    function __construct
-    (
-        HelperData $helper
-    )
+    function __construct(HelperData $helper)
     {
         $this->_helper = $helper;
     }

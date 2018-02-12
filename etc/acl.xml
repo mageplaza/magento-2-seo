@@ -24,15 +24,10 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="Mageplaza_Core::menu">
-                    <resource id="Mageplaza_Seo::seo" title="Seo" sortOrder="43">
-                        <resource id="Mageplaza_Seo::brand" title="Configuration" sortOrder="100"/>
-                    </resource>
-                </resource>
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Mageplaza_Seo::configuration" title="Seo"/>
+                            <resource id="Mageplaza_Seo::configuration" title="Mageplaza Seo"/>
                         </resource>
                     </resource>
                 </resource>

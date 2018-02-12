@@ -1,4 +1,5 @@
-<?php
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 /**
  * Mageplaza
  *
@@ -18,8 +19,11 @@
  * @copyright   Copyright (c) 2018 Mageplaza (https://www.mageplaza.com/)
  * @license     http://mageplaza.com/LICENSE.txt
  */
-?>
-
-<form id="mageplaza-seo-form" target="_blank" method="post" action="<?php echo $block->getSeoToolUrl() ?>">
-    <input title="" type="hidden" name="mageplazaSeoData" value='<?php echo $block->getSeoData(); ?>'>
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="buttons" xsi:type="array">
+            <item name="check_on_page" xsi:type="string">Mageplaza\Seo\Block\Adminhtml\SeoChecker\CheckButton</item>
+        </item>
+    </argument>
 </form>

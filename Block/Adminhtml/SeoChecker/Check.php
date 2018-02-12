@@ -30,6 +30,8 @@ use Mageplaza\Seo\Helper\Data;
  */
 class Check extends Template
 {
+    const SEO_TOOL_URL = 'http://seo.mageplaza.com';
+
     /**
      * @var string
      */
@@ -46,7 +48,7 @@ class Check extends Template
     protected $cmsPageFactory;
 
     /**
-     * @var \Magento\Catalog\Model\ProductFactory 
+     * @var \Magento\Catalog\Model\ProductFactory
      */
     protected $productFactory;
 
@@ -195,6 +197,6 @@ class Check extends Template
      */
     public function getSeoToolUrl()
     {
-        return $this->helper->getConfigGeneral('seo_tool_url');
+        return self::SEO_TOOL_URL;
     }
 }
