@@ -68,17 +68,6 @@ class Data extends CoreHelper
     }
 
     /**
-     * check Module enable
-     *
-     * @param null $storeId
-     * @return bool
-     */
-    public function isEnabled($storeId = null)
-    {
-        return $this->isModuleOutputEnabled();
-    }
-
-    /**
      * @param $code
      * @param null $storeId
      * @return mixed

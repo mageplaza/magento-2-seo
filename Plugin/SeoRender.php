@@ -43,6 +43,7 @@ use Mageplaza\Seo\Helper\Data as HelperData;
  */
 class SeoRender
 {
+
     const GOOLE_SITE_VERIFICATION = 'google-site-verification';
     const MSVALIDATE_01 = 'msvalidate.01';
     const P_DOMAIN_VERIFY = 'p:domain_verify';
@@ -172,15 +173,17 @@ class SeoRender
      */
     public function beforeRenderMetadata(Renderer $subject)
     {
-        $this->showVerifications();
+        if ($this->helperData->isEnabled()) {
+            $this->showVerifications();
 
-        $pages = array(
-            'catalogsearch_result_index',
-            'cms_noroute_index',
-            'catalogsearch_advanced_result'
-        );
-        if (in_array($this->getFullActionName(), $pages)) {
-            $this->pageConfig->setMetadata('robots', 'NOINDEX,NOFOLLOW');
+            $pages = array(
+                'catalogsearch_result_index',
+                'cms_noroute_index',
+                'catalogsearch_advanced_result'
+            );
+            if (in_array($this->getFullActionName(), $pages)) {
+                $this->pageConfig->setMetadata('robots', 'NOINDEX,NOFOLLOW');
+            }
         }
     }
 
@@ -191,25 +194,28 @@ class SeoRender
      */
     public function afterRenderHeadContent(Renderer $subject, $result)
     {
-        $fullActionname = $this->getFullActionName();
-        switch ($fullActionname) {
-            case 'catalog_product_view':
-                if ($this->helperData->getRichsnippetsConfig('enable_product')) {
-                    $productStructuredData = $this->showProductStructuredData();
-                    $result = $result . $productStructuredData;
-                }
-                break;
-            case 'cms_index_index':
-                if ($this->helperData->getInfoConfig('enable')) {
-                    $result = $result . $this->showBusinessStructuredData();
-                }
-                if ($this->helperData->getRichsnippetsConfig('enable_site_link')) {
-                    $result = $result . $this->showSiteLinksStructuredData();
-                }
-                break;
+        if ($this->helperData->isEnabled()) {
+            $fullActionname = $this->getFullActionName();
+            switch ($fullActionname) {
+                case 'catalog_product_view':
+                    if ($this->helperData->getRichsnippetsConfig('enable_product')) {
+                        $productStructuredData = $this->showProductStructuredData();
+                        $result = $result . $productStructuredData;
+                    }
+                    break;
+                case 'cms_index_index':
+                    if ($this->helperData->getInfoConfig('enable')) {
+                        $result = $result . $this->showBusinessStructuredData();
+                    }
+                    if ($this->helperData->getRichsnippetsConfig('enable_site_link')) {
+                        $result = $result . $this->showSiteLinksStructuredData();
+                    }
+                    break;
+            }
         }
 
         return $result;
+
     }
 
     /**
@@ -397,7 +403,7 @@ class SeoRender
 
         );
         if (!empty($this->getSocialProfiles()))
-            $businessStructuredData['sameAs'] = [$this->getSocialProfiles()];
+            $businessStructuredData['sameAs'] = $this->getSocialProfiles();
         $businessStructuredData['contactPoint'] = array();
 
         // get customer service info
@@ -460,9 +466,8 @@ class SeoRender
         if ($profiles) {
             foreach ($profiles as $_profile) {
                 if ($_profile)
-                    $lines[] = '"' . $_profile . '"';
+                    $lines[] = $_profile;
             }
-            $lines = implode(",\n", $lines);
         }
 
         return $lines;

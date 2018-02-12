@@ -29,6 +29,11 @@
             <resource>Mageplaza_Seo::configuration</resource>
             <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Module Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Select Yes to enable this module.</comment>
+                </field>
                 <field id="head" translate="label" type="button" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <frontend_model>Mageplaza\Core\Block\Adminhtml\System\Config\Head</frontend_model>
                     <comment><![CDATA[
