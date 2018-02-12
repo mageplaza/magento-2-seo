@@ -28,7 +28,6 @@
             </module>
             <general>
                 <seo_tool_url>http://localhost.com/seo-tool/home/</seo_tool_url>
-                <enabled>1</enabled>
             </general>
         </seo>
         <catalog>
