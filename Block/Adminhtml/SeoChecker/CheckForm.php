@@ -25,10 +25,10 @@ use Magento\Framework\View\Element\Template;
 use Mageplaza\Seo\Helper\Data;
 
 /**
- * Class Check
+ * Class CheckForm
  * @package Mageplaza\Seo\Block\Adminhtml\SeoChecker
  */
-class Check extends Template
+class CheckForm extends Template
 {
     const SEO_TOOL_URL = 'http://seo.mageplaza.com';
 
