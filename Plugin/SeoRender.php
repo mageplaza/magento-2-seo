@@ -36,6 +36,7 @@ use Magento\Review\Model\ReviewFactory;
 use Magento\Search\Helper\Data as SearchHelper;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
+use Magento\Framework\Event\Manager;
 
 /**
  * Class SeoBeforeRender
@@ -48,7 +49,6 @@ class SeoRender
     const MSVALIDATE_01 = 'msvalidate.01';
     const P_DOMAIN_VERIFY = 'p:domain_verify';
     const YANDEX_VERIFICATION = 'yandex-verification';
-    const SHOP_BY_BRAND_EXTENSION = 'Mageplaza_Shopbybrand';
 
     /**
      * @var \Magento\Framework\View\Page\Config
@@ -120,22 +120,28 @@ class SeoRender
      */
     protected $_priceHelper;
 
-    /**
-     * SeoRender constructor.
-     * @param PageConfig $pageConfig
-     * @param Http $request
-     * @param HelperData $helpData
-     * @param StockItemRepository $stockItemRepository
-     * @param Registry $registry
-     * @param ReviewFactory $reviewFactory
-     * @param StoreManagerInterface $storeManager
-     * @param UrlInterface $urlBuilder
-     * @param ProductFactory $productFactory
-     * @param ManagerInterface $messageManager
-     * @param StockRegistryInterface $stockState
-     * @param SearchHelper $searchHelper
-     * @param PriceHelper $priceHelper
-     */
+	/**
+	 * @var \Magento\Framework\Event\Manager
+	 */
+    protected $_eventManager;
+
+	/**
+	 * SeoRender constructor.
+	 * @param \Magento\Framework\View\Page\Config $pageConfig
+	 * @param \Magento\Framework\App\Request\Http $request
+	 * @param \Mageplaza\Seo\Helper\Data $helpData
+	 * @param \Magento\CatalogInventory\Model\Stock\StockItemRepository $stockItemRepository
+	 * @param \Magento\Framework\Registry $registry
+	 * @param \Magento\Review\Model\ReviewFactory $reviewFactory
+	 * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+	 * @param \Magento\Framework\UrlInterface $urlBuilder
+	 * @param \Magento\Catalog\Model\ProductFactory $productFactory
+	 * @param \Magento\Framework\Message\ManagerInterface $messageManager
+	 * @param \Magento\CatalogInventory\Api\StockRegistryInterface $stockState
+	 * @param \Magento\Search\Helper\Data $searchHelper
+	 * @param \Magento\Framework\Pricing\Helper\Data $priceHelper
+	 * @param \Magento\Framework\Event\Manager $eventManager
+	 */
     function __construct(
         PageConfig $pageConfig,
         Http $request,
@@ -149,7 +155,8 @@ class SeoRender
         ManagerInterface $messageManager,
         StockRegistryInterface $stockState,
         SearchHelper $searchHelper,
-        PriceHelper $priceHelper
+        PriceHelper $priceHelper,
+		Manager $eventManager
     )
     {
         $this->pageConfig = $pageConfig;
@@ -166,6 +173,7 @@ class SeoRender
         $this->stockState = $stockState;
         $this->_searchHelper = $searchHelper;
         $this->_priceHelper = $priceHelper;
+        $this->_eventManager = $eventManager;
     }
 
     /**
@@ -304,29 +312,6 @@ class SeoRender
     }
 
     /**
-     * Get product brand
-     * @return null | Brand
-     */
-    public function getProductBrand()
-    {
-        if (!$this->helperData->checkModuleActive(self::SHOP_BY_BRAND_EXTENSION)) {
-            return null;
-        }
-
-        /** @type \Mageplaza\Shopbybrand\Helper\Data $helper */
-        $brandHelper = $this->objectManager->create('Mageplaza\Shopbybrand\Helper\Data');
-
-        if ($optionId = $this->getProduct()->getData($brandHelper->getAttributeCode())) {
-            /** @type \Mageplaza\Shopbybrand\Model\Brand $brand */
-            $brand = $this->objectManager->create('Mageplaza\Shopbybrand\Model\Brand');
-
-            return $brand->loadByOption($optionId);
-        }
-
-        return null;
-    }
-
-    /**
      * Show product structured data
      * @return string
      *
@@ -367,11 +352,7 @@ class SeoRender
                 if (!empty($priceValidUntil)) {
                     $productStructuredData['offers']['priceValidUntil'] = $priceValidUntil;
                 }
-                if ($brand = $this->getProductBrand()) {
-                    $productStructuredData['brand']['@type'] = "Thing";
-                    $productStructuredData['brand']['name'] = $brand->getValue();
 
-                }
                 if ($this->getReviewCount()) {
                     $productStructuredData['aggregateRating']['@type'] = 'AggregateRating';
                     $productStructuredData['aggregateRating']['bestRating'] = 100;
@@ -379,6 +360,10 @@ class SeoRender
                     $productStructuredData['aggregateRating']['ratingValue'] = $this->getRatingSummary();
                     $productStructuredData['aggregateRating']['reviewCount'] = $this->getReviewCount();
                 }
+
+				$objectStructuredData = new \Magento\Framework\DataObject(array('mpdata' => $productStructuredData));
+				$this->_eventManager->dispatch('mp_seo_product_structured_data', ['structured_data' => $objectStructuredData]);
+				$productStructuredData = $objectStructuredData->getMpdata();
 
                 return $this->helperData->createStructuredData($productStructuredData, '<!-- Product Structured Data by Mageplaza SEO-->');
             } catch (\Exception $e) {
