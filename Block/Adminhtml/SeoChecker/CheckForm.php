@@ -4,7 +4,7 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the mageplaza.com license that is
+ * This source file is subject to the Mageplaza.com license that is
  * available through the world-wide-web at this URL:
  * https://mageplaza.com/LICENSE.txt
  *
@@ -21,8 +21,16 @@
 
 namespace Mageplaza\Seo\Block\Adminhtml\SeoChecker;
 
+use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\ProductFactory;
+use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
+use Magento\Cms\Model\PageFactory;
+use Magento\Framework\Json\Helper\Data as JsonData;
+use Magento\Framework\Url;
 use Magento\Framework\View\Element\Template;
-use Mageplaza\Seo\Helper\Data;
+use Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory;
+use Mageplaza\Seo\Helper\Data as SeoHelperData;
 
 /**
  * Class CheckForm
@@ -38,81 +46,81 @@ class CheckForm extends Template
     protected $_template = 'seocheck.phtml';
 
     /**
-     * @var \Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder
+     * @var UrlBuilder
      */
     protected $cmsUrl;
 
     /**
-     * @var \Magento\Cms\Model\PageFactory
+     * @var PageFactory
      */
     protected $cmsPageFactory;
 
     /**
-     * @var \Magento\Catalog\Model\ProductFactory
+     * @var ProductFactory
      */
     protected $productFactory;
 
     /**
-     * @var \Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory
+     * @var CollectionFactory
      */
     protected $sitemapCollection;
 
     /**
-     * @var \Magento\Framework\Json\Helper\Data
+     * @var JsonData
      */
     protected $jsonHelper;
 
     /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface
+     * @var ProductRepositoryInterface
      */
     protected $productRepository;
 
     /**
-     * @var \Magento\Catalog\Api\CategoryRepositoryInterface
+     * @var CategoryRepositoryInterface
      */
     protected $categoryRepository;
 
     /**
-     * @var \Mageplaza\Seo\Helper\Data
+     * @var SeoHelperData
      */
     protected $helper;
 
     /**
-     * Check constructor.
-     * @param Data $helper
-     * @param \Magento\Framework\Url $url
-     * @param \Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder $cmsUrl
-     * @param \Magento\Cms\Model\PageFactory $cmsPageFactory
-     * @param \Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory $sitemapCollection
-     * @param \Magento\Framework\Json\Helper\Data $jsonHelper
-     * @param \Magento\Catalog\Model\ProductFactory $productFactory
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
-     * @param \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
+     * CheckForm constructor.
      * @param Template\Context $context
+     * @param Url $url
+     * @param UrlBuilder $cmsUrl
+     * @param PageFactory $cmsPageFactory
+     * @param CollectionFactory $sitemapCollection
+     * @param JsonData $jsonHelper
+     * @param ProductFactory $productFactory
+     * @param ProductRepositoryInterface $productRepository
+     * @param CategoryRepositoryInterface $categoryRepository
+     * @param SeoHelperData $helper
      * @param array $data
      */
     public function __construct(
-        \Mageplaza\Seo\Helper\Data $helper,
-        \Magento\Framework\Url $url,
-        \Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder $cmsUrl,
-        \Magento\Cms\Model\PageFactory $cmsPageFactory,
-        \Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory $sitemapCollection,
-        \Magento\Framework\Json\Helper\Data $jsonHelper,
-        \Magento\Catalog\Model\ProductFactory $productFactory,
-        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
-        \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository,
         Template\Context $context,
+        Url $url,
+        UrlBuilder $cmsUrl,
+        PageFactory $cmsPageFactory,
+        CollectionFactory $sitemapCollection,
+        JsonData $jsonHelper,
+        ProductFactory $productFactory,
+        ProductRepositoryInterface $productRepository,
+        CategoryRepositoryInterface $categoryRepository,
+        SeoHelperData $helper,
         array $data = []
     )
     {
-        $this->helper = $helper;
-        $this->productFactory = $productFactory;
+        $this->helper             = $helper;
+        $this->productFactory     = $productFactory;
         $this->categoryRepository = $categoryRepository;
-        $this->cmsUrl = $cmsUrl;
-        $this->cmsPageFactory = $cmsPageFactory;
-        $this->sitemapCollection = $sitemapCollection;
-        $this->jsonHelper = $jsonHelper;
-        $this->productRepository = $productRepository;
+        $this->cmsUrl             = $cmsUrl;
+        $this->cmsPageFactory     = $cmsPageFactory;
+        $this->sitemapCollection  = $sitemapCollection;
+        $this->jsonHelper         = $jsonHelper;
+        $this->productRepository  = $productRepository;
 
         parent::__construct($context, $data);
     }
@@ -125,30 +133,34 @@ class CheckForm extends Template
      */
     public function getLink()
     {
-        $id = $this->_request->getParam('id');
-        $storeCode = $this->_storeManager->getStore()->getCode();
-        $storeId = $this->_storeManager->getStore()->getId();
+        $id         = $this->_request->getParam('id');
+        $storeCode  = $this->_storeManager->getStore()->getCode();
+        $storeId    = $this->_storeManager->getStore()->getId();
         $actionName = $this->_request->getFullActionName();
         if ($storeId == "0") {
-            $storeId = $this->_storeManager->getDefaultStoreView()->getId();
+            $storeId   = $this->_storeManager->getDefaultStoreView()->getId();
             $storeCode = $this->_storeManager->getDefaultStoreView()->getCode();
         }
+
         switch ($actionName) {
             case 'catalog_product_edit':
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
-                $product = $this->productFactory->create()->load($id)->setStoreId($storeId);
-                $url = $urlModel->getUrl($product) . "?___store=" . $storeCode;
-
-                return $url;
+                $product  = $this->productFactory->create()->load($id)->setStoreId($storeId);
+                $url      = $urlModel->getUrl($product) . "?___store=" . $storeCode;
+                break;
             case 'catalog_category_edit':
                 $category = $this->categoryRepository->get($id, $storeId);
-                return $category->getUrl() . "?___store=" . $storeCode;
+                $url      = $category->getUrl() . "?___store=" . $storeCode;
+                break;
             case 'cms_page_edit':
                 $pageId = $this->_request->getParam('page_id');
-                return $this->cmsUrl->getUrl($this->cmsPageFactory->create()->load($pageId)->getIdentifier(), $storeId, $storeCode);
+                $url    = $this->cmsUrl->getUrl($this->cmsPageFactory->create()->load($pageId)->getIdentifier(), $storeId, $storeCode);
+                break;
             default:
-                return '';
+                $url = '';
         }
+
+        return $url;
     }
 
     /**
@@ -171,6 +183,7 @@ class CheckForm extends Template
         foreach ($sitemap as $item) {
             $sitemapLinks[] = $this->getBaseUrl() . ltrim($item->getSitemapPath(), '/') . $item->getSitemapFilename();
         }
+
         return $sitemapLinks;
     }
 
@@ -182,8 +195,8 @@ class CheckForm extends Template
      */
     public function getSeoData()
     {
-        $data = [];
-        $data['link'] = $this->getLink();
+        $data            = [];
+        $data['link']    = $this->getLink();
         $data['sitemap'] = $this->sitemap();
         $data['baseUrl'] = $this->getBaseUrl();
 

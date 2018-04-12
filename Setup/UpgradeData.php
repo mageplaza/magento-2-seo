@@ -4,7 +4,7 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the mageplaza.com license that is
+ * This source file is subject to the Mageplaza.com license that is
  * available through the world-wide-web at this URL:
  * https://mageplaza.com/LICENSE.txt
  *
@@ -37,7 +37,7 @@ class UpgradeData implements UpgradeDataInterface
     /**
      * @var \Magento\Eav\Setup\EavSetupFactory
      */
-    private $eavSetupFactory;
+    protected $eavSetupFactory;
 
     /**
      * UpgradeData constructor.

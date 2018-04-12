@@ -21,9 +21,6 @@
 
 namespace Mageplaza\Seo\Helper;
 
-use Magento\Framework\App\Helper\Context;
-use Magento\Framework\ObjectManagerInterface;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Theme\Block\Html\Header\Logo;
 use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 
@@ -34,30 +31,6 @@ use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 class Data extends CoreHelper
 {
     const CONFIG_MODULE_PATH = 'seo';
-
-    /**
-     * @var Logo
-     */
-    protected $_logo;
-
-    /**
-     * Data constructor.
-     * @param Context $context
-     * @param StoreManagerInterface $storeManager
-     * @param ObjectManagerInterface $objectManager
-     * @param Logo $logo
-     */
-    public function __construct(
-        Context $context,
-        StoreManagerInterface $storeManager,
-        ObjectManagerInterface $objectManager,
-        Logo $logo
-    )
-    {
-        $this->_logo = $logo;
-
-        parent::__construct($context, $objectManager, $storeManager);
-    }
 
     /**
      * @param $code
@@ -180,36 +153,6 @@ class Data extends CoreHelper
     }
 
     /**
-     * Convert array to options
-     * @access public
-     * @param $options
-     * @return array
-     */
-    public function convertOptions($options)
-    {
-        $converted = [];
-        foreach ($options as $option) {
-            if (isset($option['value']) && !is_array($option['value'])
-                && isset($option['label'])
-                && !is_array($option['label'])
-            ) {
-                $converted[$option['value']] = $option['label'];
-            }
-        }
-
-        return $converted;
-    }
-
-    /**
-     * Get html sitemap
-     * @return string
-     */
-    public function getHtmlSitemapUrl()
-    {
-        return $this->_getUrl('mageplaza_seo/sitemap');
-    }
-
-    /**
      * @param null $code
      * @param null $storeId
      * @return mixed
@@ -219,16 +162,6 @@ class Data extends CoreHelper
         $code = ($code !== '') ? '/' . $code : '';
 
         return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/hreflang' . $code, $storeId);
-    }
-
-    /**
-     * Check module active
-     * @param $moduleName
-     * @return bool
-     */
-    public function checkModuleActive($moduleName)
-    {
-        return $this->_moduleManager->isOutputEnabled($moduleName);
     }
 
     /**
@@ -255,6 +188,8 @@ class Data extends CoreHelper
      */
     public function getLogo()
     {
-        return $this->_logo->getLogoSrc();
+        $logo = $this->objectManager->get(Logo::class);
+
+        return $logo->getLogoSrc();
     }
 }

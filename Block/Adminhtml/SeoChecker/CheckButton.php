@@ -4,7 +4,7 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the mageplaza.com license that is
+ * This source file is subject to the Mageplaza.com license that is
  * available through the world-wide-web at this URL:
  * https://mageplaza.com/LICENSE.txt
  *
@@ -54,9 +54,9 @@ class CheckButton implements ButtonProviderInterface
         }
 
         return [
-            'label' => __('Check On-page'),
-            'class' => 'action-secondary save',
-            'on_click' => 'jQuery("#mageplaza-seo-form").submit();',
+            'label'      => __('Check On-page'),
+            'class'      => 'action-secondary save',
+            'on_click'   => 'jQuery("#mageplaza-seo-form").submit();',
             'sort_order' => 85
         ];
     }

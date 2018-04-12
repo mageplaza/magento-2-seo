@@ -22,7 +22,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Mageplaza_Seo::seo" title="SEO" module="Mageplaza_Seo" sortOrder="55" resource="Mageplaza_Seo::seo" parent="Mageplaza_Core::menu"/>
-        <add id="Mageplaza_Seo::configuration" title="Configuration" module="Mageplaza_Seo" sortOrder="999" action="adminhtml/system_config/edit/section/seo" resource="Mageplaza_Seo::configuration" parent="Mageplaza_Seo::seo"/>
+        <add id="Mageplaza_Seo::seo" title="SEO" module="Mageplaza_Seo" sortOrder="90" resource="Mageplaza_Seo::seo" parent="Magento_Backend::marketing"/>
     </menu>
 </config>
