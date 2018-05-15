@@ -33,9 +33,9 @@
                     <frontend_model>Mageplaza\Core\Block\Adminhtml\System\Config\Head</frontend_model>
                     <comment><![CDATA[
                         <ul class="mageplaza-head">
-                            <li><a href="https://docs.mageplaza.com/seo-m2/index.html" target="_blank">User Guide</a>    </li>
+                            <li><a href="https://docs.mageplaza.com/seo-ultimate/" target="_blank">User Guide</a>    </li>
+                            <li>Boost up to ↑198% site traffic, ↑32% site ranking with <a href="https://www.mageplaza.com/magento-2-seo-extension/pricing.html?utm_source=free-extension&utm_medium=documents&utm_campaign=m2-seo" target="_blank">Learn more</a></li>
                             <li><a href="https://mageplaza.freshdesk.com/" target="_blank">Helpdesk</a> </li>
-                            <li><a href="https://www.mageplaza.com/magento-2-seo-extension/?utm_source=magento2&utm_medium=documents&utm_campaign=m2-seo" target="_blank">SEO Ultimate</a> </li>
                             <li><a href="https://goo.gl/forms/SrTm7YUxZoCzixhH3" target="_blank">Request features</a> </li>
                             <li>Increase 25% conversion rate with <a href="https://goo.gl/6chU3c" target="_blank">Layered Navigation</a></li>
                         </ul>
