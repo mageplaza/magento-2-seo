@@ -8,24 +8,16 @@
 ## 1. Documentation
 
 - Installation guide: https://www.mageplaza.com/install-magento-2-extension/
-- User Guide: https://docs.mageplaza.com/seo-m2/
+- User Guide: https://docs.mageplaza.com/seo-m2/index.html
 - Download from our Live site: https://www.mageplaza.com/magento-2-seo-extension/
+- On Magento Marketplace: https://marketplace.magento.com/mageplaza-magento-2-seo-extension.html
 - Get Support: https://github.com/mageplaza/magento-2-seo/issues
 - Contribute on Github: https://github.com/mageplaza/magento-2-seo
 - Changelog: https://www.mageplaza.com/changelog/m2-seo.txt
 
 
 
-## 2. FAQs
-
-#### Q: I got error: `Mageplaza_Core has been already defined`
-A: Read solution: https://github.com/mageplaza/module-core/issues/3
-
-#### Q: My site is down
-A: Please follow this guide: https://www.mageplaza.com/blog/magento-site-down.html
-
-
-## 3. How to install
+## 2. How to install
 
 ### Install via composer (recommend)
 
@@ -41,6 +33,13 @@ php bin/magento setup:upgrade
 Download the latest version at [Mageplaza SEO for Magento 2](https://www.mageplaza.com/magento-2-seo-extension/)
 then follow [installation guide](https://www.mageplaza.com/install-magento-2-extension/)
 
+## 3. FAQs
+
+#### Q: I got error: `Mageplaza_Core has been already defined`
+A: Read solution: https://github.com/mageplaza/module-core/issues/3
+
+#### Q: My site is down
+A: Please follow this guide: https://www.mageplaza.com/blog/magento-site-down.html
 
 
 ## 4. Contribute to this SEO module
@@ -48,6 +47,7 @@ then follow [installation guide](https://www.mageplaza.com/install-magento-2-ext
 Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
 
 ## 5. Magento SEO Services
+
 We recommend SEO service from **Creare**
 
 - Creare [https://www.creare.co.uk](https://www.creare.co.uk/?utm_source=mageplaza.com&utm_medium=link&utm_campaign=related-services)
@@ -127,8 +127,6 @@ We recommend SEO service from **Creare**
 ☞ Smart Referral Links
 
 ☞ Affiliate Report
-
-
 
 
 
