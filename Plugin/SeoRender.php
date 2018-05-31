@@ -437,10 +437,8 @@ class SeoRender
 
     public function getSocialProfiles()
     {
-        $config   = $this->helperData;
-        $profiles = $config->getConfigValue('seo/social_profiles');
         $lines    = [];
-        if ($profiles) {
+        if ($profiles = $this->helperData->getSocialProfiles()) {
             foreach ($profiles as $_profile) {
                 if ($_profile) {
                     $lines[] = $_profile;

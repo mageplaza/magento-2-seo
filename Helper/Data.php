@@ -69,42 +69,6 @@ class Data extends CoreHelper
     }
 
     /**
-     * @param $code
-     * @param null $storeId
-     * @return mixed
-     */
-    public function getHtaccessConfig($code, $storeId = null)
-    {
-        $code = ($code !== '') ? '/' . $code : '';
-
-        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/htaccess' . $code, $storeId);
-    }
-
-    /**
-     * @param $code
-     * @param null $storeId
-     * @return mixed
-     */
-    public function getRobotsConfig($code, $storeId = null)
-    {
-        $code = ($code !== '') ? '/' . $code : '';
-
-        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/robots' . $code, $storeId);
-    }
-
-    /**
-     * @param $code
-     * @param null $storeId
-     * @return mixed
-     */
-    public function getHtmlsitemapConfig($code, $storeId = null)
-    {
-        $code = ($code !== '') ? '/' . $code : '';
-
-        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/htmlsitemap' . $code, $storeId);
-    }
-
-    /**
      * @param null $code
      * @param null $storeId
      * @return mixed
@@ -114,18 +78,6 @@ class Data extends CoreHelper
         $code = ($code !== '') ? '/' . $code : '';
 
         return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/info' . $code, $storeId);
-    }
-
-    /**
-     * @param null $code
-     * @param null $storeId
-     * @return mixed
-     */
-    public function getSocialShares($code = null, $storeId = null)
-    {
-        $code = ($code !== '') ? '/' . $code : '';
-
-        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/social_shares' . $code, $storeId);
     }
 
     /**
@@ -150,18 +102,6 @@ class Data extends CoreHelper
         $code = ($code !== '') ? '/' . $code : '';
 
         return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/duplicate' . $code, $storeId);
-    }
-
-    /**
-     * @param null $code
-     * @param null $storeId
-     * @return mixed
-     */
-    public function getHreflang($code = null, $storeId = null)
-    {
-        $code = ($code !== '') ? '/' . $code : '';
-
-        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/hreflang' . $code, $storeId);
     }
 
     /**
