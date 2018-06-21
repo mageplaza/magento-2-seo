@@ -46,95 +46,10 @@ A: Please follow this guide: https://www.mageplaza.com/blog/magento-site-down.ht
 
 Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
 
-## 5. Magento SEO Services
-
-We recommend SEO service from **Creare**
-
-- Creare [https://www.creare.co.uk](https://www.creare.co.uk/?utm_source=mageplaza.com&utm_medium=link&utm_campaign=related-services)
-
-
-## 6. SWEET MAGEPLAZA EXTENSIONS TO BRING YOU MORE MONEY
-
-### [✓ One Step Checkout](https://www.mageplaza.com/magento-2-one-step-checkout-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ ↑30% INCREASE CONVERSION RATE 
-
-☞ ↓66% DECREASE ABANDONMENT CART
-
-☞ ↓80% REDUCE CHECKOUT TIME
-
-### [✓ Layered Navigation](https://www.mageplaza.com/magento-2-layered-navigation-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ ↑84% USER'S FILTERING EXPERIENCE
-
-☞ ↑25% CONVERSION RATE
-
-☞ ↓67% SHOPPING TIME
-
-### [✓ Frequently Bought Together](https://www.mageplaza.com/magento-2-frequently-bought-together/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Amazon Product Recommendation Solution
- 
-☞ AJAX loading for better performance
-
-☞ Support Custom Options and all product types
-
-
-### [✓ Gift Card](https://www.mageplaza.com/magento-2-gift-card-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Physical, virtual or combined gift cards
- 
-☞ Different gift card values from prices
-
-☞ Send cards via email, SMS, post office or messenger
-
-### [✓ Who Bought This Also Bought](https://www.mageplaza.com/magento-2-who-bought-this-also-bought/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Display on Product Page, Category Page, Shopping Cart page
-
-☞ AJAX loading for better performance.
-
-☞ Flexible layout and design.
-
-
-### [✓ Social Login](https://www.mageplaza.com/magento-2-social-login-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Increase signup rate up-to 30%
-
-☞ Supports 11 Types: Facebook, Google Plus, Twitter, Linkedin, Instagram, Yahoo, Github, Foursquare, VK, Live, Amazon
-
-☞ Easy custom design fit with your store design
-
-☞ [Social Login on Github](https://github.com/mageplaza/magento-2-social-login)
 
 
 
-### [✓ Shop By Brand](https://www.mageplaza.com/magento-2-shop-by-brand/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Fully Compatible with Layered Navigation
-
-☞ Instant Search brands
-
-☞ Import brands
-
-
-
-
-### [✓ Affiliate](https://www.mageplaza.com/magento-2-affiliate-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Multiple Affiliate Campaigns
-
-☞ Smart Referral Links
-
-☞ Affiliate Report
-
-
-
-
-
-
-
-## 7. Introduction
+## 5. Introduction
 
 Improve your SEO for [Magento](https://magento.com/) site. Use Mageplaza SEO to automatically optimize your site for Search Engines.
 Mageplaza SEO extension will automatically optimize and greatly improve the performance of your Magento-based store in Search Engines. Magento 2 is great SEO-ready out-of-the-box that is really good for SEO. However it still needs some craftiness to be improved in a few areas.
@@ -236,7 +151,7 @@ A huge advantage when you have Megaplaza SEO extension is that it’s fully supp
 
 
 
-## 8. USER GUIDE
+## 6. USER GUIDE
 
 
 ### Magento 2 SEO Basic Settings
