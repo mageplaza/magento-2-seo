@@ -7,13 +7,14 @@
 
 ## 1. Documentation
 
-- Installation guide: https://www.mageplaza.com/install-magento-2-extension/
-- User Guide: https://docs.mageplaza.com/seo-m2/index.html
-- Download from our Live site: https://www.mageplaza.com/magento-2-seo-extension/
-- On Magento Marketplace: https://marketplace.magento.com/mageplaza-magento-2-seo-extension.html
-- Get Support: https://github.com/mageplaza/magento-2-seo/issues
-- Contribute on Github: https://github.com/mageplaza/magento-2-seo
-- Changelog: https://www.mageplaza.com/changelog/m2-seo.txt
+- [Installation guide](https://www.mageplaza.com/install-magento-2-extension/)
+- [User Guide](https://docs.mageplaza.com/seo-m2/index.html)
+- [Download from our Live site](https://www.mageplaza.com/magento-2-seo-extension/)
+- [Get Free Support](https://github.com/mageplaza/magento-2-seo/issues)
+- Get premium support from Mageplaza: [Purchase Support package](https://www.mageplaza.com/magento-2-extension-support-package/)
+- [Contribute on Github](https://github.com/mageplaza/magento-2-seo)
+- [Releases](https://github.com/mageplaza/magento-2-seo/releases)
+- [License](https://www.mageplaza.com/LICENSE.txt)
 
 
 
