@@ -299,5 +299,242 @@ Yandex Webmaster Tools.
 
 
 
+## CHANGELOG 
+
+
+### SEO v2.1.1
+Released on  2018-06-05
+
+Release notes: 
+
+- Update copyright
+#### SEO Ultimate
+- Fixed error page when analysis enabled on the product which has no description.
+- Fixed wrong hreflang URL when store using URL rewrite
+
+
+
+### SEO v2.1.0
+Released on  2018-04-23
+
+Release notes: 
+
+- Added General configuration.
+- Added Product Structured Data configuration.
+- Added Prevent Duplicated Content configuration in Product pages and Category pages
+- Added Social Profiles.
+- Added Business Information.
+- Added On-page analysis.
+- Added Sitelinks Searchbox.
+
+
+
+### SEO v2.0.2
+Released on  2017-12-12
+
+Release notes: 
+
+- Fix bug "cannot add structure data" on new product
+
+
+
+### SEO v2.0.1
+Released on  2017-11-13
+
+Release notes: 
+
+- Compatible with old version
+- Compatible with Magento 2.2.x
+- Fix error with structure data when created new product #54 
+
+
+
+### SEO v2.0.0
+Released on  2017-10-26
+
+Release notes: 
+
+Rebuilt Mageplaza SEO Standard edition. 
+- Structured Data (Rich snippet  Schema) Star rating, Price, Inventory...
+- Support Shop by brand in Structured Data.
+- Webmaster Verifications Google Search Console, Bing, Yandex ...
+- Fixed Duplicate Content (Basic)
+- and more
+
+
+
+### SEO v1.4.1
+Released on  2017-06-12
+
+Release notes: 
+
+- Optimize Structured Data ld-json
+- Optimize Social share Open graph (Google+ and Pinterest) and twitter card
+- Fixed Breadcrumbs issue
+- Fixed canonical link issue
+
+
+
+### SEO v1.4.0
+Released on  2017-05-23
+
+Release notes: 
+
+- Released Seo Crosslinks
+- Fixed minor bugs
+
+
+
+### SEO v1.3.1
+Released on  2017-05-23
+
+Release notes: 
+
+- Fixed issue on bundle products
+- Fixed Remove inject object in Search and Catalog block
+- Optimize config object
+- Optimize Search Nofollow
+
+
+
+### SEO v1.3.0
+Released on  2017-04-24
+
+Release notes: 
+
+**SEO Core , Sitemap**
+
+* Exclude CMS pages in HTML Sitemap
++ Include custom links in HTML Sitemap
+* Opt to exclude out-of-stock in HTML, XML Sitemap
+* Optimize canonical tag, rich snippet, hrefLang, alternate
+
+**Rule templates**
+
++ Compatible with Layered Navigation
++ Add Mageplaza_Blog posts meta data template
++ Optimize template rule products, categories, CMS pages.
++ Preview rule template
+
+
+
+
+### SEO v1.2.2
+Released on  2017-04-24
+
+Release notes: 
+
+- Edit composer.json to require mageplazamodule-core instead of mageplazacore-m2
+
+
+
+### SEO v1.2.1
+Released on  2017-04-09
+
+Release notes: 
+
+- Fix composer issue
+
+
+
+### SEO v1.2.0
+Released on  2017-04-09
+
+Release notes: 
+
+**Features**
+
++ Add Verification configuration
++ Add Stop words feature
++ Hreflang tags feature
+
+**Bug fixes**
+
+- Performance optimization
+- Group SEO menu
+- Optimize Configuration options
+
+
+
+
+### SEO v1.1.4
+Released on  2016-11-23
+
+Release notes: 
+
+- Fix Upgrade issue
+
+
+
+
+### SEO v1.1.2
+Released on  2016-11-22
+
+Release notes: 
+
+- Improve Robots meta tags categories, products, cms pages
+
+
+
+
+### SEO v1.1.1
+Released on  2016-10-20
+
+Release notes: 
+
+- add HTML Sitemap features
+
+
+
+
+### SEO v1.1.0
+Released on  2016-10-20
+
+Release notes: 
+
+#### Improvement
+- Optimize code and performance
+- Comment code
+
+#### Features
+- Add config Disable URL parameter in canonical URL
+
+#### Bug fixing
+- Fix bug canonical url
+
+
+
+
+### SEO v1.0.2
+Released on  2016-08-09
+
+Release notes: 
+
+- Compatible Magento 2.1
+- Fix bug Dependency 
+- Fix JSONLD broken tags
+- Optimize Review rating value
+
+
+
+
+### SEO v1.0.1
+Released on  2016-07-20
+
+Release notes: 
+
+- Add composer and packagist.org
+
+
+
+### SEO v1.0.0-beta
+Released on  2016-04-23
+
+Release notes: 
+
+- Release first version
+
+
+
 
 
