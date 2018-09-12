@@ -297,7 +297,6 @@ Yandex Webmaster Tools.
 
 ☞ [Magento 2 Product Slider on Github](https://github.com/mageplaza/magento-2-product-slider)
 
-☞ [Magento 2 Banner on Github](https://github.com/mageplaza/magento-2-banner-slider)
 
 
 
