@@ -25,7 +25,7 @@
 Run the following command in Magento 2 root folder
 
 ```
-composer require mageplaza/magento-2-seo-extension
+composer require mageplaza/magento-2-seo-extension mageplaza/module-sitemap
 php bin/magento setup:upgrade
 ```
 
