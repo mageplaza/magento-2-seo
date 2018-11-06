@@ -5,7 +5,7 @@
 - Download from our Live site: https://www.mageplaza.com/magento-2-seo-extension/
 - Support: https://github.com/mageplaza/magento-2-seo/issues
 - Contribute on Github: https://github.com/mageplaza/magento-2-seo
-- Changelog: https://www.mageplaza.com/changelog/m2-seo.txt
+- Changelog: https://www.mageplaza.com/releases/seo/
 
 ## FAQs
 
