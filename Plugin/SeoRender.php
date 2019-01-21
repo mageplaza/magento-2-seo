@@ -437,12 +437,11 @@ class SeoRender
 
     public function getSocialProfiles()
     {
-        $lines    = [];
-        if ($profiles = $this->helperData->getSocialProfiles()) {
-            foreach ($profiles as $_profile) {
-                if ($_profile) {
-                    $lines[] = $_profile;
-                }
+        $lines = [];
+        $socialNetwork = ['facebook','twitter','google','instagram','youtube','linkedin','myspace','pinterest','soundclound','tumblr'];
+        foreach ($socialNetwork as $value) {
+            if ($profile = $this->helperData->getSocialProfiles($value)) {
+                $lines[] = $profile;
             }
         }
 
