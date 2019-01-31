@@ -61,12 +61,12 @@
             </group>
             <group id="richsnippets" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Structured Data</label>
-                <field id="enable_product" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="enable_product" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Product Structured Data</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[ Disable this feature if your theme or module implements it's own product snippets. <a href="https://developers.google.com/search/docs/data-types/products" target="_blank">Learn more</a> ]]></comment>
+                    <comment><![CDATA[Disable this feature if your theme or module implements it's own product snippets. <a href="https://developers.google.com/search/docs/data-types/products" target="_blank">Learn more</a> ]]></comment>
                 </field>
-                <field id="enable_site_link" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="enable_site_link" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Sitelinks Searchbox</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Learn more <a href="https://developers.google.com/search/docs/data-types/sitelinks-searchbox" target="_blank">here</a> ]]></comment>
@@ -74,7 +74,7 @@
             </group>
             <group id="info" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Business information</label>
-                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Business information</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Learn more <a href="https://developers.google.com/search/docs/data-types/corporate-contacts" target="_blank">here</a> ]]></comment>
@@ -186,7 +186,7 @@
             </group>
             <group id="verification" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Verifications</label>
-                <field id="google" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="google" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Google Search Console</label>
                     <comment><![CDATA[Enter verification code, it will be added into <head> tag]]></comment>
                 </field>

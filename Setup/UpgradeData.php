@@ -41,6 +41,7 @@ class UpgradeData implements UpgradeDataInterface
 
     /**
      * UpgradeData constructor.
+     *
      * @param \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
      */
     public function __construct(EavSetupFactory $eavSetupFactory)
@@ -64,6 +65,7 @@ class UpgradeData implements UpgradeDataInterface
 
     /**
      * Remove attribute
+     *
      * @param $eavSetup
      * @param $model
      * @param $id

@@ -87,6 +87,7 @@ class CheckForm extends Template
 
     /**
      * CheckForm constructor.
+     *
      * @param Template\Context $context
      * @param Url $url
      * @param UrlBuilder $cmsUrl
@@ -111,16 +112,15 @@ class CheckForm extends Template
         CategoryRepositoryInterface $categoryRepository,
         SeoHelperData $helper,
         array $data = []
-    )
-    {
-        $this->helper             = $helper;
-        $this->productFactory     = $productFactory;
+    ) {
+        $this->helper = $helper;
+        $this->productFactory = $productFactory;
         $this->categoryRepository = $categoryRepository;
-        $this->cmsUrl             = $cmsUrl;
-        $this->cmsPageFactory     = $cmsPageFactory;
-        $this->sitemapCollection  = $sitemapCollection;
-        $this->jsonHelper         = $jsonHelper;
-        $this->productRepository  = $productRepository;
+        $this->cmsUrl = $cmsUrl;
+        $this->cmsPageFactory = $cmsPageFactory;
+        $this->sitemapCollection = $sitemapCollection;
+        $this->jsonHelper = $jsonHelper;
+        $this->productRepository = $productRepository;
 
         parent::__construct($context, $data);
     }
@@ -133,28 +133,28 @@ class CheckForm extends Template
      */
     public function getLink()
     {
-        $id         = $this->_request->getParam('id');
-        $storeCode  = $this->_storeManager->getStore()->getCode();
-        $storeId    = $this->_storeManager->getStore()->getId();
+        $id = $this->_request->getParam('id');
+        $storeCode = $this->_storeManager->getStore()->getCode();
+        $storeId = $this->_storeManager->getStore()->getId();
         $actionName = $this->_request->getFullActionName();
         if ($storeId == "0") {
-            $storeId   = $this->_storeManager->getDefaultStoreView()->getId();
+            $storeId = $this->_storeManager->getDefaultStoreView()->getId();
             $storeCode = $this->_storeManager->getDefaultStoreView()->getCode();
         }
 
         switch ($actionName) {
             case 'catalog_product_edit':
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
-                $product  = $this->productFactory->create()->load($id)->setStoreId($storeId);
-                $url      = $urlModel->getUrl($product) . "?___store=" . $storeCode;
+                $product = $this->productFactory->create()->load($id)->setStoreId($storeId);
+                $url = $urlModel->getUrl($product) . "?___store=" . $storeCode;
                 break;
             case 'catalog_category_edit':
                 $category = $this->categoryRepository->get($id, $storeId);
-                $url      = $category->getUrl() . "?___store=" . $storeCode;
+                $url = $category->getUrl() . "?___store=" . $storeCode;
                 break;
             case 'cms_page_edit':
                 $pageId = $this->_request->getParam('page_id');
-                $url    = $this->cmsUrl->getUrl($this->cmsPageFactory->create()->load($pageId)->getIdentifier(), $storeId, $storeCode);
+                $url = $this->cmsUrl->getUrl($this->cmsPageFactory->create()->load($pageId)->getIdentifier(), $storeId, $storeCode);
                 break;
             default:
                 $url = '';
@@ -167,6 +167,7 @@ class CheckForm extends Template
      * get site map links
      *
      * @return array
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function sitemap()
     {
@@ -195,8 +196,8 @@ class CheckForm extends Template
      */
     public function getSeoData()
     {
-        $data            = [];
-        $data['link']    = $this->getLink();
+        $data = [];
+        $data['link'] = $this->getLink();
         $data['sitemap'] = $this->sitemap();
         $data['baseUrl'] = $this->getBaseUrl();
 
