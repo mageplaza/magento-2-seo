@@ -120,6 +120,7 @@ class SeoRender
 
     /**
      * SeoRender constructor.
+     *
      * @param \Magento\Framework\View\Page\Config $pageConfig
      * @param \Magento\Framework\App\Request\Http $request
      * @param \Mageplaza\Seo\Helper\Data $helpData
@@ -150,22 +151,21 @@ class SeoRender
         SearchHelper $searchHelper,
         PriceHelper $priceHelper,
         Manager $eventManager
-    )
-    {
-        $this->pageConfig          = $pageConfig;
-        $this->request             = $request;
-        $this->helperData          = $helpData;
+    ) {
+        $this->pageConfig = $pageConfig;
+        $this->request = $request;
+        $this->helperData = $helpData;
         $this->stockItemRepository = $stockItemRepository;
-        $this->registry            = $registry;
-        $this->_storeManager       = $storeManager;
-        $this->reviewFactory       = $reviewFactory;
-        $this->_urlBuilder         = $urlBuilder;
-        $this->productFactory      = $productFactory;
-        $this->messageManager      = $messageManager;
-        $this->stockState          = $stockState;
-        $this->_searchHelper       = $searchHelper;
-        $this->_priceHelper        = $priceHelper;
-        $this->_eventManager       = $eventManager;
+        $this->registry = $registry;
+        $this->_storeManager = $storeManager;
+        $this->reviewFactory = $reviewFactory;
+        $this->_urlBuilder = $urlBuilder;
+        $this->productFactory = $productFactory;
+        $this->messageManager = $messageManager;
+        $this->stockState = $stockState;
+        $this->_searchHelper = $searchHelper;
+        $this->_priceHelper = $priceHelper;
+        $this->_eventManager = $eventManager;
     }
 
     /**
@@ -190,6 +190,7 @@ class SeoRender
     /**
      * @param Renderer $subject
      * @param $result
+     *
      * @return string
      */
     public function afterRenderHeadContent(Renderer $subject, $result)
@@ -200,7 +201,7 @@ class SeoRender
                 case 'catalog_product_view':
                     if ($this->helperData->getRichsnippetsConfig('enable_product')) {
                         $productStructuredData = $this->showProductStructuredData();
-                        $result                = $result . $productStructuredData;
+                        $result = $result . $productStructuredData;
                     }
                     break;
                 case 'cms_index_index':
@@ -248,8 +249,10 @@ class SeoRender
 
     /**
      * Get Url
+     *
      * @param string $route
      * @param array $params
+     *
      * @return string
      */
     public function getUrl($route = '', $params = [])
@@ -259,6 +262,7 @@ class SeoRender
 
     /**
      * @param $productId
+     *
      * @return \Magento\CatalogInventory\Api\Data\StockItemInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
@@ -268,8 +272,8 @@ class SeoRender
     }
 
     /**
-     * Get review count
      * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getReviewCount()
     {
@@ -281,8 +285,8 @@ class SeoRender
     }
 
     /**
-     * Get rating summary
      * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getRatingSummary()
     {
@@ -295,7 +299,9 @@ class SeoRender
 
     /**
      * @param $product
+     *
      * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getEntitySummary($product)
     {
@@ -314,9 +320,9 @@ class SeoRender
             try {
                 $productId = $currentProduct->getId() ? $currentProduct->getId() : $this->request->getParam('id');
 
-                $product         = $this->productFactory->create()->load($productId);
-                $availability    = $product->isAvailable() ? 'InStock' : 'OutOfStock';
-                $stockItem       = $this->stockState->getStockItem(
+                $product = $this->productFactory->create()->load($productId);
+                $availability = $product->isAvailable() ? 'InStock' : 'OutOfStock';
+                $stockItem = $this->stockState->getStockItem(
                     $product->getId(),
                     $product->getStore()->getWebsiteId()
                 );
@@ -345,8 +351,8 @@ class SeoRender
                 }
 
                 if ($this->getReviewCount()) {
-                    $productStructuredData['aggregateRating']['@type']       = 'AggregateRating';
-                    $productStructuredData['aggregateRating']['bestRating']  = 100;
+                    $productStructuredData['aggregateRating']['@type'] = 'AggregateRating';
+                    $productStructuredData['aggregateRating']['bestRating'] = 100;
                     $productStructuredData['aggregateRating']['worstRating'] = 0;
                     $productStructuredData['aggregateRating']['ratingValue'] = $this->getRatingSummary();
                     $productStructuredData['aggregateRating']['reviewCount'] = $this->getReviewCount();
@@ -437,12 +443,11 @@ class SeoRender
 
     public function getSocialProfiles()
     {
-        $lines    = [];
-        if ($profiles = $this->helperData->getSocialProfiles()) {
-            foreach ($profiles as $_profile) {
-                if ($_profile) {
-                    $lines[] = $_profile;
-                }
+        $lines = [];
+        $socialNetwork = ['facebook', 'twitter', 'google', 'instagram', 'youtube', 'linkedin', 'myspace', 'pinterest', 'soundclound', 'tumblr'];
+        foreach ($socialNetwork as $value) {
+            if ($profile = $this->helperData->getSocialProfiles($value)) {
+                $lines[] = $profile;
             }
         }
 
@@ -475,20 +480,22 @@ class SeoRender
      *
      * @param $currentProduct
      * @param $productStructuredData
+     *
      * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getGroupedProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
-        $childrenPrice                            = [];
-        $offerData                                = [];
-        $typeInstance                             = $currentProduct->getTypeInstance();
-        $childProductCollection                   = $typeInstance->getAssociatedProducts($currentProduct);
+        $childrenPrice = [];
+        $offerData = [];
+        $typeInstance = $currentProduct->getTypeInstance();
+        $childProductCollection = $typeInstance->getAssociatedProducts($currentProduct);
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
+                        . 'catalog/product' . $child->getImage();
 
-            $offerData[]     = [
+            $offerData[] = [
                 '@type' => "Offer",
                 'name'  => $child->getName(),
                 'price' => $this->_priceHelper->currency($child->getPrice(), false),
@@ -499,7 +506,7 @@ class SeoRender
         }
 
         $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice']  = min($childrenPrice);
+        $productStructuredData['offers']['lowPrice'] = min($childrenPrice);
         unset($productStructuredData['offers']['price']);
 
         if (!empty($offerData)) {
@@ -514,17 +521,18 @@ class SeoRender
      *
      * @param $currentProduct
      * @param $productStructuredData
+     *
      * @return mixed
      */
     public function getDownloadableProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
 
-        $typeInstance           = $currentProduct->getTypeInstance();
+        $typeInstance = $currentProduct->getTypeInstance();
         $childProductCollection = $typeInstance->getLinks($currentProduct);
-        $childrenPrice          = [];
+        $childrenPrice = [];
         foreach ($childProductCollection as $child) {
-            $offerData[]     = [
+            $offerData[] = [
                 '@type' => "Offer",
                 'name'  => $child->getTitle(),
                 'price' => $this->_priceHelper->currency($child->getPrice(), false)
@@ -532,7 +540,7 @@ class SeoRender
             $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
         }
         $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice']  = min($childrenPrice);
+        $productStructuredData['offers']['lowPrice'] = min($childrenPrice);
 
         if (!empty($offerData)) {
             $productStructuredData['offers']['offers'] = $offerData;
@@ -546,19 +554,21 @@ class SeoRender
      *
      * @param $currentProduct
      * @param $productStructuredData
+     *
      * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
     {
-        $productStructuredData['offers']['@type']     = 'AggregateOffer';
+        $productStructuredData['offers']['@type'] = 'AggregateOffer';
         $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaxRegularAmount()->getValue();
-        $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinRegularAmount()->getValue();
-        $offerData                                    = [];
-        $typeInstance                                 = $currentProduct->getTypeInstance();
-        $childProductCollection                       = $typeInstance->getUsedProductCollection($currentProduct)->addAttributeToSelect('*');
+        $productStructuredData['offers']['lowPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinRegularAmount()->getValue();
+        $offerData = [];
+        $typeInstance = $currentProduct->getTypeInstance();
+        $childProductCollection = $typeInstance->getUsedProductCollection($currentProduct)->addAttributeToSelect('*');
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
+                        . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
                 '@type' => "Offer",
@@ -580,20 +590,22 @@ class SeoRender
      *
      * @param $currentProduct
      * @param $productStructuredData
+     *
      * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getBundleProductStructuredData($currentProduct, $productStructuredData)
     {
-        $productStructuredData['offers']['@type']     = 'AggregateOffer';
+        $productStructuredData['offers']['@type'] = 'AggregateOffer';
         $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaximalPrice()->getValue();
-        $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinimalPrice()->getValue();
+        $productStructuredData['offers']['lowPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinimalPrice()->getValue();
         unset($productStructuredData['offers']['price']);
-        $offerData              = [];
-        $typeInstance           = $currentProduct->getTypeInstance();
+        $offerData = [];
+        $typeInstance = $currentProduct->getTypeInstance();
         $childProductCollection = $typeInstance->getSelectionsCollection($typeInstance->getOptionsIds($currentProduct), $currentProduct);
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
+                        . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
                 '@type' => "Offer",
@@ -611,12 +623,12 @@ class SeoRender
     }
 
     /**
-     * add Product Structured Data By Type
-     *
      * @param $productType
      * @param $currentProduct
      * @param $productStructuredData
+     *
      * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function addProductStructuredDataByType($productType, $currentProduct, $productStructuredData)
     {

@@ -9,9 +9,12 @@ Enable,Enable
 "Use Canonical Link Meta Tag For Products","Use Canonical Link Meta Tag For Products"
 "Structured Data","Structured Data"
 "Enable Product Structured Data","Enable Product Structured Data"
+"Disable this feature if your theme or module implements it's own product snippets. <a href=""https://developers.google.com/search/docs/data-types/products"" target=""_blank"">Learn more</a>","Disable this feature if your theme or module implements it's own product snippets. <a href=""https://developers.google.com/search/docs/data-types/products"" target=""_blank"">Learn more</a>"
 "Enable Sitelinks Searchbox","Enable Sitelinks Searchbox"
+"Learn more <a href=""https://developers.google.com/search/docs/data-types/sitelinks-searchbox"" target=""_blank"">here</a>","Learn more <a href=""https://developers.google.com/search/docs/data-types/sitelinks-searchbox"" target=""_blank"">here</a>"
 "Business information","Business information"
 "Enable Business information","Enable Business information"
+"Learn more <a href=""https://developers.google.com/search/docs/data-types/corporate-contacts"" target=""_blank"">here</a>","Learn more <a href=""https://developers.google.com/search/docs/data-types/corporate-contacts"" target=""_blank"">here</a>"
 "Business Name","Business Name"
 "Customer Service Phone","Customer Service Phone"
 "Customer Service Contact Option","Customer Service Contact Option"
@@ -35,6 +38,6 @@ SoundCloud,SoundCloud
 Tumblr,Tumblr
 Verifications,Verifications
 "Google Search Console","Google Search Console"
-"Bing Webmaster Tools","Bing Webmaster Tools"
 "Enter verification code, it will be added into <head> tag","Enter verification code, it will be added into <head> tag"
+"Bing Webmaster Tools","Bing Webmaster Tools"
 "Yandex Webmaster Tools","Yandex Webmaster Tools"

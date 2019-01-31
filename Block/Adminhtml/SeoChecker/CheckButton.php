@@ -37,6 +37,7 @@ class CheckButton implements ButtonProviderInterface
 
     /**
      * CheckButton constructor.
+     *
      * @param Data $helper
      */
     public function __construct(Data $helper)
