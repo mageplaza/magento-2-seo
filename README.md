@@ -549,4 +549,12 @@ Release notes:
 - magento 2 rich snippets extension
 - rich snippets magento 2
 
-
+**Other free extension on Github**
+- [Magento 2 Product slider](https://github.com/mageplaza/magento-2-product-slider)
+- [Magento 2 GDPR](https://github.com/mageplaza/magento-2-gdpr)
+- [Magento 2 popup extension](https://github.com/mageplaza/magento-2-better-popup)
+- [Magento 2 Reports extension](https://github.com/mageplaza/magento-2-reports)
+- [Magento 2 social login](https://github.com/mageplaza/magento-2-social-login)
+- [Magento 2 blog](https://github.com/mageplaza/magento-2-blog)
+- [Magento 2 Layered Navigation](https://github.com/mageplaza/magento-2-ajax-layered-navigation)
+- [Magento 2 security extension](https://github.com/mageplaza/magento-2-security)
