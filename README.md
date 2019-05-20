@@ -5,7 +5,7 @@
 [![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-seo-extension/v/stable)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 [![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-seo-extension/downloads)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 
-## 1. Mageplaza SEO Documentation
+## 1. SEO Documentation
 
 - [Installation guide](https://www.mageplaza.com/install-magento-2-extension/)
 - [User Guide](https://docs.mageplaza.com/seo-m2/index.html)
@@ -109,7 +109,7 @@ Make your site content to be easier readable by the search engines by adding opt
 
 ### LAYERED NAVIGATION SUPPORTED
 
-A huge advantage when you have Megaplaza SEO extension is that it’s fully supported by Layered Navigation to make the SEO performance even better.
+A huge advantage when you have Megaplaza SEO extension is that it’s fully supported by [Layered Navigation](https://www.mageplaza.com/magento-2-layered-navigation-extension/) to make the SEO performance even better.
 
 
 ## Full Magento 2 SEO Features
@@ -558,3 +558,27 @@ Release notes:
 - [Magento 2 blog](https://github.com/mageplaza/magento-2-blog)
 - [Magento 2 Layered Navigation](https://github.com/mageplaza/magento-2-ajax-layered-navigation)
 - [Magento 2 security extension](https://github.com/mageplaza/magento-2-security)
+
+**Table of contents**
+- [SEO Documentation](#1-seo-documentation)
+- [How to install Magento 2 SEO extension](#2-how-to-install-magento-2-seo-extension)
+  - [Install module via composer (recommend)](#install-module-via-composer-recommend)
+  - [Install Package from copy-paste package](#install-package-from-copy-paste-package)
+- [SEO FAQs](#3-seo-faqs)
+- [Contribute to this SEO module](#4-contribute-to-this-seo-module)
+- [Magento 2 SEO Introduction](#5-magento-2-seo-introduction)
+  - [Stop Duplicating Content SEO](#stop-duplicating-content-seo)
+  - [Magento 2 Structured Data](#magento-2-structured-data)
+  - [SEO Metadata template rules (SEO Pro edition)](#seo-metadata-template-rules-seo-pro-edition)
+  - [Magento 2 Hreflang tag (SEO Ultimate edition)](#magento-2-hreflang-tag-seo-ultimate-edition)
+  - [SEO checklist (SEO Ultimate edition)](#seo-checklist-seo-ultimate-edition)
+  - [Breadcrumbs](#breadcrumbs)
+  - [SEO HTML/XML Sitemaps (SEO Pro edition)](#seo-htmlxml-sitemaps-seo-pro-edition)
+  - [LINK ALTERNATE TAG](#link-alternate-tag)
+  - [CONFIGURING ROBOTS METADATA TAG](#configuring-robots-metadata-tag)
+  - [LAYERED NAVIGATION SUPPORTED](#layered-navigation-supported)
+- [Full Magento 2 SEO Features](#full-magento-2-seo-features)
+- [SEO Pricing](#seo-pricing)
+- [USER GUIDE](#6-user-guide)
+  - [Magento 2 SEO Basic Settings](#magento-2-seo-basic-settings)
+- [SEO CHANGELOG](#seo-changelog)
