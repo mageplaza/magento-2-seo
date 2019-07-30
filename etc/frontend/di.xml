@@ -24,4 +24,7 @@
     <type name="Magento\Framework\View\Page\Config\Renderer">
         <plugin name="seoRender" type="Mageplaza\Seo\Plugin\SeoRender"/>
     </type>
+    <type name="Magento\Review\Block\Product\ReviewRenderer">
+        <plugin name="mpseo_remove_review" type="Mageplaza\Seo\Plugin\RemoveReview"/>
+    </type>
 </config>
