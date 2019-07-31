@@ -29,6 +29,7 @@
             <general>
                 <enabled>1</enabled>
                 <richsnippets>
+                    <enable_product>0</enable_product>
                     <brand>manufacturer</brand>
                     <aggregate_rating>0</aggregate_rating>
                     <price_valid_until>7days</price_valid_until>
