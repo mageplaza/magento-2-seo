@@ -445,7 +445,7 @@ class SeoRender
                             'author' => $review['nickname']
                         ];
                     }
-                } elseif (!$this->helperData->getRichsnippetsConfig('aggregate_rating')) {
+                } elseif ($this->helperData->getRichsnippetsConfig('aggregate_rating') === '1') {
                     $productStructuredData['review'][] = [
                         '@type'  => 'Review',
                         'author' => $this->helperData->getRichsnippetsConfig('review_author')
