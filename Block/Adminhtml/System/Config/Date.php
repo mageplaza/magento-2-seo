@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\Seo\Block\Adminhtml\System\Config;
 
 use Magento\Config\Block\System\Config\Form\Field;

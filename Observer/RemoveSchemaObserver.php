@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\Seo\Observer;
 
 use Magento\Framework\Event\Observer;
@@ -40,9 +41,8 @@ class RemoveSchemaObserver implements ObserverInterface
      *
      * @param HelperData $helperData
      */
-    public function __construct(
-        HelperData $helperData
-    ){
+    public function __construct(HelperData $helperData)
+    {
         $this->_helperData = $helperData;
     }
 

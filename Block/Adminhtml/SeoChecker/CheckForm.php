@@ -26,10 +26,13 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
 use Magento\Cms\Model\PageFactory;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Json\Helper\Data as JsonData;
 use Magento\Framework\Url;
 use Magento\Framework\View\Element\Template;
+use Magento\Sitemap\Model\ResourceModel\Sitemap\Collection;
 use Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory;
+use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as SeoHelperData;
 
 /**
@@ -129,7 +132,7 @@ class CheckForm extends Template
      * get link to check
      *
      * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getLink()
     {
@@ -137,24 +140,29 @@ class CheckForm extends Template
         $storeCode = $this->_storeManager->getStore()->getCode();
         $storeId = $this->_storeManager->getStore()->getId();
         $actionName = $this->_request->getFullActionName();
-        if ($storeId == "0") {
-            $storeId = $this->_storeManager->getDefaultStoreView()->getId();
-            $storeCode = $this->_storeManager->getDefaultStoreView()->getCode();
+        if ($storeId === 0) {
+            $defaultStore = $this->_storeManager->getDefaultStoreView();
+            $storeId = $defaultStore->getId();
+            $storeCode = $defaultStore->getCode();
         }
 
         switch ($actionName) {
             case 'catalog_product_edit':
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
                 $product = $this->productFactory->create()->load($id)->setStoreId($storeId);
-                $url = $urlModel->getUrl($product) . "?___store=" . $storeCode;
+                $url = $urlModel->getUrl($product, ['_query' => [StoreManagerInterface::PARAM_NAME => $storeCode]]);
                 break;
             case 'catalog_category_edit':
                 $category = $this->categoryRepository->get($id, $storeId);
-                $url = $category->getUrl() . "?___store=" . $storeCode;
+                $url = $category->getUrl(['_query' => [StoreManagerInterface::PARAM_NAME => $storeCode]]);
                 break;
             case 'cms_page_edit':
                 $pageId = $this->_request->getParam('page_id');
-                $url = $this->cmsUrl->getUrl($this->cmsPageFactory->create()->load($pageId)->getIdentifier(), $storeId, $storeCode);
+                $url = $this->cmsUrl->getUrl(
+                    $this->cmsPageFactory->create()->load($pageId)->getIdentifier(),
+                    $storeId,
+                    $storeCode
+                );
                 break;
             default:
                 $url = '';
@@ -167,13 +175,13 @@ class CheckForm extends Template
      * get site map links
      *
      * @return array
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function sitemap()
     {
         $sitemapLinks = [];
 
-        /** @var \Magento\Sitemap\Model\ResourceModel\Sitemap\Collection $sitemap */
+        /** @var Collection $sitemap */
         $sitemap = $this->sitemapCollection->create();
 
         $storeId = $this->_storeManager->getStore()->getId();
@@ -192,7 +200,7 @@ class CheckForm extends Template
      * get Data to check
      *
      * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getSeoData()
     {

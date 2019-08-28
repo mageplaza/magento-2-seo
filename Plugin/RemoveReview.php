@@ -37,9 +37,8 @@ class RemoveReview
      *
      * @param HelperData $helperData
      */
-    public function __construct(
-        HelperData $helperData
-    ) {
+    public function __construct(HelperData $helperData)
+    {
         $this->_helperData = $helperData;
     }
 

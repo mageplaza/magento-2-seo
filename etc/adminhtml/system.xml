@@ -41,7 +41,7 @@
                         </ul>
                         ]]></comment>
                 </field>
-                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
@@ -76,7 +76,7 @@
                 </field>
                 <field id="aggregate_rating" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Default Aggregate Rating Value</label>
-                    <source_model>Mageplaza\Seo\Model\Config\Source\AggregateRating</source_model>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                     <depends>
                         <field id="enable_product">1</field>
                     </depends>
