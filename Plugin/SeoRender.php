@@ -21,24 +21,34 @@
 
 namespace Mageplaza\Seo\Plugin;
 
+use Exception;
 use Magento\Catalog\Model\ProductFactory;
+use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\DataObject;
 use Magento\Framework\Event\Manager;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Message\ManagerInterface;
+use Magento\Framework\Module\Manager as ModuleManager;
 use Magento\Framework\Pricing\Helper\Data as PriceHelper;
 use Magento\Framework\Registry;
+use Magento\Framework\Stdlib\DateTime\DateTime;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Page\Config as PageConfig;
 use Magento\Framework\View\Page\Config\Renderer;
+use Magento\Review\Model\ResourceModel\Review\CollectionFactory as ReviewCollection;
+use Magento\Review\Model\Review;
 use Magento\Review\Model\ReviewFactory;
 use Magento\Search\Helper\Data as SearchHelper;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
+use Mageplaza\Seo\Model\Config\Source\PriceValidUntil;
 
 /**
- * Class SeoBeforeRender
+ * Class SeoRender
  * @package Mageplaza\Seo\Plugin
  */
 class SeoRender
@@ -49,42 +59,42 @@ class SeoRender
     const YANDEX_VERIFICATION     = 'yandex-verification';
 
     /**
-     * @var \Magento\Framework\View\Page\Config
+     * @var PageConfig
      */
     protected $pageConfig;
 
     /**
-     * @var \Magento\Framework\App\Request\Http
+     * @var Http
      */
     protected $request;
 
     /**
-     * @var \Mageplaza\Seo\Helper\Data
+     * @var HelperData
      */
     protected $helperData;
 
     /**
-     * @var \Magento\CatalogInventory\Model\Stock\StockItemRepository
+     * @var StockItemRepository
      */
     protected $stockItemRepository;
 
     /**
-     * @var \Magento\Framework\Registry
+     * @var Registry
      */
     protected $registry;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $_storeManager;
 
     /**
-     * @var \Magento\Review\Model\ReviewFactory
+     * @var ReviewFactory
      */
     protected $reviewFactory;
 
     /**
-     * @var \Magento\Framework\UrlInterface
+     * @var UrlInterface
      */
     protected $_urlBuilder;
 
@@ -94,47 +104,71 @@ class SeoRender
     protected $productFactory;
 
     /**
-     * @var \Magento\Framework\Message\ManagerInterface
+     * @var ManagerInterface
      */
     protected $messageManager;
 
     /**
-     * @var \Magento\CatalogInventory\Api\StockRegistryInterface
+     * @var StockRegistryInterface
      */
     protected $stockState;
 
     /**
-     * @var \Magento\Search\Helper\Data
+     * @var SearchHelper
      */
     protected $_searchHelper;
 
     /**
-     * @var \Magento\Framework\Pricing\Helper\Data
+     * @var PriceHelper
      */
     protected $_priceHelper;
 
     /**
-     * @var \Magento\Framework\Event\Manager
+     * @var Manager
      */
     protected $_eventManager;
 
     /**
+     * @var DateTime
+     */
+    protected $_dateTime;
+
+    /**
+     * @var TimezoneInterface
+     */
+    protected $_timeZoneInterface;
+
+    /**
+     * @var ReviewCollection
+     */
+    protected $_reviewCollection;
+
+    /**
+     * @var ModuleManager
+     */
+    protected $_moduleManager;
+
+    /**
      * SeoRender constructor.
      *
-     * @param \Magento\Framework\View\Page\Config $pageConfig
-     * @param \Magento\Framework\App\Request\Http $request
-     * @param \Mageplaza\Seo\Helper\Data $helpData
-     * @param \Magento\CatalogInventory\Model\Stock\StockItemRepository $stockItemRepository
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Review\Model\ReviewFactory $reviewFactory
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\UrlInterface $urlBuilder
-     * @param \Magento\Catalog\Model\ProductFactory $productFactory
-     * @param \Magento\Framework\Message\ManagerInterface $messageManager
-     * @param \Magento\CatalogInventory\Api\StockRegistryInterface $stockState
-     * @param \Magento\Search\Helper\Data $searchHelper
-     * @param \Magento\Framework\Pricing\Helper\Data $priceHelper
-     * @param \Magento\Framework\Event\Manager $eventManager
+     * @param PageConfig $pageConfig
+     * @param Http $request
+     * @param HelperData $helpData
+     * @param StockItemRepository $stockItemRepository
+     * @param Registry $registry
+     * @param ReviewFactory $reviewFactory
+     * @param StoreManagerInterface $storeManager
+     * @param UrlInterface $urlBuilder
+     * @param ProductFactory $productFactory
+     * @param ManagerInterface $messageManager
+     * @param StockRegistryInterface $stockState
+     * @param SearchHelper $searchHelper
+     * @param PriceHelper $priceHelper
+     * @param Manager $eventManager
+     * @param DateTime $dateTime
+     * @param TimezoneInterface $timeZoneInterface
+     * @param ReviewCollection $reviewCollection
+     * @param ModuleManager $moduleManager
      */
     function __construct(
         PageConfig $pageConfig,
@@ -150,7 +184,11 @@ class SeoRender
         StockRegistryInterface $stockState,
         SearchHelper $searchHelper,
         PriceHelper $priceHelper,
-        Manager $eventManager
+        Manager $eventManager,
+        DateTime $dateTime,
+        TimezoneInterface $timeZoneInterface,
+        ReviewCollection $reviewCollection,
+        ModuleManager $moduleManager
     ) {
         $this->pageConfig = $pageConfig;
         $this->request = $request;
@@ -166,6 +204,10 @@ class SeoRender
         $this->_searchHelper = $searchHelper;
         $this->_priceHelper = $priceHelper;
         $this->_eventManager = $eventManager;
+        $this->_dateTime = $dateTime;
+        $this->_timeZoneInterface = $timeZoneInterface;
+        $this->_reviewCollection = $reviewCollection;
+        $this->_moduleManager = $moduleManager;
     }
 
     /**
@@ -201,15 +243,15 @@ class SeoRender
                 case 'catalog_product_view':
                     if ($this->helperData->getRichsnippetsConfig('enable_product')) {
                         $productStructuredData = $this->showProductStructuredData();
-                        $result = $result . $productStructuredData;
+                        $result .= $productStructuredData;
                     }
                     break;
                 case 'cms_index_index':
                     if ($this->helperData->getInfoConfig('enable')) {
-                        $result = $result . $this->showBusinessStructuredData();
+                        $result .= $this->showBusinessStructuredData();
                     }
                     if ($this->helperData->getRichsnippetsConfig('enable_site_link')) {
-                        $result = $result . $this->showSiteLinksStructuredData();
+                        $result .= $this->showSiteLinksStructuredData();
                     }
                     break;
             }
@@ -223,7 +265,10 @@ class SeoRender
      */
     public function showVerifications()
     {
-        $this->pageConfig->setMetadata(self::GOOLE_SITE_VERIFICATION, $this->helperData->getVerficationConfig('google'));
+        $this->pageConfig->setMetadata(
+            self::GOOLE_SITE_VERIFICATION,
+            $this->helperData->getVerficationConfig('google')
+        );
         $this->pageConfig->setMetadata(self::MSVALIDATE_01, $this->helperData->getVerficationConfig('bing'));
         $this->pageConfig->setMetadata(self::P_DOMAIN_VERIFY, $this->helperData->getVerficationConfig('pinterest'));
         $this->pageConfig->setMetadata(self::YANDEX_VERIFICATION, $this->helperData->getVerficationConfig('yandex'));
@@ -263,8 +308,8 @@ class SeoRender
     /**
      * @param $productId
      *
-     * @return \Magento\CatalogInventory\Api\Data\StockItemInterface
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return StockItemInterface
+     * @throws NoSuchEntityException
      */
     public function getProductStock($productId)
     {
@@ -273,7 +318,7 @@ class SeoRender
 
     /**
      * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getReviewCount()
     {
@@ -286,7 +331,7 @@ class SeoRender
 
     /**
      * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getRatingSummary()
     {
@@ -301,7 +346,7 @@ class SeoRender
      * @param $product
      *
      * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getEntitySummary($product)
     {
@@ -318,7 +363,7 @@ class SeoRender
     {
         if ($currentProduct = $this->getProduct()) {
             try {
-                $productId = $currentProduct->getId() ? $currentProduct->getId() : $this->request->getParam('id');
+                $productId = $currentProduct->getId() ?: $this->request->getParam('id');
 
                 $product = $this->productFactory->create()->load($productId);
                 $availability = $product->isAvailable() ? 'InStock' : 'OutOfStock';
@@ -327,6 +372,10 @@ class SeoRender
                     $product->getStore()->getWebsiteId()
                 );
                 $priceValidUntil = $currentProduct->getSpecialToDate();
+                $modelValue = $product->getResource()
+                    ->getAttribute($this->helperData->getRichsnippetsConfig('model_value'))
+                    ->getFrontend()->getValue($product);
+                $modelName = $this->helperData->getRichsnippetsConfig('model_name');
 
                 $productStructuredData = [
                     '@context'    => 'http://schema.org/',
@@ -341,13 +390,74 @@ class SeoRender
                         'priceCurrency' => $this->_storeManager->getStore()->getCurrentCurrencyCode(),
                         'price'         => $currentProduct->getPriceInfo()->getPrice('final_price')->getValue(),
                         'itemOffered'   => $stockItem->getQty(),
-                        'availability'  => 'http://schema.org/' . $availability
-                    ]
+                        'availability'  => 'http://schema.org/' . $availability,
+                        'url'           => $currentProduct->getProductUrl()
+                    ],
+                    $modelName    => $modelValue ?: $modelName
                 ];
-                $productStructuredData = $this->addProductStructuredDataByType($currentProduct->getTypeId(), $currentProduct, $productStructuredData);
+                $productStructuredData = $this->addProductStructuredDataByType(
+                    $currentProduct->getTypeId(),
+                    $currentProduct,
+                    $productStructuredData
+                );
 
+                $priceValidType = $this->helperData->getRichsnippetsConfig('price_valid_until');
                 if (!empty($priceValidUntil)) {
                     $productStructuredData['offers']['priceValidUntil'] = $priceValidUntil;
+                } elseif ($priceValidType !== 'none') {
+                    $time = $this->_dateTime->gmtTimestamp();
+
+                    switch ($priceValidType) {
+                        case PriceValidUntil::PLUS_7:
+                            $time += 604800;
+                            break;
+                        case PriceValidUntil::PLUS_30:
+                            $time += 2592000;
+                            break;
+                        case PriceValidUntil::PLUS_60:
+                            $time += 5184000;
+                            break;
+                        case PriceValidUntil::PLUS_1_YEAR:
+                            $time += 31536000;
+                            break;
+                        default:
+                            $time = $this->helperData->getRichsnippetsConfig('price_valid_until_custom');
+                            break;
+                    }
+
+                    $productStructuredData['offers']['priceValidUntil'] = $priceValidType === 'custom'
+                        ? $time
+                        : date('Y-m-d', $time);
+                }
+
+                if (!$this->_moduleManager->isEnabled('Mageplaza_Shopbybrand')) {
+                    $brandValue = $product->getResource()
+                        ->getAttribute($this->helperData->getRichsnippetsConfig('brand'))
+                        ->getFrontend()->getValue($product);
+
+                    $productStructuredData['brand']['@type'] = 'Thing';
+                    $productStructuredData['brand']['name'] = $brandValue ?: 'Brand';
+                }
+
+                $collection = $this->_reviewCollection->create()
+                    ->addStatusFilter(
+                        Review::STATUS_APPROVED
+                    )->addEntityFilter(
+                        'product',
+                        $product->getId()
+                    )->setDateOrder();
+                if ($collection->getData()) {
+                    foreach ($collection->getData() as $review) {
+                        $productStructuredData['review'][] = [
+                            '@type'  => 'Review',
+                            'author' => $review['nickname']
+                        ];
+                    }
+                } elseif ($this->helperData->getRichsnippetsConfig('aggregate_rating') === '1') {
+                    $productStructuredData['review'][] = [
+                        '@type'  => 'Review',
+                        'author' => $this->helperData->getRichsnippetsConfig('review_author')
+                    ];
                 }
 
                 if ($this->getReviewCount()) {
@@ -356,14 +466,26 @@ class SeoRender
                     $productStructuredData['aggregateRating']['worstRating'] = 0;
                     $productStructuredData['aggregateRating']['ratingValue'] = $this->getRatingSummary();
                     $productStructuredData['aggregateRating']['reviewCount'] = $this->getReviewCount();
+                } elseif ($this->helperData->getRichsnippetsConfig('aggregate_rating')) {
+                    $productStructuredData['aggregateRating']['@type'] = 'AggregateRating';
+                    $productStructuredData['aggregateRating']['bestRating'] = 100;
+                    $productStructuredData['aggregateRating']['worstRating'] = 0;
+                    $productStructuredData['aggregateRating']['ratingValue'] = $this->helperData->getRichsnippetsConfig('rating_value');
+                    $productStructuredData['aggregateRating']['reviewCount'] = $this->helperData->getRichsnippetsConfig('review_count');
                 }
 
-                $objectStructuredData = new \Magento\Framework\DataObject(['mpdata' => $productStructuredData]);
-                $this->_eventManager->dispatch('mp_seo_product_structured_data', ['structured_data' => $objectStructuredData]);
+                $objectStructuredData = new DataObject(['mpdata' => $productStructuredData]);
+                $this->_eventManager->dispatch(
+                    'mp_seo_product_structured_data',
+                    ['structured_data' => $objectStructuredData]
+                );
                 $productStructuredData = $objectStructuredData->getMpdata();
 
-                return $this->helperData->createStructuredData($productStructuredData, '<!-- Product Structured Data by Mageplaza SEO-->');
-            } catch (\Exception $e) {
+                return $this->helperData->createStructuredData(
+                    $productStructuredData,
+                    '<!-- Product Structured Data by Mageplaza SEO-->'
+                );
+            } catch (Exception $e) {
                 $this->messageManager->addError(__('Can not add structured data'));
             }
         }
@@ -377,62 +499,61 @@ class SeoRender
     public function showBusinessStructuredData()
     {
         $businessStructuredData = [
-            '@context' => 'http://schema.org/',
-            '@type'    => 'Organization',
-            'url'      => $this->getUrl(),
-            'logo'     => $this->helperData->getLogo(),
-            'name'     => $this->helperData->getInfoConfig('business_name')
-
+            '@context'     => 'http://schema.org/',
+            '@type'        => 'Organization',
+            'url'          => $this->getUrl(),
+            'logo'         => $this->helperData->getLogo(),
+            'name'         => $this->helperData->getInfoConfig('business_name'),
+            'contactPoint' => []
         ];
         if (!empty($this->getSocialProfiles())) {
             $businessStructuredData['sameAs'] = $this->getSocialProfiles();
         }
-        $businessStructuredData['contactPoint'] = [];
 
         // get customer service info
         if ($this->helperData->getInfoConfig('customer_service_phone')
             || $this->helperData->getInfoConfig('customer_service_contact_option')
             || $this->helperData->getInfoConfig('customer_service_area_serve')
         ) {
-            $customerService = [
+            $businessStructuredData['contactPoint'][] = [
                 '@type'         => 'ContactPoint',
                 'telephone'     => $this->helperData->getInfoConfig('customer_service_phone'),
                 'contactType'   => 'customer service',
                 'contactOption' => $this->helperData->getInfoConfig('customer_service_contact_option'),
                 'areaServed'    => $this->helperData->getInfoConfig('customer_service_area_serve')
             ];
-            array_push($businessStructuredData['contactPoint'], $customerService);
         }
         // get technical support info
         if ($this->helperData->getInfoConfig('technical_support_phone')
             || $this->helperData->getInfoConfig('technical_support_contact_option')
             || $this->helperData->getInfoConfig('technical_support_area_serve')
         ) {
-            $technicalSupport = [
+            $businessStructuredData['contactPoint'][] = [
                 '@type'         => 'ContactPoint',
                 'telephone'     => $this->helperData->getInfoConfig('technical_support_phone'),
                 'contactType'   => 'technical support',
                 'contactOption' => $this->helperData->getInfoConfig('technical_support_contact_option'),
                 'areaServed'    => $this->helperData->getInfoConfig('technical_support_area_serve')
             ];
-            array_push($businessStructuredData['contactPoint'], $technicalSupport);
         }
         // get sales info
         if ($this->helperData->getInfoConfig('sales_phone')
             || $this->helperData->getInfoConfig('sales_contact_option')
             || $this->helperData->getInfoConfig('sales_area_serve')
         ) {
-            $sales = [
+            $businessStructuredData['contactPoint'][] = [
                 '@type'         => 'ContactPoint',
                 'telephone'     => $this->helperData->getInfoConfig('sales_phone'),
                 'contactType'   => 'sales',
                 'contactOption' => $this->helperData->getInfoConfig('sales_contact_option'),
                 'areaServed'    => $this->helperData->getInfoConfig('sales_area_serve')
             ];
-            array_push($businessStructuredData['contactPoint'], $sales);
         }
 
-        return $this->helperData->createStructuredData($businessStructuredData, '<!-- Business Structured Data by Mageplaza SEO-->');
+        return $this->helperData->createStructuredData(
+            $businessStructuredData,
+            '<!-- Business Structured Data by Mageplaza SEO-->'
+        );
     }
 
     /**
@@ -444,7 +565,18 @@ class SeoRender
     public function getSocialProfiles()
     {
         $lines = [];
-        $socialNetwork = ['facebook', 'twitter', 'google', 'instagram', 'youtube', 'linkedin', 'myspace', 'pinterest', 'soundclound', 'tumblr'];
+        $socialNetwork = [
+            'facebook',
+            'twitter',
+            'google',
+            'instagram',
+            'youtube',
+            'linkedin',
+            'myspace',
+            'pinterest',
+            'soundclound',
+            'tumblr'
+        ];
         foreach ($socialNetwork as $value) {
             if ($profile = $this->helperData->getSocialProfiles($value)) {
                 $lines[] = $profile;
@@ -472,7 +604,10 @@ class SeoRender
             ]
         ];
 
-        return $this->helperData->createStructuredData($siteLinksStructureData, '<!-- Sitelinks Searchbox Structured Data by Mageplaza SEO-->');
+        return $this->helperData->createStructuredData(
+            $siteLinksStructureData,
+            '<!-- Sitelinks Searchbox Structured Data by Mageplaza SEO-->'
+        );
     }
 
     /**
@@ -482,7 +617,7 @@ class SeoRender
      * @param $productStructuredData
      *
      * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getGroupedProductStructuredData($currentProduct, $productStructuredData)
     {
@@ -496,7 +631,7 @@ class SeoRender
                         . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
-                '@type' => "Offer",
+                '@type' => 'Offer',
                 'name'  => $child->getName(),
                 'price' => $this->_priceHelper->currency($child->getPrice(), false),
                 'sku'   => $child->getSku(),
@@ -533,7 +668,7 @@ class SeoRender
         $childrenPrice = [];
         foreach ($childProductCollection as $child) {
             $offerData[] = [
-                '@type' => "Offer",
+                '@type' => 'Offer',
                 'name'  => $child->getTitle(),
                 'price' => $this->_priceHelper->currency($child->getPrice(), false)
             ];
@@ -556,7 +691,7 @@ class SeoRender
      * @param $productStructuredData
      *
      * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
     {
@@ -571,7 +706,7 @@ class SeoRender
                         . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
-                '@type' => "Offer",
+                '@type' => 'Offer',
                 'name'  => $child->getName(),
                 'price' => $this->_priceHelper->currency($child->getPrice(), false),
                 'sku'   => $child->getSku(),
@@ -592,7 +727,7 @@ class SeoRender
      * @param $productStructuredData
      *
      * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getBundleProductStructuredData($currentProduct, $productStructuredData)
     {
@@ -602,13 +737,16 @@ class SeoRender
         unset($productStructuredData['offers']['price']);
         $offerData = [];
         $typeInstance = $currentProduct->getTypeInstance();
-        $childProductCollection = $typeInstance->getSelectionsCollection($typeInstance->getOptionsIds($currentProduct), $currentProduct);
+        $childProductCollection = $typeInstance->getSelectionsCollection(
+            $typeInstance->getOptionsIds($currentProduct),
+            $currentProduct
+        );
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                         . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
-                '@type' => "Offer",
+                '@type' => 'Offer',
                 'name'  => $child->getName(),
                 'price' => $this->_priceHelper->currency($child->getPrice(), false),
                 'sku'   => $child->getSku(),
@@ -628,22 +766,31 @@ class SeoRender
      * @param $productStructuredData
      *
      * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function addProductStructuredDataByType($productType, $currentProduct, $productStructuredData)
     {
         switch ($productType) {
             case 'grouped':
-                $productStructuredData = $this->getGroupedProductStructuredData($currentProduct, $productStructuredData);
+                $productStructuredData = $this->getGroupedProductStructuredData(
+                    $currentProduct,
+                    $productStructuredData
+                );
                 break;
             case 'bundle':
                 $productStructuredData = $this->getBundleProductStructuredData($currentProduct, $productStructuredData);
                 break;
             case 'downloadable':
-                $productStructuredData = $this->getDownloadableProductStructuredData($currentProduct, $productStructuredData);
+                $productStructuredData = $this->getDownloadableProductStructuredData(
+                    $currentProduct,
+                    $productStructuredData
+                );
                 break;
             case 'configurable':
-                $productStructuredData = $this->getConfigurableProductStructuredData($currentProduct, $productStructuredData);
+                $productStructuredData = $this->getConfigurableProductStructuredData(
+                    $currentProduct,
+                    $productStructuredData
+                );
                 break;
         }
 

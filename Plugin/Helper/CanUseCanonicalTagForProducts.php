@@ -21,6 +21,7 @@
 
 namespace Mageplaza\Seo\Plugin\Helper;
 
+use Magento\Catalog\Helper\Product;
 use Mageplaza\Seo\Helper\Data as HelperData;
 
 /**
@@ -30,7 +31,7 @@ use Mageplaza\Seo\Helper\Data as HelperData;
 class CanUseCanonicalTagForProducts
 {
     /**
-     * @var \Mageplaza\Seo\Helper\Data
+     * @var HelperData
      */
     protected $_helper;
 
@@ -45,12 +46,12 @@ class CanUseCanonicalTagForProducts
     }
 
     /**
-     * @param \Magento\Catalog\Helper\Product $product
+     * @param Product $product
      * @param $result
      *
      * @return mixed
      */
-    public function afterCanUseCanonicalTag(\Magento\Catalog\Helper\Product $product, $result)
+    public function afterCanUseCanonicalTag(Product $product, $result)
     {
         if ($this->_helper->isEnabled()) {
             return $this->_helper->getDuplicateConfig('product_canonical_tag');

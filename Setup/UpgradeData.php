@@ -35,14 +35,14 @@ use Magento\Framework\Setup\UpgradeDataInterface;
 class UpgradeData implements UpgradeDataInterface
 {
     /**
-     * @var \Magento\Eav\Setup\EavSetupFactory
+     * @var EavSetupFactory
      */
     protected $eavSetupFactory;
 
     /**
      * UpgradeData constructor.
      *
-     * @param \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
+     * @param EavSetupFactory $eavSetupFactory
      */
     public function __construct(EavSetupFactory $eavSetupFactory)
     {
@@ -50,8 +50,8 @@ class UpgradeData implements UpgradeDataInterface
     }
 
     /**
-     * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
-     * @param \Magento\Framework\Setup\ModuleContextInterface $context
+     * @param ModuleDataSetupInterface $setup
+     * @param ModuleContextInterface $context
      */
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {

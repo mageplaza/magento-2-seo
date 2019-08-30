@@ -28,6 +28,14 @@
             </module>
             <general>
                 <enabled>1</enabled>
+                <richsnippets>
+                    <enable_product>0</enable_product>
+                    <brand>manufacturer</brand>
+                    <aggregate_rating>0</aggregate_rating>
+                    <price_valid_until>7days</price_valid_until>
+                    <model_name>mpn</model_name>
+                    <model_value>sku</model_value>
+                </richsnippets>
             </general>
         </seo>
         <catalog>

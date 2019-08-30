@@ -122,7 +122,10 @@ class Data extends CoreHelper
     public function createStructuredData($data, $prefixComment = '', $subfixComment = '')
     {
         $applicationLdJson = $prefixComment;
-        $applicationLdJson .= '<script type="application/ld+json">' . json_encode($data, JSON_PRETTY_PRINT) . '</script>';
+        $applicationLdJson .= '<script type="application/ld+json">' . json_encode(
+            $data,
+            JSON_PRETTY_PRINT
+        ) . '</script>';
         $applicationLdJson .= $subfixComment;
 
         return $applicationLdJson;
