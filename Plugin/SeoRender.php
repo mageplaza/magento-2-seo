@@ -372,9 +372,13 @@ class SeoRender
                     $product->getStore()->getWebsiteId()
                 );
                 $priceValidUntil = $currentProduct->getSpecialToDate();
+
                 $modelValue = $product->getResource()
-                    ->getAttribute($this->helperData->getRichsnippetsConfig('model_value'))
-                    ->getFrontend()->getValue($product);
+                    ->getAttribute($this->helperData->getRichsnippetsConfig('model_value'));
+                if ($modelValue) {
+                    $modelValue = $modelValue->getFrontend()->getValue($product);
+                }
+
                 $modelName = $this->helperData->getRichsnippetsConfig('model_name');
 
                 $productStructuredData = [
@@ -432,8 +436,10 @@ class SeoRender
 
                 if (!$this->_moduleManager->isEnabled('Mageplaza_Shopbybrand')) {
                     $brandValue = $product->getResource()
-                        ->getAttribute($this->helperData->getRichsnippetsConfig('brand'))
-                        ->getFrontend()->getValue($product);
+                        ->getAttribute($this->helperData->getRichsnippetsConfig('brand'));
+                    if ($brandValue) {
+                        $brandValue = $brandValue->getFrontend()->getValue($product);
+                    }
 
                     $productStructuredData['brand']['@type'] = 'Thing';
                     $productStructuredData['brand']['name'] = $brandValue ?: 'Brand';
