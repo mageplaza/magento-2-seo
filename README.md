@@ -5,6 +5,15 @@
 [![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-seo-extension/v/stable)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 [![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-seo-extension/downloads)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 
+## Highlight Features for SEO Standard Edition
+- Prevent Duplicate Content issue
+- XML, HTML Sitemap
+- Structured Data (Rich Snipet: Adding Rating, Reviews, Price, Stock status ...)
+- Google, Bing, Pinterest ... verification
+- Add Canonical URLs
+
+
+
 ## 1. SEO Documentation
 
 - [Installation guide](https://www.mageplaza.com/install-magento-2-extension/)
@@ -46,8 +55,6 @@ A: Please follow this guide: https://www.mageplaza.com/blog/magento-site-down.ht
 ## 4. Contribute to this SEO module
 
 Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
-
-
 
 
 ## 5. Magento 2 SEO Introduction
