@@ -150,11 +150,11 @@ class CheckForm extends Template
             case 'catalog_product_edit':
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
                 $product = $this->productFactory->create()->load($id)->setStoreId($storeId);
-                $url = $urlModel->getUrl($product, ['_query' => [StoreManagerInterface::PARAM_NAME => $storeCode]]);
+                $url = $urlModel->getUrl($product) . "?___store=" . $storeCode;
                 break;
             case 'catalog_category_edit':
                 $category = $this->categoryRepository->get($id, $storeId);
-                $url = $category->getUrl(['_query' => [StoreManagerInterface::PARAM_NAME => $storeCode]]);
+                $url = $category->getUrl() . "?___store=" . $storeCode;
                 break;
             case 'cms_page_edit':
                 $pageId = $this->_request->getParam('page_id');
