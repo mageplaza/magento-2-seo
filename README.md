@@ -125,8 +125,7 @@ A huge advantage when you have Megaplaza SEO extension is that it’s fully supp
 - Advanced Structured Data						
 - Custom Meta tags: title, description, keywords			
 - Hreflang tag			
-- Layered Navigation Support			
-- Social Shares			
+- Layered Navigation Support					
 - URL Friendly			
 - Link Alternate Tag			
 - Opptimize canonical tag, rich snippet, alternate			
@@ -194,28 +193,6 @@ configurations related to the duplicate content:
 
 ![Configuration Duplicate Content for SEO](http://i.imgur.com/GiyZUa6.png)
 
-#### Social Shares Setting
-
-
-**Social Shares** provides the working fields that support for the
-better SEO on the social channels. Now expand that section and do the
-following:
-
--   It is possible to show **Open Graph** that is a short description of
-    your website whenever visitors publish on the social medias like
-    Facebook, Google+, Pinterest and other social networks.
-
-    If disable the open graph on the social network, please choose "No"
-    to turn it off in Add Open Graph meta tags field
-
--   You can also add Twitter Card Meta tags when the visitors share your
-    website on Twitter
--   Enter Pinterest Confirmation Code to verify your website. Follow the
-    instruction
-    [here](https://help.pinterest.com/en/articles/confirm-your-website#meta_tag)
--   Enter Google+ Publisher Page if you need
-
-![image](https://i.imgur.com/n0HsKaJ.png)
 
 #### Magento 2 Structured Data Setting
 
