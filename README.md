@@ -247,15 +247,6 @@ shown in the search result.
 
 ![Magento 2 SEO Business](https://i.imgur.com/xez4HkD.png)
 
-#### Breadcrumbs
-
-Enabling Breadcrumbs is the way to show the exact position in the site
-hierarchy, for example:
-`www.mageplaza.com > Magento 2 Extensions > Better SEO`. If you really
-want to apply for your product page, under **Breadcrumbs** section,
-please select "Yes" in the Enable Breadcrumbs Rich Snippet field.
-
-![Magento 2 Breadcrumbs snippet](https://i.imgur.com/QtvrkWY.png)
 
 #### Verifications
 
