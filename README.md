@@ -96,10 +96,6 @@ The smart list for a perfect performance! The SEO checklists can tell you what y
 
 ![Magento 2 seo checklist](https://i.imgur.com/0StlqWM.jpg)
 
-### Breadcrumbs
-By enhancing the structure of the access link on the Search Engine Results Pages (SERPs), it’s easier for the search engines crawler to understand the site structure and as a result, your site ranking can increase significantly. The Breadcrumb will show the structure of link that customers access, particularly as “Home > Category > Product name”.
-
-![Magento 2 breadcrumbs](http://i.imgur.com/4e0SDeU.jpg)
 
 ### SEO HTML/XML Sitemaps (SEO Pro edition)
 
