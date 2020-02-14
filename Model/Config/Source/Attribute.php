@@ -50,7 +50,7 @@ class Attribute implements ArrayInterface
      */
     public function toOptionArray()
     {
-        $attributes = $this->_collectionFactory->create()->addVisibleFilter();
+        $attributes   = $this->_collectionFactory->create()->addVisibleFilter();
         $arrAttribute = [];
 
         foreach ($attributes as $attribute) {

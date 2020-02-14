@@ -20,6 +20,6 @@
  */
 ?>
 
-<form id="mageplaza-seo-form" target="_blank" method="post" action="<?= $block->getSeoToolUrl() ?>">
-    <input title="" type="hidden" name="mageplazaSeoData" value='<?= $block->getSeoData() ?>'>
+<form id="mageplaza-seo-form" target="_blank" method="post" action="<?= $block->escapeUrl($block->getSeoToolUrl()) ?>">
+    <input title="" type="hidden" name="mageplazaSeoData" value='<?= $block->escapeHtml($block->getSeoData()) ?>'>
 </form>

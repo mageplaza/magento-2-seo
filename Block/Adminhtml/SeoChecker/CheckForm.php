@@ -32,7 +32,6 @@ use Magento\Framework\Url;
 use Magento\Framework\View\Element\Template;
 use Magento\Sitemap\Model\ResourceModel\Sitemap\Collection;
 use Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory;
-use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as SeoHelperData;
 
 /**
@@ -116,14 +115,14 @@ class CheckForm extends Template
         SeoHelperData $helper,
         array $data = []
     ) {
-        $this->helper = $helper;
-        $this->productFactory = $productFactory;
+        $this->helper             = $helper;
+        $this->productFactory     = $productFactory;
         $this->categoryRepository = $categoryRepository;
-        $this->cmsUrl = $cmsUrl;
-        $this->cmsPageFactory = $cmsPageFactory;
-        $this->sitemapCollection = $sitemapCollection;
-        $this->jsonHelper = $jsonHelper;
-        $this->productRepository = $productRepository;
+        $this->cmsUrl             = $cmsUrl;
+        $this->cmsPageFactory     = $cmsPageFactory;
+        $this->sitemapCollection  = $sitemapCollection;
+        $this->jsonHelper         = $jsonHelper;
+        $this->productRepository  = $productRepository;
 
         parent::__construct($context, $data);
     }
@@ -136,29 +135,29 @@ class CheckForm extends Template
      */
     public function getLink()
     {
-        $id = $this->_request->getParam('id');
-        $storeCode = $this->_storeManager->getStore()->getCode();
-        $storeId = $this->_storeManager->getStore()->getId();
+        $id         = $this->_request->getParam('id');
+        $storeCode  = $this->_storeManager->getStore()->getCode();
+        $storeId    = $this->_storeManager->getStore()->getId();
         $actionName = $this->_request->getFullActionName();
         if ($storeId === 0) {
             $defaultStore = $this->_storeManager->getDefaultStoreView();
-            $storeId = $defaultStore->getId();
-            $storeCode = $defaultStore->getCode();
+            $storeId      = $defaultStore->getId();
+            $storeCode    = $defaultStore->getCode();
         }
 
         switch ($actionName) {
             case 'catalog_product_edit':
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
-                $product = $this->productFactory->create()->load($id)->setStoreId($storeId);
-                $url = $urlModel->getUrl($product, ['_query' => [StoreManagerInterface::PARAM_NAME => $storeCode]]);
+                $product  = $this->productFactory->create()->load($id)->setStoreId($storeId);
+                $url      = $urlModel->getUrl($product, ['_query' => ['___store' => $storeCode]]);
                 break;
             case 'catalog_category_edit':
                 $category = $this->categoryRepository->get($id, $storeId);
-                $url = $category->getUrl(['_query' => [StoreManagerInterface::PARAM_NAME => $storeCode]]);
+                $url      = $category->getUrl(['_query' => ['___store' => $storeCode]]);
                 break;
             case 'cms_page_edit':
                 $pageId = $this->_request->getParam('page_id');
-                $url = $this->cmsUrl->getUrl(
+                $url    = $this->cmsUrl->getUrl(
                     $this->cmsPageFactory->create()->load($pageId)->getIdentifier(),
                     $storeId,
                     $storeCode
@@ -204,12 +203,12 @@ class CheckForm extends Template
      */
     public function getSeoData()
     {
-        $data = [];
-        $data['link'] = $this->getLink();
+        $data            = [];
+        $data['link']    = $this->getLink();
         $data['sitemap'] = $this->sitemap();
         $data['baseUrl'] = $this->getBaseUrl();
 
-        return $this->jsonHelper->jsonEncode($data);
+        return SeoHelperData::jsonEncode($data);
     }
 
     /**
