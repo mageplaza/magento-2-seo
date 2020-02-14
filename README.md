@@ -1,11 +1,20 @@
-# Magento 2 SEO Extension FREE by Mageplaza
+# The Best Magento 2 SEO Extension FREE
 
-**Mageplaza SEO for Magento 2** is a bundle of outstanding features that are auto-active when you install it from Mageplaza without any code modifications. It is also friendly with your store if you need to insert meta keywords and meta descriptions for your product. It will do perfectly for your better SEO.
+**Mageplaza SEO All-in-One for Magento 2** is a bundle of outstanding features that are auto-active when you install it from Mageplaza without any code modifications. It is also friendly with your store if you need to insert meta keywords and meta descriptions for your product. It will do perfectly for your better SEO.
 
 [![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-seo-extension/v/stable)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 [![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-seo-extension/downloads)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 
-## 1. Documentation
+## Highlight Features for SEO Standard Edition
+- Prevent Duplicate Content issue
+- XML, HTML Sitemap
+- Structured Data (Rich Snipet: Adding Rating, Reviews, Price, Stock status ...)
+- Google, Bing, Pinterest ... verification
+- Add Canonical URLs
+
+
+
+## 1. SEO Documentation
 
 - [Installation guide](https://www.mageplaza.com/install-magento-2-extension/)
 - [User Guide](https://docs.mageplaza.com/seo-m2/index.html)
@@ -18,9 +27,9 @@
 
 
 
-## 2. How to install
+## 2. How to install Magento 2 SEO extension
 
-### Install via composer (recommend)
+### Install module via composer (recommend)
 
 Run the following command in Magento 2 root folder
 
@@ -31,10 +40,10 @@ php bin/magento setup:upgrade
 
 ### Install Package from copy-paste package
 
-Download the latest version at [Mageplaza SEO for Magento 2](https://www.mageplaza.com/magento-2-seo-extension/)
+Download the latest version at [Mageplaza.com](https://www.mageplaza.com/magento-2-seo-extension/)
 then follow [installation guide](https://www.mageplaza.com/install-magento-2-extension/)
 
-## 3. FAQs
+## 3. SEO FAQs
 
 #### Q: I got error: `Mageplaza_Core has been already defined`
 A: Read solution: https://github.com/mageplaza/module-core/issues/3
@@ -48,79 +57,72 @@ A: Please follow this guide: https://www.mageplaza.com/blog/magento-site-down.ht
 Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
 
 
+## 5. Magento 2 SEO Introduction
 
+Improve your SEO for Magento 2 site. Use **Mageplaza SEO All in One** to automatically optimize your site for Search Engines.
+**Mageplaza SEO extension** will automatically optimize and greatly improve the performance of your Magento-based store in Search Engines. Magento 2 is great SEO-ready out-of-the-box that is really good for SEO. However it still needs some craftiness to be improved in a few areas.
 
-## 5. Introduction
+Mageplaza SEO module will support a list of new useful tools and settings that help you have own all the technical optimization with automatically optimizing and inserting the meta tags and link elements that Google or other Search Engines like so much:
 
-Improve your SEO for [Magento](https://magento.com/) site. Use Mageplaza SEO to automatically optimize your site for Search Engines.
-Mageplaza SEO extension will automatically optimize and greatly improve the performance of your Magento-based store in Search Engines. Magento 2 is great SEO-ready out-of-the-box that is really good for SEO. However it still needs some craftiness to be improved in a few areas.
+### Stop Duplicating Content SEO
 
-Mageplaza SEO extension will support a list of new useful tools and settings that help you have own all the technical optimization with automatically optimizing and inserting the meta tags and link elements that Google or other Search Engines like so much:
-
-
-## Stop Duplicating Content
-
-By automatically preventing the duplicate content problem, Mageplaza SEO extension will avoid your site from being affected badly to the search ranking or caused the traffic loss, and as a result, boost the SEO performance significantly.
+By automatically preventing the duplicate content problem, **Mageplaza SEO extension** will avoid your site from being affected badly to the search ranking or caused the traffic loss, and as a result, boost the SEO performance significantly.
 
 ![magento 2 seo duplicate content](https://i.imgur.com/BX2YeiW.jpg)
 
 
-## Structured Data
+### Magento 2 Structured Data
 
-Mageplaza SEO extension will add schema structured data to your Magento 2 store automatically without configuration to help Search engines display your web pages better and more attractive.
+**Mageplaza SEO All-in-One** will **add schema structured data to Magento 2 store** automatically without configuration to help Search engines display your web pages better and more attractive.
 
-![magento 2 seo structured data](https://i.imgur.com/Diw8ydK.png)
+![Magento 2 structured data](https://i.imgur.com/Diw8ydK.png)
 
-## Meta-data template rules (Pro edition)
+### SEO Metadata template rules (SEO Pro edition)
 
-For the marketers, it’s critical to understand and use the metadata that helps to drive the customer from the search engines. With Mageplaza SEO extension, it’s completely a huge advantage that you can set mass and dynamic metadata information for products, categories, pages, layered navigation.
+For the marketers, it’s critical to understand and use the metadata that helps to drive the customer from the search engines. With **Magento 2 SEO Pro edition**, it’s completely a huge advantage that you can set mass and dynamic metadata information for products, categories, pages, layered navigation.
 
-![seo meta data](https://i.imgur.com/NdobHxN.jpg)
+![Magento 2 seo meta data](https://i.imgur.com/NdobHxN.jpg)
 
 
-## Hreflang tag (Ultimate edition)
+### Magento 2 Hreflang tag (SEO Ultimate edition)
 
 You can easily to use the ‘Hreflang’ tags to tell the Search Engines which language you’re using in the specific page so when the visitors search in that language, your page will rank higher.
 
-![seo hreflang tag](https://i.imgur.com/PNu5Td4.jpg)
+![Magento 2 Hreflang](https://i.imgur.com/PNu5Td4.jpg)
 
-## SEO checklist (Ultimate edition)
+### SEO checklist (SEO Ultimate edition)
 
 The smart list for a perfect performance! The SEO checklists can tell you what you haven’t done yet, what you should do or even warn you to make sure your SEO process is going the right way.
 
-![seo checklist for magento 2](https://i.imgur.com/0StlqWM.jpg)
+![Magento 2 seo checklist](https://i.imgur.com/0StlqWM.jpg)
 
-## Breadcrumbs
-By enhancing the structure of the access link on the Search Engine Results Pages (SERPs), it’s easier for the search engines crawler to understand the site structure and as a result, your site ranking can increase significantly. The Breadcrumb will show the structure of link that customers access, particularly as “Home > Category > Product name”.
 
-![seo breadcrumbs](http://i.imgur.com/4e0SDeU.jpg)
-
-## HTML/XML Sitemaps (Pro edition)
+### SEO HTML/XML Sitemaps (SEO Pro edition)
 
 While the XML sitemap is specifically written for the search engines spiders, the HTML one is primarily for users. Hence, creating those 2 sitemaps will help your site to be easier to understand for both search engines and the users.
 
-## LINK ALTERNATE TAG
+### LINK ALTERNATE TAG
 
 Easily to Provides a link to an alternate version of the site by adding the rel=”alternate”.
 
 
-## CONFIGURING ROBOTS METADATA TAG
+### CONFIGURING ROBOTS METADATA TAG
 
 Make your site content to be easier readable by the search engines by adding options: Follow/Nofollow/Noindex for Products, Categories, CMS Pages.
 
-## LAYERED NAVIGATION SUPPORTED
+### LAYERED NAVIGATION SUPPORTED
 
-A huge advantage when you have Megaplaza SEO extension is that it’s fully supported by Layered Navigation to make the SEO performance even better.
+A huge advantage when you have Megaplaza SEO extension is that it’s fully supported by [Layered Navigation](https://www.mageplaza.com/magento-2-layered-navigation-extension/) to make the SEO performance even better.
 
 
-## Full features of Magento 2 SEO
+## Full Magento 2 SEO Features
 
 - Automatically avoid duplicate content			
 - Advanced Structured Data						
 - Custom Meta tags: title, description, keywords			
-- Hreflang tag			
-- Layered Navigation Support			
-- Social Shares			
+- Hreflang tag	
+- Social Shares
+- Layered Navigation Support					
 - URL Friendly			
 - Link Alternate Tag			
 - Opptimize canonical tag, rich snippet, alternate			
@@ -146,21 +148,20 @@ A huge advantage when you have Megaplaza SEO extension is that it’s fully supp
 - Supports multiple languages			
 
 
-## Pricing table
+### SEO Pricing
 
-![seo pricing](https://i.imgur.com/m5ngLpE.png)
+![Magento 2 seo pricing](https://i.imgur.com/m5ngLpE.png)
 
 
 
 ## 6. USER GUIDE
-
 
 ### Magento 2 SEO Basic Settings
 
 Firstly, we will familiar with the module via the list of the configuration. Login as Admin account, go to the path `Mageplaza > SEO > Settings`.
 
 
-#### General Configuration
+#### General SEO Configuration
 
 
 Open **General Configuration** section, you can see:
@@ -175,7 +176,7 @@ Open **General Configuration** section, you can see:
 for, etc*.
 
 
-#### Duplicate Content
+#### SEO Duplicate Content Setting
 
 
 Continue with the next session - **Duplicate Content**, there are some
@@ -187,9 +188,9 @@ configurations related to the duplicate content:
     option depending on whether you would prefer the https version of a
     page or not
 
-![image](http://i.imgur.com/GiyZUa6.png)
+![Configuration Duplicate Content for SEO](http://i.imgur.com/GiyZUa6.png)
 
-#### Social Shares
+#### Social Shares Setting
 
 
 **Social Shares** provides the working fields that support for the
@@ -212,7 +213,8 @@ following:
 
 ![image](https://i.imgur.com/n0HsKaJ.png)
 
-#### Structured Data
+
+#### Magento 2 Structured Data Setting
 
 Scroll down and expand the **Structured Data** section, you will:
 
@@ -228,14 +230,14 @@ Scroll down and expand the **Structured Data** section, you will:
     in detailed. Furthermore, you can custom that data via this
     [guide](https://mageplaza.freshdesk.com/support/solutions/articles/6000122360).
 
-![image](https://i.imgur.com/zqBgZjN.png)
+![Magento 2 Structured Data Setting](https://i.imgur.com/zqBgZjN.png)
 
-#### Social Profiles
+#### Social Profiles Setting
 
-Mageplaza SEO extension permits to show **Social Profiles** when your
+Magento 2 SEO extension permits to show **Social Profiles** when your
 website is searched on Google.
 
-![image](https://i.imgur.com/N6IRXwm.png)
+![Magento 2 Social Profiles Setting](https://i.imgur.com/N6IRXwm.png)
 
 #### Business information
 
@@ -243,17 +245,8 @@ You can enable **Business Information** if choosing "Yes". Just enter
 the information into the corresponding fields, then all of them will be
 shown in the search result.
 
-![image](https://i.imgur.com/xez4HkD.png)
+![Magento 2 SEO Business](https://i.imgur.com/xez4HkD.png)
 
-#### Breadcrumbs
-
-Enabling Breadcrumbs is the way to show the exact position in the site
-hierarchy, for example:
-`www.mageplaza.com > Magento 2 Extensions > Better SEO`. If you really
-want to apply for your product page, under **Breadcrumbs** section,
-please select "Yes" in the Enable Breadcrumbs Rich Snippet field.
-
-![image](https://i.imgur.com/QtvrkWY.png)
 
 #### Verifications
 
@@ -266,15 +259,7 @@ Yandex Webmaster Tools.
 
 
 
-
-
-
-
-
-
-
-
-## Mageplaza extensions on Magento Marketplace, Github
+**Mageplaza extensions on Magento Marketplace, Github**
 
 
 ☞ [Magento 2 One Step Checkout extension](https://marketplace.magento.com/mageplaza-magento-2-one-step-checkout-extension.html)
@@ -299,7 +284,7 @@ Yandex Webmaster Tools.
 
 
 
-## CHANGELOG 
+## SEO CHANGELOG 
 
 
 ### SEO v2.1.1
@@ -535,6 +520,60 @@ Release notes:
 - Release first version
 
 
+**Peoples also search:**
+- Magento 2 seo
+- magento 2 seo extension
+- magento 2 seo extension free
+- magento 2 seo module
+- magento 2 seo github
+- magento 2 advanced seo
+- magento 2 seo suite
+- magento 2 seo all in one
+- magento 2 seo suite ultimate extension
+- magento 2 seo suite ultimate
+- seo suite ultimate for Magento 2
+- magento 2 rich snippets
+- magento 2 structured data
+- magento 2 301 redirect extension
+- magento 2 sitemap page
+- magento 2 schema.org
+- magento 2 schema markup
+- magento 2 seo plugin 
+- magento 2 schema
+- magento 2 google rich snippets
+- magento 2 rich snippets extension
+- rich snippets magento 2
 
+**Other free extension on Github**
+- [Magento 2 Product slider](https://github.com/mageplaza/magento-2-product-slider)
+- [Magento 2 GDPR](https://github.com/mageplaza/magento-2-gdpr)
+- [Magento 2 popup extension](https://github.com/mageplaza/magento-2-better-popup)
+- [Magento 2 Reports extension](https://github.com/mageplaza/magento-2-reports)
+- [Magento 2 social login](https://github.com/mageplaza/magento-2-social-login)
+- [Magento 2 blog](https://github.com/mageplaza/magento-2-blog)
+- [Magento 2 Layered Navigation](https://github.com/mageplaza/magento-2-ajax-layered-navigation)
+- [Magento 2 security extension](https://github.com/mageplaza/magento-2-security)
 
-
+**Table of contents**
+- [SEO Documentation](#1-seo-documentation)
+- [How to install Magento 2 SEO extension](#2-how-to-install-magento-2-seo-extension)
+  - [Install module via composer (recommend)](#install-module-via-composer-recommend)
+  - [Install Package from copy-paste package](#install-package-from-copy-paste-package)
+- [SEO FAQs](#3-seo-faqs)
+- [Contribute to this SEO module](#4-contribute-to-this-seo-module)
+- [Magento 2 SEO Introduction](#5-magento-2-seo-introduction)
+  - [Stop Duplicating Content SEO](#stop-duplicating-content-seo)
+  - [Magento 2 Structured Data](#magento-2-structured-data)
+  - [SEO Metadata template rules (SEO Pro edition)](#seo-metadata-template-rules-seo-pro-edition)
+  - [Magento 2 Hreflang tag (SEO Ultimate edition)](#magento-2-hreflang-tag-seo-ultimate-edition)
+  - [SEO checklist (SEO Ultimate edition)](#seo-checklist-seo-ultimate-edition)
+  - [Breadcrumbs](#breadcrumbs)
+  - [SEO HTML/XML Sitemaps (SEO Pro edition)](#seo-htmlxml-sitemaps-seo-pro-edition)
+  - [LINK ALTERNATE TAG](#link-alternate-tag)
+  - [CONFIGURING ROBOTS METADATA TAG](#configuring-robots-metadata-tag)
+  - [LAYERED NAVIGATION SUPPORTED](#layered-navigation-supported)
+- [Full Magento 2 SEO Features](#full-magento-2-seo-features)
+- [SEO Pricing](#seo-pricing)
+- [USER GUIDE](#6-user-guide)
+  - [Magento 2 SEO Basic Settings](#magento-2-seo-basic-settings)
+- [SEO CHANGELOG](#seo-changelog)

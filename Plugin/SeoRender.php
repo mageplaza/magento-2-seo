@@ -719,6 +719,7 @@ class SeoRender
         }
         if (!empty($offerData)) {
             $productStructuredData['offers']['offers'] = $offerData;
+            $productStructuredData['offers']['offerCount'] = count($offerData);
         }
 
         return $productStructuredData;
