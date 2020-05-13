@@ -170,7 +170,7 @@ class SeoRender
      * @param ReviewCollection $reviewCollection
      * @param ModuleManager $moduleManager
      */
-    function __construct(
+    public function __construct(
         PageConfig $pageConfig,
         Http $request,
         HelperData $helpData,
@@ -700,8 +700,11 @@ class SeoRender
     public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type']     = 'AggregateOffer';
-        $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaxRegularAmount()->getValue();
-        $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinRegularAmount()->getValue();
+
+        $regularPrice = $currentProduct->getPriceInfo()->getPrice('regular_price');
+        $highPrice = $regularPrice->getMaxRegularAmount() ? $regularPrice->getMaxRegularAmount()->getValue() : null;
+        $lowPrice = $regularPrice->getMinRegularAmount() ? $regularPrice->getMinRegularAmount()->getValue() : null;
+
         $offerData                                    = [];
         $typeInstance                                 = $currentProduct->getTypeInstance();
         $childProductCollection                       = $typeInstance->getUsedProductCollection($currentProduct)->addAttributeToSelect('*');
@@ -709,17 +712,33 @@ class SeoRender
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
 
+            $childPrice = $child->getPrice();
+
             $offerData[] = [
                 '@type' => 'Offer',
                 'name'  => $child->getName(),
-                'price' => $this->_priceHelper->currency($child->getPrice(), false),
+                'price' => $this->_priceHelper->currency($childPrice, false),
                 'sku'   => $child->getSku(),
                 'image' => $imageUrl
             ];
+
+            if(!$highPrice || $highPrice < $childPrice){
+                $highPrice = $childPrice;
+            }
+            if(!$lowPrice || $lowPrice > $childPrice){
+                $lowPrice = $childPrice;
+            }
         }
         if (!empty($offerData)) {
             $productStructuredData['offers']['offers']     = $offerData;
             $productStructuredData['offers']['offerCount'] = count($offerData);
+        }
+
+        if($highPrice) {
+            $productStructuredData['offers']['highPrice'] = $highPrice;
+        }
+        if($lowPrice) {
+            $productStructuredData['offers']['lowPrice'] = $lowPrice;
         }
 
         return $productStructuredData;
