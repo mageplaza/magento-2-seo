@@ -1,6 +1,4 @@
 "Check On-page","Check On-page"
-Enable,Enable
-Disable,Disable
 gtin8,gtin8
 gtin13,gtin13
 gtin14,gtin14
@@ -14,6 +12,7 @@ Custom,Custom
 "Can not add structured data","Can not add structured data"
 SEO,SEO
 General,General
+Enable,Enable
 "Duplicate Content","Duplicate Content"
 "Use Canonical Link Meta Tag For Categories","Use Canonical Link Meta Tag For Categories"
 "Avoid duplicate content.","Avoid duplicate content."
