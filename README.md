@@ -31,8 +31,15 @@
 
 ### Install module via composer (recommend)
 
-Run the following command in Magento 2 root folder
+Run the following command in Magento 2 root folder:
 
+With Social Proof (Recommend):
+```
+composer require mageplaza/magento-2-seo-extension mageplaza/module-sitemap avada/module-proofo
+php bin/magento setup:upgrade
+```
+
+Without Social Proof:
 ```
 composer require mageplaza/magento-2-seo-extension mageplaza/module-sitemap
 php bin/magento setup:upgrade
