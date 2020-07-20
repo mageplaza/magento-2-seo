@@ -188,7 +188,8 @@ class SeoRender
         DateTime $dateTime,
         TimezoneInterface $timeZoneInterface,
         ReviewCollection $reviewCollection,
-        ModuleManager $moduleManager
+        ModuleManager $moduleManager,
+        DataObjectFactory $dataObjectFactory
     ) {
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
@@ -208,6 +209,7 @@ class SeoRender
         $this->_timeZoneInterface  = $timeZoneInterface;
         $this->_reviewCollection   = $reviewCollection;
         $this->_moduleManager      = $moduleManager;
+        $this->_dataObjectFactory  = $dataObjectFactory;
     }
 
     /**
@@ -373,8 +375,8 @@ class SeoRender
                 );
                 $priceValidUntil = $currentProduct->getSpecialToDate();
                 $modelValue      = $product->getResource()
-                    ->getAttribute($this->helperData->getRichsnippetsConfig('model_value'))
-                    ->getFrontend()->getValue($product);
+                                           ->getAttribute($this->helperData->getRichsnippetsConfig('model_value'))
+                                           ->getFrontend()->getValue($product);
                 $modelName       = $this->helperData->getRichsnippetsConfig('model_name');
 
                 $productStructuredData = [
@@ -432,17 +434,17 @@ class SeoRender
 
                 if (!$this->_moduleManager->isEnabled('Mageplaza_Shopbybrand')) {
                     $brandValue = $product->getResource()
-                        ->getAttribute($this->helperData->getRichsnippetsConfig('brand'))
-                        ->getFrontend()->getValue($product);
+                                          ->getAttribute($this->helperData->getRichsnippetsConfig('brand'))
+                                          ->getFrontend()->getValue($product);
 
                     $productStructuredData['brand']['@type'] = 'Thing';
                     $productStructuredData['brand']['name']  = $brandValue ?: 'Brand';
                 }
 
                 $collection = $this->_reviewCollection->create()
-                    ->addStatusFilter(
-                        Review::STATUS_APPROVED
-                    )->addEntityFilter(
+                                                      ->addStatusFilter(
+                                                          Review::STATUS_APPROVED
+                                                      )->addEntityFilter(
                         'product',
                         $product->getId()
                     )->setDateOrder();
@@ -474,7 +476,7 @@ class SeoRender
                     $productStructuredData['aggregateRating']['reviewCount'] = $this->helperData->getRichsnippetsConfig('review_count');
                 }
 
-                $objectStructuredData = new DataObject(['mpdata' => $productStructuredData]);
+                $objectStructuredData = $this->_dataObjectFactory->create(['mpdata' => $productStructuredData]);
                 $this->_eventManager->dispatch(
                     'mp_seo_product_structured_data',
                     ['structured_data' => $objectStructuredData]
@@ -628,7 +630,7 @@ class SeoRender
         $childProductCollection                   = $typeInstance->getAssociatedProducts($currentProduct);
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
+                        . 'catalog/product' . $child->getImage();
 
             $offerData[]     = [
                 '@type' => 'Offer',
@@ -703,7 +705,7 @@ class SeoRender
         $childProductCollection                       = $typeInstance->getUsedProductCollection($currentProduct)->addAttributeToSelect('*');
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
+                        . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
                 '@type' => 'Offer',
@@ -743,7 +745,7 @@ class SeoRender
         );
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
+                        . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
                 '@type' => 'Offer',

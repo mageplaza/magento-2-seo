@@ -21,6 +21,9 @@
 
 namespace Mageplaza\Seo\Helper;
 
+use Magento\Framework\App\Helper\Context;
+use Magento\Framework\ObjectManagerInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Theme\Block\Html\Header\Logo;
 use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 
@@ -31,6 +34,18 @@ use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 class Data extends CoreHelper
 {
     const CONFIG_MODULE_PATH = 'seo';
+
+    private $_logoBlock;
+
+    public function __construct(
+        Context $context,
+        ObjectManagerInterface $objectManager,
+        StoreManagerInterface $storeManager,
+        Logo $logoBlock
+    ) {
+        $this->_logoBlock = $logoBlock;
+        parent::__construct($context, $objectManager, $storeManager);
+    }
 
     /**
      * @param $code
@@ -123,9 +138,9 @@ class Data extends CoreHelper
     {
         $applicationLdJson = $prefixComment;
         $applicationLdJson .= '<script type="application/ld+json">' . json_encode(
-            $data,
-            JSON_PRETTY_PRINT
-        ) . '</script>';
+                $data,
+                JSON_PRETTY_PRINT
+            ) . '</script>';
         $applicationLdJson .= $subfixComment;
 
         return $applicationLdJson;
@@ -138,8 +153,6 @@ class Data extends CoreHelper
      */
     public function getLogo()
     {
-        $logo = $this->objectManager->get(Logo::class);
-
-        return $logo->getLogoSrc();
+        return $this->_logoBlock->getLogoSrc();
     }
 }
