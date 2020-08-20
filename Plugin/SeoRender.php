@@ -641,7 +641,7 @@ class SeoRender
         }
 
         $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice']  = min($childrenPrice);
+        $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
         unset($productStructuredData['offers']['price']);
 
         if (!empty($offerData)) {
@@ -675,7 +675,7 @@ class SeoRender
             $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
         }
         $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice']  = min($childrenPrice);
+        $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
 
         if (!empty($offerData)) {
             $productStructuredData['offers']['offers'] = $offerData;
@@ -696,8 +696,13 @@ class SeoRender
     public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type']     = 'AggregateOffer';
-        $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaxRegularAmount()->getValue();
-        $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinRegularAmount()->getValue();
+        try {
+            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaxRegularAmount()->getValue();
+            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinRegularAmount()->getValue();
+        } catch (Exception $exception) {
+            $productStructuredData['offers']['highPrice'] = 0;
+            $productStructuredData['offers']['lowPrice']  = 0;
+        }
         $offerData                                    = [];
         $typeInstance                                 = $currentProduct->getTypeInstance();
         $childProductCollection                       = $typeInstance->getUsedProductCollection($currentProduct)->addAttributeToSelect('*');
@@ -732,8 +737,13 @@ class SeoRender
     public function getBundleProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type']     = 'AggregateOffer';
-        $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaximalPrice()->getValue();
-        $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinimalPrice()->getValue();
+        try {
+            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaximalPrice()->getValue();
+            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinimalPrice()->getValue();
+        } catch (Exception $exception) {
+            $productStructuredData['offers']['highPrice'] = 0;
+            $productStructuredData['offers']['lowPrice']  = 0;
+        }
         unset($productStructuredData['offers']['price']);
         $offerData              = [];
         $typeInstance           = $currentProduct->getTypeInstance();
