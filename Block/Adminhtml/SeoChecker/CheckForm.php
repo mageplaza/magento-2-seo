@@ -137,19 +137,19 @@ class CheckForm extends Template
     {
         $id         = $this->_request->getParam('id');
         $storeCode  = $this->_storeManager->getStore()->getCode();
-        $storeId    = $this->_storeManager->getStore()->getId();
+        $storeId    = $this->_request->getParam('store');
         $actionName = $this->_request->getFullActionName();
-        if ($storeId === 0) {
+        if ($storeId === 0 || $storeId === null) {
             $defaultStore = $this->_storeManager->getDefaultStoreView();
             $storeId      = $defaultStore->getId();
             $storeCode    = $defaultStore->getCode();
         }
-
         switch ($actionName) {
             case 'catalog_product_edit':
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
                 $product  = $this->productFactory->create()->load($id)->setStoreId($storeId);
                 $url      = $urlModel->getUrl($product, ['_query' => ['___store' => $storeCode]]);
+
                 break;
             case 'catalog_category_edit':
                 $category = $this->categoryRepository->get($id, $storeId);
@@ -166,7 +166,6 @@ class CheckForm extends Template
             default:
                 $url = '';
         }
-
         return $url;
     }
 
