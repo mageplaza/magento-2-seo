@@ -149,7 +149,6 @@ class CheckForm extends Template
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
                 $product  = $this->productFactory->create()->load($id)->setStoreId($storeId);
                 $url      = $urlModel->getUrl($product, ['_query' => ['___store' => $storeCode]]);
-
                 break;
             case 'catalog_category_edit':
                 $category = $this->categoryRepository->get($id, $storeId);
