@@ -645,6 +645,7 @@ class SeoRender
         unset($productStructuredData['offers']['price']);
 
         if (!empty($offerData)) {
+            $productStructuredData['offers']['offerCount'] = sizeof($offerData);
             $productStructuredData['offers']['offers'] = $offerData;
         }
 
@@ -678,6 +679,7 @@ class SeoRender
         $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
 
         if (!empty($offerData)) {
+            $productStructuredData['offers']['offerCount'] = sizeof($offerData);
             $productStructuredData['offers']['offers'] = $offerData;
         }
 
@@ -719,6 +721,7 @@ class SeoRender
             ];
         }
         if (!empty($offerData)) {
+            $productStructuredData['offers']['offerCount'] = sizeof($offerData);
             $productStructuredData['offers']['offers'] = $offerData;
         }
 
@@ -764,6 +767,7 @@ class SeoRender
             ];
         }
         if (!empty($offerData)) {
+            $productStructuredData['offers']['offerCount'] = sizeof($offerData);
             $productStructuredData['offers']['offers'] = $offerData;
         }
 
