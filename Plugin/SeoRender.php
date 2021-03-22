@@ -39,6 +39,8 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Page\Config as PageConfig;
 use Magento\Framework\View\Page\Config\Renderer;
+use Magento\Review\Model\Rating;
+use Magento\Review\Model\ResourceModel\Review as ReviewResourceModel;
 use Magento\Review\Model\ResourceModel\Review\CollectionFactory as ReviewCollection;
 use Magento\Review\Model\Review;
 use Magento\Review\Model\ReviewFactory;
@@ -46,6 +48,7 @@ use Magento\Search\Helper\Data as SearchHelper;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
 use Mageplaza\Seo\Model\Config\Source\PriceValidUntil;
+use Magento\Review\Model\RatingFactory;
 
 /**
  * Class SeoRender
@@ -149,6 +152,16 @@ class SeoRender
     protected $_moduleManager;
 
     /**
+     * @var Magento\Review\Model\RatingFactory
+     */
+    protected $ratingFactory;
+
+    /**
+     * @var ReviewResourceModel
+     */
+    protected $reviewResourceModel;
+
+    /**
      * SeoRender constructor.
      *
      * @param PageConfig $pageConfig
@@ -169,6 +182,8 @@ class SeoRender
      * @param TimezoneInterface $timeZoneInterface
      * @param ReviewCollection $reviewCollection
      * @param ModuleManager $moduleManager
+     * @param RatingFactory $ratingFactory
+     * @param ReviewResourceModel $reviewResourceModel
      */
     public function __construct(
         PageConfig $pageConfig,
@@ -188,7 +203,9 @@ class SeoRender
         DateTime $dateTime,
         TimezoneInterface $timeZoneInterface,
         ReviewCollection $reviewCollection,
-        ModuleManager $moduleManager
+        ModuleManager $moduleManager,
+        RatingFactory $ratingFactory,
+        ReviewResourceModel $reviewResourceModel
     ) {
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
@@ -208,6 +225,8 @@ class SeoRender
         $this->_timeZoneInterface  = $timeZoneInterface;
         $this->_reviewCollection   = $reviewCollection;
         $this->_moduleManager      = $moduleManager;
+        $this->ratingFactory       = $ratingFactory;
+        $this->reviewResourceModel = $reviewResourceModel;
     }
 
     /**
@@ -325,16 +344,25 @@ class SeoRender
     }
 
     /**
-     * @return mixed
+     * @return int
      * @throws NoSuchEntityException
      */
     public function getReviewCount()
     {
-        if (!$this->getProduct()->getRatingSummary()) {
-            $this->getEntitySummary($this->getProduct());
+        $ratingSummaries = $this->ratingFactory->create()->getEntitySummary($this->getProduct()->getId(), false);
+
+        /** @var Rating $ratingSummary */
+        foreach ($ratingSummaries as $ratingSummary) {
+            if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
+                return (int) $this->reviewResourceModel->getTotalReviews(
+                    $this->getProduct()->getId(),
+                    true,
+                    $ratingSummary->getStoreId()
+                );
+            }
         }
 
-        return $this->getProduct()->getRatingSummary()->getReviewsCount();
+        return 0;
     }
 
     /**
@@ -343,11 +371,22 @@ class SeoRender
      */
     public function getRatingSummary()
     {
-        if (!$this->getProduct()->getRatingSummary()) {
-            $this->getEntitySummary($this->getProduct());
+        $ratingSummaries = $this->ratingFactory->create()->getEntitySummary($this->getProduct()->getId(), false);
+
+        /** @var Rating $ratingSummary */
+        foreach ($ratingSummaries as $ratingSummary) {
+            if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
+                if ($ratingSummary->getCount()) {
+                    $ratingSummary = round($ratingSummary->getSum() / $ratingSummary->getCount());
+                } else {
+                    $ratingSummary = $ratingSummary->getSum();
+                }
+
+                return $ratingSummary;
+            }
         }
 
-        return $this->getProduct()->getRatingSummary()->getRatingSummary();
+        return 0;
     }
 
     /**
