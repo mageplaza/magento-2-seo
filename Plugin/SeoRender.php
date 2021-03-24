@@ -500,11 +500,6 @@ class SeoRender
                             'author' => $review['nickname']
                         ];
                     }
-                } elseif ($this->helperData->getRichsnippetsConfig('aggregate_rating') === '1') {
-                    $productStructuredData['review'][] = [
-                        '@type'  => 'Review',
-                        'author' => $this->helperData->getRichsnippetsConfig('review_author')
-                    ];
                 }
 
                 if ($this->getReviewCount()) {
@@ -513,16 +508,6 @@ class SeoRender
                     $productStructuredData['aggregateRating']['worstRating'] = 0;
                     $productStructuredData['aggregateRating']['ratingValue'] = $this->getRatingSummary();
                     $productStructuredData['aggregateRating']['reviewCount'] = $this->getReviewCount();
-                } elseif ($this->helperData->getRichsnippetsConfig('aggregate_rating')) {
-                    $productStructuredData['aggregateRating']['@type']       = 'AggregateRating';
-                    $productStructuredData['aggregateRating']['bestRating']  = 100;
-                    $productStructuredData['aggregateRating']['worstRating'] = 0;
-                    $productStructuredData['aggregateRating']['ratingValue'] = $this->helperData->getRichsnippetsConfig(
-                        'rating_value'
-                    );
-                    $productStructuredData['aggregateRating']['reviewCount'] = $this->helperData->getRichsnippetsConfig(
-                        'review_count'
-                    );
                 }
 
                 $objectStructuredData = new DataObject(['mpdata' => $productStructuredData]);
