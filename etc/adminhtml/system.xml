@@ -74,38 +74,6 @@
                     </depends>
                     <validate>required-entry</validate>
                 </field>
-                <field id="aggregate_rating" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Default Aggregate Rating Value</label>
-                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
-                    <depends>
-                        <field id="enable_product">1</field>
-                    </depends>
-                    <comment>To avoid warning message, you can set default value in case of no Aggregate Rating/Review.</comment>
-                </field>
-                <field id="rating_value" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Default Rating Value</label>
-                    <depends>
-                        <field id="enable_product">1</field>
-                        <field id="aggregate_rating">1</field>
-                    </depends>
-                    <validate>required-entry validate-digits validate-not-negative-number validate-digits-range digits-range-1-100</validate>
-                </field>
-                <field id="review_count" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Default Review Count</label>
-                    <depends>
-                        <field id="enable_product">1</field>
-                        <field id="aggregate_rating">1</field>
-                    </depends>
-                    <validate>required-entry validate-digits validate-not-negative-number</validate>
-                </field>
-                <field id="review_author" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Default Review Author</label>
-                    <depends>
-                        <field id="enable_product">1</field>
-                        <field id="aggregate_rating">1</field>
-                    </depends>
-                    <validate>required-entry</validate>
-                </field>
                 <field id="price_valid_until" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Default Price Valid Until</label>
                     <depends>
