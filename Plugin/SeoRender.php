@@ -39,6 +39,8 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Page\Config as PageConfig;
 use Magento\Framework\View\Page\Config\Renderer;
+use Magento\Review\Model\Rating;
+use Magento\Review\Model\ResourceModel\Review as ReviewResourceModel;
 use Magento\Review\Model\ResourceModel\Review\CollectionFactory as ReviewCollection;
 use Magento\Review\Model\Review;
 use Magento\Review\Model\ReviewFactory;
@@ -46,6 +48,7 @@ use Magento\Search\Helper\Data as SearchHelper;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
 use Mageplaza\Seo\Model\Config\Source\PriceValidUntil;
+use Magento\Review\Model\RatingFactory;
 
 /**
  * Class SeoRender
@@ -149,6 +152,16 @@ class SeoRender
     protected $_moduleManager;
 
     /**
+     * @var RatingFactory
+     */
+    protected $ratingFactory;
+
+    /**
+     * @var ReviewResourceModel
+     */
+    protected $reviewResourceModel;
+
+    /**
      * SeoRender constructor.
      *
      * @param PageConfig $pageConfig
@@ -169,8 +182,10 @@ class SeoRender
      * @param TimezoneInterface $timeZoneInterface
      * @param ReviewCollection $reviewCollection
      * @param ModuleManager $moduleManager
+     * @param RatingFactory $ratingFactory
+     * @param ReviewResourceModel $reviewResourceModel
      */
-    function __construct(
+    public function __construct(
         PageConfig $pageConfig,
         Http $request,
         HelperData $helpData,
@@ -188,7 +203,9 @@ class SeoRender
         DateTime $dateTime,
         TimezoneInterface $timeZoneInterface,
         ReviewCollection $reviewCollection,
-        ModuleManager $moduleManager
+        ModuleManager $moduleManager,
+        RatingFactory $ratingFactory,
+        ReviewResourceModel $reviewResourceModel
     ) {
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
@@ -208,6 +225,8 @@ class SeoRender
         $this->_timeZoneInterface  = $timeZoneInterface;
         $this->_reviewCollection   = $reviewCollection;
         $this->_moduleManager      = $moduleManager;
+        $this->ratingFactory       = $ratingFactory;
+        $this->reviewResourceModel = $reviewResourceModel;
     }
 
     /**
@@ -238,8 +257,7 @@ class SeoRender
     public function afterRenderHeadContent(Renderer $subject, $result)
     {
         if ($this->helperData->isEnabled()) {
-            $fullActionname = $this->getFullActionName();
-            switch ($fullActionname) {
+            switch ($this->getFullActionName()) {
                 case 'catalog_product_view':
                     if ($this->helperData->getRichsnippetsConfig('enable_product')) {
                         $productStructuredData = $this->showProductStructuredData();
@@ -269,9 +287,18 @@ class SeoRender
             self::GOOLE_SITE_VERIFICATION,
             $this->helperData->getVerficationConfig('google')
         );
-        $this->pageConfig->setMetadata(self::MSVALIDATE_01, $this->helperData->getVerficationConfig('bing'));
-        $this->pageConfig->setMetadata(self::P_DOMAIN_VERIFY, $this->helperData->getVerficationConfig('pinterest'));
-        $this->pageConfig->setMetadata(self::YANDEX_VERIFICATION, $this->helperData->getVerficationConfig('yandex'));
+        $this->pageConfig->setMetadata(
+            self::MSVALIDATE_01,
+            $this->helperData->getVerficationConfig('bing')
+        );
+        $this->pageConfig->setMetadata(
+            self::P_DOMAIN_VERIFY,
+            $this->helperData->getVerficationConfig('pinterest')
+        );
+        $this->pageConfig->setMetadata(
+            self::YANDEX_VERIFICATION,
+            $this->helperData->getVerficationConfig('yandex')
+        );
     }
 
     /**
@@ -317,16 +344,25 @@ class SeoRender
     }
 
     /**
-     * @return mixed
+     * @return int
      * @throws NoSuchEntityException
      */
     public function getReviewCount()
     {
-        if (!$this->getProduct()->getRatingSummary()) {
-            $this->getEntitySummary($this->getProduct());
+        $ratingSummaries = $this->ratingFactory->create()->getEntitySummary($this->getProduct()->getId(), false);
+
+        /** @var Rating $ratingSummary */
+        foreach ($ratingSummaries as $ratingSummary) {
+            if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
+                return (int) $this->reviewResourceModel->getTotalReviews(
+                    $this->getProduct()->getId(),
+                    true,
+                    $ratingSummary->getStoreId()
+                );
+            }
         }
 
-        return $this->getProduct()->getRatingSummary()->getReviewsCount();
+        return 0;
     }
 
     /**
@@ -335,11 +371,22 @@ class SeoRender
      */
     public function getRatingSummary()
     {
-        if (!$this->getProduct()->getRatingSummary()) {
-            $this->getEntitySummary($this->getProduct());
+        $ratingSummaries = $this->ratingFactory->create()->getEntitySummary($this->getProduct()->getId(), false);
+
+        /** @var Rating $ratingSummary */
+        foreach ($ratingSummaries as $ratingSummary) {
+            if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
+                if ($ratingSummary->getCount()) {
+                    $ratingSummary = round($ratingSummary->getSum() / $ratingSummary->getCount());
+                } else {
+                    $ratingSummary = $ratingSummary->getSum();
+                }
+
+                return $ratingSummary;
+            }
         }
 
-        return $this->getProduct()->getRatingSummary()->getRatingSummary();
+        return 0;
     }
 
     /**
@@ -453,11 +500,6 @@ class SeoRender
                             'author' => $review['nickname']
                         ];
                     }
-                } elseif ($this->helperData->getRichsnippetsConfig('aggregate_rating') === '1') {
-                    $productStructuredData['review'][] = [
-                        '@type'  => 'Review',
-                        'author' => $this->helperData->getRichsnippetsConfig('review_author')
-                    ];
                 }
 
                 if ($this->getReviewCount()) {
@@ -466,12 +508,6 @@ class SeoRender
                     $productStructuredData['aggregateRating']['worstRating'] = 0;
                     $productStructuredData['aggregateRating']['ratingValue'] = $this->getRatingSummary();
                     $productStructuredData['aggregateRating']['reviewCount'] = $this->getReviewCount();
-                } elseif ($this->helperData->getRichsnippetsConfig('aggregate_rating')) {
-                    $productStructuredData['aggregateRating']['@type']       = 'AggregateRating';
-                    $productStructuredData['aggregateRating']['bestRating']  = 100;
-                    $productStructuredData['aggregateRating']['worstRating'] = 0;
-                    $productStructuredData['aggregateRating']['ratingValue'] = $this->helperData->getRichsnippetsConfig('rating_value');
-                    $productStructuredData['aggregateRating']['reviewCount'] = $this->helperData->getRichsnippetsConfig('review_count');
                 }
 
                 $objectStructuredData = new DataObject(['mpdata' => $productStructuredData]);
@@ -645,7 +681,8 @@ class SeoRender
         unset($productStructuredData['offers']['price']);
 
         if (!empty($offerData)) {
-            $productStructuredData['offers']['offers'] = $offerData;
+            $productStructuredData['offers']['offerCount'] = count($offerData);
+            $productStructuredData['offers']['offers']     = $offerData;
         }
 
         return $productStructuredData;
@@ -678,7 +715,8 @@ class SeoRender
         $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
 
         if (!empty($offerData)) {
-            $productStructuredData['offers']['offers'] = $offerData;
+            $productStructuredData['offers']['offerCount'] = count($offerData);
+            $productStructuredData['offers']['offers']     = $offerData;
         }
 
         return $productStructuredData;
@@ -697,15 +735,18 @@ class SeoRender
     {
         $productStructuredData['offers']['@type']     = 'AggregateOffer';
         try {
-            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaxRegularAmount()->getValue();
-            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinRegularAmount()->getValue();
+            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
+                ->getMaxRegularAmount()->getValue();
+            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
+                ->getMinRegularAmount()->getValue();
         } catch (Exception $exception) {
             $productStructuredData['offers']['highPrice'] = 0;
             $productStructuredData['offers']['lowPrice']  = 0;
         }
         $offerData                                    = [];
         $typeInstance                                 = $currentProduct->getTypeInstance();
-        $childProductCollection                       = $typeInstance->getUsedProductCollection($currentProduct)->addAttributeToSelect('*');
+        $childProductCollection                       = $typeInstance->getUsedProductCollection($currentProduct)
+            ->addAttributeToSelect('*');
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
@@ -719,7 +760,8 @@ class SeoRender
             ];
         }
         if (!empty($offerData)) {
-            $productStructuredData['offers']['offers'] = $offerData;
+            $productStructuredData['offers']['offerCount'] = count($offerData);
+            $productStructuredData['offers']['offers']     = $offerData;
         }
 
         return $productStructuredData;
@@ -738,8 +780,10 @@ class SeoRender
     {
         $productStructuredData['offers']['@type']     = 'AggregateOffer';
         try {
-            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMaximalPrice()->getValue();
-            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')->getMinimalPrice()->getValue();
+            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
+                ->getMaximalPrice()->getValue();
+            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
+                ->getMinimalPrice()->getValue();
         } catch (Exception $exception) {
             $productStructuredData['offers']['highPrice'] = 0;
             $productStructuredData['offers']['lowPrice']  = 0;
@@ -752,7 +796,7 @@ class SeoRender
             $currentProduct
         );
         foreach ($childProductCollection as $child) {
-            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+            $imageUrl    = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
@@ -764,7 +808,8 @@ class SeoRender
             ];
         }
         if (!empty($offerData)) {
-            $productStructuredData['offers']['offers'] = $offerData;
+            $productStructuredData['offers']['offerCount'] = count($offerData);
+            $productStructuredData['offers']['offers']     = $offerData;
         }
 
         return $productStructuredData;
