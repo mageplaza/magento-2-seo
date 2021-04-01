@@ -152,7 +152,7 @@ class SeoRender
     protected $_moduleManager;
 
     /**
-     * @var Magento\Review\Model\RatingFactory
+     * @var RatingFactory
      */
     protected $ratingFactory;
 

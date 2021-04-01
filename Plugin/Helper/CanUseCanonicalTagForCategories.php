@@ -40,7 +40,7 @@ class CanUseCanonicalTagForCategories
      *
      * @param HelperData $helper
      */
-    function __construct(HelperData $helper)
+    public function __construct(HelperData $helper)
     {
         $this->_helper = $helper;
     }

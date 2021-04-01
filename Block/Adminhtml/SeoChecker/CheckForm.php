@@ -28,7 +28,6 @@ use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
 use Magento\Cms\Model\PageFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Json\Helper\Data as JsonData;
-use Magento\Framework\Url;
 use Magento\Framework\View\Element\Template;
 use Magento\Sitemap\Model\ResourceModel\Sitemap\Collection;
 use Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory;
@@ -91,7 +90,6 @@ class CheckForm extends Template
      * CheckForm constructor.
      *
      * @param Template\Context $context
-     * @param Url $url
      * @param UrlBuilder $cmsUrl
      * @param PageFactory $cmsPageFactory
      * @param CollectionFactory $sitemapCollection
@@ -104,7 +102,6 @@ class CheckForm extends Template
      */
     public function __construct(
         Template\Context $context,
-        Url $url,
         UrlBuilder $cmsUrl,
         PageFactory $cmsPageFactory,
         CollectionFactory $sitemapCollection,
