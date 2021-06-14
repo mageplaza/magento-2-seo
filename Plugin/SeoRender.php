@@ -22,6 +22,7 @@
 namespace Mageplaza\Seo\Plugin;
 
 use Exception;
+use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
@@ -152,7 +153,7 @@ class SeoRender
     protected $_moduleManager;
 
     /**
-     * @var Magento\Review\Model\RatingFactory
+     * @var RatingFactory
      */
     protected $ratingFactory;
 
@@ -234,7 +235,7 @@ class SeoRender
      */
     public function beforeRenderMetadata(Renderer $subject)
     {
-        if ($this->helperData->isEnabled()) {
+        if ($this->helperData->isEnabled($this->helperData->getStoreId())) {
             $this->showVerifications();
 
             $pages = [
@@ -250,13 +251,13 @@ class SeoRender
 
     /**
      * @param Renderer $subject
-     * @param $result
+     * @param string $result
      *
      * @return string
      */
     public function afterRenderHeadContent(Renderer $subject, $result)
     {
-        if ($this->helperData->isEnabled()) {
+        if ($this->helperData->isEnabled($this->helperData->getStoreId())) {
             switch ($this->getFullActionName()) {
                 case 'catalog_product_view':
                     if ($this->helperData->getRichsnippetsConfig('enable_product')) {
@@ -303,6 +304,7 @@ class SeoRender
 
     /**
      * Get full action name
+     *
      * @return string
      */
     public function getFullActionName()
@@ -312,6 +314,7 @@ class SeoRender
 
     /**
      * Get current product
+     *
      * @return mixed
      */
     public function getProduct()
@@ -333,7 +336,7 @@ class SeoRender
     }
 
     /**
-     * @param $productId
+     * @param int $productId
      *
      * @return StockItemInterface
      * @throws NoSuchEntityException
@@ -366,7 +369,7 @@ class SeoRender
     }
 
     /**
-     * @return mixed
+     * @return false|float|int|Rating|mixed
      * @throws NoSuchEntityException
      */
     public function getRatingSummary()
@@ -390,9 +393,8 @@ class SeoRender
     }
 
     /**
-     * @param $product
+     * @param Product $product
      *
-     * @return mixed
      * @throws NoSuchEntityException
      */
     public function getEntitySummary($product)
@@ -649,8 +651,8 @@ class SeoRender
     /**
      * add Grouped Product Structured Data
      *
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      * @throws NoSuchEntityException
@@ -691,8 +693,8 @@ class SeoRender
     /**
      * add Downloadable Product Structured Data
      *
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      */
@@ -725,8 +727,8 @@ class SeoRender
     /**
      * add Configurable Product Structured Data
      *
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      * @throws NoSuchEntityException
@@ -770,8 +772,8 @@ class SeoRender
     /**
      * add Bundle Product Structured Data
      *
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      * @throws NoSuchEntityException
@@ -816,9 +818,9 @@ class SeoRender
     }
 
     /**
-     * @param $productType
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param string $productType
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      * @throws NoSuchEntityException

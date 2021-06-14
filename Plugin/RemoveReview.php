@@ -50,7 +50,7 @@ class RemoveReview
      */
     public function afterGetReviewsSummaryHtml(ReviewRenderer $subject, $result)
     {
-        if (!$this->_helperData->isEnabled()) {
+        if (!$this->_helperData->isEnabled($this->_helperData->getStoreId())) {
             return $result;
         }
 

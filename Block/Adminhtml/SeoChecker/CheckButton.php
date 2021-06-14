@@ -50,7 +50,7 @@ class CheckButton implements ButtonProviderInterface
      */
     public function getButtonData()
     {
-        if (!$this->helper->isEnabled()) {
+        if (!$this->helper->isEnabled($this->helper->getStoreId())) {
             return [];
         }
 
