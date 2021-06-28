@@ -66,7 +66,7 @@ Feel free to **Fork** and contrinute to this module and create a pull request so
 
 ## 5. Magento 2 SEO extension Introduction
 
-Improve your SEO for Magento 2 site. Use **Mageplaza SEO All in One** to automatically optimize your site for Search Engines.
+Improve your SEO for Magento 2 site. Use **[Magento 2 SEO All in One](https://marketplace.magento.com/mageplaza-magento-2-seo-extension.html)** to automatically optimize your site for Search Engines.
 **Mageplaza SEO extension** will automatically optimize and greatly improve the performance of your Magento-based store in Search Engines. Magento 2 is great SEO-ready out-of-the-box that is really good for SEO. However it still needs some craftiness to be improved in a few areas.
 
 Mageplaza SEO module will support a list of new useful tools and settings that help you have own all the technical optimization with automatically optimizing and inserting the meta tags and link elements that Google or other Search Engines like so much:
