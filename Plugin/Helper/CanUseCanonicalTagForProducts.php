@@ -40,21 +40,21 @@ class CanUseCanonicalTagForProducts
      *
      * @param HelperData $helper
      */
-    function __construct(HelperData $helper)
+    public function __construct(HelperData $helper)
     {
         $this->_helper = $helper;
     }
 
     /**
      * @param Product $product
-     * @param $result
+     * @param string $result
      *
      * @return mixed
      */
     public function afterCanUseCanonicalTag(Product $product, $result)
     {
-        if ($this->_helper->isEnabled()) {
-            return $this->_helper->getDuplicateConfig('product_canonical_tag');
+        if ($this->_helper->isEnabled($this->_helper->getStoreId())) {
+            return $this->_helper->getDuplicateConfig('product_canonical_tag', $this->_helper->getStoreId());
         }
 
         return $result;

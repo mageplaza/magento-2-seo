@@ -28,8 +28,8 @@ use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
 use Magento\Cms\Model\PageFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Json\Helper\Data as JsonData;
-use Magento\Framework\Url;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
 use Magento\Sitemap\Model\ResourceModel\Sitemap\Collection;
 use Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory;
 use Mageplaza\Seo\Helper\Data as SeoHelperData;
@@ -90,8 +90,7 @@ class CheckForm extends Template
     /**
      * CheckForm constructor.
      *
-     * @param Template\Context $context
-     * @param Url $url
+     * @param Context $context
      * @param UrlBuilder $cmsUrl
      * @param PageFactory $cmsPageFactory
      * @param CollectionFactory $sitemapCollection
@@ -103,8 +102,7 @@ class CheckForm extends Template
      * @param array $data
      */
     public function __construct(
-        Template\Context $context,
-        Url $url,
+        Context $context,
         UrlBuilder $cmsUrl,
         PageFactory $cmsPageFactory,
         CollectionFactory $sitemapCollection,
@@ -137,14 +135,13 @@ class CheckForm extends Template
     {
         $id         = $this->_request->getParam('id');
         $storeCode  = $this->_storeManager->getStore()->getCode();
-        $storeId    = $this->_storeManager->getStore()->getId();
+        $storeId    = $this->_request->getParam('store');
         $actionName = $this->_request->getFullActionName();
-        if ($storeId === 0) {
+        if ($storeId === 0 || $storeId === null) {
             $defaultStore = $this->_storeManager->getDefaultStoreView();
             $storeId      = $defaultStore->getId();
             $storeCode    = $defaultStore->getCode();
         }
-
         switch ($actionName) {
             case 'catalog_product_edit':
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
@@ -166,7 +163,6 @@ class CheckForm extends Template
             default:
                 $url = '';
         }
-
         return $url;
     }
 

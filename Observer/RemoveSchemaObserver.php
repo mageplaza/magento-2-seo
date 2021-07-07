@@ -55,7 +55,7 @@ class RemoveSchemaObserver implements ObserverInterface
     {
         $layout = $observer->getData('layout');
 
-        if (!$this->_helperData->isEnabled()) {
+        if (!$this->_helperData->isEnabled($this->_helperData->getStoreId())) {
             return $this;
         }
 
