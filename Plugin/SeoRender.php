@@ -519,6 +519,16 @@ class SeoRender
                 );
                 $productStructuredData = $objectStructuredData->getMpdata();
 
+                // Compatible with Mageplaza Shop By Brand
+                if (!isset($productStructuredData['brand'])) {
+                    $brandValue = $product->getResource()
+                        ->getAttribute($this->helperData->getRichsnippetsConfig('brand'))
+                        ->getFrontend()->getValue($product);
+
+                    $productStructuredData['brand']['@type'] = 'Thing';
+                    $productStructuredData['brand']['name']  = $brandValue ?: 'Brand';
+                }
+
                 return $this->helperData->createStructuredData(
                     $productStructuredData,
                     '<!-- Product Structured Data by Mageplaza SEO-->'
