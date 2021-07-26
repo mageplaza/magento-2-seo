@@ -21,6 +21,7 @@
 
 namespace Mageplaza\Seo\Helper;
 
+use Exception;
 use Magento\Theme\Block\Html\Header\Logo;
 use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 
@@ -33,7 +34,7 @@ class Data extends CoreHelper
     const CONFIG_MODULE_PATH = 'seo';
 
     /**
-     * @param $code
+     * @param string $code
      * @param null $storeId
      *
      * @return mixed
@@ -46,7 +47,7 @@ class Data extends CoreHelper
     }
 
     /**
-     * @param $code
+     * @param string $code
      * @param null $storeId
      *
      * @return mixed
@@ -59,7 +60,7 @@ class Data extends CoreHelper
     }
 
     /**
-     * @param $code
+     * @param string $code
      * @param null $storeId
      *
      * @return mixed
@@ -113,7 +114,7 @@ class Data extends CoreHelper
     /**
      * Create structure data script
      *
-     * @param $data
+     * @param array $data
      * @param string $prefixComment
      * @param string $subfixComment
      *
@@ -141,5 +142,21 @@ class Data extends CoreHelper
         $logo = $this->objectManager->get(Logo::class);
 
         return $logo->getLogoSrc();
+    }
+
+    /**
+     * Get Store Id
+     *
+     * @return int|null
+     */
+    public function getStoreId()
+    {
+        try {
+            $storeId = $this->storeManager->getStore()->getId();
+        } catch (Exception $e) {
+            $storeId = null;
+        }
+
+        return $storeId;
     }
 }

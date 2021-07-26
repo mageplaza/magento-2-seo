@@ -22,6 +22,7 @@
 namespace Mageplaza\Seo\Plugin;
 
 use Exception;
+use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
@@ -234,7 +235,7 @@ class SeoRender
      */
     public function beforeRenderMetadata(Renderer $subject)
     {
-        if ($this->helperData->isEnabled()) {
+        if ($this->helperData->isEnabled($this->helperData->getStoreId())) {
             $this->showVerifications();
 
             $pages = [
@@ -250,13 +251,13 @@ class SeoRender
 
     /**
      * @param Renderer $subject
-     * @param $result
+     * @param string $result
      *
      * @return string
      */
     public function afterRenderHeadContent(Renderer $subject, $result)
     {
-        if ($this->helperData->isEnabled()) {
+        if ($this->helperData->isEnabled($this->helperData->getStoreId())) {
             switch ($this->getFullActionName()) {
                 case 'catalog_product_view':
                     if ($this->helperData->getRichsnippetsConfig('enable_product')) {
@@ -303,6 +304,7 @@ class SeoRender
 
     /**
      * Get full action name
+     *
      * @return string
      */
     public function getFullActionName()
@@ -312,6 +314,7 @@ class SeoRender
 
     /**
      * Get current product
+     *
      * @return mixed
      */
     public function getProduct()
@@ -333,7 +336,7 @@ class SeoRender
     }
 
     /**
-     * @param $productId
+     * @param int $productId
      *
      * @return StockItemInterface
      * @throws NoSuchEntityException
@@ -366,7 +369,7 @@ class SeoRender
     }
 
     /**
-     * @return mixed
+     * @return false|float|int|Rating|mixed
      * @throws NoSuchEntityException
      */
     public function getRatingSummary()
@@ -390,9 +393,8 @@ class SeoRender
     }
 
     /**
-     * @param $product
+     * @param Product $product
      *
-     * @return mixed
      * @throws NoSuchEntityException
      */
     public function getEntitySummary($product)
@@ -516,6 +518,16 @@ class SeoRender
                     ['structured_data' => $objectStructuredData]
                 );
                 $productStructuredData = $objectStructuredData->getMpdata();
+
+                // Compatible with Mageplaza Shop By Brand
+                if (!isset($productStructuredData['brand'])) {
+                    $brandValue = $product->getResource()
+                        ->getAttribute($this->helperData->getRichsnippetsConfig('brand'))
+                        ->getFrontend()->getValue($product);
+
+                    $productStructuredData['brand']['@type'] = 'Thing';
+                    $productStructuredData['brand']['name']  = $brandValue ?: 'Brand';
+                }
 
                 return $this->helperData->createStructuredData(
                     $productStructuredData,
@@ -649,8 +661,8 @@ class SeoRender
     /**
      * add Grouped Product Structured Data
      *
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      * @throws NoSuchEntityException
@@ -691,8 +703,8 @@ class SeoRender
     /**
      * add Downloadable Product Structured Data
      *
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      */
@@ -725,8 +737,8 @@ class SeoRender
     /**
      * add Configurable Product Structured Data
      *
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      * @throws NoSuchEntityException
@@ -736,9 +748,9 @@ class SeoRender
         $productStructuredData['offers']['@type']     = 'AggregateOffer';
         try {
             $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                ->getMaxRegularAmount()->getValue();
+                                                                ->getMaxRegularAmount()->getValue();
             $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                ->getMinRegularAmount()->getValue();
+                                                                ->getMinRegularAmount()->getValue();
         } catch (Exception $exception) {
             $productStructuredData['offers']['highPrice'] = 0;
             $productStructuredData['offers']['lowPrice']  = 0;
@@ -746,7 +758,7 @@ class SeoRender
         $offerData                                    = [];
         $typeInstance                                 = $currentProduct->getTypeInstance();
         $childProductCollection                       = $typeInstance->getUsedProductCollection($currentProduct)
-            ->addAttributeToSelect('*');
+                                                            ->addAttributeToSelect('*');
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
@@ -770,8 +782,8 @@ class SeoRender
     /**
      * add Bundle Product Structured Data
      *
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      * @throws NoSuchEntityException
@@ -781,9 +793,9 @@ class SeoRender
         $productStructuredData['offers']['@type']     = 'AggregateOffer';
         try {
             $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                ->getMaximalPrice()->getValue();
+                                                                ->getMaximalPrice()->getValue();
             $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                ->getMinimalPrice()->getValue();
+                                                                ->getMinimalPrice()->getValue();
         } catch (Exception $exception) {
             $productStructuredData['offers']['highPrice'] = 0;
             $productStructuredData['offers']['lowPrice']  = 0;
@@ -816,9 +828,9 @@ class SeoRender
     }
 
     /**
-     * @param $productType
-     * @param $currentProduct
-     * @param $productStructuredData
+     * @param string $productType
+     * @param Product $currentProduct
+     * @param array $productStructuredData
      *
      * @return mixed
      * @throws NoSuchEntityException
