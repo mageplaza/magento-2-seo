@@ -33,13 +33,13 @@
 
 Run the following command in Magento 2 root folder:
 
-With Social Proof (Recommend):
+With Marketing Automation (recommend):
 ```
-composer require mageplaza/magento-2-seo-extension mageplaza/module-sitemap avada/module-proofo
+composer require mageplaza/magento-2-seo-extension mageplaza/module-sitemap mageplaza/module-smtp
 php bin/magento setup:upgrade
 ```
 
-Without Social Proof:
+Without Marketing Automation:
 ```
 composer require mageplaza/magento-2-seo-extension mageplaza/module-sitemap
 php bin/magento setup:upgrade
