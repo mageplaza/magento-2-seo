@@ -5,6 +5,8 @@
 [![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-seo-extension/v/stable)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 [![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-seo-extension/downloads)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 
+**IMPORTANT NOTE: This version of [Magento 2 SEO extension](https://www.mageplaza.com/magento-2-seo-extension/) on Github is free as a contribution to the Magento community from Mageplaza. This package does not include the technical support. Should you need technical support for this version of the extension, you will have to buy a license from Mageplaza. [Click here to buy](https://www.mageplaza.com/magento-2-seo-extension/).**
+
 ## Highlight Features for Magento 2 SEO Standard Edition
 - Prevent Duplicate Content issue
 - XML, HTML Sitemap
