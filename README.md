@@ -5,7 +5,7 @@
 [![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-seo-extension/v/stable)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 [![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-seo-extension/downloads)](https://packagist.org/packages/mageplaza/magento-2-seo-extension)
 
-## Highlight Features for SEO Standard Edition
+## Highlight Features for Magento 2 SEO Standard Edition
 - Prevent Duplicate Content issue
 - XML, HTML Sitemap
 - Structured Data (Rich Snipet: Adding Rating, Reviews, Price, Stock status ...)
@@ -14,7 +14,7 @@
 
 
 
-## 1. SEO Documentation
+## 1. Mageplaza SEO extension Documentation
 
 - [Installation guide](https://www.mageplaza.com/install-magento-2-extension/)
 - [User Guide](https://docs.mageplaza.com/seo-m2/index.html)
@@ -33,13 +33,13 @@
 
 Run the following command in Magento 2 root folder:
 
-With Social Proof (Recommend):
+With Marketing Automation (recommend):
 ```
-composer require mageplaza/magento-2-seo-extension mageplaza/module-sitemap avada/module-proofo
+composer require mageplaza/magento-2-seo-extension mageplaza/module-sitemap mageplaza/module-smtp
 php bin/magento setup:upgrade
 ```
 
-Without Social Proof:
+Without Marketing Automation:
 ```
 composer require mageplaza/magento-2-seo-extension mageplaza/module-sitemap
 php bin/magento setup:upgrade
@@ -64,9 +64,9 @@ A: Please follow this guide: https://www.mageplaza.com/blog/magento-site-down.ht
 Feel free to **Fork** and contrinute to this module and create a pull request so we will merge your changes to `master` branch.
 
 
-## 5. Magento 2 SEO Introduction
+## 5. Magento 2 SEO extension Introduction
 
-Improve your SEO for Magento 2 site. Use **Mageplaza SEO All in One** to automatically optimize your site for Search Engines.
+Improve your SEO for Magento 2 site. Use **[Magento 2 SEO All in One](https://marketplace.magento.com/mageplaza-magento-2-seo-extension.html)** to automatically optimize your site for Search Engines.
 **Mageplaza SEO extension** will automatically optimize and greatly improve the performance of your Magento-based store in Search Engines. Magento 2 is great SEO-ready out-of-the-box that is really good for SEO. However it still needs some craftiness to be improved in a few areas.
 
 Mageplaza SEO module will support a list of new useful tools and settings that help you have own all the technical optimization with automatically optimizing and inserting the meta tags and link elements that Google or other Search Engines like so much:
@@ -119,7 +119,7 @@ Make your site content to be easier readable by the search engines by adding opt
 
 ### LAYERED NAVIGATION SUPPORTED
 
-A huge advantage when you have Megaplaza SEO extension is that it’s fully supported by [Layered Navigation](https://www.mageplaza.com/magento-2-layered-navigation-extension/) to make the SEO performance even better.
+A huge advantage when you have Megaplaza SEO extension is that it’s fully supported by [Layered Navigation Ultimate](https://www.mageplaza.com/magento-2-layered-navigation-extension/) to make the SEO performance even better.
 
 
 ## Full Magento 2 SEO Features
@@ -155,11 +155,9 @@ A huge advantage when you have Megaplaza SEO extension is that it’s fully supp
 - Supports multiple languages			
 
 
-### SEO Pricing
+### Pricing
 
 ![Magento 2 seo pricing](https://i.imgur.com/m5ngLpE.png)
-
-
 
 ## 6. USER GUIDE
 
@@ -266,7 +264,7 @@ Yandex Webmaster Tools.
 
 
 
-**Mageplaza extensions on Magento Marketplace, Github**
+**Mageplaza extensions on Magento Marketplace**
 
 
 ☞ [Magento 2 One Step Checkout extension](https://marketplace.magento.com/mageplaza-magento-2-one-step-checkout-extension.html)
@@ -277,17 +275,19 @@ Yandex Webmaster Tools.
 
 ☞ [Magento 2 Layered Navigation extension](https://marketplace.magento.com/mageplaza-layered-navigation-m2.html)
 
-☞ [Magento One Step Checkout](https://github.com/magento-2/one-step-checkout)
+☞ [Magento 2 Reward Points extension](https://marketplace.magento.com/mageplaza-module-reward-points.html)
 
-☞ [Magento 2 Blog on Github](https://github.com/mageplaza/magento-2-blog)
+☞ [Magento 2 Product Feed](https://marketplace.magento.com/mageplaza-module-product-feed.html)
 
-☞ [Magento 2 Social Login on Github](https://github.com/mageplaza/magento-2-social-login)
+☞ [Magento 2 Custom Order Number](https://marketplace.magento.com/mageplaza-module-custom-order-number.html)
 
-☞ [Magento 2 SEO on Github](https://github.com/mageplaza/magento-2-seo)
+☞ [Magento 2 Stripe Payment](https://marketplace.magento.com/mageplaza-module-stripe.html)
 
-☞ [Magento 2 SMTP on Github](https://github.com/mageplaza/magento-2-smtp)
+☞ [Magento 2 Size Chart](https://marketplace.magento.com/mageplaza-module-size-chart.html)
 
-☞ [Magento 2 Product Slider on Github](https://github.com/mageplaza/magento-2-product-slider)
+☞ [Magento 2 Ajax Search extension](https://marketplace.magento.com/mageplaza-module-search.html)
+
+☞ [Magento 2 Image Optimizer](https://marketplace.magento.com/mageplaza-module-image-optimizer.html)
 
 
 
@@ -562,13 +562,13 @@ Release notes:
 - [Magento 2 security extension](https://github.com/mageplaza/magento-2-security)
 
 **Table of contents**
-- [SEO Documentation](#1-seo-documentation)
+- [Mageplaza SEO extension Documentation](#1-mageplaza-seo-extension-documentation)
 - [How to install Magento 2 SEO extension](#2-how-to-install-magento-2-seo-extension)
   - [Install module via composer (recommend)](#install-module-via-composer-recommend)
   - [Install Package from copy-paste package](#install-package-from-copy-paste-package)
 - [SEO FAQs](#3-seo-faqs)
 - [Contribute to this SEO module](#4-contribute-to-this-seo-module)
-- [Magento 2 SEO Introduction](#5-magento-2-seo-introduction)
+- [Magento 2 SEO extension Introduction](#5-magento-2-seo-extension-introduction)
   - [Stop Duplicating Content SEO](#stop-duplicating-content-seo)
   - [Magento 2 Structured Data](#magento-2-structured-data)
   - [SEO Metadata template rules (SEO Pro edition)](#seo-metadata-template-rules-seo-pro-edition)
