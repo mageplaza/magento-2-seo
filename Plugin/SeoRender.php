@@ -746,31 +746,44 @@ class SeoRender
     public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type']     = 'AggregateOffer';
-        try {
-            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                                                                ->getMaxRegularAmount()->getValue();
-            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                                                                ->getMinRegularAmount()->getValue();
-        } catch (Exception $exception) {
-            $productStructuredData['offers']['highPrice'] = 0;
-            $productStructuredData['offers']['lowPrice']  = 0;
-        }
+//        try {
+//            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
+//                                                                ->getMaxRegularAmount()->getValue();
+//            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
+//                                                                ->getMinRegularAmount()->getValue();
+//        } catch (Exception $exception) {
+//            $productStructuredData['offers']['highPrice'] = 0;
+//            $productStructuredData['offers']['lowPrice']  = 0;
+//        }
         $offerData                                    = [];
         $typeInstance                                 = $currentProduct->getTypeInstance();
         $childProductCollection                       = $typeInstance->getUsedProductCollection($currentProduct)
                                                             ->addAttributeToSelect('*');
+
+        $allChildPrices = [];
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
 
+            $allChildPrices[] = $child->getFinalPrice();
+
             $offerData[] = [
                 '@type' => 'Offer',
                 'name'  => $child->getName(),
-                'price' => $this->_priceHelper->currency($child->getPrice(), false),
+                'price' => $this->_priceHelper->currency($child->getFinalPrice(), false),
                 'sku'   => $child->getSku(),
                 'image' => $imageUrl
             ];
         }
+
+        try {
+            $productStructuredData['offers']['highPrice'] = $this->_priceHelper->currency(max($allChildPrices), false);
+            $productStructuredData['offers']['lowPrice'] = $this->_priceHelper->currency(min($allChildPrices), false);
+        } catch (Exception $exception) {
+            $productStructuredData['offers']['highPrice'] = 0;
+            $productStructuredData['offers']['lowPrice'] = 0;
+        }
+
         if (!empty($offerData)) {
             $productStructuredData['offers']['offerCount'] = count($offerData);
             $productStructuredData['offers']['offers']     = $offerData;
