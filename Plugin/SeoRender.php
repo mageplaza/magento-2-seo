@@ -426,11 +426,16 @@ class SeoRender
                     ->getFrontend()->getValue($product);
                 $modelName       = $this->helperData->getRichsnippetsConfig('model_name');
 
+                $description = preg_replace([
+                    '/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/',
+                    '/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/',
+                ], '', $currentProduct->getDescription());
+
                 $productStructuredData = [
                     '@context'    => 'http://schema.org/',
                     '@type'       => 'Product',
                     'name'        => $currentProduct->getName(),
-                    'description' => trim(strip_tags($currentProduct->getDescription())),
+                    'description' => trim(strip_tags($description)),
                     'sku'         => $currentProduct->getSku(),
                     'url'         => $currentProduct->getProductUrl(),
                     'image'       => $this->getUrl('pub/media/catalog') . 'product' . $currentProduct->getImage(),
