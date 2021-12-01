@@ -484,7 +484,7 @@ class SeoRender
                         ->getAttribute($this->helperData->getRichsnippetsConfig('brand'))
                         ->getFrontend()->getValue($product);
 
-                    $productStructuredData['brand']['@type'] = 'Thing';
+                    $productStructuredData['brand']['@type'] = 'Brand';
                     $productStructuredData['brand']['name']  = $brandValue ?: 'Brand';
                 }
 
