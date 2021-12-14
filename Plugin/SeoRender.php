@@ -24,6 +24,7 @@ namespace Mageplaza\Seo\Plugin;
 use Exception;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
+use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
@@ -163,6 +164,11 @@ class SeoRender
     protected $reviewResourceModel;
 
     /**
+     * @var CollectionFactory
+     */
+    protected $collectionFactory;
+
+    /**
      * SeoRender constructor.
      *
      * @param PageConfig $pageConfig
@@ -185,6 +191,7 @@ class SeoRender
      * @param ModuleManager $moduleManager
      * @param RatingFactory $ratingFactory
      * @param ReviewResourceModel $reviewResourceModel
+     * @param CollectionFactory $collectionFactory
      */
     public function __construct(
         PageConfig $pageConfig,
@@ -206,7 +213,8 @@ class SeoRender
         ReviewCollection $reviewCollection,
         ModuleManager $moduleManager,
         RatingFactory $ratingFactory,
-        ReviewResourceModel $reviewResourceModel
+        ReviewResourceModel $reviewResourceModel,
+        CollectionFactory $collectionFactory
     ) {
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
@@ -228,6 +236,7 @@ class SeoRender
         $this->_moduleManager      = $moduleManager;
         $this->ratingFactory       = $ratingFactory;
         $this->reviewResourceModel = $reviewResourceModel;
+        $this->collectionFactory   = $collectionFactory;
     }
 
     /**
@@ -404,6 +413,7 @@ class SeoRender
 
     /**
      * Show product structured data
+     *
      * @return string
      *
      * Learn more: https://developers.google.com/structured-data/rich-snippets/products#single_product_page
@@ -412,7 +422,10 @@ class SeoRender
     {
         if ($currentProduct = $this->getProduct()) {
             try {
-                $productId = $currentProduct->getId() ?: $this->request->getParam('id');
+                $priceAttributes = $this->collectionFactory->create()
+                    ->addVisibleFilter()->addFieldToFilter('attribute_code', ['like' => "%price%"])
+                    ->getColumnValues('attribute_code');
+                $productId       = $currentProduct->getId() ?: $this->request->getParam('id');
 
                 $product         = $this->productFactory->create()->load($productId);
                 $availability    = $product->isAvailable() ? 'InStock' : 'OutOfStock';
@@ -421,10 +434,17 @@ class SeoRender
                     $product->getStore()->getWebsiteId()
                 );
                 $priceValidUntil = $currentProduct->getSpecialToDate();
+                $modelAttribute  = $this->helperData->getRichsnippetsConfig('model_value');
                 $modelValue      = $product->getResource()
-                    ->getAttribute($this->helperData->getRichsnippetsConfig('model_value'))
+                    ->getAttribute($modelAttribute)
                     ->getFrontend()->getValue($product);
-                $modelName       = $this->helperData->getRichsnippetsConfig('model_name');
+                if ($modelAttribute === 'quantity_and_stock_status') {
+                    $modelValue = $this->helperData->getQtySale($product);
+                }
+                if ($modelValue && in_array($modelAttribute, $priceAttributes, true)) {
+                    $modelValue = number_format($this->_priceHelper->currency($modelValue, false), 2);
+                }
+                $modelName = $this->helperData->getRichsnippetsConfig('model_name');
 
                 $productStructuredData = [
                     '@context'    => 'http://schema.org/',
@@ -479,10 +499,20 @@ class SeoRender
                         : date('Y-m-d', $time);
                 }
 
-                if (!$this->_moduleManager->isEnabled('Mageplaza_Shopbybrand')) {
-                    $brandValue = $product->getResource()
-                        ->getAttribute($this->helperData->getRichsnippetsConfig('brand'))
+                if (!$this->_moduleManager->isEnabled('Mageplaza_Shopbybrand')
+                    || !isset($productStructuredData['brand'])) {
+                    $brandAttribute = $this->helperData->getRichsnippetsConfig('brand');
+                    $brandValue     = $product->getResource()
+                        ->getAttribute($brandAttribute)
                         ->getFrontend()->getValue($product);
+
+                    if ($brandAttribute === 'quantity_and_stock_status') {
+                        $brandValue = $this->helperData->getQtySale($product);
+                    }
+
+                    if ($brandValue && in_array($brandAttribute, $priceAttributes, true)) {
+                        $brandValue = number_format($this->_priceHelper->currency($brandValue, false), 2);
+                    }
 
                     $productStructuredData['brand']['@type'] = 'Thing';
                     $productStructuredData['brand']['name']  = $brandValue ?: 'Brand';
@@ -519,16 +549,6 @@ class SeoRender
                 );
                 $productStructuredData = $objectStructuredData->getMpdata();
 
-                // Compatible with Mageplaza Shop By Brand
-                if (!isset($productStructuredData['brand'])) {
-                    $brandValue = $product->getResource()
-                        ->getAttribute($this->helperData->getRichsnippetsConfig('brand'))
-                        ->getFrontend()->getValue($product);
-
-                    $productStructuredData['brand']['@type'] = 'Thing';
-                    $productStructuredData['brand']['name']  = $brandValue ?: 'Brand';
-                }
-
                 return $this->helperData->createStructuredData(
                     $productStructuredData,
                     '<!-- Product Structured Data by Mageplaza SEO-->'
@@ -537,6 +557,8 @@ class SeoRender
                 $this->messageManager->addError(__('Can not add structured data'));
             }
         }
+
+        return '';
     }
 
     /**
@@ -622,7 +644,7 @@ class SeoRender
             'linkedin',
             'myspace',
             'pinterest',
-            'soundclound',
+            'soundcloud',
             'tumblr'
         ];
         foreach ($socialNetwork as $value) {
@@ -745,20 +767,20 @@ class SeoRender
      */
     public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
     {
-        $productStructuredData['offers']['@type']     = 'AggregateOffer';
+        $productStructuredData['offers']['@type'] = 'AggregateOffer';
         try {
             $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                                                                ->getMaxRegularAmount()->getValue();
+                ->getMaxRegularAmount()->getValue();
             $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                                                                ->getMinRegularAmount()->getValue();
+                ->getMinRegularAmount()->getValue();
         } catch (Exception $exception) {
             $productStructuredData['offers']['highPrice'] = 0;
             $productStructuredData['offers']['lowPrice']  = 0;
         }
-        $offerData                                    = [];
-        $typeInstance                                 = $currentProduct->getTypeInstance();
-        $childProductCollection                       = $typeInstance->getUsedProductCollection($currentProduct)
-                                                            ->addAttributeToSelect('*');
+        $offerData              = [];
+        $typeInstance           = $currentProduct->getTypeInstance();
+        $childProductCollection = $typeInstance->getUsedProductCollection($currentProduct)
+            ->addAttributeToSelect('*');
         foreach ($childProductCollection as $child) {
             $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
@@ -790,12 +812,12 @@ class SeoRender
      */
     public function getBundleProductStructuredData($currentProduct, $productStructuredData)
     {
-        $productStructuredData['offers']['@type']     = 'AggregateOffer';
+        $productStructuredData['offers']['@type'] = 'AggregateOffer';
         try {
             $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                                                                ->getMaximalPrice()->getValue();
+                ->getMaximalPrice()->getValue();
             $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                                                                ->getMinimalPrice()->getValue();
+                ->getMinimalPrice()->getValue();
         } catch (Exception $exception) {
             $productStructuredData['offers']['highPrice'] = 0;
             $productStructuredData['offers']['lowPrice']  = 0;
@@ -808,7 +830,7 @@ class SeoRender
             $currentProduct
         );
         foreach ($childProductCollection as $child) {
-            $imageUrl    = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'catalog/product' . $child->getImage();
 
             $offerData[] = [
