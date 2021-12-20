@@ -514,7 +514,7 @@ class SeoRender
                         $brandValue = number_format($this->_priceHelper->currency($brandValue, false), 2);
                     }
 
-                    $productStructuredData['brand']['@type'] = 'Thing';
+                    $productStructuredData['brand']['@type'] = 'Brand';
                     $productStructuredData['brand']['name']  = $brandValue ?: 'Brand';
                 }
 
@@ -524,13 +524,26 @@ class SeoRender
                     )->addEntityFilter(
                         'product',
                         $product->getId()
-                    )->setDateOrder();
-                if ($collection->getData()) {
-                    foreach ($collection->getData() as $review) {
-                        $productStructuredData['review'][] = [
+                    )->addRateVotes()->setDateOrder();
+                if ($collection->getSize()) {
+                    foreach ($collection as $review) {
+                        $reviewData = [
                             '@type'  => 'Review',
-                            'author' => $review['nickname']
+                            'author' => [
+                                '@type' => 'Person',
+                                'name'  => $review->getNickname()
+                            ]
                         ];
+                        if ($review->getRatingVotes()->getData()) {
+                            $ratingVotes                = $review->getRatingVotes()->getData();
+                            $vote                       = array_first($ratingVotes);
+                            $reviewData['reviewRating'] = [
+                                '@type'       => 'Rating',
+                                'ratingValue' => $vote['percent'],
+                                'bestRating'  => '100'
+                            ];
+                        }
+                        $productStructuredData['review'][] = $reviewData;
                     }
                 }
 
