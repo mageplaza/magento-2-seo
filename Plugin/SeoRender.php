@@ -517,6 +517,9 @@ class SeoRender
 
                     if ($brandValue && in_array($brandAttribute, $priceAttributes, true)) {
                         $brandValue = number_format($this->_priceHelper->currency($brandValue, false), 2);
+                        if ($brandAttribute === 'price') {
+                            $brandValue = $currentProduct->getPriceInfo()->getPrice('final_price')->getValue();
+                        }
                     }
 
                     $productStructuredData['brand']['@type'] = 'Brand';
