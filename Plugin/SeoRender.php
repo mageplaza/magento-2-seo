@@ -443,6 +443,10 @@ class SeoRender
                 }
                 if ($modelValue && in_array($modelAttribute, $priceAttributes, true)) {
                     $modelValue = number_format($this->_priceHelper->currency($modelValue, false), 2);
+
+                    if ($modelAttribute === 'price') {
+                        $modelValue = $currentProduct->getPriceInfo()->getPrice('final_price')->getValue();
+                    }
                 }
                 $modelName = $this->helperData->getRichsnippetsConfig('model_name');
 
@@ -462,7 +466,8 @@ class SeoRender
                         'availability'  => 'http://schema.org/' . $availability,
                         'url'           => $currentProduct->getProductUrl()
                     ],
-                    $modelName    => $modelValue ?: $modelName
+                    $modelName    => (($modelAttribute === 'quantity_and_stock_status' && $modelValue >=0)
+                        || $modelValue) ? $modelValue : $modelName
                 ];
                 $productStructuredData = $this->addProductStructuredDataByType(
                     $currentProduct->getTypeId(),
@@ -512,10 +517,14 @@ class SeoRender
 
                     if ($brandValue && in_array($brandAttribute, $priceAttributes, true)) {
                         $brandValue = number_format($this->_priceHelper->currency($brandValue, false), 2);
+                        if ($brandAttribute === 'price') {
+                            $brandValue = $currentProduct->getPriceInfo()->getPrice('final_price')->getValue();
+                        }
                     }
 
                     $productStructuredData['brand']['@type'] = 'Brand';
-                    $productStructuredData['brand']['name']  = $brandValue ?: 'Brand';
+                    $productStructuredData['brand']['name']  = (($brandAttribute === 'quantity_and_stock_status'
+                            && $brandValue >=0) || $brandValue) ? $brandValue : 'Brand';
                 }
 
                 $collection = $this->_reviewCollection->create()
