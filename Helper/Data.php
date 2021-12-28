@@ -22,6 +22,12 @@
 namespace Mageplaza\Seo\Helper;
 
 use Exception;
+use Magento\Catalog\Model\Product;
+use Magento\CatalogInventory\Model\Stock\StockItemRepository;
+use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
+use Magento\Framework\App\Helper\Context;
+use Magento\Framework\ObjectManagerInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Theme\Block\Html\Header\Logo;
 use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 
@@ -32,6 +38,30 @@ use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 class Data extends CoreHelper
 {
     const CONFIG_MODULE_PATH = 'seo';
+
+    /**
+     * @var StockItemRepository
+     */
+    protected $stockItemRepository;
+
+    /**
+     * Data constructor.
+     *
+     * @param Context $context
+     * @param ObjectManagerInterface $objectManager
+     * @param StoreManagerInterface $storeManager
+     * @param StockItemRepository $stockItemRepository
+     */
+    public function __construct(
+        Context $context,
+        ObjectManagerInterface $objectManager,
+        StoreManagerInterface $storeManager,
+        StockItemRepository $stockItemRepository
+    ) {
+        $this->stockItemRepository = $stockItemRepository;
+
+        parent::__construct($context, $objectManager, $storeManager);
+    }
 
     /**
      * @param string $code
@@ -123,10 +153,11 @@ class Data extends CoreHelper
     public function createStructuredData($data, $prefixComment = '', $subfixComment = '')
     {
         $applicationLdJson = $prefixComment;
-        $applicationLdJson .= '<script type="application/ld+json">' . json_encode(
-            $data,
-            JSON_PRETTY_PRINT
-        ) . '</script>';
+        $applicationLdJson .= '<script type="application/ld+json">'
+            . json_encode(
+                $data,
+                JSON_PRETTY_PRINT
+            ) . '</script>';
         $applicationLdJson .= $subfixComment;
 
         return $applicationLdJson;
@@ -158,5 +189,41 @@ class Data extends CoreHelper
         }
 
         return $storeId;
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return float|int
+     */
+    public function getQtySale($product)
+    {
+        try {
+            $stock = $this->stockItemRepository->get($product->getId());
+
+            if ($this->versionCompare('2.3.0')) {
+                $totalQty                    = 0;
+                $getSalableQuantityDataBySku = $this->createObject(
+                    \Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku::class
+                );
+                if ($product->getTypeId() === Configurable::TYPE_CODE) {
+                    $typeInstance           = $product->getTypeInstance();
+                    $childProductCollection = $typeInstance->getUsedProducts($product);
+                    foreach ($childProductCollection as $childProduct) {
+                        $qty      = $getSalableQuantityDataBySku->execute($childProduct->getSku());
+                        $totalQty += isset($qty[0]['qty']) ? $qty[0]['qty'] : 0;
+                    }
+                } else {
+                    $qty      = $getSalableQuantityDataBySku->execute($product->getSku());
+                    $totalQty += isset($qty[0]['qty']) ? $qty[0]['qty'] : 0;
+                }
+
+                return $totalQty;
+            }
+
+            return $stock->getIsInStock() ? $stock->getQty() : 0;
+        } catch (Exception $e) {
+            return 0;
+        }
     }
 }
