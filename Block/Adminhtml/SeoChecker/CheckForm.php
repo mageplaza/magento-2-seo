@@ -27,10 +27,8 @@ use Magento\Catalog\Model\ProductFactory;
 use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
 use Magento\Cms\Model\PageFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Json\Helper\Data as JsonData;
 use Magento\Framework\View\Element\Template;
-use Magento\Sitemap\Model\ResourceModel\Sitemap\Collection;
-use Magento\Sitemap\Model\ResourceModel\Sitemap\CollectionFactory;
+use Magento\Framework\View\Element\Template\Context;
 use Mageplaza\Seo\Helper\Data as SeoHelperData;
 
 /**
@@ -39,7 +37,7 @@ use Mageplaza\Seo\Helper\Data as SeoHelperData;
  */
 class CheckForm extends Template
 {
-    const SEO_TOOL_URL = 'http://seo.mageplaza.com';
+    const SEO_TOOL_URL = 'https://pagespeed.web.dev/report';
 
     /**
      * @var string
@@ -62,16 +60,6 @@ class CheckForm extends Template
     protected $productFactory;
 
     /**
-     * @var CollectionFactory
-     */
-    protected $sitemapCollection;
-
-    /**
-     * @var JsonData
-     */
-    protected $jsonHelper;
-
-    /**
      * @var ProductRepositoryInterface
      */
     protected $productRepository;
@@ -89,11 +77,9 @@ class CheckForm extends Template
     /**
      * CheckForm constructor.
      *
-     * @param Template\Context $context
+     * @param Context $context
      * @param UrlBuilder $cmsUrl
      * @param PageFactory $cmsPageFactory
-     * @param CollectionFactory $sitemapCollection
-     * @param JsonData $jsonHelper
      * @param ProductFactory $productFactory
      * @param ProductRepositoryInterface $productRepository
      * @param CategoryRepositoryInterface $categoryRepository
@@ -101,24 +87,20 @@ class CheckForm extends Template
      * @param array $data
      */
     public function __construct(
-        Template\Context $context,
-        UrlBuilder $cmsUrl,
-        PageFactory $cmsPageFactory,
-        CollectionFactory $sitemapCollection,
-        JsonData $jsonHelper,
-        ProductFactory $productFactory,
-        ProductRepositoryInterface $productRepository,
+        Context                     $context,
+        UrlBuilder                  $cmsUrl,
+        PageFactory                 $cmsPageFactory,
+        ProductFactory              $productFactory,
+        ProductRepositoryInterface  $productRepository,
         CategoryRepositoryInterface $categoryRepository,
-        SeoHelperData $helper,
-        array $data = []
+        SeoHelperData               $helper,
+        array                       $data = []
     ) {
         $this->helper             = $helper;
         $this->productFactory     = $productFactory;
         $this->categoryRepository = $categoryRepository;
         $this->cmsUrl             = $cmsUrl;
         $this->cmsPageFactory     = $cmsPageFactory;
-        $this->sitemapCollection  = $sitemapCollection;
-        $this->jsonHelper         = $jsonHelper;
         $this->productRepository  = $productRepository;
 
         parent::__construct($context, $data);
@@ -145,11 +127,11 @@ class CheckForm extends Template
             case 'catalog_product_edit':
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
                 $product  = $this->productFactory->create()->load($id)->setStoreId($storeId);
-                $url      = $urlModel->getUrl($product, ['_query' => ['___store' => $storeCode]]);
+                $url      = $urlModel->getUrl($product);
                 break;
             case 'catalog_category_edit':
                 $category = $this->categoryRepository->get($id, $storeId);
-                $url      = $category->getUrl(['_query' => ['___store' => $storeCode]]);
+                $url      = $category->getUrl();
                 break;
             case 'cms_page_edit':
                 $pageId = $this->_request->getParam('page_id');
@@ -162,48 +144,8 @@ class CheckForm extends Template
             default:
                 $url = '';
         }
+
         return $url;
-    }
-
-    /**
-     * get site map links
-     *
-     * @return array
-     * @throws NoSuchEntityException
-     */
-    public function sitemap()
-    {
-        $sitemapLinks = [];
-
-        /** @var Collection $sitemap */
-        $sitemap = $this->sitemapCollection->create();
-
-        $storeId = $this->_storeManager->getStore()->getId();
-        if ($storeId) {
-            $sitemap->addStoreFilter([$storeId]);
-        }
-
-        foreach ($sitemap as $item) {
-            $sitemapLinks[] = $this->getBaseUrl() . ltrim($item->getSitemapPath(), '/') . $item->getSitemapFilename();
-        }
-
-        return $sitemapLinks;
-    }
-
-    /**
-     * get Data to check
-     *
-     * @return string
-     * @throws NoSuchEntityException
-     */
-    public function getSeoData()
-    {
-        $data            = [];
-        $data['link']    = $this->getLink();
-        $data['sitemap'] = $this->sitemap();
-        $data['baseUrl'] = $this->getBaseUrl();
-
-        return SeoHelperData::jsonEncode($data);
     }
 
     /**

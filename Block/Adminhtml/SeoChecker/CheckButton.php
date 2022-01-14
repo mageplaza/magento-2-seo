@@ -55,9 +55,9 @@ class CheckButton implements ButtonProviderInterface
         }
 
         return [
-            'label'      => __('Check On-page'),
+            'label'      => __('PageSpeed Insight'),
             'class'      => 'action-secondary save',
-            'on_click'   => 'jQuery("#mageplaza-seo-form").attr("action", "https://seo.mageplaza.com").submit();',
+            'on_click'   => 'jQuery("#mageplaza-seo-form").submit();',
             'sort_order' => 85
         ];
     }
