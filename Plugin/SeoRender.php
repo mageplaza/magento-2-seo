@@ -42,6 +42,7 @@ use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Page\Config as PageConfig;
 use Magento\Framework\View\Page\Config\Renderer;
 use Magento\Review\Model\Rating;
+use Magento\Review\Model\RatingFactory;
 use Magento\Review\Model\ResourceModel\Review as ReviewResourceModel;
 use Magento\Review\Model\ResourceModel\Review\CollectionFactory as ReviewCollection;
 use Magento\Review\Model\Review;
@@ -50,18 +51,18 @@ use Magento\Search\Helper\Data as SearchHelper;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
 use Mageplaza\Seo\Model\Config\Source\PriceValidUntil;
-use Magento\Review\Model\RatingFactory;
 
 /**
  * Class SeoRender
+ *
  * @package Mageplaza\Seo\Plugin
  */
 class SeoRender
 {
     const GOOLE_SITE_VERIFICATION = 'google-site-verification';
-    const MSVALIDATE_01           = 'msvalidate.01';
-    const P_DOMAIN_VERIFY         = 'p:domain_verify';
-    const YANDEX_VERIFICATION     = 'yandex-verification';
+    const MSVALIDATE_01 = 'msvalidate.01';
+    const P_DOMAIN_VERIFY = 'p:domain_verify';
+    const YANDEX_VERIFICATION = 'yandex-verification';
 
     /**
      * @var PageConfig
@@ -171,50 +172,50 @@ class SeoRender
     /**
      * SeoRender constructor.
      *
-     * @param PageConfig $pageConfig
-     * @param Http $request
-     * @param HelperData $helpData
-     * @param StockItemRepository $stockItemRepository
-     * @param Registry $registry
-     * @param ReviewFactory $reviewFactory
-     * @param StoreManagerInterface $storeManager
-     * @param UrlInterface $urlBuilder
-     * @param ProductFactory $productFactory
-     * @param ManagerInterface $messageManager
+     * @param PageConfig             $pageConfig
+     * @param Http                   $request
+     * @param HelperData             $helpData
+     * @param StockItemRepository    $stockItemRepository
+     * @param Registry               $registry
+     * @param ReviewFactory          $reviewFactory
+     * @param StoreManagerInterface  $storeManager
+     * @param UrlInterface           $urlBuilder
+     * @param ProductFactory         $productFactory
+     * @param ManagerInterface       $messageManager
      * @param StockRegistryInterface $stockState
-     * @param SearchHelper $searchHelper
-     * @param PriceHelper $priceHelper
-     * @param Manager $eventManager
-     * @param DateTime $dateTime
-     * @param TimezoneInterface $timeZoneInterface
-     * @param ReviewCollection $reviewCollection
-     * @param ModuleManager $moduleManager
-     * @param RatingFactory $ratingFactory
-     * @param ReviewResourceModel $reviewResourceModel
-     * @param CollectionFactory $collectionFactory
+     * @param SearchHelper           $searchHelper
+     * @param PriceHelper            $priceHelper
+     * @param Manager                $eventManager
+     * @param DateTime               $dateTime
+     * @param TimezoneInterface      $timeZoneInterface
+     * @param ReviewCollection       $reviewCollection
+     * @param ModuleManager          $moduleManager
+     * @param RatingFactory          $ratingFactory
+     * @param ReviewResourceModel    $reviewResourceModel
+     * @param CollectionFactory      $collectionFactory
      */
     public function __construct(
-        PageConfig $pageConfig,
-        Http $request,
-        HelperData $helpData,
-        StockItemRepository $stockItemRepository,
-        Registry $registry,
-        ReviewFactory $reviewFactory,
-        StoreManagerInterface $storeManager,
-        UrlInterface $urlBuilder,
-        ProductFactory $productFactory,
-        ManagerInterface $messageManager,
+        PageConfig             $pageConfig,
+        Http                   $request,
+        HelperData             $helpData,
+        StockItemRepository    $stockItemRepository,
+        Registry               $registry,
+        ReviewFactory          $reviewFactory,
+        StoreManagerInterface  $storeManager,
+        UrlInterface           $urlBuilder,
+        ProductFactory         $productFactory,
+        ManagerInterface       $messageManager,
         StockRegistryInterface $stockState,
-        SearchHelper $searchHelper,
-        PriceHelper $priceHelper,
-        Manager $eventManager,
-        DateTime $dateTime,
-        TimezoneInterface $timeZoneInterface,
-        ReviewCollection $reviewCollection,
-        ModuleManager $moduleManager,
-        RatingFactory $ratingFactory,
-        ReviewResourceModel $reviewResourceModel,
-        CollectionFactory $collectionFactory
+        SearchHelper           $searchHelper,
+        PriceHelper            $priceHelper,
+        Manager                $eventManager,
+        DateTime               $dateTime,
+        TimezoneInterface      $timeZoneInterface,
+        ReviewCollection       $reviewCollection,
+        ModuleManager          $moduleManager,
+        RatingFactory          $ratingFactory,
+        ReviewResourceModel    $reviewResourceModel,
+        CollectionFactory      $collectionFactory
     ) {
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
@@ -259,36 +260,6 @@ class SeoRender
     }
 
     /**
-     * @param Renderer $subject
-     * @param string $result
-     *
-     * @return string
-     */
-    public function afterRenderHeadContent(Renderer $subject, $result)
-    {
-        if ($this->helperData->isEnabled($this->helperData->getStoreId())) {
-            switch ($this->getFullActionName()) {
-                case 'catalog_product_view':
-                    if ($this->helperData->getRichsnippetsConfig('enable_product')) {
-                        $productStructuredData = $this->showProductStructuredData();
-                        $result                .= $productStructuredData;
-                    }
-                    break;
-                case 'cms_index_index':
-                    if ($this->helperData->getInfoConfig('enable')) {
-                        $result .= $this->showBusinessStructuredData();
-                    }
-                    if ($this->helperData->getRichsnippetsConfig('enable_site_link')) {
-                        $result .= $this->showSiteLinksStructuredData();
-                    }
-                    break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      *  Show verifications from config
      */
     public function showVerifications()
@@ -322,93 +293,33 @@ class SeoRender
     }
 
     /**
-     * Get current product
-     *
-     * @return mixed
-     */
-    public function getProduct()
-    {
-        return $this->registry->registry('current_product');
-    }
-
-    /**
-     * Get Url
-     *
-     * @param string $route
-     * @param array $params
+     * @param Renderer $subject
+     * @param string   $result
      *
      * @return string
      */
-    public function getUrl($route = '', $params = [])
+    public function afterRenderHeadContent(Renderer $subject, $result)
     {
-        return $this->_urlBuilder->getUrl($route, $params);
-    }
-
-    /**
-     * @param int $productId
-     *
-     * @return StockItemInterface
-     * @throws NoSuchEntityException
-     */
-    public function getProductStock($productId)
-    {
-        return $this->stockItemRepository->get($productId);
-    }
-
-    /**
-     * @return int
-     * @throws NoSuchEntityException
-     */
-    public function getReviewCount()
-    {
-        $ratingSummaries = $this->ratingFactory->create()->getEntitySummary($this->getProduct()->getId(), false);
-
-        /** @var Rating $ratingSummary */
-        foreach ($ratingSummaries as $ratingSummary) {
-            if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
-                return (int) $this->reviewResourceModel->getTotalReviews(
-                    $this->getProduct()->getId(),
-                    true,
-                    $ratingSummary->getStoreId()
-                );
+        if ($this->helperData->isEnabled($this->helperData->getStoreId())) {
+            switch ($this->getFullActionName()) {
+                case 'catalog_product_view':
+                    if ($this->helperData->getRichsnippetsConfig('enable_product')) {
+                        $productStructuredData = $this->showProductStructuredData();
+                        $result                .= $productStructuredData;
+                    }
+                    break;
+                case 'cms_index_index':
+                    if ($this->helperData->getInfoConfig('enable')) {
+                        $result .= $this->showBusinessStructuredData();
+                    }
+                    if ($this->helperData->getRichsnippetsConfig('enable_site_link')) {
+                        $result .= $this->showSiteLinksStructuredData();
+                    }
+                    break;
             }
         }
 
-        return 0;
-    }
-
-    /**
-     * @return false|float|int|Rating|mixed
-     * @throws NoSuchEntityException
-     */
-    public function getRatingSummary()
-    {
-        $ratingSummaries = $this->ratingFactory->create()->getEntitySummary($this->getProduct()->getId(), false);
-
-        /** @var Rating $ratingSummary */
-        foreach ($ratingSummaries as $ratingSummary) {
-            if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
-                if ($ratingSummary->getCount()) {
-                    $ratingSummary = round($ratingSummary->getSum() / $ratingSummary->getCount());
-                } else {
-                    $ratingSummary = $ratingSummary->getSum();
-                }
-
-                return $ratingSummary;
-            }
-        }
-
-        return 0;
-    }
-
-    /**
-     * @param Product $product
-     *
-     * @throws NoSuchEntityException
-     */
-    public function getEntitySummary($product)
-    {
-        $this->reviewFactory->create()->getEntitySummary($product, $this->_storeManager->getStore()->getId());
+        return $result;
     }
 
     /**
@@ -466,7 +377,7 @@ class SeoRender
                         'availability'  => 'http://schema.org/' . $availability,
                         'url'           => $currentProduct->getProductUrl()
                     ],
-                    $modelName    => (($modelAttribute === 'quantity_and_stock_status' && $modelValue >=0)
+                    $modelName    => (($modelAttribute === 'quantity_and_stock_status' && $modelValue >= 0)
                         || $modelValue) ? $modelValue : $modelName
                 ];
                 $productStructuredData = $this->addProductStructuredDataByType(
@@ -524,7 +435,7 @@ class SeoRender
 
                     $productStructuredData['brand']['@type'] = 'Brand';
                     $productStructuredData['brand']['name']  = (($brandAttribute === 'quantity_and_stock_status'
-                            && $brandValue >=0) || $brandValue) ? $brandValue : 'Brand';
+                            && $brandValue >= 0) || $brandValue) ? $brandValue : 'Brand';
                 }
 
                 $collection = $this->_reviewCollection->create()
@@ -581,6 +492,282 @@ class SeoRender
         }
 
         return '';
+    }
+
+    /**
+     * Get current product
+     *
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->registry->registry('current_product');
+    }
+
+    /**
+     * Get Url
+     *
+     * @param string $route
+     * @param array  $params
+     *
+     * @return string
+     */
+    public function getUrl($route = '', $params = [])
+    {
+        return $this->_urlBuilder->getUrl($route, $params);
+    }
+
+    /**
+     * @param string  $productType
+     * @param Product $currentProduct
+     * @param array   $productStructuredData
+     *
+     * @return mixed
+     * @throws NoSuchEntityException
+     */
+    public function addProductStructuredDataByType($productType, $currentProduct, $productStructuredData)
+    {
+        switch ($productType) {
+            case 'grouped':
+                $productStructuredData = $this->getGroupedProductStructuredData(
+                    $currentProduct,
+                    $productStructuredData
+                );
+                break;
+            case 'bundle':
+                $productStructuredData = $this->getBundleProductStructuredData($currentProduct, $productStructuredData);
+                break;
+            case 'downloadable':
+                $productStructuredData = $this->getDownloadableProductStructuredData(
+                    $currentProduct,
+                    $productStructuredData
+                );
+                break;
+            case 'configurable':
+                $productStructuredData = $this->getConfigurableProductStructuredData(
+                    $currentProduct,
+                    $productStructuredData
+                );
+                break;
+        }
+
+        return $productStructuredData;
+    }
+
+    /**
+     * add Grouped Product Structured Data
+     *
+     * @param Product $currentProduct
+     * @param array   $productStructuredData
+     *
+     * @return mixed
+     * @throws NoSuchEntityException
+     */
+    public function getGroupedProductStructuredData($currentProduct, $productStructuredData)
+    {
+        $productStructuredData['offers']['@type'] = 'AggregateOffer';
+        $childrenPrice                            = [];
+        $offerData                                = [];
+        $typeInstance                             = $currentProduct->getTypeInstance();
+        $childProductCollection                   = $typeInstance->getAssociatedProducts($currentProduct);
+        foreach ($childProductCollection as $child) {
+            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+                . 'catalog/product' . $child->getImage();
+
+            $offerData[]     = [
+                '@type' => 'Offer',
+                'name'  => $child->getName(),
+                'price' => $this->_priceHelper->currency($child->getPrice(), false),
+                'sku'   => $child->getSku(),
+                'image' => $imageUrl
+            ];
+            $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
+        }
+
+        $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
+        $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
+        unset($productStructuredData['offers']['price']);
+
+        if (!empty($offerData)) {
+            $productStructuredData['offers']['offerCount'] = count($offerData);
+            $productStructuredData['offers']['offers']     = $offerData;
+        }
+
+        return $productStructuredData;
+    }
+
+    /**
+     * add Bundle Product Structured Data
+     *
+     * @param Product $currentProduct
+     * @param array   $productStructuredData
+     *
+     * @return mixed
+     * @throws NoSuchEntityException
+     */
+    public function getBundleProductStructuredData($currentProduct, $productStructuredData)
+    {
+        $productStructuredData['offers']['@type'] = 'AggregateOffer';
+        try {
+            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
+                ->getMaximalPrice()->getValue();
+            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
+                ->getMinimalPrice()->getValue();
+        } catch (Exception $exception) {
+            $productStructuredData['offers']['highPrice'] = 0;
+            $productStructuredData['offers']['lowPrice']  = 0;
+        }
+        unset($productStructuredData['offers']['price']);
+        $offerData              = [];
+        $typeInstance           = $currentProduct->getTypeInstance();
+        $childProductCollection = $typeInstance->getSelectionsCollection(
+            $typeInstance->getOptionsIds($currentProduct),
+            $currentProduct
+        );
+        foreach ($childProductCollection as $child) {
+            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+                . 'catalog/product' . $child->getImage();
+
+            $offerData[] = [
+                '@type' => 'Offer',
+                'name'  => $child->getName(),
+                'price' => $this->_priceHelper->currency($child->getPrice(), false),
+                'sku'   => $child->getSku(),
+                'image' => $imageUrl
+            ];
+        }
+        if (!empty($offerData)) {
+            $productStructuredData['offers']['offerCount'] = count($offerData);
+            $productStructuredData['offers']['offers']     = $offerData;
+        }
+
+        return $productStructuredData;
+    }
+
+    /**
+     * add Downloadable Product Structured Data
+     *
+     * @param Product $currentProduct
+     * @param array   $productStructuredData
+     *
+     * @return mixed
+     */
+    public function getDownloadableProductStructuredData($currentProduct, $productStructuredData)
+    {
+        $productStructuredData['offers']['@type'] = 'AggregateOffer';
+
+        $typeInstance           = $currentProduct->getTypeInstance();
+        $childProductCollection = $typeInstance->getLinks($currentProduct);
+        $childrenPrice          = [];
+        foreach ($childProductCollection as $child) {
+            $offerData[]     = [
+                '@type' => 'Offer',
+                'name'  => $child->getTitle(),
+                'price' => $this->_priceHelper->currency($child->getPrice(), false)
+            ];
+            $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
+        }
+        $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
+        $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
+
+        if (!empty($offerData)) {
+            $productStructuredData['offers']['offerCount'] = count($offerData);
+            $productStructuredData['offers']['offers']     = $offerData;
+        }
+
+        return $productStructuredData;
+    }
+
+    /**
+     * add Configurable Product Structured Data
+     *
+     * @param $currentProduct
+     * @param $productStructuredData
+     * @return array
+     * @throws NoSuchEntityException
+     */
+    public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
+    {
+        $productStructuredData['offers']['@type'] = 'AggregateOffer';
+        $offerData                                = [];
+        $typeInstance                             = $currentProduct->getTypeInstance();
+        $childProductCollection                   = $typeInstance->getUsedProductCollection($currentProduct)
+            ->addAttributeToSelect('*');
+        $allChildPrices                           = [];
+        foreach ($childProductCollection as $child) {
+            $imageUrl         = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+                . 'catalog/product' . $child->getImage();
+            $childPrice       = $this->_priceHelper->currency($child->getPrice(), false);
+            $allChildPrices[] = $childPrice;
+            $offerData[]      = [
+                '@type' => 'Offer',
+                'name'  => $child->getName(),
+                'price' => $childPrice,
+                'sku'   => $child->getSku(),
+                'image' => $imageUrl
+            ];
+        }
+
+        if (count($allChildPrices)) {
+            $productStructuredData['offers']['highPrice'] = max($allChildPrices);
+            $productStructuredData['offers']['lowPrice']  = min($allChildPrices);
+        } else {
+            $productStructuredData['offers']['highPrice'] = 0;
+            $productStructuredData['offers']['lowPrice']  = 0;
+        }
+
+        if (!empty($offerData)) {
+            $productStructuredData['offers']['offerCount'] = count($offerData);
+            $productStructuredData['offers']['offers']     = $offerData;
+        }
+
+        return $productStructuredData;
+    }
+
+    /**
+     * @return int
+     * @throws NoSuchEntityException
+     */
+    public function getReviewCount()
+    {
+        $ratingSummaries = $this->ratingFactory->create()->getEntitySummary($this->getProduct()->getId(), false);
+
+        /** @var Rating $ratingSummary */
+        foreach ($ratingSummaries as $ratingSummary) {
+            if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
+                return (int)$this->reviewResourceModel->getTotalReviews(
+                    $this->getProduct()->getId(),
+                    true,
+                    $ratingSummary->getStoreId()
+                );
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * @return false|float|int|Rating|mixed
+     * @throws NoSuchEntityException
+     */
+    public function getRatingSummary()
+    {
+        $ratingSummaries = $this->ratingFactory->create()->getEntitySummary($this->getProduct()->getId(), false);
+
+        /** @var Rating $ratingSummary */
+        foreach ($ratingSummaries as $ratingSummary) {
+            if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
+                if ($ratingSummary->getCount()) {
+                    $ratingSummary = round($ratingSummary->getSum() / $ratingSummary->getCount());
+                } else {
+                    $ratingSummary = $ratingSummary->getSum();
+                }
+
+                return $ratingSummary;
+            }
+        }
+
+        return 0;
     }
 
     /**
@@ -703,208 +890,23 @@ class SeoRender
     }
 
     /**
-     * add Grouped Product Structured Data
+     * @param int $productId
      *
-     * @param Product $currentProduct
-     * @param array $productStructuredData
-     *
-     * @return mixed
+     * @return StockItemInterface
      * @throws NoSuchEntityException
      */
-    public function getGroupedProductStructuredData($currentProduct, $productStructuredData)
+    public function getProductStock($productId)
     {
-        $productStructuredData['offers']['@type'] = 'AggregateOffer';
-        $childrenPrice                            = [];
-        $offerData                                = [];
-        $typeInstance                             = $currentProduct->getTypeInstance();
-        $childProductCollection                   = $typeInstance->getAssociatedProducts($currentProduct);
-        foreach ($childProductCollection as $child) {
-            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
-
-            $offerData[]     = [
-                '@type' => 'Offer',
-                'name'  => $child->getName(),
-                'price' => $this->_priceHelper->currency($child->getPrice(), false),
-                'sku'   => $child->getSku(),
-                'image' => $imageUrl
-            ];
-            $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
-        }
-
-        $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
-        unset($productStructuredData['offers']['price']);
-
-        if (!empty($offerData)) {
-            $productStructuredData['offers']['offerCount'] = count($offerData);
-            $productStructuredData['offers']['offers']     = $offerData;
-        }
-
-        return $productStructuredData;
+        return $this->stockItemRepository->get($productId);
     }
 
     /**
-     * add Downloadable Product Structured Data
+     * @param Product $product
      *
-     * @param Product $currentProduct
-     * @param array $productStructuredData
-     *
-     * @return mixed
-     */
-    public function getDownloadableProductStructuredData($currentProduct, $productStructuredData)
-    {
-        $productStructuredData['offers']['@type'] = 'AggregateOffer';
-
-        $typeInstance           = $currentProduct->getTypeInstance();
-        $childProductCollection = $typeInstance->getLinks($currentProduct);
-        $childrenPrice          = [];
-        foreach ($childProductCollection as $child) {
-            $offerData[]     = [
-                '@type' => 'Offer',
-                'name'  => $child->getTitle(),
-                'price' => $this->_priceHelper->currency($child->getPrice(), false)
-            ];
-            $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
-        }
-        $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
-
-        if (!empty($offerData)) {
-            $productStructuredData['offers']['offerCount'] = count($offerData);
-            $productStructuredData['offers']['offers']     = $offerData;
-        }
-
-        return $productStructuredData;
-    }
-
-    /**
-     * add Configurable Product Structured Data
-     *
-     * @param Product $currentProduct
-     * @param array $productStructuredData
-     *
-     * @return mixed
      * @throws NoSuchEntityException
      */
-    public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
+    public function getEntitySummary($product)
     {
-        $productStructuredData['offers']['@type'] = 'AggregateOffer';
-        try {
-            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                ->getMaxRegularAmount()->getValue();
-            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                ->getMinRegularAmount()->getValue();
-        } catch (Exception $exception) {
-            $productStructuredData['offers']['highPrice'] = 0;
-            $productStructuredData['offers']['lowPrice']  = 0;
-        }
-        $offerData              = [];
-        $typeInstance           = $currentProduct->getTypeInstance();
-        $childProductCollection = $typeInstance->getUsedProductCollection($currentProduct)
-            ->addAttributeToSelect('*');
-        foreach ($childProductCollection as $child) {
-            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
-
-            $offerData[] = [
-                '@type' => 'Offer',
-                'name'  => $child->getName(),
-                'price' => $this->_priceHelper->currency($child->getPrice(), false),
-                'sku'   => $child->getSku(),
-                'image' => $imageUrl
-            ];
-        }
-        if (!empty($offerData)) {
-            $productStructuredData['offers']['offerCount'] = count($offerData);
-            $productStructuredData['offers']['offers']     = $offerData;
-        }
-
-        return $productStructuredData;
-    }
-
-    /**
-     * add Bundle Product Structured Data
-     *
-     * @param Product $currentProduct
-     * @param array $productStructuredData
-     *
-     * @return mixed
-     * @throws NoSuchEntityException
-     */
-    public function getBundleProductStructuredData($currentProduct, $productStructuredData)
-    {
-        $productStructuredData['offers']['@type'] = 'AggregateOffer';
-        try {
-            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                ->getMaximalPrice()->getValue();
-            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
-                ->getMinimalPrice()->getValue();
-        } catch (Exception $exception) {
-            $productStructuredData['offers']['highPrice'] = 0;
-            $productStructuredData['offers']['lowPrice']  = 0;
-        }
-        unset($productStructuredData['offers']['price']);
-        $offerData              = [];
-        $typeInstance           = $currentProduct->getTypeInstance();
-        $childProductCollection = $typeInstance->getSelectionsCollection(
-            $typeInstance->getOptionsIds($currentProduct),
-            $currentProduct
-        );
-        foreach ($childProductCollection as $child) {
-            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
-
-            $offerData[] = [
-                '@type' => 'Offer',
-                'name'  => $child->getName(),
-                'price' => $this->_priceHelper->currency($child->getPrice(), false),
-                'sku'   => $child->getSku(),
-                'image' => $imageUrl
-            ];
-        }
-        if (!empty($offerData)) {
-            $productStructuredData['offers']['offerCount'] = count($offerData);
-            $productStructuredData['offers']['offers']     = $offerData;
-        }
-
-        return $productStructuredData;
-    }
-
-    /**
-     * @param string $productType
-     * @param Product $currentProduct
-     * @param array $productStructuredData
-     *
-     * @return mixed
-     * @throws NoSuchEntityException
-     */
-    public function addProductStructuredDataByType($productType, $currentProduct, $productStructuredData)
-    {
-        switch ($productType) {
-            case 'grouped':
-                $productStructuredData = $this->getGroupedProductStructuredData(
-                    $currentProduct,
-                    $productStructuredData
-                );
-                break;
-            case 'bundle':
-                $productStructuredData = $this->getBundleProductStructuredData($currentProduct, $productStructuredData);
-                break;
-            case 'downloadable':
-                $productStructuredData = $this->getDownloadableProductStructuredData(
-                    $currentProduct,
-                    $productStructuredData
-                );
-                break;
-            case 'configurable':
-                $productStructuredData = $this->getConfigurableProductStructuredData(
-                    $currentProduct,
-                    $productStructuredData
-                );
-                break;
-        }
-
-        return $productStructuredData;
+        $this->reviewFactory->create()->getEntitySummary($product, $this->_storeManager->getStore()->getId());
     }
 }
