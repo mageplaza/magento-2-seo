@@ -18,8 +18,11 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     http://mageplaza.com/LICENSE.txt
  */
-?>
 
-<form id="mageplaza-seo-form" target="_blank" method="post" action="<?= $block->escapeUrl($block->getSeoToolUrl()) ?>">
-    <input title="" type="hidden" name="mageplazaSeoData" value='<?= $block->escapeHtml($block->getSeoData()) ?>'>
+use Mageplaza\Seo\Block\Adminhtml\SeoChecker\CheckForm;
+
+/** @var CheckForm $block */
+?>
+<form id="mageplaza-seo-form" target="_blank" method="get" action="<?= $block->escapeUrl($block->getSeoToolUrl()) ?>">
+    <input type="hidden" name="url" value="<?= $block->escapeHtml($block->getLink()) ?>">
 </form>
