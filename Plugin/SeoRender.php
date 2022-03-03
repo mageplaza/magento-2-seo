@@ -294,9 +294,10 @@ class SeoRender
 
     /**
      * @param Renderer $subject
-     * @param string   $result
+     * @param $result
      *
-     * @return string
+     * @return mixed|string
+     * @throws NoSuchEntityException
      */
     public function afterRenderHeadContent(Renderer $subject, $result)
     {
@@ -556,12 +557,12 @@ class SeoRender
     }
 
     /**
-     * add Grouped Product Structured Data
+     * Add Grouped Product Structured Data
      *
      * @param Product $currentProduct
      * @param array   $productStructuredData
      *
-     * @return mixed
+     * @return array
      * @throws NoSuchEntityException
      */
     public function getGroupedProductStructuredData($currentProduct, $productStructuredData)
@@ -598,12 +599,12 @@ class SeoRender
     }
 
     /**
-     * add Bundle Product Structured Data
+     * Add Bundle Product Structured Data
      *
      * @param Product $currentProduct
      * @param array   $productStructuredData
      *
-     * @return mixed
+     * @return array
      * @throws NoSuchEntityException
      */
     public function getBundleProductStructuredData($currentProduct, $productStructuredData)
@@ -646,12 +647,12 @@ class SeoRender
     }
 
     /**
-     * add Downloadable Product Structured Data
+     * Add Downloadable Product Structured Data
      *
      * @param Product $currentProduct
      * @param array   $productStructuredData
      *
-     * @return mixed
+     * @return array
      */
     public function getDownloadableProductStructuredData($currentProduct, $productStructuredData)
     {
