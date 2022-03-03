@@ -293,9 +293,10 @@ class SeoRender
 
     /**
      * @param Renderer $subject
-     * @param string $result
+     * @param $result
      *
-     * @return string
+     * @return mixed|string
+     * @throws NoSuchEntityException
      */
     public function afterRenderHeadContent(Renderer $subject, $result)
     {
@@ -554,13 +555,12 @@ class SeoRender
         return $productStructuredData;
     }
 
+
     /**
-     * add Grouped Product Structured Data
+     * @param $currentProduct
+     * @param $productStructuredData
      *
-     * @param Product $currentProduct
-     * @param array $productStructuredData
-     *
-     * @return mixed
+     * @return array
      * @throws NoSuchEntityException
      */
     public function getGroupedProductStructuredData($currentProduct, $productStructuredData)
@@ -597,12 +597,12 @@ class SeoRender
     }
 
     /**
-     * add Bundle Product Structured Data
+     * Add Bundle Product Structured Data
      *
      * @param Product $currentProduct
      * @param array $productStructuredData
      *
-     * @return mixed
+     * @return array
      * @throws NoSuchEntityException
      */
     public function getBundleProductStructuredData($currentProduct, $productStructuredData)
@@ -645,12 +645,12 @@ class SeoRender
     }
 
     /**
-     * add Downloadable Product Structured Data
+     * Add Downloadable Product Structured Data
      *
      * @param Product $currentProduct
      * @param array $productStructuredData
      *
-     * @return mixed
+     * @return array
      */
     public function getDownloadableProductStructuredData($currentProduct, $productStructuredData)
     {
@@ -679,7 +679,7 @@ class SeoRender
     }
 
     /**
-     * add Configurable Product Structured Data
+     * Add Configurable Product Structured Data
      *
      * @param $currentProduct
      * @param $productStructuredData
@@ -846,7 +846,7 @@ class SeoRender
     {
         $localBussinessStructureData = [
             '@context'    => 'http://schema.org/',
-            '@type'       => 'Store',
+            '@type'       => $this->helperData->getInfoConfig('business_type'),
             'name'        => $this->helperData->getInfoConfig('business_name'),
             'address'     => [
                 '@type'           => 'PostalAddress',
