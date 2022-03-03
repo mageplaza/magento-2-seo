@@ -846,7 +846,7 @@ class SeoRender
     {
         $localBussinessStructureData = [
             '@context'    => 'http://schema.org/',
-            '@type'       => 'Store',
+            '@type'       => $this->helperData->getInfoConfig('business_type'),
             'name'        => $this->helperData->getInfoConfig('business_name'),
             'address'     => [
                 '@type'           => 'PostalAddress',
@@ -858,7 +858,7 @@ class SeoRender
                 'email'           => $this->helperData->getInfoConfig('email'),
                 'faxNumber'       => $this->helperData->getInfoConfig('fax')
             ],
-            'telephone'       => $this->helperData->getInfoConfig('customer_service_phone'),
+            'telephone'   => $this->helperData->getInfoConfig('customer_service_phone'),
             'priceRange'  => $this->helperData->getInfoConfig('price_range'),
             'description' => $this->helperData->getInfoConfig('description')
         ];
