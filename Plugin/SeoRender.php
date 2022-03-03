@@ -310,7 +310,8 @@ class SeoRender
                     break;
                 case 'cms_index_index':
                     if ($this->helperData->getInfoConfig('enable')) {
-                        $result .= $this->showBusinessStructuredData();
+                        $result .= $this->showLogoStructureData();
+                        $result .= $this->showLocalBussinessStructureData();
                     }
                     if ($this->helperData->getRichsnippetsConfig('enable_site_link')) {
                         $result .= $this->showSiteLinksStructuredData();
@@ -771,13 +772,13 @@ class SeoRender
     }
 
     /**
-     * get Business Structured Data
+     * Get Logo Structured Data
      *
      * @return string
      */
-    public function showBusinessStructuredData()
+    public function showLogoStructureData()
     {
-        $businessStructuredData = [
+        $logoStructureData = [
             '@context'     => 'http://schema.org/',
             '@type'        => 'Organization',
             'url'          => $this->getUrl(),
@@ -786,7 +787,7 @@ class SeoRender
             'contactPoint' => []
         ];
         if (!empty($this->getSocialProfiles())) {
-            $businessStructuredData['sameAs'] = $this->getSocialProfiles();
+            $logoStructureData['sameAs'] = $this->getSocialProfiles();
         }
 
         // get customer service info
@@ -794,7 +795,7 @@ class SeoRender
             || $this->helperData->getInfoConfig('customer_service_contact_option')
             || $this->helperData->getInfoConfig('customer_service_area_serve')
         ) {
-            $businessStructuredData['contactPoint'][] = [
+            $logoStructureData['contactPoint'][] = [
                 '@type'         => 'ContactPoint',
                 'telephone'     => $this->helperData->getInfoConfig('customer_service_phone'),
                 'contactType'   => 'customer service',
@@ -807,7 +808,7 @@ class SeoRender
             || $this->helperData->getInfoConfig('technical_support_contact_option')
             || $this->helperData->getInfoConfig('technical_support_area_serve')
         ) {
-            $businessStructuredData['contactPoint'][] = [
+            $logoStructureData['contactPoint'][] = [
                 '@type'         => 'ContactPoint',
                 'telephone'     => $this->helperData->getInfoConfig('technical_support_phone'),
                 'contactType'   => 'technical support',
@@ -820,7 +821,7 @@ class SeoRender
             || $this->helperData->getInfoConfig('sales_contact_option')
             || $this->helperData->getInfoConfig('sales_area_serve')
         ) {
-            $businessStructuredData['contactPoint'][] = [
+            $logoStructureData['contactPoint'][] = [
                 '@type'         => 'ContactPoint',
                 'telephone'     => $this->helperData->getInfoConfig('sales_phone'),
                 'contactType'   => 'sales',
@@ -830,8 +831,50 @@ class SeoRender
         }
 
         return $this->helperData->createStructuredData(
-            $businessStructuredData,
-            '<!-- Business Structured Data by Mageplaza SEO-->'
+            $logoStructureData,
+            '<!-- Logo Structured Data by Mageplaza SEO-->'
+        );
+    }
+
+    /**
+     * Get Local Bussiness Structure data.
+     *
+     * @return string
+     * @throws NoSuchEntityException
+     */
+    public function showLocalBussinessStructureData()
+    {
+        $localBussinessStructureData = [
+            '@context'    => 'http://schema.org/',
+            '@type'       => 'Store',
+            'name'        => $this->helperData->getInfoConfig('business_name'),
+            'address'     => [
+                '@type'           => 'PostalAddress',
+                'streetAddress'   => $this->helperData->getInfoConfig('street_address'),
+                'addressLocality' => $this->helperData->getInfoConfig('city'),
+                'addressRegion'   => $this->helperData->getInfoConfig('state_province'),
+                'addressCountry'  => $this->helperData->getConfigValue('general/country/default'),
+                'postalCode'      => $this->helperData->getInfoConfig('zip_code'),
+                'email'           => $this->helperData->getInfoConfig('email'),
+                'faxNumber'       => $this->helperData->getInfoConfig('fax')
+            ],
+            'telephone'       => $this->helperData->getInfoConfig('customer_service_phone'),
+            'priceRange'  => $this->helperData->getInfoConfig('price_range'),
+            'description' => $this->helperData->getInfoConfig('description')
+        ];
+
+        $bussinessImages = $this->helperData->getInfoConfig('image_url')
+            ? explode(',', $this->helperData->getInfoConfig('image_url')) : [];
+        if ($this->helperData->getInfoConfig('image')) {
+            $image             = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+                . 'mageplaza/seo/' . $this->helperData->getInfoConfig('image');
+            $bussinessImages[] = $image;
+        }
+        $localBussinessStructureData['image'] = $bussinessImages;
+
+        return $this->helperData->createStructuredData(
+            $localBussinessStructureData,
+            '<!-- Local Bussiness Structured Data by Mageplaza SEO-->'
         );
     }
 

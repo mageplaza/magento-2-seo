@@ -181,6 +181,69 @@
                         <field id="enable">1</field>
                     </depends>
                 </field>
+                <field id="image" translate="label comment" type="image" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Image</label>
+                    <backend_model>Mageplaza\Seo\Model\Config\Backend\BussinessImage</backend_model>
+                    <base_url type="media" scope_info="1">mageplaza/seo</base_url>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="image_url" translate="label" type="textarea" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Image URL</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="street_address" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Street Address</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="city" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>City</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="state_province" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>State/Province</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="zip_code" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Zip/Postal Code</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="email" translate="label" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="fax" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Fax</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="price_range" translate="label" type="text" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Price Range</label>
+                    <comment><![CDATA[Select the price range in which the business operates. Example: $10-$5000.]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="description" translate="label" type="textarea" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Description</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
             </group>
             <!--Social Profiles-->
             <group id="social_profiles" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
