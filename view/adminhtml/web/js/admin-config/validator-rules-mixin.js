@@ -27,7 +27,10 @@ define([
             'validate-phone-number',
             function (value) {
                 var regex = new RegExp(/^\+(?:\d(?:\(\d{3}\)|-\d{3})-\d{3}-(?:\d{2}-\d{2}|\d{4})|\d{11})$/);
-                return !(regex.match(value));
+                if (value.length) {
+                    return regex.match(value);
+                }
+                return true;
             },
             $.mage.__('Please enter a valid phone number')
         );
