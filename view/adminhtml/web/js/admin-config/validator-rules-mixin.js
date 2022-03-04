@@ -26,7 +26,7 @@ define([
         $.validator.addMethod(
             'validate-phone-number',
             function (value) {
-                var regex = new RegExp(/^\+(?:\d(?:\(\d{3}\)|-\d{3})-\d{3}-(?:\d{2}-\d{2}|\d{4})|\d{11})$/);
+                var regex = new RegExp(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/);
                 if (value.length) {
                     return regex.match(value);
                 }
