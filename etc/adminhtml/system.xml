@@ -136,6 +136,7 @@
                 </field>
                 <field id="customer_service_phone" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Customer Service Phone</label>
+                    <validate>validate-phone-number</validate>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
@@ -154,6 +155,7 @@
                 </field>
                 <field id="technical_support_phone" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Technical Support Phone</label>
+                    <validate>validate-phone-number</validate>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
@@ -172,6 +174,7 @@
                 </field>
                 <field id="sales_phone" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Sales Service Phone</label>
+                    <validate>validate-phone-number</validate>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
@@ -228,12 +231,14 @@
                 </field>
                 <field id="email" translate="label" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Email</label>
+                    <validate>validate-email</validate>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
                 </field>
                 <field id="fax" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Fax</label>
+                    <validate>validate-fax</validate>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
