@@ -863,8 +863,7 @@ class SeoRender
             'description' => $this->helperData->getInfoConfig('description')
         ];
 
-        $bussinessImages = $this->helperData->getInfoConfig('image_url')
-            ? explode(',', $this->helperData->getInfoConfig('image_url')) : [];
+        $bussinessImages = $this->getBussinessImageUrlConfig();
         if ($this->helperData->getInfoConfig('image')) {
             $image             = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'mageplaza/seo/' . $this->helperData->getInfoConfig('image');
@@ -876,6 +875,20 @@ class SeoRender
             $localBussinessStructureData,
             '<!-- Local Bussiness Structured Data by Mageplaza SEO-->'
         );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBussinessImageUrlConfig()
+    {
+        if ($this->helperData->getInfoConfig('image_url')) {
+            return array_map('trim', explode(
+                "\n",
+                $this->helperData->getInfoConfig('image_url')
+            ));
+        }
+        return [];
     }
 
     /**
