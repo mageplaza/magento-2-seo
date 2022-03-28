@@ -43,7 +43,7 @@ class BussinessType implements ArrayInterface
             ['label' => __('Computer Store'), 'value' => 'ComputerStore'],
             ['label' => __('Convenience Store'), 'value' => 'ConvenienceStore'],
             ['label' => __('Department Store'), 'value' => 'DepartmentStore'],
-            ['label' => __('Electronics Store'), 'value' => 'Electronics Store'],
+            ['label' => __('Electronics Store'), 'value' => 'ElectronicsStore'],
             ['label' => __('Florist'), 'value' => 'Florist'],
             ['label' => __('Furniture Store'), 'value' => 'FurnitureStore'],
             ['label' => __('Garden Store'), 'value' => 'GardenStore'],
