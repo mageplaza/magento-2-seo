@@ -4,7 +4,11 @@ namespace Mageplaza\Seo\Model\Config\Backend;
 
 use Magento\Config\Model\Config\Backend\Image;
 
-class BussinessImage extends Image
+/**
+ * Class BusinessImage
+ * @package Mageplaza\Seo\Model\Config\Source
+ */
+class BusinessImage extends Image
 {
     /**
      * The tail part of directory path for uploading

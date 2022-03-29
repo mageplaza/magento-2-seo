@@ -193,7 +193,7 @@
                 </field>
                 <field id="image" translate="label comment" type="image" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Image</label>
-                    <backend_model>Mageplaza\Seo\Model\Config\Backend\BussinessImage</backend_model>
+                    <backend_model>Mageplaza\Seo\Model\Config\Backend\BusinessImage</backend_model>
                     <base_url type="media" scope_info="1">mageplaza/seo</base_url>
                     <depends>
                         <field id="enable">1</field>
