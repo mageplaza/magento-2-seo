@@ -128,8 +128,8 @@
                     </depends>
                 </field>
                 <field id="business_type" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Bussiness Type</label>
-                    <source_model>Mageplaza\Seo\Model\Config\Source\BussinessType</source_model>
+                    <label>Business Type</label>
+                    <source_model>Mageplaza\Seo\Model\Config\Source\BusinessType</source_model>
                     <depends>
                         <field id="enable">1</field>
                     </depends>

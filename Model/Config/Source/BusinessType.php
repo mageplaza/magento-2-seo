@@ -24,10 +24,10 @@ namespace Mageplaza\Seo\Model\Config\Source;
 use Magento\Framework\Option\ArrayInterface;
 
 /**
- * Class BussinessType
+ * Class BusinessType
  * @package Mageplaza\Seo\Model\Config\Source
  */
-class BussinessType implements ArrayInterface
+class BusinessType implements ArrayInterface
 {
     /**
      * @return array
@@ -35,7 +35,7 @@ class BussinessType implements ArrayInterface
     public function toOptionArray()
     {
         return [
-            ['label' => __('Local Bussiness'), 'value' => 'LocalBussiness'],
+            ['label' => __('Local Business'), 'value' => 'LocalBusiness'],
             ['label' => __('Auto Parts Store'), 'value' => 'AutoPartsStore'],
             ['label' => __('Bike Store'), 'value' => 'BikeStore'],
             ['label' => __('Book Store'), 'value' => 'BookStore'],
