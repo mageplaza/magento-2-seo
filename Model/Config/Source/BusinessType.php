@@ -45,7 +45,7 @@ class BusinessType implements ArrayInterface
             ['label' => __('Convenience Store'), 'value' => 'ConvenienceStore'],
             ['label' => __('Department Store'), 'value' => 'DepartmentStore'],
             ['label' => __('Electronics Store'), 'value' => 'ElectronicsStore'],
-            ['label' => __('Florist'), 'value' => 'Florist'],
+            ['label' => __('Florist Store'), 'value' => 'Florist'],
             ['label' => __('Furniture Store'), 'value' => 'FurnitureStore'],
             ['label' => __('Garden Store'), 'value' => 'GardenStore'],
             ['label' => __('Grocery Store'), 'value' => 'GroceryStore'],
