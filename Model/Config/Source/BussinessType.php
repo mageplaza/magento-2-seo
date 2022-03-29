@@ -35,7 +35,7 @@ class BussinessType implements ArrayInterface
     public function toOptionArray()
     {
         return [
-            ['label' => __('Local Bussiness'), 'value' => 'LocalBussiness'],
+            ['label' => __('Local Business'), 'value' => 'LocalBusiness'],
             ['label' => __('Auto Parts Store'), 'value' => 'AutoPartsStore'],
             ['label' => __('Bike Store'), 'value' => 'BikeStore'],
             ['label' => __('Book Store'), 'value' => 'BookStore'],
