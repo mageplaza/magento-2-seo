@@ -24,10 +24,10 @@ namespace Mageplaza\Seo\Model\Config\Source;
 use Magento\Framework\Option\ArrayInterface;
 
 /**
- * Class BussinessType
+ * Class BusinessType
  * @package Mageplaza\Seo\Model\Config\Source
  */
-class BussinessType implements ArrayInterface
+class BusinessType implements ArrayInterface
 {
     /**
      * @return array
