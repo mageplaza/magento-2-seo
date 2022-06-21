@@ -367,7 +367,7 @@ class SeoRender
                     '@context'    => 'http://schema.org/',
                     '@type'       => 'Product',
                     'name'        => $currentProduct->getName(),
-                    'description' => trim(strip_tags($currentProduct->getDescription())),
+                    'description' => $currentProduct->getDescription() ? trim(strip_tags($currentProduct->getDescription())) : '',
                     'sku'         => $currentProduct->getSku(),
                     'url'         => $currentProduct->getProductUrl(),
                     'image'       => $this->getUrl('pub/media/catalog') . 'product' . $currentProduct->getImage(),
@@ -579,11 +579,11 @@ class SeoRender
             $offerData[]     = [
                 '@type' => 'Offer',
                 'name'  => $child->getName(),
-                'price' => $this->_priceHelper->currency($child->getPrice(), false),
+                'price' => $this->_priceHelper->currency($child->getFinalPrice(), false),
                 'sku'   => $child->getSku(),
                 'image' => $imageUrl
             ];
-            $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
+            $childrenPrice[] = $this->_priceHelper->currency($child->getFinalPrice(), false);
         }
 
         $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
@@ -611,9 +611,9 @@ class SeoRender
     {
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
         try {
-            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
+            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('final_price')
                 ->getMaximalPrice()->getValue();
-            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
+            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('final_price')
                 ->getMinimalPrice()->getValue();
         } catch (Exception $exception) {
             $productStructuredData['offers']['highPrice'] = 0;
