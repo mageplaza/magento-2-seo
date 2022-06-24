@@ -117,7 +117,7 @@
             <group id="info" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Business information</label>
                 <field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable Business information</label>
+                    <label>Enable Business Information</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Learn more <a href="https://developers.google.com/search/docs/data-types/corporate-contacts" target="_blank">here</a> ]]></comment>
                 </field>
@@ -127,8 +127,16 @@
                         <field id="enable">1</field>
                     </depends>
                 </field>
+                <field id="business_type" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Business Type</label>
+                    <source_model>Mageplaza\Seo\Model\Config\Source\BusinessType</source_model>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
                 <field id="customer_service_phone" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Customer Service Phone</label>
+                    <validate>validate-phone-number</validate>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
@@ -147,6 +155,7 @@
                 </field>
                 <field id="technical_support_phone" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Technical Support Phone</label>
+                    <validate>validate-phone-number</validate>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
@@ -165,6 +174,7 @@
                 </field>
                 <field id="sales_phone" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Sales Service Phone</label>
+                    <validate>validate-phone-number</validate>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
@@ -177,6 +187,71 @@
                 </field>
                 <field id="sales_area_serve" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Sales Area Serve</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="image" translate="label comment" type="image" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Image</label>
+                    <backend_model>Mageplaza\Seo\Model\Config\Backend\BusinessImage</backend_model>
+                    <base_url type="media" scope_info="1">mageplaza/seo</base_url>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="image_url" translate="label" type="textarea" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Image URL</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="street_address" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Street Address</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="city" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>City</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="state_province" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>State/Province</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="zip_code" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Zip/Postal Code</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="email" translate="label" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email</label>
+                    <validate>validate-email</validate>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="fax" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Fax</label>
+                    <validate>validate-fax</validate>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="price_range" translate="label" type="text" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Price Range</label>
+                    <comment><![CDATA[Select the price range in which the business operates. Example: $10-$5000.]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="description" translate="label" type="textarea" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Description</label>
                     <depends>
                         <field id="enable">1</field>
                     </depends>

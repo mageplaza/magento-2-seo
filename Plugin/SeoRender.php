@@ -294,9 +294,10 @@ class SeoRender
 
     /**
      * @param Renderer $subject
-     * @param string   $result
+     * @param $result
      *
-     * @return string
+     * @return mixed|string
+     * @throws NoSuchEntityException
      */
     public function afterRenderHeadContent(Renderer $subject, $result)
     {
@@ -310,7 +311,8 @@ class SeoRender
                     break;
                 case 'cms_index_index':
                     if ($this->helperData->getInfoConfig('enable')) {
-                        $result .= $this->showBusinessStructuredData();
+                        $result .= $this->showLogoStructureData();
+                        $result .= $this->showLocalBussinessStructureData();
                     }
                     if ($this->helperData->getRichsnippetsConfig('enable_site_link')) {
                         $result .= $this->showSiteLinksStructuredData();
@@ -365,7 +367,7 @@ class SeoRender
                     '@context'    => 'http://schema.org/',
                     '@type'       => 'Product',
                     'name'        => $currentProduct->getName(),
-                    'description' => trim(strip_tags($currentProduct->getDescription())),
+                    'description' => $currentProduct->getDescription() ? trim(strip_tags($currentProduct->getDescription())) : '',
                     'sku'         => $currentProduct->getSku(),
                     'url'         => $currentProduct->getProductUrl(),
                     'image'       => $this->getUrl('pub/media/catalog') . 'product' . $currentProduct->getImage(),
@@ -555,12 +557,12 @@ class SeoRender
     }
 
     /**
-     * add Grouped Product Structured Data
+     * Add Grouped Product Structured Data
      *
      * @param Product $currentProduct
      * @param array   $productStructuredData
      *
-     * @return mixed
+     * @return array
      * @throws NoSuchEntityException
      */
     public function getGroupedProductStructuredData($currentProduct, $productStructuredData)
@@ -577,11 +579,11 @@ class SeoRender
             $offerData[]     = [
                 '@type' => 'Offer',
                 'name'  => $child->getName(),
-                'price' => $this->_priceHelper->currency($child->getPrice(), false),
+                'price' => $this->_priceHelper->currency($child->getFinalPrice(), false),
                 'sku'   => $child->getSku(),
                 'image' => $imageUrl
             ];
-            $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
+            $childrenPrice[] = $this->_priceHelper->currency($child->getFinalPrice(), false);
         }
 
         $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
@@ -597,21 +599,21 @@ class SeoRender
     }
 
     /**
-     * add Bundle Product Structured Data
+     * Add Bundle Product Structured Data
      *
      * @param Product $currentProduct
      * @param array   $productStructuredData
      *
-     * @return mixed
+     * @return array
      * @throws NoSuchEntityException
      */
     public function getBundleProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
         try {
-            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('regular_price')
+            $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('final_price')
                 ->getMaximalPrice()->getValue();
-            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('regular_price')
+            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('final_price')
                 ->getMinimalPrice()->getValue();
         } catch (Exception $exception) {
             $productStructuredData['offers']['highPrice'] = 0;
@@ -645,12 +647,12 @@ class SeoRender
     }
 
     /**
-     * add Downloadable Product Structured Data
+     * Add Downloadable Product Structured Data
      *
      * @param Product $currentProduct
      * @param array   $productStructuredData
      *
-     * @return mixed
+     * @return array
      */
     public function getDownloadableProductStructuredData($currentProduct, $productStructuredData)
     {
@@ -771,13 +773,13 @@ class SeoRender
     }
 
     /**
-     * get Business Structured Data
+     * Get Logo Structured Data
      *
      * @return string
      */
-    public function showBusinessStructuredData()
+    public function showLogoStructureData()
     {
-        $businessStructuredData = [
+        $logoStructureData = [
             '@context'     => 'http://schema.org/',
             '@type'        => 'Organization',
             'url'          => $this->getUrl(),
@@ -786,7 +788,7 @@ class SeoRender
             'contactPoint' => []
         ];
         if (!empty($this->getSocialProfiles())) {
-            $businessStructuredData['sameAs'] = $this->getSocialProfiles();
+            $logoStructureData['sameAs'] = $this->getSocialProfiles();
         }
 
         // get customer service info
@@ -794,7 +796,7 @@ class SeoRender
             || $this->helperData->getInfoConfig('customer_service_contact_option')
             || $this->helperData->getInfoConfig('customer_service_area_serve')
         ) {
-            $businessStructuredData['contactPoint'][] = [
+            $logoStructureData['contactPoint'][] = [
                 '@type'         => 'ContactPoint',
                 'telephone'     => $this->helperData->getInfoConfig('customer_service_phone'),
                 'contactType'   => 'customer service',
@@ -807,7 +809,7 @@ class SeoRender
             || $this->helperData->getInfoConfig('technical_support_contact_option')
             || $this->helperData->getInfoConfig('technical_support_area_serve')
         ) {
-            $businessStructuredData['contactPoint'][] = [
+            $logoStructureData['contactPoint'][] = [
                 '@type'         => 'ContactPoint',
                 'telephone'     => $this->helperData->getInfoConfig('technical_support_phone'),
                 'contactType'   => 'technical support',
@@ -820,7 +822,7 @@ class SeoRender
             || $this->helperData->getInfoConfig('sales_contact_option')
             || $this->helperData->getInfoConfig('sales_area_serve')
         ) {
-            $businessStructuredData['contactPoint'][] = [
+            $logoStructureData['contactPoint'][] = [
                 '@type'         => 'ContactPoint',
                 'telephone'     => $this->helperData->getInfoConfig('sales_phone'),
                 'contactType'   => 'sales',
@@ -830,9 +832,64 @@ class SeoRender
         }
 
         return $this->helperData->createStructuredData(
-            $businessStructuredData,
-            '<!-- Business Structured Data by Mageplaza SEO-->'
+            $logoStructureData,
+            '<!-- Logo Structured Data by Mageplaza SEO-->'
         );
+    }
+
+    /**
+     * Get Local Bussiness Structure data.
+     *
+     * @return string
+     * @throws NoSuchEntityException
+     */
+    public function showLocalBussinessStructureData()
+    {
+        $localBussinessStructureData = [
+            '@context'    => 'http://schema.org/',
+            '@type'       => $this->helperData->getInfoConfig('business_type'),
+            'name'        => $this->helperData->getInfoConfig('business_name'),
+            'address'     => [
+                '@type'           => 'PostalAddress',
+                'streetAddress'   => $this->helperData->getInfoConfig('street_address'),
+                'addressLocality' => $this->helperData->getInfoConfig('city'),
+                'addressRegion'   => $this->helperData->getInfoConfig('state_province'),
+                'addressCountry'  => $this->helperData->getConfigValue('general/country/default'),
+                'postalCode'      => $this->helperData->getInfoConfig('zip_code'),
+                'email'           => $this->helperData->getInfoConfig('email'),
+                'faxNumber'       => $this->helperData->getInfoConfig('fax')
+            ],
+            'telephone'   => $this->helperData->getInfoConfig('customer_service_phone'),
+            'priceRange'  => $this->helperData->getInfoConfig('price_range'),
+            'description' => $this->helperData->getInfoConfig('description')
+        ];
+
+        $bussinessImages = $this->getBussinessImageUrlConfig();
+        if ($this->helperData->getInfoConfig('image')) {
+            $image             = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+                . 'mageplaza/seo/' . $this->helperData->getInfoConfig('image');
+            $bussinessImages[] = $image;
+        }
+        $localBussinessStructureData['image'] = $bussinessImages;
+
+        return $this->helperData->createStructuredData(
+            $localBussinessStructureData,
+            '<!-- Local Bussiness Structured Data by Mageplaza SEO-->'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBussinessImageUrlConfig()
+    {
+        if ($this->helperData->getInfoConfig('image_url')) {
+            return array_map('trim', explode(
+                "\n",
+                $this->helperData->getInfoConfig('image_url')
+            ));
+        }
+        return [];
     }
 
     /**
