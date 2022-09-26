@@ -357,11 +357,13 @@ class SeoRender
                 );
 
                 if ($sourceItemList = $this->sourceItemsBySku->execute($product->getSku())) {
-                    $stockQty = [];
+                    $stockQty = 0;
                     foreach ($sourceItemList as $source) {
-                        $stockQty[] = (int) $source['quantity'];
+                        if ($source->getSourceCode() != 'default') {
+                            $stockQty += (int) $source['quantity'];
+                        }
                     }
-                    $stockItem = max($stockQty);
+                    $stockItem = $stockQty;
                 }
 
                 $priceValidUntil = $currentProduct->getSpecialToDate();

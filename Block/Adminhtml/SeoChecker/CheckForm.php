@@ -24,7 +24,7 @@ namespace Mageplaza\Seo\Block\Adminhtml\SeoChecker;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\ProductFactory;
-use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
+use Magento\Cms\Helper\Page;
 use Magento\Cms\Model\PageFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Template;
@@ -45,7 +45,7 @@ class CheckForm extends Template
     protected $_template = 'seocheck.phtml';
 
     /**
-     * @var UrlBuilder
+     * @var Page
      */
     protected $cmsUrl;
 
@@ -88,7 +88,7 @@ class CheckForm extends Template
      */
     public function __construct(
         Context                     $context,
-        UrlBuilder                  $cmsUrl,
+        Page                        $cmsUrl,
         PageFactory                 $cmsPageFactory,
         ProductFactory              $productFactory,
         ProductRepositoryInterface  $productRepository,
@@ -115,13 +115,11 @@ class CheckForm extends Template
     public function getLink()
     {
         $id         = $this->_request->getParam('id');
-        $storeCode  = $this->_storeManager->getStore()->getCode();
         $storeId    = $this->_request->getParam('store');
         $actionName = $this->_request->getFullActionName();
         if ($storeId === 0 || $storeId === null) {
             $defaultStore = $this->_storeManager->getDefaultStoreView();
             $storeId      = $defaultStore->getId();
-            $storeCode    = $defaultStore->getCode();
         }
         switch ($actionName) {
             case 'catalog_product_edit':
@@ -135,11 +133,7 @@ class CheckForm extends Template
                 break;
             case 'cms_page_edit':
                 $pageId = $this->_request->getParam('page_id');
-                $url    = $this->cmsUrl->getUrl(
-                    $this->cmsPageFactory->create()->load($pageId)->getIdentifier(),
-                    $storeId,
-                    $storeCode
-                );
+                $url    = $this->cmsUrl->getPageUrl($pageId);
                 break;
             default:
                 $url = '';
