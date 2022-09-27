@@ -28,6 +28,7 @@ use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
+use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\DataObject;
 use Magento\Framework\Event\Manager;
@@ -52,6 +53,8 @@ use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
 use Mageplaza\Seo\Model\Config\Source\PriceValidUntil;
 use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface as SourceItems;
+use Magento\InventorySales\Model\ResourceModel\GetAssignedStockIdForWebsite as AssignedStock;
+use Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku as SalableQuantity;
 
 /**
  * Class SeoRender
@@ -176,6 +179,16 @@ class SeoRender
     protected  $sourceItemsBySku;
 
     /**
+     * @var AssignedStock
+     */
+    protected  $assignedStock;
+
+    /**
+     * @var SalableQuantity
+     */
+    protected  $salableQuantity;
+
+    /**
      * SeoRender constructor.
      *
      * @param PageConfig $pageConfig
@@ -200,6 +213,8 @@ class SeoRender
      * @param ReviewResourceModel $reviewResourceModel
      * @param CollectionFactory $collectionFactory
      * @param SourceItems $sourceItemsBySku
+     * @param AssignedStock $assignedStock
+     * @param SalableQuantity $salableQuantity
      */
     public function __construct(
         PageConfig             $pageConfig,
@@ -223,7 +238,9 @@ class SeoRender
         RatingFactory          $ratingFactory,
         ReviewResourceModel    $reviewResourceModel,
         CollectionFactory      $collectionFactory,
-        SourceItems            $sourceItemsBySku
+        SourceItems            $sourceItemsBySku,
+        AssignedStock          $assignedStock,
+        SalableQuantity        $salableQuantity
     ) {
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
@@ -247,6 +264,8 @@ class SeoRender
         $this->reviewResourceModel = $reviewResourceModel;
         $this->collectionFactory   = $collectionFactory;
         $this->sourceItemsBySku    = $sourceItemsBySku;
+        $this->assignedStock       = $assignedStock;
+        $this->salableQuantity     = $salableQuantity;
     }
 
     /**
@@ -357,13 +376,32 @@ class SeoRender
                 );
 
                 if ($sourceItemList = $this->sourceItemsBySku->execute($product->getSku())) {
-                    $stockQty = 0;
-                    foreach ($sourceItemList as $source) {
-                        if ($source->getSourceCode() != 'default') {
-                            $stockQty += (int) $source['quantity'];
+                    $stockQty        = 0;
+                    $websiteCode     = $this->_storeManager->getWebsite()->getCode();
+                    $assignedStockId = $this->assignedStock->execute($websiteCode);
+
+                    if ($product->getTypeId() === Configurable::TYPE_CODE) {
+                        $typeInstance           = $product->getTypeInstance();
+                        $childProductCollection = $typeInstance->getUsedProducts($product);
+                        foreach ($childProductCollection as $childProduct) {
+                            $qty = $this->salableQuantity->execute($childProduct->getSku());
+                            foreach ($qty as $value) {
+                                if ($value['stock_id'] == $assignedStockId) {
+                                    $stockQty += isset($value['qty']) ? $value['qty'] : 0;
+                                }
+                            }
                         }
+                    } else {
+                        $qty = $this->salableQuantity->execute($product->getSku());
+                        foreach ($qty as $value) {
+                            if ($value['stock_id'] == $assignedStockId) {
+                                $stockQty += isset($value['qty']) ? $value['qty'] : 0;
+                            }
+                        }
+
                     }
-                    $stockItem = $stockQty;
+
+                    $stockItem = (int)$stockQty;
                 }
 
                 $priceValidUntil = $currentProduct->getSpecialToDate();
