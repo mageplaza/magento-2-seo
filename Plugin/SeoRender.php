@@ -28,6 +28,7 @@ use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
+use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\DataObject;
 use Magento\Framework\Event\Manager;
@@ -51,6 +52,9 @@ use Magento\Search\Helper\Data as SearchHelper;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
 use Mageplaza\Seo\Model\Config\Source\PriceValidUntil;
+use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface as SourceItems;
+use Magento\InventorySales\Model\ResourceModel\GetAssignedStockIdForWebsite as AssignedStock;
+use Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku as SalableQuantity;
 
 /**
  * Class SeoRender
@@ -170,29 +174,47 @@ class SeoRender
     protected $collectionFactory;
 
     /**
+     * @var SourceItems
+     */
+    protected  $sourceItemsBySku;
+
+    /**
+     * @var AssignedStock
+     */
+    protected  $assignedStock;
+
+    /**
+     * @var SalableQuantity
+     */
+    protected  $salableQuantity;
+
+    /**
      * SeoRender constructor.
      *
-     * @param PageConfig             $pageConfig
-     * @param Http                   $request
-     * @param HelperData             $helpData
-     * @param StockItemRepository    $stockItemRepository
-     * @param Registry               $registry
-     * @param ReviewFactory          $reviewFactory
-     * @param StoreManagerInterface  $storeManager
-     * @param UrlInterface           $urlBuilder
-     * @param ProductFactory         $productFactory
-     * @param ManagerInterface       $messageManager
+     * @param PageConfig $pageConfig
+     * @param Http $request
+     * @param HelperData $helpData
+     * @param StockItemRepository $stockItemRepository
+     * @param Registry $registry
+     * @param ReviewFactory $reviewFactory
+     * @param StoreManagerInterface $storeManager
+     * @param UrlInterface $urlBuilder
+     * @param ProductFactory $productFactory
+     * @param ManagerInterface $messageManager
      * @param StockRegistryInterface $stockState
-     * @param SearchHelper           $searchHelper
-     * @param PriceHelper            $priceHelper
-     * @param Manager                $eventManager
-     * @param DateTime               $dateTime
-     * @param TimezoneInterface      $timeZoneInterface
-     * @param ReviewCollection       $reviewCollection
-     * @param ModuleManager          $moduleManager
-     * @param RatingFactory          $ratingFactory
-     * @param ReviewResourceModel    $reviewResourceModel
-     * @param CollectionFactory      $collectionFactory
+     * @param SearchHelper $searchHelper
+     * @param PriceHelper $priceHelper
+     * @param Manager $eventManager
+     * @param DateTime $dateTime
+     * @param TimezoneInterface $timeZoneInterface
+     * @param ReviewCollection $reviewCollection
+     * @param ModuleManager $moduleManager
+     * @param RatingFactory $ratingFactory
+     * @param ReviewResourceModel $reviewResourceModel
+     * @param CollectionFactory $collectionFactory
+     * @param SourceItems $sourceItemsBySku
+     * @param AssignedStock $assignedStock
+     * @param SalableQuantity $salableQuantity
      */
     public function __construct(
         PageConfig             $pageConfig,
@@ -215,7 +237,10 @@ class SeoRender
         ModuleManager          $moduleManager,
         RatingFactory          $ratingFactory,
         ReviewResourceModel    $reviewResourceModel,
-        CollectionFactory      $collectionFactory
+        CollectionFactory      $collectionFactory,
+        SourceItems            $sourceItemsBySku,
+        AssignedStock          $assignedStock,
+        SalableQuantity        $salableQuantity
     ) {
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
@@ -238,6 +263,9 @@ class SeoRender
         $this->ratingFactory       = $ratingFactory;
         $this->reviewResourceModel = $reviewResourceModel;
         $this->collectionFactory   = $collectionFactory;
+        $this->sourceItemsBySku    = $sourceItemsBySku;
+        $this->assignedStock       = $assignedStock;
+        $this->salableQuantity     = $salableQuantity;
     }
 
     /**
@@ -346,6 +374,36 @@ class SeoRender
                     $product->getId(),
                     $product->getStore()->getWebsiteId()
                 );
+
+                if ($sourceItemList = $this->sourceItemsBySku->execute($product->getSku())) {
+                    $stockQty        = 0;
+                    $websiteCode     = $this->_storeManager->getWebsite()->getCode();
+                    $assignedStockId = $this->assignedStock->execute($websiteCode);
+
+                    if ($product->getTypeId() === Configurable::TYPE_CODE) {
+                        $typeInstance           = $product->getTypeInstance();
+                        $childProductCollection = $typeInstance->getUsedProducts($product);
+                        foreach ($childProductCollection as $childProduct) {
+                            $qty = $this->salableQuantity->execute($childProduct->getSku());
+                            foreach ($qty as $value) {
+                                if ($value['stock_id'] == $assignedStockId) {
+                                    $stockQty += isset($value['qty']) ? $value['qty'] : 0;
+                                }
+                            }
+                        }
+                    } else {
+                        $qty = $this->salableQuantity->execute($product->getSku());
+                        foreach ($qty as $value) {
+                            if ($value['stock_id'] == $assignedStockId) {
+                                $stockQty += isset($value['qty']) ? $value['qty'] : 0;
+                            }
+                        }
+
+                    }
+
+                    $stockItem = (int)$stockQty;
+                }
+
                 $priceValidUntil = $currentProduct->getSpecialToDate();
                 $modelAttribute  = $this->helperData->getRichsnippetsConfig('model_value');
                 $modelValue      = $product->getResource()
@@ -370,12 +428,12 @@ class SeoRender
                     'description' => $currentProduct->getDescription() ? trim(strip_tags($currentProduct->getDescription())) : '',
                     'sku'         => $currentProduct->getSku(),
                     'url'         => $currentProduct->getProductUrl(),
-                    'image'       => $this->getUrl('pub/media/catalog') . 'product' . $currentProduct->getImage(),
+                    'image'       => $this->getUrl('/media/catalog') . 'product' . $currentProduct->getImage(),
                     'offers'      => [
                         '@type'         => 'Offer',
                         'priceCurrency' => $this->_storeManager->getStore()->getCurrentCurrencyCode(),
                         'price'         => $currentProduct->getPriceInfo()->getPrice('final_price')->getValue(),
-                        'itemOffered'   => $stockItem->getQty(),
+                        'itemOffered'   => is_integer($stockItem) ? $stockItem : $stockItem->getQty(),
                         'availability'  => 'http://schema.org/' . $availability,
                         'url'           => $currentProduct->getProductUrl()
                     ],
