@@ -516,7 +516,7 @@ class SeoRender
                         ];
                         if ($review->getRatingVotes()->getData()) {
                             $ratingVotes                = $review->getRatingVotes()->getData();
-                            $vote                       = array_first($ratingVotes);
+                            $vote                       = current($ratingVotes);
                             $reviewData['reviewRating'] = [
                                 '@type'       => 'Rating',
                                 'ratingValue' => $vote['percent'],
