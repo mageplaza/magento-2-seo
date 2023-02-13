@@ -2,7 +2,7 @@
   "name": "mageplaza/magento-2-seo-extension",
   "description": "Magento 2 SEO extension",
   "require": {
-    "mageplaza/module-core": "^1.5.1"
+    "mageplaza/module-core": "^1.5.2"
   },
   "type": "magento2-module",
   "version": "4.2.2",
