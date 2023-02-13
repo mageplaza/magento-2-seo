@@ -55,6 +55,7 @@ use Mageplaza\Seo\Model\Config\Source\PriceValidUntil;
 use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface as SourceItems;
 use Magento\InventorySales\Model\ResourceModel\GetAssignedStockIdForWebsite as AssignedStock;
 use Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku as SalableQuantity;
+use Magento\Catalog\Helper\Image as ImageHelper;
 
 /**
  * Class SeoRender
@@ -189,6 +190,11 @@ class SeoRender
     protected  $salableQuantity;
 
     /**
+     * @var ImageHelper
+     */
+    protected $imageHelper;
+
+    /**
      * SeoRender constructor.
      *
      * @param PageConfig $pageConfig
@@ -215,6 +221,7 @@ class SeoRender
      * @param SourceItems $sourceItemsBySku
      * @param AssignedStock $assignedStock
      * @param SalableQuantity $salableQuantity
+     * @param ImageHelper $imageHelper
      */
     public function __construct(
         PageConfig             $pageConfig,
@@ -240,7 +247,8 @@ class SeoRender
         CollectionFactory      $collectionFactory,
         SourceItems            $sourceItemsBySku,
         AssignedStock          $assignedStock,
-        SalableQuantity        $salableQuantity
+        SalableQuantity        $salableQuantity,
+        ImageHelper            $imageHelper
     ) {
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
@@ -266,6 +274,7 @@ class SeoRender
         $this->sourceItemsBySku    = $sourceItemsBySku;
         $this->assignedStock       = $assignedStock;
         $this->salableQuantity     = $salableQuantity;
+        $this->imageHelper         = $imageHelper;
     }
 
     /**
@@ -421,6 +430,12 @@ class SeoRender
                 }
                 $modelName = $this->helperData->getRichsnippetsConfig('model_name');
 
+                if($currentProduct->getImage()) {
+                    $imageUrl = $this->getUrl('pub/media/catalog') . 'product' . $currentProduct->getImage();
+                }else {
+                    $imageUrl         = $this->imageHelper->init($currentProduct,'product_base_image')->getUrl();
+                }
+
                 $productStructuredData = [
                     '@context'    => 'http://schema.org/',
                     '@type'       => 'Product',
@@ -428,7 +443,7 @@ class SeoRender
                     'description' => $currentProduct->getDescription() ? trim(strip_tags($currentProduct->getDescription())) : '',
                     'sku'         => $currentProduct->getSku(),
                     'url'         => $currentProduct->getProductUrl(),
-                    'image'       => $this->getUrl('/media/catalog') . 'product' . $currentProduct->getImage(),
+                    'image'       => $imageUrl,
                     'offers'      => [
                         '@type'         => 'Offer',
                         'priceCurrency' => $this->_storeManager->getStore()->getCurrentCurrencyCode(),
@@ -504,6 +519,8 @@ class SeoRender
                     )->addEntityFilter(
                         'product',
                         $product->getId()
+                    )->addStoreFilter(
+                        $this->_storeManager->getStore()->getId()
                     )->addRateVotes()->setDateOrder();
                 if ($collection->getSize()) {
                     foreach ($collection as $review) {
@@ -631,8 +648,13 @@ class SeoRender
         $typeInstance                             = $currentProduct->getTypeInstance();
         $childProductCollection                   = $typeInstance->getAssociatedProducts($currentProduct);
         foreach ($childProductCollection as $child) {
-            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
+
+            if($child->getImage()) {
+                $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+                    . 'catalog/product' . $child->getImage();
+            }else {
+                $imageUrl         = $this->imageHelper->init($child,'product_base_image')->getUrl();
+            }
 
             $offerData[]     = [
                 '@type' => 'Offer',
@@ -685,9 +707,12 @@ class SeoRender
             $currentProduct
         );
         foreach ($childProductCollection as $child) {
-            $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
-
+            if($child->getImage()) {
+                $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+                    . 'catalog/product' . $child->getImage();
+            }else {
+                $imageUrl         = $this->imageHelper->init($child,'product_base_image')->getUrl();
+            }
             $offerData[] = [
                 '@type' => 'Offer',
                 'name'  => $child->getName(),
@@ -755,8 +780,13 @@ class SeoRender
             ->addAttributeToSelect('*');
         $allChildPrices                           = [];
         foreach ($childProductCollection as $child) {
-            $imageUrl         = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                . 'catalog/product' . $child->getImage();
+
+            if($child->getImage()) {
+                $imageUrl         = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+                    . 'catalog/product' . $child->getImage();
+            }else {
+                $imageUrl         = $this->imageHelper->init($child,'product_base_image')->getUrl();
+            }
             $childPrice       = $this->_priceHelper->currency($child->getPrice(), false);
             $allChildPrices[] = $childPrice;
             $offerData[]      = [
