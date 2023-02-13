@@ -1,4 +1,36 @@
-"Check On-page","Check On-page"
+"PageSpeed Insight","PageSpeed Insight"
+Store,Store
+"Local Business","Local Business"
+"Auto Parts Store","Auto Parts Store"
+"Bike Store","Bike Store"
+"Book Store","Book Store"
+"Clothing Store","Clothing Store"
+"Computer Store","Computer Store"
+"Convenience Store","Convenience Store"
+"Department Store","Department Store"
+"Electronics Store","Electronics Store"
+"Florist Store","Florist Store"
+"Furniture Store","Furniture Store"
+"Garden Store","Garden Store"
+"Grocery Store","Grocery Store"
+"Hardware Store","Hardware Store"
+"Hobby Shop","Hobby Shop"
+"Home Goods Store","Home Goods Store"
+"Jewelry Store","Jewelry Store"
+"Liquor Store","Liquor Store"
+"Mens Clothing Store","Mens Clothing Store"
+"Mobile Phone Store","Mobile Phone Store"
+"Movie Rental Store","Movie Rental Store"
+"Music Store","Music Store"
+"Office Equipment Store","Office Equipment Store"
+"Outlet Store","Outlet Store"
+"Pawn Shop","Pawn Shop"
+"Pet Store","Pet Store"
+"Shoe Store","Shoe Store"
+"Sporting Goods Store","Sporting Goods Store"
+"Tire Shop","Tire Shop"
+"Toy Store","Toy Store"
+"Wholesale Store","Wholesale Store"
 gtin8,gtin8
 gtin13,gtin13
 gtin14,gtin14
@@ -10,6 +42,7 @@ None,None
 "+1 year","+1 year"
 Custom,Custom
 "Can not add structured data","Can not add structured data"
+"Please enter a valid phone number","Please enter a valid phone number"
 SEO,SEO
 General,General
 Enable,Enable
@@ -21,11 +54,6 @@ Enable,Enable
 "Enable Product Structured Data","Enable Product Structured Data"
 "Disable this feature if your theme or module implements it's own product snippets. <a href=""https://developers.google.com/search/docs/data-types/products"" target=""_blank"">Learn more</a>","Disable this feature if your theme or module implements it's own product snippets. <a href=""https://developers.google.com/search/docs/data-types/products"" target=""_blank"">Learn more</a>"
 Brand,Brand
-"Default Aggregate Rating Value","Default Aggregate Rating Value"
-"To avoid warning message, you can set default value in case of no Aggregate Rating/Review.","To avoid warning message, you can set default value in case of no Aggregate Rating/Review."
-"Default Rating Value","Default Rating Value"
-"Default Review Count","Default Review Count"
-"Default Review Author","Default Review Author"
 "Default Price Valid Until","Default Price Valid Until"
 "Select Specific Day","Select Specific Day"
 "Model Field Name","Model Field Name"
@@ -35,9 +63,10 @@ Brand,Brand
 "Enable Sitelinks Searchbox","Enable Sitelinks Searchbox"
 "Learn more <a href=""https://developers.google.com/search/docs/data-types/sitelinks-searchbox"" target=""_blank"">here</a>","Learn more <a href=""https://developers.google.com/search/docs/data-types/sitelinks-searchbox"" target=""_blank"">here</a>"
 "Business information","Business information"
-"Enable Business information","Enable Business information"
+"Enable Business Information","Enable Business Information"
 "Learn more <a href=""https://developers.google.com/search/docs/data-types/corporate-contacts"" target=""_blank"">here</a>","Learn more <a href=""https://developers.google.com/search/docs/data-types/corporate-contacts"" target=""_blank"">here</a>"
 "Business Name","Business Name"
+"Business Type","Business Type"
 "Customer Service Phone","Customer Service Phone"
 "Customer Service Contact Option","Customer Service Contact Option"
 "Customer Service Area Serve","Customer Service Area Serve"
@@ -47,6 +76,16 @@ Brand,Brand
 "Sales Service Phone","Sales Service Phone"
 "Sales Contact Option","Sales Contact Option"
 "Sales Area Serve","Sales Area Serve"
+Image,Image
+"Image URL","Image URL"
+"Street Address","Street Address"
+City,City
+State/Province,State/Province
+"Zip/Postal Code","Zip/Postal Code"
+Email,Email
+Fax,Fax
+"Price Range","Price Range"
+Description,Description
 "Social Profiles","Social Profiles"
 Facebook,Facebook
 Twitter,Twitter
