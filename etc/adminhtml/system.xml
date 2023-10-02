@@ -270,18 +270,18 @@
                     <validate>validate-url</validate>
                     <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
-                <field id="google" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Google+</label>
-                    <validate>validate-url</validate>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
-                </field>
-                <field id="instagram" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="instagram" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Instagram</label>
                     <validate>validate-url</validate>
                     <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
-                <field id="youtube" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="youtube" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>YouTube</label>
+                    <validate>validate-url</validate>
+                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
+                </field>
+                <field id="tiktok" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tiktok</label>
                     <validate>validate-url</validate>
                     <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
@@ -290,25 +290,10 @@
                     <validate>validate-url</validate>
                     <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
                 </field>
-                <field id="myspace" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Myspace</label>
-                    <validate>validate-url</validate>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
-                </field>
-                <field id="pinterest" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Pinterest</label>
-                    <validate>validate-url</validate>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
-                </field>
-                <field id="soundcloud" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>SoundCloud</label>
-                    <validate>validate-url</validate>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
-                </field>
-                <field id="tumblr" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Tumblr</label>
-                    <validate>validate-url</validate>
-                    <comment><![CDATA[Google will only show verified profiles. <a href="https://developers.google.com/search/docs/data-types/social-profile-links">Learn more</a>]]></comment>
+                <field id="custom_link" translate="label" type="textarea" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Social Profile Links</label>
+                    <backend_model>Mageplaza\Seo\Model\Config\Backend\ValidUrl</backend_model>
+                    <comment><![CDATA[- List of Social Profile Links separated by commas to add to Social Profile.<br>- One link per line.<br>Example: https://www.pinterest.com/,thttps://www.amazon.com/]]></comment>
                 </field>
             </group>
             <group id="verification" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
