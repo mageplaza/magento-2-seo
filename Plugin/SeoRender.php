@@ -1007,8 +1007,16 @@ class SeoRender
                 $lines[] = $profile;
             }
         }
-        if ($customLink = $this->helperData->getSocialProfiles('custom_link')) {
-            $customLink = explode(',', $customLink);
+        if ($this->helperData->getSocialProfiles('custom_link')) {
+            $customLink = [];
+            $valueArray = array_map('trim', explode(
+                "\n",
+                $this->helperData->getSocialProfiles('custom_link')
+                ?? ''));
+            foreach ($valueArray as $value) {
+                $value        = explode(',', $value);
+                $customLink[] = $value[0];
+            }
             $lines = array_merge($lines, $customLink);
         }
 
