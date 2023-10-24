@@ -295,8 +295,8 @@
                     <backend_model>Mageplaza\Seo\Model\Config\Backend\ValidUrl</backend_model>
                     <comment><![CDATA[- List of Social Profile Links separated by commas to add to Social Profile.<br>- One link per line.
                     <br>Example:
-                    <br>https://www.pinterest.com/,Pinterest
-                    <br>https://www.amazon.com/,Amazon]]></comment>
+                    <br>https://www.pinterest.com/
+                    <br>https://www.amazon.com/]]></comment>
                 </field>
             </group>
             <group id="verification" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">

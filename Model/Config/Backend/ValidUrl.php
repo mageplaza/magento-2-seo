@@ -42,8 +42,7 @@ class ValidUrl extends Value
                 $this->getValue()
                 ?? ''));
             foreach ($valueArray as $value) {
-                $value = explode(',', $value);
-                if (!filter_var($value[0], FILTER_VALIDATE_URL)) {
+                if (!filter_var($value, FILTER_VALIDATE_URL)) {
                     throw new ValidatorException(__('Invalid url format.'));
                 }
             }
