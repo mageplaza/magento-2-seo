@@ -89,16 +89,14 @@ Description,Description
 "Social Profiles","Social Profiles"
 Facebook,Facebook
 Twitter,Twitter
-Google+,Google+
 Instagram,Instagram
 YouTube,YouTube
+Tiktok,Tiktok
 LinkedIn,LinkedIn
-Myspace,Myspace
-Pinterest,Pinterest
-SoundCloud,SoundCloud
-Tumblr,Tumblr
+"Custom Social Profile Links","Custom Social Profile Links"
 Verifications,Verifications
 "Google Search Console","Google Search Console"
 "Enter verification code, it will be added into <head> tag","Enter verification code, it will be added into <head> tag"
 "Bing Webmaster Tools","Bing Webmaster Tools"
+Pinterest,Pinterest
 "Yandex Webmaster Tools","Yandex Webmaster Tools"

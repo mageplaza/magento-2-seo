@@ -65,9 +65,9 @@ use Magento\Catalog\Helper\Image as ImageHelper;
 class SeoRender
 {
     const GOOLE_SITE_VERIFICATION = 'google-site-verification';
-    const MSVALIDATE_01 = 'msvalidate.01';
-    const P_DOMAIN_VERIFY = 'p:domain_verify';
-    const YANDEX_VERIFICATION = 'yandex-verification';
+    const MSVALIDATE_01           = 'msvalidate.01';
+    const P_DOMAIN_VERIFY         = 'p:domain_verify';
+    const YANDEX_VERIFICATION     = 'yandex-verification';
 
     /**
      * @var PageConfig
@@ -177,17 +177,17 @@ class SeoRender
     /**
      * @var SourceItems
      */
-    protected  $sourceItemsBySku;
+    protected $sourceItemsBySku;
 
     /**
      * @var AssignedStock
      */
-    protected  $assignedStock;
+    protected $assignedStock;
 
     /**
      * @var SalableQuantity
      */
-    protected  $salableQuantity;
+    protected $salableQuantity;
 
     /**
      * @var ImageHelper
@@ -224,31 +224,31 @@ class SeoRender
      * @param ImageHelper $imageHelper
      */
     public function __construct(
-        PageConfig             $pageConfig,
-        Http                   $request,
-        HelperData             $helpData,
-        StockItemRepository    $stockItemRepository,
-        Registry               $registry,
-        ReviewFactory          $reviewFactory,
-        StoreManagerInterface  $storeManager,
-        UrlInterface           $urlBuilder,
-        ProductFactory         $productFactory,
-        ManagerInterface       $messageManager,
+        PageConfig $pageConfig,
+        Http $request,
+        HelperData $helpData,
+        StockItemRepository $stockItemRepository,
+        Registry $registry,
+        ReviewFactory $reviewFactory,
+        StoreManagerInterface $storeManager,
+        UrlInterface $urlBuilder,
+        ProductFactory $productFactory,
+        ManagerInterface $messageManager,
         StockRegistryInterface $stockState,
-        SearchHelper           $searchHelper,
-        PriceHelper            $priceHelper,
-        Manager                $eventManager,
-        DateTime               $dateTime,
-        TimezoneInterface      $timeZoneInterface,
-        ReviewCollection       $reviewCollection,
-        ModuleManager          $moduleManager,
-        RatingFactory          $ratingFactory,
-        ReviewResourceModel    $reviewResourceModel,
-        CollectionFactory      $collectionFactory,
-        SourceItems            $sourceItemsBySku,
-        AssignedStock          $assignedStock,
-        SalableQuantity        $salableQuantity,
-        ImageHelper            $imageHelper
+        SearchHelper $searchHelper,
+        PriceHelper $priceHelper,
+        Manager $eventManager,
+        DateTime $dateTime,
+        TimezoneInterface $timeZoneInterface,
+        ReviewCollection $reviewCollection,
+        ModuleManager $moduleManager,
+        RatingFactory $ratingFactory,
+        ReviewResourceModel $reviewResourceModel,
+        CollectionFactory $collectionFactory,
+        SourceItems $sourceItemsBySku,
+        AssignedStock $assignedStock,
+        SalableQuantity $salableQuantity,
+        ImageHelper $imageHelper
     ) {
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
@@ -377,9 +377,9 @@ class SeoRender
                     ->getColumnValues('attribute_code');
                 $productId       = $currentProduct->getId() ?: $this->request->getParam('id');
 
-                $product         = $this->productFactory->create()->load($productId);
-                $availability    = $product->isAvailable() ? 'InStock' : 'OutOfStock';
-                $stockItem       = $this->stockState->getStockItem(
+                $product      = $this->productFactory->create()->load($productId);
+                $availability = $product->isAvailable() ? 'InStock' : 'OutOfStock';
+                $stockItem    = $this->stockState->getStockItem(
                     $product->getId(),
                     $product->getStore()->getWebsiteId()
                 );
@@ -410,7 +410,7 @@ class SeoRender
 
                     }
 
-                    $stockItem = (int)$stockQty;
+                    $stockItem = (int) $stockQty;
                 }
 
                 $priceValidUntil = $currentProduct->getSpecialToDate();
@@ -430,10 +430,10 @@ class SeoRender
                 }
                 $modelName = $this->helperData->getRichsnippetsConfig('model_name');
 
-                if($currentProduct->getImage()) {
+                if ($currentProduct->getImage()) {
                     $imageUrl = $this->getUrl('pub/media/catalog') . 'product' . $currentProduct->getImage();
-                }else {
-                    $imageUrl         = $this->imageHelper->init($currentProduct,'product_base_image')->getUrl();
+                } else {
+                    $imageUrl = $this->imageHelper->init($currentProduct, 'product_base_image')->getUrl();
                 }
 
                 $productStructuredData = [
@@ -588,7 +588,7 @@ class SeoRender
      * Get Url
      *
      * @param string $route
-     * @param array  $params
+     * @param array $params
      *
      * @return string
      */
@@ -598,9 +598,9 @@ class SeoRender
     }
 
     /**
-     * @param string  $productType
+     * @param string $productType
      * @param Product $currentProduct
-     * @param array   $productStructuredData
+     * @param array $productStructuredData
      *
      * @return mixed
      * @throws NoSuchEntityException
@@ -638,7 +638,7 @@ class SeoRender
      * Add Grouped Product Structured Data
      *
      * @param Product $currentProduct
-     * @param array   $productStructuredData
+     * @param array $productStructuredData
      *
      * @return array
      * @throws NoSuchEntityException
@@ -652,11 +652,11 @@ class SeoRender
         $childProductCollection                   = $typeInstance->getAssociatedProducts($currentProduct);
         foreach ($childProductCollection as $child) {
 
-            if($child->getImage()) {
+            if ($child->getImage()) {
                 $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                     . 'catalog/product' . $child->getImage();
-            }else {
-                $imageUrl         = $this->imageHelper->init($child,'product_base_image')->getUrl();
+            } else {
+                $imageUrl = $this->imageHelper->init($child, 'product_base_image')->getUrl();
             }
 
             $offerData[]     = [
@@ -685,7 +685,7 @@ class SeoRender
      * Add Bundle Product Structured Data
      *
      * @param Product $currentProduct
-     * @param array   $productStructuredData
+     * @param array $productStructuredData
      *
      * @return array
      * @throws NoSuchEntityException
@@ -710,11 +710,11 @@ class SeoRender
             $currentProduct
         );
         foreach ($childProductCollection as $child) {
-            if($child->getImage()) {
+            if ($child->getImage()) {
                 $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                     . 'catalog/product' . $child->getImage();
-            }else {
-                $imageUrl         = $this->imageHelper->init($child,'product_base_image')->getUrl();
+            } else {
+                $imageUrl = $this->imageHelper->init($child, 'product_base_image')->getUrl();
             }
             $offerData[] = [
                 '@type' => 'Offer',
@@ -736,7 +736,7 @@ class SeoRender
      * Add Downloadable Product Structured Data
      *
      * @param Product $currentProduct
-     * @param array   $productStructuredData
+     * @param array $productStructuredData
      *
      * @return array
      */
@@ -771,6 +771,7 @@ class SeoRender
      *
      * @param $currentProduct
      * @param $productStructuredData
+     *
      * @return array
      * @throws NoSuchEntityException
      */
@@ -784,11 +785,11 @@ class SeoRender
         $allChildPrices                           = [];
         foreach ($childProductCollection as $child) {
 
-            if($child->getImage()) {
-                $imageUrl         = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+            if ($child->getImage()) {
+                $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                     . 'catalog/product' . $child->getImage();
-            }else {
-                $imageUrl         = $this->imageHelper->init($child,'product_base_image')->getUrl();
+            } else {
+                $imageUrl = $this->imageHelper->init($child, 'product_base_image')->getUrl();
             }
             $childPrice       = $this->_priceHelper->currency($child->getPrice(), false);
             $allChildPrices[] = $childPrice;
@@ -828,7 +829,7 @@ class SeoRender
         /** @var Rating $ratingSummary */
         foreach ($ratingSummaries as $ratingSummary) {
             if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
-                return (int)$this->reviewResourceModel->getTotalReviews(
+                return (int) $this->reviewResourceModel->getTotalReviews(
                     $this->getProduct()->getId(),
                     true,
                     $ratingSummary->getStoreId()
@@ -980,6 +981,7 @@ class SeoRender
                 $this->helperData->getInfoConfig('image_url')
             ));
         }
+
         return [];
     }
 
@@ -995,19 +997,22 @@ class SeoRender
         $socialNetwork = [
             'facebook',
             'twitter',
-            'google',
             'instagram',
             'youtube',
-            'linkedin',
-            'myspace',
-            'pinterest',
-            'soundcloud',
-            'tumblr'
+            'tiktok',
+            'linkedin'
         ];
         foreach ($socialNetwork as $value) {
             if ($profile = $this->helperData->getSocialProfiles($value)) {
                 $lines[] = $profile;
             }
+        }
+        if ($this->helperData->getSocialProfiles('custom_link')) {
+            $valueArray = array_map('trim', explode(
+                "\n",
+                $this->helperData->getSocialProfiles('custom_link')
+                ?? ''));
+            $lines      = array_merge($lines, $valueArray);
         }
 
         return $lines;
