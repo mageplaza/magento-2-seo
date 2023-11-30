@@ -791,7 +791,7 @@ class SeoRender
             } else {
                 $imageUrl = $this->imageHelper->init($child, 'product_base_image')->getUrl();
             }
-            $childPrice       = $this->_priceHelper->currency($child->getPrice(), false);
+            $childPrice       = $this->_priceHelper->currency($child->getFinalPrice(), false);
             $allChildPrices[] = $childPrice;
             $offerData[]      = [
                 '@type' => 'Offer',
