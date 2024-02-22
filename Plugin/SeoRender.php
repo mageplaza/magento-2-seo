@@ -512,7 +512,7 @@ class SeoRender
                     $productStructuredData['brand']['name']  = (($brandAttribute === 'quantity_and_stock_status'
                             && $brandValue >= 0) || $brandValue) ? $brandValue : 'Brand';
                     if ($brandAttribute === 'meta_title') {
-                        $productStructuredData['brand']['name'] = $product->getName();
+                        $productStructuredData['brand']['name'] = $product->getMetaTitle();
                     }
                 }
 
