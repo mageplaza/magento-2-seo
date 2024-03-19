@@ -21,6 +21,7 @@
 
 namespace Mageplaza\Seo\Plugin\Helper;
 
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Catalog\Helper\Category;
 use Mageplaza\Seo\Helper\Data as HelperData;
 
@@ -31,6 +32,13 @@ use Mageplaza\Seo\Helper\Data as HelperData;
 class CanUseCanonicalTagForCategories
 {
     /**
+     * Store manager
+     *
+     * @var StoreManagerInterface
+     */
+    protected $_storeManager;
+
+    /**
      * @var HelperData
      */
     protected $_helper;
@@ -38,11 +46,15 @@ class CanUseCanonicalTagForCategories
     /**
      * CanUseCanonicalTagForCategories constructor.
      *
+     * @param StoreManagerInterface $storeManager
      * @param HelperData $helper
      */
-    public function __construct(HelperData $helper)
-    {
-        $this->_helper = $helper;
+    public function __construct(
+        StoreManagerInterface $storeManager,
+        HelperData $helper
+    ) {
+        $this->_storeManager = $storeManager;
+        $this->_helper       = $helper;
     }
 
     /**
@@ -54,7 +66,7 @@ class CanUseCanonicalTagForCategories
     public function afterCanUseCanonicalTag(Category $category, $result)
     {
         if ($this->_helper->isEnabled()) {
-            return $this->_helper->getDuplicateConfig('category_canonical_tag');
+            return $this->_helper->canUseCanonicalForCategory($this->_storeManager->getStore()->getId());
         }
 
         return $result;

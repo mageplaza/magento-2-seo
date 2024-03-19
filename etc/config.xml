@@ -44,8 +44,7 @@
         </seo>
         <catalog>
             <seo>
-                <category_canonical_tag>1</category_canonical_tag>
-                <product_canonical_tag>1</product_canonical_tag>
+
             </seo>
         </catalog>
     </default>

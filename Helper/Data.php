@@ -226,4 +226,28 @@ class Data extends CoreHelper
             return 0;
         }
     }
+
+    /**
+     * @param $storeId
+     * @return bool
+     */
+    public function canUseCanonicalForCategory($storeId)
+    {
+        $value = $this->getDuplicateConfig('canonical_tag', $storeId);
+        $value = $value ? explode(',', $value) : 0;
+
+        return in_array(1, is_array($value) ? $value : [$value]);
+    }
+
+    /**
+     * @param $storeId
+     * @return bool
+     */
+    public function canUseCanonicalForProduct($storeId)
+    {
+        $value = $this->getDuplicateConfig('canonical_tag', $storeId);
+        $value = $value ? explode(',', $value) : 0;
+
+        return in_array(2, is_array($value) ? $value : [$value]);
+    }
 }

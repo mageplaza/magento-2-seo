@@ -22,6 +22,7 @@
 namespace Mageplaza\Seo\Plugin\Helper;
 
 use Magento\Catalog\Helper\Product;
+use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
 
 /**
@@ -31,18 +32,29 @@ use Mageplaza\Seo\Helper\Data as HelperData;
 class CanUseCanonicalTagForProducts
 {
     /**
+     * Store manager
+     *
+     * @var StoreManagerInterface
+     */
+    protected $_storeManager;
+
+    /**
      * @var HelperData
      */
     protected $_helper;
 
     /**
-     * CanUseCanonicalTagForProducts constructor.
+     * CanUseCanonicalTagForProduct constructor.
      *
+     * @param StoreManagerInterface $storeManager
      * @param HelperData $helper
      */
-    public function __construct(HelperData $helper)
-    {
-        $this->_helper = $helper;
+    public function __construct(
+        StoreManagerInterface $storeManager,
+        HelperData $helper
+    ) {
+        $this->_storeManager = $storeManager;
+        $this->_helper       = $helper;
     }
 
     /**
@@ -54,7 +66,7 @@ class CanUseCanonicalTagForProducts
     public function afterCanUseCanonicalTag(Product $product, $result)
     {
         if ($this->_helper->isEnabled()) {
-            return $this->_helper->getDuplicateConfig('product_canonical_tag');
+            return $this->_helper->canUseCanonicalForProduct($this->_storeManager->getStore()->getId());
         }
 
         return $result;
