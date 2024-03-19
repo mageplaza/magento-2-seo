@@ -58,12 +58,12 @@
             </group>
             <group id="richsnippets" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Structured Data</label>
-                <field id="enable_product" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="enable_product" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Product Structured Data</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Disable this feature if your theme or module implements it's own product snippets. <a href="https://developers.google.com/search/docs/data-types/products" target="_blank">Learn more</a> ]]></comment>
                 </field>
-                <field id="brand" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="brand" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Brand</label>
                     <source_model>Mageplaza\Seo\Model\Config\Source\Attribute</source_model>
                     <depends>
@@ -71,14 +71,14 @@
                     </depends>
                     <validate>required-entry</validate>
                 </field>
-                <field id="price_valid_until" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="price_valid_until" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Default Price Valid Until</label>
                     <depends>
                         <field id="enable_product">1</field>
                     </depends>
                     <source_model>Mageplaza\Seo\Model\Config\Source\PriceValidUntil</source_model>
                 </field>
-                <field id="price_valid_until_custom" translate="label comment" type="date" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="price_valid_until_custom" translate="label comment" type="date" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Select Specific Day</label>
                     <depends>
                         <field id="enable_product">1</field>
@@ -87,7 +87,7 @@
                     <frontend_model>Mageplaza\Seo\Block\Adminhtml\System\Config\Date</frontend_model>
                     <validate>required-entry</validate>
                 </field>
-                <field id="model_name" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="model_name" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Model Field Name</label>
                     <depends>
                         <field id="enable_product">1</field>
@@ -95,7 +95,7 @@
                     <source_model>Mageplaza\Seo\Model\Config\Source\ModelField</source_model>
                     <comment><![CDATA[Learn more <a href="https://schema.org/ProductModel" target="_blank">here</a> ]]></comment>
                 </field>
-                <field id="model_value" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="model_value" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Model Value</label>
                     <depends>
                         <field id="enable_product">1</field>
@@ -104,7 +104,7 @@
                     <validate>required-entry</validate>
                     <comment>Recommend field: sku, barcode</comment>
                 </field>
-                <field id="enable_site_link" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="enable_site_link" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Sitelinks Searchbox</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Learn more <a href="https://developers.google.com/search/docs/data-types/sitelinks-searchbox" target="_blank">here</a> ]]></comment>
@@ -112,7 +112,7 @@
             </group>
             <group id="info" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Business information</label>
-                <field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Business Information</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Learn more <a href="https://developers.google.com/search/docs/data-types/corporate-contacts" target="_blank">here</a> ]]></comment>
@@ -123,7 +123,7 @@
                         <field id="enable">1</field>
                     </depends>
                 </field>
-                <field id="business_type" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="business_type" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Business Type</label>
                     <source_model>Mageplaza\Seo\Model\Config\Source\BusinessType</source_model>
                     <depends>
