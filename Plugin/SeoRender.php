@@ -512,7 +512,11 @@ class SeoRender
                     $productStructuredData['brand']['name']  = (($brandAttribute === 'quantity_and_stock_status'
                             && $brandValue >= 0) || $brandValue) ? $brandValue : 'Brand';
                     if ($brandAttribute === 'meta_title') {
-                        $productStructuredData['brand']['name'] = $product->getMetaTitle();
+                        if ($this->getMetaTitle()) {
+                            $productStructuredData['brand']['name'] = $this->getMetaTitle();
+                        } else {
+                            $productStructuredData['brand']['name'] = $product->getMetaTitle();
+                        }
                     }
                 }
 
@@ -582,6 +586,16 @@ class SeoRender
     public function getProduct()
     {
         return $this->registry->registry('current_product');
+    }
+
+    /**
+     * Get meta title
+     *
+     * @return mixed
+     */
+    public function getMetaTitle()
+    {
+        return $this->registry->registry('meta_title');
     }
 
     /**
