@@ -30,6 +30,9 @@
             <general>
                 <enabled>1</enabled>
             </general>
+            <duplicate>
+                <canonical_tag>0</canonical_tag>
+            </duplicate>
             <richsnippets>
                 <enable_product>0</enable_product>
                 <brand>manufacturer</brand>
