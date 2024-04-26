@@ -78,7 +78,7 @@
                     </depends>
                     <source_model>Mageplaza\Seo\Model\Config\Source\PriceValidUntil</source_model>
                 </field>
-                <field id="price_valid_until_custom" translate="label comment" type="date" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="price_valid_until_custom" translate="label comment" type="date" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Select Specific Day</label>
                     <depends>
                         <field id="enable_product">1</field>
