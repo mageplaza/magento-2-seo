@@ -22,6 +22,7 @@
 namespace Mageplaza\Seo\Plugin;
 
 use Exception;
+use Magento\Catalog\Helper\Image as ImageHelper;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
@@ -42,6 +43,9 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Page\Config as PageConfig;
 use Magento\Framework\View\Page\Config\Renderer;
+use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface as SourceItems;
+use Magento\InventorySales\Model\ResourceModel\GetAssignedStockIdForWebsite as AssignedStock;
+use Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku as SalableQuantity;
 use Magento\Review\Model\Rating;
 use Magento\Review\Model\RatingFactory;
 use Magento\Review\Model\ResourceModel\Review as ReviewResourceModel;
@@ -52,10 +56,6 @@ use Magento\Search\Helper\Data as SearchHelper;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
 use Mageplaza\Seo\Model\Config\Source\PriceValidUntil;
-use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface as SourceItems;
-use Magento\InventorySales\Model\ResourceModel\GetAssignedStockIdForWebsite as AssignedStock;
-use Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku as SalableQuantity;
-use Magento\Catalog\Helper\Image as ImageHelper;
 
 /**
  * Class SeoRender
@@ -68,6 +68,7 @@ class SeoRender
     const MSVALIDATE_01           = 'msvalidate.01';
     const P_DOMAIN_VERIFY         = 'p:domain_verify';
     const YANDEX_VERIFICATION     = 'yandex-verification';
+    const SCHEMA_URL              = 'https://schema.org/';
 
     /**
      * @var PageConfig
@@ -224,57 +225,58 @@ class SeoRender
      * @param ImageHelper $imageHelper
      */
     public function __construct(
-        PageConfig $pageConfig,
-        Http $request,
-        HelperData $helpData,
-        StockItemRepository $stockItemRepository,
-        Registry $registry,
-        ReviewFactory $reviewFactory,
-        StoreManagerInterface $storeManager,
-        UrlInterface $urlBuilder,
-        ProductFactory $productFactory,
-        ManagerInterface $messageManager,
+        PageConfig             $pageConfig,
+        Http                   $request,
+        HelperData             $helpData,
+        StockItemRepository    $stockItemRepository,
+        Registry               $registry,
+        ReviewFactory          $reviewFactory,
+        StoreManagerInterface  $storeManager,
+        UrlInterface           $urlBuilder,
+        ProductFactory         $productFactory,
+        ManagerInterface       $messageManager,
         StockRegistryInterface $stockState,
-        SearchHelper $searchHelper,
-        PriceHelper $priceHelper,
-        Manager $eventManager,
-        DateTime $dateTime,
-        TimezoneInterface $timeZoneInterface,
-        ReviewCollection $reviewCollection,
-        ModuleManager $moduleManager,
-        RatingFactory $ratingFactory,
-        ReviewResourceModel $reviewResourceModel,
-        CollectionFactory $collectionFactory,
-        SourceItems $sourceItemsBySku,
-        AssignedStock $assignedStock,
-        SalableQuantity $salableQuantity,
-        ImageHelper $imageHelper
-    ) {
-        $this->pageConfig          = $pageConfig;
-        $this->request             = $request;
-        $this->helperData          = $helpData;
+        SearchHelper           $searchHelper,
+        PriceHelper            $priceHelper,
+        Manager                $eventManager,
+        DateTime               $dateTime,
+        TimezoneInterface      $timeZoneInterface,
+        ReviewCollection       $reviewCollection,
+        ModuleManager          $moduleManager,
+        RatingFactory          $ratingFactory,
+        ReviewResourceModel    $reviewResourceModel,
+        CollectionFactory      $collectionFactory,
+        SourceItems            $sourceItemsBySku,
+        AssignedStock          $assignedStock,
+        SalableQuantity        $salableQuantity,
+        ImageHelper            $imageHelper
+    )
+    {
+        $this->pageConfig = $pageConfig;
+        $this->request = $request;
+        $this->helperData = $helpData;
         $this->stockItemRepository = $stockItemRepository;
-        $this->registry            = $registry;
-        $this->_storeManager       = $storeManager;
-        $this->reviewFactory       = $reviewFactory;
-        $this->_urlBuilder         = $urlBuilder;
-        $this->productFactory      = $productFactory;
-        $this->messageManager      = $messageManager;
-        $this->stockState          = $stockState;
-        $this->_searchHelper       = $searchHelper;
-        $this->_priceHelper        = $priceHelper;
-        $this->_eventManager       = $eventManager;
-        $this->_dateTime           = $dateTime;
-        $this->_timeZoneInterface  = $timeZoneInterface;
-        $this->_reviewCollection   = $reviewCollection;
-        $this->_moduleManager      = $moduleManager;
-        $this->ratingFactory       = $ratingFactory;
+        $this->registry = $registry;
+        $this->_storeManager = $storeManager;
+        $this->reviewFactory = $reviewFactory;
+        $this->_urlBuilder = $urlBuilder;
+        $this->productFactory = $productFactory;
+        $this->messageManager = $messageManager;
+        $this->stockState = $stockState;
+        $this->_searchHelper = $searchHelper;
+        $this->_priceHelper = $priceHelper;
+        $this->_eventManager = $eventManager;
+        $this->_dateTime = $dateTime;
+        $this->_timeZoneInterface = $timeZoneInterface;
+        $this->_reviewCollection = $reviewCollection;
+        $this->_moduleManager = $moduleManager;
+        $this->ratingFactory = $ratingFactory;
         $this->reviewResourceModel = $reviewResourceModel;
-        $this->collectionFactory   = $collectionFactory;
-        $this->sourceItemsBySku    = $sourceItemsBySku;
-        $this->assignedStock       = $assignedStock;
-        $this->salableQuantity     = $salableQuantity;
-        $this->imageHelper         = $imageHelper;
+        $this->collectionFactory = $collectionFactory;
+        $this->sourceItemsBySku = $sourceItemsBySku;
+        $this->assignedStock = $assignedStock;
+        $this->salableQuantity = $salableQuantity;
+        $this->imageHelper = $imageHelper;
     }
 
     /**
@@ -343,7 +345,7 @@ class SeoRender
                 case 'catalog_product_view':
                     if ($this->helperData->getRichsnippetsConfig('enable_product')) {
                         $productStructuredData = $this->showProductStructuredData();
-                        $result                .= $productStructuredData;
+                        $result .= $productStructuredData;
                     }
                     break;
                 case 'cms_index_index':
@@ -375,22 +377,22 @@ class SeoRender
                 $priceAttributes = $this->collectionFactory->create()
                     ->addVisibleFilter()->addFieldToFilter('attribute_code', ['like' => "%price%"])
                     ->getColumnValues('attribute_code');
-                $productId       = $currentProduct->getId() ?: $this->request->getParam('id');
+                $productId = $currentProduct->getId() ?: $this->request->getParam('id');
 
-                $product      = $this->productFactory->create()->load($productId);
+                $product = $this->productFactory->create()->load($productId);
                 $availability = $product->isAvailable() ? 'InStock' : 'OutOfStock';
-                $stockItem    = $this->stockState->getStockItem(
+                $stockItem = $this->stockState->getStockItem(
                     $product->getId(),
                     $product->getStore()->getWebsiteId()
                 );
 
                 if ($sourceItemList = $this->sourceItemsBySku->execute($product->getSku())) {
-                    $stockQty        = 0;
-                    $websiteCode     = $this->_storeManager->getWebsite()->getCode();
+                    $stockQty = 0;
+                    $websiteCode = $this->_storeManager->getWebsite()->getCode();
                     $assignedStockId = $this->assignedStock->execute($websiteCode);
 
                     if ($product->getTypeId() === Configurable::TYPE_CODE) {
-                        $typeInstance           = $product->getTypeInstance();
+                        $typeInstance = $product->getTypeInstance();
                         $childProductCollection = $typeInstance->getUsedProducts($product);
                         foreach ($childProductCollection as $childProduct) {
                             $qty = $this->salableQuantity->execute($childProduct->getSku());
@@ -410,12 +412,12 @@ class SeoRender
 
                     }
 
-                    $stockItem = (int) $stockQty;
+                    $stockItem = (int)$stockQty;
                 }
 
                 $priceValidUntil = $currentProduct->getSpecialToDate();
-                $modelAttribute  = $this->helperData->getRichsnippetsConfig('model_value');
-                $modelValue      = $product->getResource()
+                $modelAttribute = $this->helperData->getRichsnippetsConfig('model_value');
+                $modelValue = $product->getResource()
                     ->getAttribute($modelAttribute)
                     ->getFrontend()->getValue($product);
                 if ($modelAttribute === 'quantity_and_stock_status') {
@@ -437,22 +439,22 @@ class SeoRender
                 }
 
                 $productStructuredData = [
-                    '@context'    => 'http://schema.org/',
-                    '@type'       => 'Product',
-                    'name'        => $currentProduct->getName(),
+                    '@context' => 'http://schema.org/',
+                    '@type' => 'Product',
+                    'name' => $currentProduct->getName(),
                     'description' => $currentProduct->getDescription() ? trim(strip_tags($currentProduct->getDescription())) : '',
-                    'sku'         => $currentProduct->getSku(),
-                    'url'         => $currentProduct->getProductUrl(),
-                    'image'       => $imageUrl,
-                    'offers'      => [
-                        '@type'         => 'Offer',
+                    'sku' => $currentProduct->getSku(),
+                    'url' => $currentProduct->getProductUrl(),
+                    'image' => $imageUrl,
+                    'offers' => [
+                        '@type' => 'Offer',
                         'priceCurrency' => $this->_storeManager->getStore()->getCurrentCurrencyCode(),
-                        'price'         => $currentProduct->getPriceInfo()->getPrice('final_price')->getValue(),
-                        'itemOffered'   => is_integer($stockItem) ? $stockItem : $stockItem->getQty(),
-                        'availability'  => 'http://schema.org/' . $availability,
-                        'url'           => $currentProduct->getProductUrl()
+                        'price' => $currentProduct->getPriceInfo()->getPrice('final_price')->getValue(),
+                        'itemOffered' => is_integer($stockItem) ? $stockItem : $stockItem->getQty(),
+                        'availability' => 'http://schema.org/' . $availability,
+                        'url' => $currentProduct->getProductUrl()
                     ],
-                    $modelName    => (($modelAttribute === 'quantity_and_stock_status' && $modelValue >= 0)
+                    $modelName => (($modelAttribute === 'quantity_and_stock_status' && $modelValue >= 0)
                         || $modelValue) ? $modelValue : $modelName
                 ];
                 $productStructuredData = $this->addProductStructuredDataByType(
@@ -460,6 +462,14 @@ class SeoRender
                     $currentProduct,
                     $productStructuredData
                 );
+
+                if ($this->helperData->getShippingDetailConfig('enable_shipping_details')) {
+                    $productStructuredData['offers']['shippingDetails'] = $this->createShippingDetailsData($product);
+                }
+
+                if ($this->helperData->getReturnPolicyConfig('enable_return_policy')) {
+                    $productStructuredData['offers']['hasMerchantReturnPolicy'] = $this->createMerchantReturnPolicy();
+                }
 
                 $priceValidType = $this->helperData->getRichsnippetsConfig('price_valid_until');
                 if (!empty($priceValidUntil)) {
@@ -493,7 +503,7 @@ class SeoRender
                 if (!$this->_moduleManager->isEnabled('Mageplaza_Shopbybrand')
                     || !isset($productStructuredData['brand'])) {
                     $brandAttribute = $this->helperData->getRichsnippetsConfig('brand');
-                    $brandValue     = $product->getResource()
+                    $brandValue = $product->getResource()
                         ->getAttribute($brandAttribute)
                         ->getFrontend()->getValue($product);
 
@@ -509,7 +519,7 @@ class SeoRender
                     }
 
                     $productStructuredData['brand']['@type'] = 'Brand';
-                    $productStructuredData['brand']['name']  = (($brandAttribute === 'quantity_and_stock_status'
+                    $productStructuredData['brand']['name'] = (($brandAttribute === 'quantity_and_stock_status'
                             && $brandValue >= 0) || $brandValue) ? $brandValue : 'Brand';
                     if ($brandAttribute === 'meta_title') {
                         if ($this->getMetaTitle()) {
@@ -532,19 +542,19 @@ class SeoRender
                 if ($collection->getSize()) {
                     foreach ($collection as $review) {
                         $reviewData = [
-                            '@type'  => 'Review',
+                            '@type' => 'Review',
                             'author' => [
                                 '@type' => 'Person',
-                                'name'  => $review->getNickname()
+                                'name' => $review->getNickname()
                             ]
                         ];
                         if ($review->getRatingVotes()->getData()) {
-                            $ratingVotes                = $review->getRatingVotes()->getData();
-                            $vote                       = current($ratingVotes);
+                            $ratingVotes = $review->getRatingVotes()->getData();
+                            $vote = current($ratingVotes);
                             $reviewData['reviewRating'] = [
-                                '@type'       => 'Rating',
+                                '@type' => 'Rating',
                                 'ratingValue' => $vote['percent'],
-                                'bestRating'  => '100'
+                                'bestRating' => '100'
                             ];
                         }
                         $productStructuredData['review'][] = $reviewData;
@@ -552,8 +562,8 @@ class SeoRender
                 }
 
                 if ($this->getReviewCount()) {
-                    $productStructuredData['aggregateRating']['@type']       = 'AggregateRating';
-                    $productStructuredData['aggregateRating']['bestRating']  = 100;
+                    $productStructuredData['aggregateRating']['@type'] = 'AggregateRating';
+                    $productStructuredData['aggregateRating']['bestRating'] = 100;
                     $productStructuredData['aggregateRating']['worstRating'] = 0;
                     $productStructuredData['aggregateRating']['ratingValue'] = $this->getRatingSummary();
                     $productStructuredData['aggregateRating']['reviewCount'] = $this->getReviewCount();
@@ -576,6 +586,84 @@ class SeoRender
         }
 
         return '';
+    }
+
+    /**
+     * @param $product
+     * @return array
+     */
+    public function createShippingDetailsData($product)
+    {
+        $enableFreeShipping = $this->helperData->getShippingDetailConfig('enable_free_shipping');
+        $isFreeShipping = false;
+
+        if ($enableFreeShipping) {
+            $isFreeShipping = $product->getFreeShipping();
+        }
+
+        return [
+            '@type' => 'OfferShippingDetails',
+            'deliveryTime' => [
+                '@type' => 'ShippingDeliveryTime',
+                'businessDays' => [
+                    '@type' => 'OpeningHoursSpecification',
+                    'dayOfWeek' => $this->getDayOfWeeks()
+                ],
+                'cutoffTime' => $this->helperData->getShippingDetailConfig('cutoff_time'),
+                'handlingTime' => [
+                    '@type' => 'QuantitativeValue',
+                    'minValue' => $this->helperData->getShippingDetailConfig('min_handling_time'),
+                    'maxValue' => $this->helperData->getShippingDetailConfig('max_handling_time'),
+                    'unitCode' => 'd'
+                ],
+                'transitTime' => [
+                    '@type' => 'QuantitativeValue',
+                    'minValue' => $this->helperData->getShippingDetailConfig('min_transit_time'),
+                    'maxValue' => $this->helperData->getShippingDetailConfig('max_transit_time'),
+                    'unitCode' => 'd'
+                ]
+            ],
+            'shippingDestination' => [
+                '@type' => 'DefinedRegion',
+                'addressCountry' => $this->helperData->getShippingDetailConfig('shipping_country'),
+            ],
+            'shippingRate' => [
+                '@type' => 'MonetaryAmount',
+                'value' => $isFreeShipping ? 0 : $this->helperData->getShippingDetailConfig('shipping_fee'),
+                'currency' => $this->helperData->getShippingDetailConfig('shipping_currency'),
+            ]
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getDayOfWeeks()
+    {
+        $dayList = $this->helperData->getShippingDetailConfig('business_days');
+        $days = explode(',', $dayList);
+
+        $formattedDays = array_map(function ($day) {
+            return self::SCHEMA_URL . trim($day);
+        }, $days);
+
+        return $formattedDays;
+    }
+
+    /**
+     * @return array
+     */
+    public function createMerchantReturnPolicy()
+    {
+        return [
+            '@type' => 'MerchantReturnPolicy',
+            'applicableCountry' => $this->helperData->getReturnPolicyConfig('applicable_country'),
+            'returnPolicyCategory' => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('return_policy_category'),
+            'refundType' => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('refund_type'),
+            'returnFees' => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('return_fees'),
+            'returnMethod' => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('return_method'),
+            'returnLabelSource' => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('return_label_source')
+        ];
     }
 
     /**
@@ -660,10 +748,10 @@ class SeoRender
     public function getGroupedProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
-        $childrenPrice                            = [];
-        $offerData                                = [];
-        $typeInstance                             = $currentProduct->getTypeInstance();
-        $childProductCollection                   = $typeInstance->getAssociatedProducts($currentProduct);
+        $childrenPrice = [];
+        $offerData = [];
+        $typeInstance = $currentProduct->getTypeInstance();
+        $childProductCollection = $typeInstance->getAssociatedProducts($currentProduct);
         foreach ($childProductCollection as $child) {
 
             if ($child->getImage()) {
@@ -673,23 +761,23 @@ class SeoRender
                 $imageUrl = $this->imageHelper->init($child, 'product_base_image')->getUrl();
             }
 
-            $offerData[]     = [
+            $offerData[] = [
                 '@type' => 'Offer',
-                'name'  => $child->getName(),
+                'name' => $child->getName(),
                 'price' => $this->_priceHelper->currency($child->getFinalPrice(), false),
-                'sku'   => $child->getSku(),
+                'sku' => $child->getSku(),
                 'image' => $imageUrl
             ];
             $childrenPrice[] = $this->_priceHelper->currency($child->getFinalPrice(), false);
         }
 
         $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
+        $productStructuredData['offers']['lowPrice'] = $childrenPrice ? min($childrenPrice) : 0;
         unset($productStructuredData['offers']['price']);
 
         if (!empty($offerData)) {
             $productStructuredData['offers']['offerCount'] = count($offerData);
-            $productStructuredData['offers']['offers']     = $offerData;
+            $productStructuredData['offers']['offers'] = $offerData;
         }
 
         return $productStructuredData;
@@ -710,15 +798,15 @@ class SeoRender
         try {
             $productStructuredData['offers']['highPrice'] = $currentProduct->getPriceInfo()->getPrice('final_price')
                 ->getMaximalPrice()->getValue();
-            $productStructuredData['offers']['lowPrice']  = $currentProduct->getPriceInfo()->getPrice('final_price')
+            $productStructuredData['offers']['lowPrice'] = $currentProduct->getPriceInfo()->getPrice('final_price')
                 ->getMinimalPrice()->getValue();
         } catch (Exception $exception) {
             $productStructuredData['offers']['highPrice'] = 0;
-            $productStructuredData['offers']['lowPrice']  = 0;
+            $productStructuredData['offers']['lowPrice'] = 0;
         }
         unset($productStructuredData['offers']['price']);
-        $offerData              = [];
-        $typeInstance           = $currentProduct->getTypeInstance();
+        $offerData = [];
+        $typeInstance = $currentProduct->getTypeInstance();
         $childProductCollection = $typeInstance->getSelectionsCollection(
             $typeInstance->getOptionsIds($currentProduct),
             $currentProduct
@@ -732,15 +820,15 @@ class SeoRender
             }
             $offerData[] = [
                 '@type' => 'Offer',
-                'name'  => $child->getName(),
+                'name' => $child->getName(),
                 'price' => $this->_priceHelper->currency($child->getPrice(), false),
-                'sku'   => $child->getSku(),
+                'sku' => $child->getSku(),
                 'image' => $imageUrl
             ];
         }
         if (!empty($offerData)) {
             $productStructuredData['offers']['offerCount'] = count($offerData);
-            $productStructuredData['offers']['offers']     = $offerData;
+            $productStructuredData['offers']['offers'] = $offerData;
         }
 
         return $productStructuredData;
@@ -758,23 +846,23 @@ class SeoRender
     {
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
 
-        $typeInstance           = $currentProduct->getTypeInstance();
+        $typeInstance = $currentProduct->getTypeInstance();
         $childProductCollection = $typeInstance->getLinks($currentProduct);
-        $childrenPrice          = [];
+        $childrenPrice = [];
         foreach ($childProductCollection as $child) {
-            $offerData[]     = [
+            $offerData[] = [
                 '@type' => 'Offer',
-                'name'  => $child->getTitle(),
+                'name' => $child->getTitle(),
                 'price' => $this->_priceHelper->currency($child->getPrice(), false)
             ];
             $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
         }
         $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
+        $productStructuredData['offers']['lowPrice'] = $childrenPrice ? min($childrenPrice) : 0;
 
         if (!empty($offerData)) {
             $productStructuredData['offers']['offerCount'] = count($offerData);
-            $productStructuredData['offers']['offers']     = $offerData;
+            $productStructuredData['offers']['offers'] = $offerData;
         }
 
         return $productStructuredData;
@@ -792,11 +880,11 @@ class SeoRender
     public function getConfigurableProductStructuredData($currentProduct, $productStructuredData)
     {
         $productStructuredData['offers']['@type'] = 'AggregateOffer';
-        $offerData                                = [];
-        $typeInstance                             = $currentProduct->getTypeInstance();
-        $childProductCollection                   = $typeInstance->getUsedProductCollection($currentProduct)
+        $offerData = [];
+        $typeInstance = $currentProduct->getTypeInstance();
+        $childProductCollection = $typeInstance->getUsedProductCollection($currentProduct)
             ->addAttributeToSelect('*');
-        $allChildPrices                           = [];
+        $allChildPrices = [];
         foreach ($childProductCollection as $child) {
 
             if ($child->getImage()) {
@@ -805,28 +893,28 @@ class SeoRender
             } else {
                 $imageUrl = $this->imageHelper->init($child, 'product_base_image')->getUrl();
             }
-            $childPrice       = $this->_priceHelper->currency($child->getPrice(), false);
+            $childPrice = $this->_priceHelper->currency($child->getPrice(), false);
             $allChildPrices[] = $childPrice;
-            $offerData[]      = [
+            $offerData[] = [
                 '@type' => 'Offer',
-                'name'  => $child->getName(),
+                'name' => $child->getName(),
                 'price' => $childPrice,
-                'sku'   => $child->getSku(),
+                'sku' => $child->getSku(),
                 'image' => $imageUrl
             ];
         }
 
         if (count($allChildPrices)) {
             $productStructuredData['offers']['highPrice'] = max($allChildPrices);
-            $productStructuredData['offers']['lowPrice']  = min($allChildPrices);
+            $productStructuredData['offers']['lowPrice'] = min($allChildPrices);
         } else {
             $productStructuredData['offers']['highPrice'] = 0;
-            $productStructuredData['offers']['lowPrice']  = 0;
+            $productStructuredData['offers']['lowPrice'] = 0;
         }
 
         if (!empty($offerData)) {
             $productStructuredData['offers']['offerCount'] = count($offerData);
-            $productStructuredData['offers']['offers']     = $offerData;
+            $productStructuredData['offers']['offers'] = $offerData;
         }
 
         return $productStructuredData;
@@ -843,7 +931,7 @@ class SeoRender
         /** @var Rating $ratingSummary */
         foreach ($ratingSummaries as $ratingSummary) {
             if ($ratingSummary->getStoreId() === $this->_storeManager->getStore()->getId()) {
-                return (int) $this->reviewResourceModel->getTotalReviews(
+                return (int)$this->reviewResourceModel->getTotalReviews(
                     $this->getProduct()->getId(),
                     true,
                     $ratingSummary->getStoreId()
@@ -886,11 +974,11 @@ class SeoRender
     public function showLogoStructureData()
     {
         $logoStructureData = [
-            '@context'     => 'http://schema.org/',
-            '@type'        => 'Organization',
-            'url'          => $this->getUrl(),
-            'logo'         => $this->helperData->getLogo(),
-            'name'         => $this->helperData->getInfoConfig('business_name'),
+            '@context' => 'http://schema.org/',
+            '@type' => 'Organization',
+            'url' => $this->getUrl(),
+            'logo' => $this->helperData->getLogo(),
+            'name' => $this->helperData->getInfoConfig('business_name'),
             'contactPoint' => []
         ];
         if (!empty($this->getSocialProfiles())) {
@@ -903,11 +991,11 @@ class SeoRender
             || $this->helperData->getInfoConfig('customer_service_area_serve')
         ) {
             $logoStructureData['contactPoint'][] = [
-                '@type'         => 'ContactPoint',
-                'telephone'     => $this->helperData->getInfoConfig('customer_service_phone'),
-                'contactType'   => 'customer service',
+                '@type' => 'ContactPoint',
+                'telephone' => $this->helperData->getInfoConfig('customer_service_phone'),
+                'contactType' => 'customer service',
                 'contactOption' => $this->helperData->getInfoConfig('customer_service_contact_option'),
-                'areaServed'    => $this->helperData->getInfoConfig('customer_service_area_serve')
+                'areaServed' => $this->helperData->getInfoConfig('customer_service_area_serve')
             ];
         }
         // get technical support info
@@ -916,11 +1004,11 @@ class SeoRender
             || $this->helperData->getInfoConfig('technical_support_area_serve')
         ) {
             $logoStructureData['contactPoint'][] = [
-                '@type'         => 'ContactPoint',
-                'telephone'     => $this->helperData->getInfoConfig('technical_support_phone'),
-                'contactType'   => 'technical support',
+                '@type' => 'ContactPoint',
+                'telephone' => $this->helperData->getInfoConfig('technical_support_phone'),
+                'contactType' => 'technical support',
                 'contactOption' => $this->helperData->getInfoConfig('technical_support_contact_option'),
-                'areaServed'    => $this->helperData->getInfoConfig('technical_support_area_serve')
+                'areaServed' => $this->helperData->getInfoConfig('technical_support_area_serve')
             ];
         }
         // get sales info
@@ -929,11 +1017,11 @@ class SeoRender
             || $this->helperData->getInfoConfig('sales_area_serve')
         ) {
             $logoStructureData['contactPoint'][] = [
-                '@type'         => 'ContactPoint',
-                'telephone'     => $this->helperData->getInfoConfig('sales_phone'),
-                'contactType'   => 'sales',
+                '@type' => 'ContactPoint',
+                'telephone' => $this->helperData->getInfoConfig('sales_phone'),
+                'contactType' => 'sales',
                 'contactOption' => $this->helperData->getInfoConfig('sales_contact_option'),
-                'areaServed'    => $this->helperData->getInfoConfig('sales_area_serve')
+                'areaServed' => $this->helperData->getInfoConfig('sales_area_serve')
             ];
         }
 
@@ -952,27 +1040,27 @@ class SeoRender
     public function showLocalBussinessStructureData()
     {
         $localBussinessStructureData = [
-            '@context'    => 'http://schema.org/',
-            '@type'       => $this->helperData->getInfoConfig('business_type'),
-            'name'        => $this->helperData->getInfoConfig('business_name'),
-            'address'     => [
-                '@type'           => 'PostalAddress',
-                'streetAddress'   => $this->helperData->getInfoConfig('street_address'),
+            '@context' => 'http://schema.org/',
+            '@type' => $this->helperData->getInfoConfig('business_type'),
+            'name' => $this->helperData->getInfoConfig('business_name'),
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => $this->helperData->getInfoConfig('street_address'),
                 'addressLocality' => $this->helperData->getInfoConfig('city'),
-                'addressRegion'   => $this->helperData->getInfoConfig('state_province'),
-                'addressCountry'  => $this->helperData->getConfigValue('general/country/default'),
-                'postalCode'      => $this->helperData->getInfoConfig('zip_code'),
-                'email'           => $this->helperData->getInfoConfig('email'),
-                'faxNumber'       => $this->helperData->getInfoConfig('fax')
+                'addressRegion' => $this->helperData->getInfoConfig('state_province'),
+                'addressCountry' => $this->helperData->getConfigValue('general/country/default'),
+                'postalCode' => $this->helperData->getInfoConfig('zip_code'),
+                'email' => $this->helperData->getInfoConfig('email'),
+                'faxNumber' => $this->helperData->getInfoConfig('fax')
             ],
-            'telephone'   => $this->helperData->getInfoConfig('customer_service_phone'),
-            'priceRange'  => $this->helperData->getInfoConfig('price_range'),
+            'telephone' => $this->helperData->getInfoConfig('customer_service_phone'),
+            'priceRange' => $this->helperData->getInfoConfig('price_range'),
             'description' => $this->helperData->getInfoConfig('description')
         ];
 
         $bussinessImages = $this->getBussinessImageUrlConfig();
         if ($this->helperData->getInfoConfig('image')) {
-            $image             = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+            $image = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
                 . 'mageplaza/seo/' . $this->helperData->getInfoConfig('image');
             $bussinessImages[] = $image;
         }
@@ -1007,7 +1095,7 @@ class SeoRender
 
     public function getSocialProfiles()
     {
-        $lines         = [];
+        $lines = [];
         $socialNetwork = [
             'facebook',
             'twitter',
@@ -1025,8 +1113,9 @@ class SeoRender
             $valueArray = array_map('trim', explode(
                 "\n",
                 $this->helperData->getSocialProfiles('custom_link')
-                ?? ''));
-            $lines      = array_merge($lines, $valueArray);
+                ?? ''
+            ));
+            $lines = array_merge($lines, $valueArray);
         }
 
         return $lines;
@@ -1040,12 +1129,12 @@ class SeoRender
     public function showSiteLinksStructuredData()
     {
         $siteLinksStructureData = [
-            '@context'        => 'http://schema.org',
-            '@type'           => 'WebSite',
-            'url'             => $this->_urlBuilder->getBaseUrl(),
+            '@context' => 'http://schema.org',
+            '@type' => 'WebSite',
+            'url' => $this->_urlBuilder->getBaseUrl(),
             'potentialAction' => [
-                '@type'       => 'SearchAction',
-                'target'      => $this->_searchHelper->getResultUrl() . '?q={searchbox_target}',
+                '@type' => 'SearchAction',
+                'target' => $this->_searchHelper->getResultUrl() . '?q={searchbox_target}',
                 'query-input' => 'required name=searchbox_target'
             ]
         ];
