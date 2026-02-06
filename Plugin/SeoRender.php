@@ -467,7 +467,7 @@ class SeoRender
                     $productStructuredData['offers']['shippingDetails'] = $this->createShippingDetailsData($product);
                 }
 
-                if ($this->helperData->getReturnPolicyConfig('enable_return_policy')) {
+                if ($this->helperData->getReturnPolicyConfig('enable_mrp')) {
                     $productStructuredData['offers']['hasMerchantReturnPolicy'] = $this->createMerchantReturnPolicy();
                 }
 
