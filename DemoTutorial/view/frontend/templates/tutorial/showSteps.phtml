@@ -1,0 +1,535 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_DemoTutorial
+ * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+
+$helperData  = $this->helper(\Mageplaza\DemoTutorial\Helper\Data::class);
+$info        = $helperData->getContentTutorialJson();
+
+//Demo data
+$contactUrl  = $info['contact_url'];
+$guideUrl    = $info['guide_url'];
+$nextVersion = $info['next_version_url'] ?: null;
+$frontend    = $info['frontend_url'];
+$backend     = $info['backend_url'];
+$tiers       = $info['tiers'];
+$nextTiers   = $info['next_tiers'] ?: null;
+$moduleName  = $info['module_name'];
+
+$pageUrl = $block->getRequest()->getRequestUri();
+$isLogin = $helperData->isCustomerLoggedIn();
+$stepsUnregister = $block->getSteps(0, 'frontend');
+$stepsRegister = $block->getSteps(1, 'frontend');
+$exData = $helperData->getContentJson();
+
+$hasUnregistered = !empty($stepsUnregister);
+$hasRegistered = !empty($stepsRegister);
+if (str_contains($exData['name'], 'Ultimate')) {
+    $tiers = 'Ultimate';
+} elseif (str_contains($exData['name'], 'Pro')) {
+    $tiers = 'Pro';
+} else {
+    $tiers = 'Standard';
+}
+$moduleName = trim(
+    preg_replace('/\s+(Ultimate|Pro)$/i', '', $exData['name'])
+);
+?>
+
+<?php if ($hasUnregistered || $hasRegistered): ?>
+    <div id="tutorial-overlay" class="tutorial-overlay" style="display:none;"></div>
+
+    <div id="popup-container" class="popup-container" style="display:none;font-family:'Outfit';min-width: 50%">
+        <!-- FIRST BOX -->
+        <div id="tutorial-first-box" class="tutorial-box" style="display:none;">
+            <span class="welcome-title">
+                <?= /* @noEscape */ __('Welcome to') ?>
+                <br>
+                <?= /* @noEscape */ __('the Mageplaza') ?>
+                <a href="<?= /* @noEscape */
+                $exData['live_url'] ?>"><?= /* @noEscape */
+                    $moduleName ?></a>
+                <?= /* @noEscape */
+                __(' front-end demo.') ?>
+            </span>
+            <p class="welcome-content mp-center">
+                <?= /* @noEscape */
+                __('See how your customers interact with the search feature on your store') ?>
+            </p>
+
+            <?php if ($hasRegistered && $hasUnregistered): ?>
+                <!-- TWO FLOW SELECTION -->
+                <div class="mp-center select-flow">
+                    <button class="start-flow" data-type="unregistered"><?= __('Unregistered Customers') ?></button>
+                    <button class="start-flow" data-type="registered"><?= __('Registered Customers') ?></button>
+                </div>
+            <?php else: ?>
+                <!-- SINGLE FLOW : just skip + next -->
+                <div class="tutorial-toolbar single-flow-toolbar">
+                    <button class="skip-tutorial"><?= __('Skip') ?></button>
+                    <button id="start-tutorial"><?= __('Next') ?></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($hasRegistered && $hasUnregistered): ?>
+                <div class="tutorial-toolbar">
+                    <button class="skip-tutorial">Skip</button>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- END BOX -->
+        <div id="tutorial-end-box" class="tutorial-box" style="display:none;min-width: 60%">
+            <span class="welcome-title">
+                <?= /* @noEscape */ __('That\'s the end of') ?>
+                <br>
+                <?= /* @noEscape */ __(' Frontend Demo of Mageplaza') ?>
+                <a href="<?= /* @noEscape */
+                $exData['live_url'] ?>"><?= /* @noEscape */
+                    $moduleName ?><?= /* @noEscape */
+                    __(' extension') ?></a>
+            </span>
+            <p class="welcome-content">
+                <?= /* @noEscape */
+                __('For more details on how everything works behind the scenes, check out the ') ?>
+                <a href="<?= /* @noEscape */ $backend ?>"><?= /* @noEscape */
+                    __('Backend Demo') ?></a>
+                <?= /* @noEscape */
+                __('. And if anything’s unclear, just ') ?>
+                <a href="https://www.mageplaza.com/support/"><?= /* @noEscape */
+                    __('Contact us') ?></a>
+                <?= /* @noEscape */ __('! We’re here to help.') ?>
+            </p>
+            <div class="tutorial-toolbar">
+                <button class="skip-tutorial">Done</button>
+                <button id="prev-last-step">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        require(['jquery', 'select20dom'], function ($) {
+            $(document).ready(function () {
+                const skippedKey = 'frontendTutorialSkipped';
+                if (localStorage.getItem(skippedKey) === 'true') return;
+                $('.sections.nav-sections').css('z-index', '1');
+                $('.block.block-search').css('z-index', '1');
+                const multiFlow = <?= json_encode($hasRegistered && $hasUnregistered) ?>;
+                const allSteps = {
+                    registered: <?= json_encode(array_values(array_map(function ($s) {
+                        return [
+                            'title' => $s['module_name'], 'content' => $s['content'], 'element' => $s['element'],
+                            'url' => $s['page'], 'trigger' => $s['trigger'],
+                            'position' => $s['notice_position'] ?? 'bottom'];
+                    }, $stepsRegister))); ?>,
+                    unregistered: <?= json_encode(array_values(array_map(function ($s) {
+                        return [
+                            'title' => $s['module_name'], 'content' => $s['content'], 'element' => $s['element'],
+                            'url' => $s['page'], 'trigger' => $s['trigger'],
+                            'position' => $s['notice_position'] ?? 'bottom'];
+                    }, $stepsUnregister))); ?>
+                };
+
+                const stepKey = 'frontendTutorialStep';
+                let steps = [];
+                let currentStep = -1;
+                let type = 'unregistered';
+
+                function closeTutorial() {
+                    localStorage.setItem(skippedKey, 'true');
+                    $('#popup-container, #tutorial-overlay').fadeOut();
+                    $('.tutorial-highlight').removeClass('tutorial-highlight');
+                    $('.tutorial-tooltip').remove();
+                }
+
+                function showFirstPopup() {
+                    if (localStorage.getItem(skippedKey) === 'true') return;
+                    $('#tutorial-overlay, #popup-container, #tutorial-first-box').fadeIn();
+                }
+
+                function tooltipPos(offset, position, $tooltip, $target) {
+                    switch (position) {
+                        case 'top':
+                            $tooltip.css({top: offset.top - $tooltip.outerHeight() - 30, left: offset.left});
+                            break;
+                        case 'right':
+                            $tooltip.css({
+                                top: offset.top + $target.outerHeight() / 2 - $tooltip.outerHeight() / 2,
+                                left: offset.left + $target.outerWidth() + 30
+                            });
+                            break;
+                        case 'left':
+                            $tooltip.css({
+                                top: offset.top + $target.outerHeight() / 2 - $tooltip.outerHeight() / 2,
+                                left: offset.left - $tooltip.outerWidth() - 30
+                            });
+                            break;
+                        default:
+                            $tooltip.css({top: offset.top + $target.outerHeight() + 30, left: offset.left});
+                    }
+                }
+
+                function renderTooltip(step, index) {
+                    const $t = $('<div class="tutorial-tooltip"></div>');
+                    $t.html(`<div class="content-title">${step.title}</div>
+                             <div class="step-content">${step.content}</div>
+                             <div class="tutorial-toolbar">
+                                 <button class="skip-tutorial">Skip</button>
+                                 <span id="step-counter">${index + 1} of ${steps.length}</span>
+                                 <div>
+                                     <button id="prev-step" ${index === 0 ? 'style="display:none;"' : ''}>Back</button>
+                                     <button id="next-step" ${index === steps.length ? 'style="display:none;"' : ''}>Next</button>
+                                 </div>
+                             </div>`);
+                    $('body').append($t);
+                    return $t;
+                }
+
+                function handleTrigger(stp) {
+                    if (stp.trigger && stp.trigger !== 'none') {
+                        const $tg = $(stp.trigger);
+                        if ($tg.length) {
+                            if (stp.trigger === '.search input[type="text"]') {
+                                $tg.focus()
+                            } else if (stp.trigger === 'select#mpsearch-category'){
+                                $tg.select2({
+                                    minimumResultsForSearch: Infinity,
+                                    templateResult: function (data) {
+                                        if (!data.id) {
+                                            return data.text;
+                                        }
+
+                                        var $option = $(data.element);
+                                        if ($option.hasClass('parent-category')) {
+                                            return $('<span style="font-weight: bold;">' + data.text + '</span>');
+                                        }
+
+                                        return data.text;
+                                    }
+                                });
+                                $tg.select2('open');
+                            }
+                            else {
+                                $tg.trigger('click');
+                            }
+                        }
+                    }
+                }
+
+                function showStep(idx) {
+                    if (idx < 0 || idx >= steps.length) return;
+                    const stp = steps[idx];
+
+                    if (window.location.pathname + window.location.search !== stp.url) {
+                        localStorage.setItem(stepKey, idx);
+                        window.location.href = stp.url;
+                        return;
+                    }
+
+                    handleTrigger(stp);
+
+                    $('.tutorial-highlight').removeClass('tutorial-highlight');
+                    $('.tutorial-tooltip').remove();
+                    const $target = $(stp.element);
+                    if ($target.length) {
+                        $target.addClass('tutorial-highlight');
+                        $('html,body').animate({scrollTop: $target.offset().top - 150}, 500);
+                    }
+
+                    if ($target.find('.tutorial-overlay')) {
+                        $('.tutorial-overlay').insertAfter($target);
+                    }
+
+                    const $tip = renderTooltip(stp, idx);
+
+                    if ($target.length) {
+                        $tip.addClass(stp.position || 'bottom');
+                        tooltipPos($target.offset(), stp.position || 'bottom', $tip, $target);
+                    } else {
+                        if (stp.position === 'top') {
+                            $tip.css({
+                                top: $(window).scrollTop() + 20,
+                                left: ($(window).width() - $tip.outerWidth()) / 2
+                            });
+                            $tip.addClass('bottom');
+                        } else {
+                            $tip.css({
+                                top: $(window).scrollTop() + ($(window).height() - $tip.outerHeight()) / 2,
+                                left: ($(window).width() - $tip.outerWidth()) / 2
+                            });
+                        }
+                    }
+
+                    $('#next-step').click((e) => {
+                        if (steps[currentStep].trigger !== '.search input[type="text"]' && steps[currentStep].trigger !== 'select#mpsearch-category') {
+                            handleTrigger(steps[currentStep]);
+                        }
+                        if (currentStep < steps.length - 1) {
+                            currentStep++;
+                            showStep(currentStep);
+                            e.stopPropagation();
+                            e.preventDefault();
+                        } else {
+                            $('.tutorial-tooltip').remove();
+                            $('.tutorial-highlight').removeClass('tutorial-highlight');
+                            $('#tutorial-end-box').fadeIn();
+                            $('#tutorial-overlay').insertAfter('div#popup-container');
+                        }
+                    });
+
+                    $('#prev-step').click((e) => {
+                        if (steps[currentStep].trigger !== 'select#mpsearch-category' && steps[currentStep].trigger !== 'select#mpsearch-category') {
+                            handleTrigger(steps[currentStep]);
+                        }
+                        if (currentStep > 0) {
+                            currentStep--;
+                            showStep(currentStep);
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }
+                    });
+
+                    $('div#paypal-smart-button').css({'position':'relative','z-index':'99'});
+                    $('.skip-tutorial').click(closeTutorial);
+                }
+
+                // MULTI FLOW BUTTONS
+                $('.start-flow').on('click', function () {
+                    type = $(this).data('type');
+                    steps = allSteps[type] || [];
+                    currentStep = 0;
+                    localStorage.setItem(stepKey, currentStep);
+                    $('#tutorial-first-box').fadeOut(function () {
+                        showStep(currentStep);
+                    });
+                    if (type === 'registered') { // handle demo auto-login
+                        const formKey = $('.form-customer-login [name="form_key"]').val();
+                        $.ajax({
+                            url: window.location.origin + '/customer/ajax/login', type: 'POST',
+                            data: JSON.stringify({
+                                username: 'roni_cost@example.com',
+                                password: 'roni_cost3@example.com',
+                                form_key: formKey
+                            }),
+                            success: function (resp) {
+                                $('#tutorial-first-box').fadeOut(function () {
+                                    showStep(currentStep);
+                                });
+                            },
+                            error: function () {
+                                alert('Login failed.');
+                            }
+                        });
+                    }
+                });
+
+                // SINGLE FLOW NEXT
+                $('#start-tutorial').on('click', function () {
+                    type = 'unregistered';
+                    steps = allSteps[type] || [];
+                    currentStep = 0;
+                    localStorage.setItem(stepKey, currentStep);
+                    $('#tutorial-first-box').fadeOut(function () {
+                        showStep(currentStep);
+                    });
+                });
+
+                // RESUME
+                const savedStep = localStorage.getItem(stepKey);
+                if (savedStep !== null) {
+                    currentStep = parseInt(savedStep, 10);
+                    type = multiFlow ? localStorage.getItem('tutorialFlow') || 'unregistered' : 'unregistered';
+                    steps = allSteps[type] || [];
+                    $('#tutorial-overlay,#popup-container').show();
+                    showStep(currentStep);
+                } else {
+                    showFirstPopup();
+                    $('.skip-tutorial').on('click', closeTutorial);
+                }
+
+                $('#prev-last-step').on('click', function () {
+                    currentStep = steps.length - 1;
+                    $('#tutorial-end-box').fadeOut(function () {
+                        showStep(currentStep);
+                    });
+                });
+            });
+        });
+    </script>
+
+    <!-- STYLE -->
+    <style>
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .7);
+            z-index: 99;
+        }
+
+        .popup-container {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            max-width: 70%;
+        }
+
+        .tutorial-box {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+            width: 100%;
+        }
+
+        .tutorial-toolbar {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tutorial-toolbar button {
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            background: #01007F;
+            color: #fff;
+            border-radius: 3px;
+        }
+
+        .tutorial-toolbar button:hover {
+            background: #0056b3;
+        }
+
+        button.skip-tutorial {
+            background: unset;
+            color: #1E2022;
+            padding: 0;
+            border: 0;
+        }
+
+        span.welcome-title {
+            font-size: 24px;
+            text-align: center;
+            display: block;
+            padding: 5px;
+            font-weight: 600;
+        }
+
+        .content-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .welcome-content {
+            padding: 25px 0;
+        }
+
+        .mp-center {
+            text-align: center;
+            padding: 25px 0;
+        }
+
+        .select-flow {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .start-flow {
+            background: #1979C3;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .single-flow-toolbar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .tutorial-highlight {
+            z-index: 1002;
+            position: relative;
+            padding: 5px;
+            box-shadow: 0 0 0 4px #fff;
+            transition: box-shadow .3s ease;
+            background: #fff !important;
+        }
+
+        .tutorial-tooltip {
+            font-family: 'Outfit';
+            background: #fff;
+            color: #000;
+            position: absolute;
+            z-index: 1003;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .3);
+            max-width: 600px;
+        }
+
+        .tutorial-tooltip:before {
+            content: '';
+            position: absolute;
+            border: 15px solid transparent;
+            left: 20%;
+            border-right-color: #fff;
+        }
+
+        .tutorial-tooltip.bottom:before {
+            transform: rotate(90deg);
+            top: -25px;
+        }
+
+        .tutorial-tooltip.top:before {
+            transform: rotate(-90deg);
+            top: 97%;
+        }
+
+        .tutorial-tooltip.left:before {
+            transform: rotate(180deg);
+            top: 40%;
+            left: 99%;
+        }
+
+        .tutorial-tooltip.right:before {
+            top: 65px;
+            left: -24px;
+        }
+
+        #step-counter {
+            color: #1E2022;
+        }
+    </style>
+<?php endif; ?>

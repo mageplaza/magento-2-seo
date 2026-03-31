@@ -1,0 +1,17 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/db_schema.xsd">
+    <table name="mageplaza_tutorial_step" resource="default" engine="innodb" comment="Guide Steps">
+        <column name="step_id" xsi:type="int" nullable="false" identity="true" unsigned="true" comment="Step ID"/>
+        <column name="module_name" xsi:type="varchar" length="255" nullable="false" comment="Module Name"/>
+        <column name="page" xsi:type="varchar" length="255" nullable="false" comment="Page"/>
+        <column name="element" xsi:type="varchar" length="255" nullable="false" comment="Element Selector"/>
+        <column name="content" xsi:type="text" nullable="false" comment="Step Content"/>
+        <column name="notice_position" xsi:type="varchar" length="10" nullable="true" default="bottom" comment="Notice Position (top, right, bottom, left)"/>
+        <column name="area" xsi:type="varchar" length="32" nullable="false" default="frontend" comment="Frontend or Backend"/>
+        <column name="is_login" xsi:type="boolean" nullable="false" default="0" comment="Require Login (Frontend Only)"/>
+        <column xsi:type="varchar" name="trigger" nullable="true" length="255" comment="Trigger Condition"/>
+        <column name="position" xsi:type="int" nullable="false" default="0" comment="Step Order"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="step_id"/>
+        </constraint>
+    </table>
+</schema>

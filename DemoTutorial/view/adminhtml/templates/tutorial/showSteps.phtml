@@ -1,0 +1,540 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_DemoTutorial
+ *
+ * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+/** @var \Mageplaza\DemoTutorial\Block\Adminhtml\Tutorial\ShowSteps $block */
+
+$helperData  = $this->helper(\Mageplaza\DemoTutorial\Helper\Data::class);
+$info        = $helperData->getContentTutorialJson();
+
+$moduleName  = $info['module_name'];
+$tiers       = $info['tiers'];
+$nextTiers   = $info['next_tiers'] ?: null;
+$contactUrl  = $info['contact_url'];
+$guideUrl    = $info['guide_url'];
+$nextVersion = $info['next_version_url'] ?: null;
+$frontend    = $info['frontend_url'];
+$backend     = $info['backend_url'];
+
+$pageUrl     = $block->getRequest()->getRequestUri();
+$steps       = $block->getSteps(null, 'adminhtml');
+
+$exData      = $helperData->getContentJson();
+$isLoggedIn  = $helperData->isAdminLoggedIn();
+?>
+<?php if (!empty($steps) && $isLoggedIn): ?>
+    <!-- Popup boxes and overlay (unchanged) -->
+    <div id="tutorial-overlay" class="tutorial-overlay" style="display: none;"></div>
+    <div id="popup-container" class="popup-container" style="display: none;font-family: 'Outfit';min-width: 50%">
+        <div id="tutorial-first-box" class="tutorial-box" style="display: none;">
+            <span class="welcome-title">
+                <?= /* @noEscape */ __('Welcome to your guided demo of') ?>
+                <br>
+                <a href="<?= /* @noEscape */ $exData['live_url'] ?>"><?= /* @noEscape */ $moduleName . ' (' . $tiers .')' ?></a>
+            </span>
+            <p class="welcome-content mp-center">
+                <?= /* @noEscape */ __('Discover how easily you can optimize your SEO settings and see the improvements in real time.') ?>
+            </p>
+            <div class="tutorial-toolbar">
+                <button class="skip-tutorial">Skip</button>
+                <button id="start-tutorial">Next</button>
+            </div>
+        </div>
+
+        <div id="tutorial-end-box" class="tutorial-box" style="display: none;font-family: 'Outfit';">
+            <span class="welcome-title">
+                <?= /* @noEscape */ __('That\'s the end of the backend demo of ') ?>
+                <a href="<?= /* @noEscape */ $exData['live_url'] ?>">
+                    <?= /* @noEscape */ $moduleName?>
+                    <br>
+                </a>
+                <a href="<?= /* @noEscape */ $exData['live_url'] ?>">
+                    <?= /* @noEscape */ __(' Extension [') ?>
+                    <?= /* @noEscape */ __($tiers) ?>
+                    <?= /* @noEscape */ __(']') ?>
+                </a>
+            </span>
+            <div class="welcome-content">
+                <ul>
+                    <li> <?= /* @noEscape */ __('Explore our detailed tutorials in the') ?>
+                        <a href="<?= /* @noEscape */ $guideUrl ?>"> <?= /* @noEscape */ __('User Guide') ?> </a>
+                        <?= /* @noEscape */ __(', or contact us if you have any questions') ?></li>
+                    <li style="margin: 0 40px"><?= /* @noEscape */ __('If you wonder how different the Professional version is, click') ?>
+                        <a href="<?= /* @noEscape */ $nextVersion ?>"> <?= /* @noEscape */ __('here') ?> </a>
+                        <?= /* @noEscape */ __('to start!') ?>
+                    </li>
+                </ul>
+            </div>
+            <div class="tutorial-toolbar">
+                <button class="skip-tutorial">Done</button>
+                <button id="prev-last-step">Back</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        require(['jquery'], function ($) {
+            $(window).on('load', function () {
+                if (localStorage.getItem('tutorialSkipped') === 'true') return;
+                setTimeout(function () {
+                    let steps = <?php echo json_encode(array_values(array_map(function ($step) {
+                        return [
+                            'title' => $step['module_name'],
+                            'content' => $step['content'],
+                            'element' => $step['element'],
+                            'url' => $step['page'],
+                            'trigger' => $step['trigger'],
+                            'position' => $step['notice_position'] ?? 'bottom'
+                        ];
+                    }, $steps))); ?>;
+                    let currentStep = -1;
+
+                    function closeTutorial() {
+                        localStorage.setItem('tutorialSkipped', 'true');
+                        $('#popup-container, #tutorial-overlay').fadeOut();
+                        $('.tutorial-highlight').removeClass('tutorial-highlight');
+                        $('.tutorial-tooltip').remove();
+                    }
+
+                    function showFirstPopup() {
+                        if (localStorage.getItem('tutorialSkipped') === 'true') return;
+                        $('#tutorial-overlay, #popup-container, #tutorial-first-box').fadeIn();
+                    }
+
+                    function handleTrigger(step) {
+                        const $element = $(step.element);
+                        const isExpanded = $element.hasClass('section-config') || $element.hasClass('active') || $element.hasClass('_show');
+
+                        if (step.trigger && step.trigger !== 'none') {
+                            const $trigger = $(step.trigger);
+
+                            if (!isExpanded) {
+                                if ($trigger.length) {
+                                    const baseUrl = window.location.origin + '/admin/admin/system_config/state/';
+                                    Fieldset.toggleCollapse($trigger.get(0), baseUrl);
+                                } else {
+                                    waitForElement(step.trigger, function ($resolvedTrigger) {
+                                        const baseUrl = window.location.origin + '/admin/admin/system_config/state/';
+                                        Fieldset.toggleCollapse($resolvedTrigger.get(0), baseUrl);
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    function tooltipPositioning(offset, position, $tooltip, $target) {
+                        const currentOffset = $target.offset();
+                        if (!currentOffset) return;
+
+                        switch (position) {
+                            case 'top':
+                                $tooltip.css({
+                                    top: offset.top - $tooltip.outerHeight() - 30,
+                                    left: offset.left,
+                                    position: 'absolute'
+                                });
+                                break;
+                            case 'right':
+                                $tooltip.css({
+                                    top: offset.top + $target.outerHeight() / 2 - $tooltip.outerHeight() / 2,
+                                    left: offset.left + $target.outerWidth() + 30,
+                                    position: 'absolute'
+                                });
+                                break;
+                            case 'left':
+                                $tooltip.css({
+                                    top: offset.top + $target.outerHeight() / 2 - $tooltip.outerHeight() / 2,
+                                    left: offset.left - $target.outerWidth() / 2 - $tooltip.outerWidth() / 2 - 233,
+                                    position: 'absolute'
+                                });
+                                break;
+                            case 'bottom':
+                            default:
+                                $tooltip.css({
+                                    top: offset.top + $target.outerHeight() + 30,
+                                    left: offset.left,
+                                    position: 'absolute'
+                                });
+                                break;
+                        }
+                    }
+
+                    function waitForElement(selector, callback, timeout = 4000) {
+                        const start = Date.now();
+
+                        $('body').trigger('processStart');
+
+                        const interval = setInterval(() => {
+                            const $el = $(selector);
+
+                            if ($el.length) {
+                                clearInterval(interval);
+                                $('body').trigger('processStop');
+                                callback($el);
+                            } else if (Date.now() - start > timeout) {
+                                clearInterval(interval);
+                                $('body').trigger('processStop');
+                                console.warn('Timeout waiting for element:', selector);
+                            }
+                        }, 1000);
+                    }
+
+
+                    function waitForPageStable(callback, timeout = 4000) {
+                        let lastHeight  = 0;
+                        let stableCount = 0;
+                        const requiredStableCount = 10;
+                        const start = Date.now();
+
+                        $('body').trigger('processStart');
+
+                        const checkStability = setInterval(() => {
+                            const currentHeight = document.body.scrollHeight;
+
+                            if (currentHeight === lastHeight) {
+                                stableCount++;
+                            } else {
+                                stableCount = 0;
+                                lastHeight = currentHeight;
+                            }
+
+                            if (stableCount >= requiredStableCount) {
+                                clearInterval(checkStability);
+                                $('body').trigger('processStop');
+                                setTimeout(callback, 200);
+                            } else if (Date.now() - start > timeout) {
+                                clearInterval(checkStability);
+                                $('body').trigger('processStop');
+                                console.warn('Page stability timeout, proceeding anyway');
+                                callback();
+                            }
+                        }, 1000);
+                    }
+                    function scrollToTop(duration = 600) {
+                        $('html, body').animate({ scrollTop: 0 }, duration);
+                    }
+
+                    function renderStep($target, step, index) {
+                        let overlay = $target.find('#tutorial-overlay');
+
+                        if (overlay.length) {
+                            $target.parent().append(overlay);
+                        }
+
+                        if (($target.is('button') || $target.is('[type="button"]'))) {
+                            const $wrapper = $('<div class="tutorial-highlight-wrapper"></div>');
+                            $target.wrap($wrapper);
+                            $target.parent().addClass('tutorial-highlight');
+                        } else {
+                            $target.addClass('tutorial-highlight');
+                        }
+
+                        $('html, body').animate({
+                            scrollTop: $target.offset().top - 200
+                        }, 500);
+
+                        let $tooltip = $('<div class="tutorial-tooltip"></div>');
+                        $tooltip.html(`
+                            <div class="content-title">${step.title}</div>
+                            <div class="step-content">${step.content}</div>
+                            <div class="tutorial-toolbar">
+                                <button class="skip-tutorial">Skip</button>
+                                <span id="step-counter">${index + 1} of ${steps.length}</span>
+                                <div>
+                                    <button id="prev-step" ${index === 0 ? 'style="display:none;"' : ''}>Back</button>
+                                    <button id="next-step" ${index === steps.length ? 'style="display:none;"' : ''}>Next</button>
+                                </div>
+                            </div>
+                        `);
+
+                        $('body').append($tooltip);
+
+                        // Tooltip positioning
+                        let offset = $target.offset();
+                        let position = step.position || 'bottom';
+
+                        $tooltip.addClass(position);
+
+                        tooltipPositioning(offset, position, $tooltip, $target);
+                        $('#next-step').click(() => {
+                            handleTrigger(step);
+                            if (currentStep < steps.length - 1) {
+                                currentStep++;
+                                localStorage.setItem('tutorialStep', currentStep);
+                                showStep(currentStep);
+                                if (currentStep === 7) {
+                                    scrollToTop();
+                                }
+                            } else {
+                                $('.tutorial-tooltip').remove();
+                                $('.tutorial-highlight').removeClass('tutorial-highlight');
+                                $('#tutorial-end-box').fadeIn();
+                            }
+                        });
+
+
+                        $('#prev-step').click(() => {
+                            if (currentStep > 0) {
+                                currentStep--;
+                                localStorage.setItem('tutorialStep', currentStep);
+                                showStep(currentStep);
+                            }
+                        });
+
+                        $('.skip-tutorial').click(closeTutorial);
+                    }
+                    function showStep(index) {
+                        if (index >= 0 && index < steps.length) {
+                            let step = steps[index];
+
+                            if (window.location.pathname !== step.url) {
+                                localStorage.setItem('tutorialStep', index);
+                                window.location.href = step.url;
+                                return;
+                            }
+
+                            if (step.trigger) {
+                                handleTrigger(step);
+                            }
+
+                            $('.tutorial-highlight').removeClass('tutorial-highlight');
+                            $('.tutorial-tooltip').remove();
+
+                            let $target = $(step.element);
+
+                            if ($target.length) {
+                                renderStep($target, step, index);
+                            } else if (!$target.length) {
+                                waitForElement(step.element, function ($target) {
+                                    waitForPageStable(function() {
+                                        if ($target.length) {
+                                            renderStep($target, step, index);
+                                        }
+                                    });
+                                });
+                            } else {
+                                let $tooltip = $('<div class="tutorial-tooltip"></div>');
+                                $tooltip.html(`
+                                <div class="content-title">${step.title}</div>
+                                <div class="step-content">${step.content}</div>
+                                <div class="tutorial-toolbar">
+                                    <button class="skip-tutorial">Skip</button>
+                                    <span id="step-counter">${index + 1} of ${steps.length}</span>
+                                    <div>
+                                        <button id="prev-step" ${index === 0 ? 'style="display:none;"' : ''}>Back</button>
+                                        <button id="next-step" ${index === steps.length ? 'style="display:none;"' : ''}>Next</button>
+                                    </div>
+                                </div>
+                            `);
+
+                                $('body').append($tooltip);
+
+                                // Tooltip positioning
+                                $tooltip.css({
+                                    top: $(window).scrollTop() + ($(window).height() - $tooltip.outerHeight()) / 2,
+                                    left: ($(window).width() - $tooltip.outerWidth()) / 2,
+                                    position: 'absolute'
+                                });
+                            }
+                        }
+                    }
+
+                    function updateTooltipPosition() {
+                        const $tooltip = $('.tutorial-tooltip');
+                        const $target  = $('.tutorial-highlight');
+
+                        if ($tooltip.length && $target.length && $target.is(':visible')) {
+                            const step = steps[currentStep];
+                            if (step) {
+                                tooltipPositioning($target.offset(), step.position, $tooltip, $target);
+                            }
+                        }
+                    }
+
+                    // Start tutorial
+                    $('#start-tutorial').click(function () {
+                        currentStep = 0;
+                        localStorage.setItem('tutorialStep', currentStep);
+                        $('#tutorial-first-box').fadeOut(function () {
+                            showStep(currentStep);
+                        });
+                    });
+
+                    // Resume if redirected
+                    let savedStep = localStorage.getItem('tutorialStep');
+                    if (savedStep !== null) {
+                        currentStep = parseInt(savedStep);
+                        $('#tutorial-overlay, #popup-container').show();
+                        showStep(currentStep);
+                    } else {
+                        showFirstPopup();
+                        $('.skip-tutorial').click(closeTutorial);
+                    }
+                    $('#prev-last-step').click(function () {
+                        currentStep = steps.length - 1;
+                        $('#tutorial-end-box').fadeOut(function () {
+                            showStep(currentStep);
+                        });
+                    });
+                    $(window).on('resize', updateTooltipPosition);
+                    $(window).on('scroll', updateTooltipPosition);
+                }, 0);
+            });
+        })
+    </script>
+    <style>
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+        .popup-container {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            max-width: 70%;
+        }
+        .tutorial-box {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+        }
+        .tutorial-toolbar {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tutorial-toolbar button {
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            background: #01007F;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .tutorial-toolbar button:hover {
+            background: #0056b3;
+        }
+        button.skip-tutorial {
+            background: unset;
+            color: #1E2022;
+            padding: unset;
+            border: unset;
+        }
+        span.welcome-title {
+            font-size: 24px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            padding: 5px;
+            font-weight: 600;
+        }
+        .welcome-title a {
+            color: #0249D2;
+        }
+        .content-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .welcome-content ul li {
+            list-style-type: disc;
+        }
+        .welcome-content {
+            display: grid;
+            justify-content: center;
+            text-align: center;
+        }
+        .mp-center {
+            text-align: center;
+        }
+        .tutorial-highlight {
+            background-color: #FFF !important;
+            position: relative;
+            z-index: 1002;
+            box-shadow: 0 0 0 4px #fff;
+            transition: box-shadow 0.3s ease;
+        }
+        .tutorial-tooltip {
+            font-family: 'Outfit';
+            color: #000;
+            position: absolute;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1003;
+            max-width: 600px;
+            transition: top 0.1s ease, left 0.1s ease;
+        }
+        .tutorial-tooltip:before {
+            left: 20%;
+            border: 15px solid transparent;
+            height: 0;
+            width: 0;
+            border-right-color: #f4f4f4;
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 3;
+            transform-origin: center;
+            border-right-color: #fff;
+        }
+        .tutorial-tooltip.bottom:before {
+            transform: rotate(90deg);
+            top: -25px;
+        }
+        .tutorial-tooltip.top:before {
+            transform: rotate(-90deg);
+            top: 97%;
+        }
+        .tutorial-tooltip.left:before {
+            transform: rotate(180deg);
+            top: 40%;
+            left: 99%;
+        }
+        .tutorial-tooltip.right:before {
+            transform: rotate(90deg);
+            top: -25px;
+        }
+        #step-counter {
+            color: #1E2022;
+        }
+        aside.modal-slide._inner-scroll._show{
+            left: 40%;
+        }
+    </style>
+<?php endif; ?>

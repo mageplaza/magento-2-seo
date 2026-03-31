@@ -21,8 +21,22 @@
 
 use Magento\Framework\Component\ComponentRegistrar;
 
-ComponentRegistrar::register(
-    ComponentRegistrar::MODULE,
-    'Mageplaza_Seo',
-    __DIR__
-);
+$moduleMap = [
+    'Mageplaza_Seo'  => __DIR__,
+    'Mageplaza_DemoTutorial' => __DIR__ . '/DemoTutorial',
+];
+
+if (!defined('BP')) {
+    \define('BP', \dirname(__DIR__, 3));
+}
+if (!defined('VENDOR_PATH')) {
+    \define('VENDOR_PATH', BP . '/app/etc/vendor_path.php');
+}
+$vendorDir      = require VENDOR_PATH;
+$vendorAutoload = BP . "/{$vendorDir}/autoload.php";
+$loader         = require $vendorAutoload;
+
+foreach ($moduleMap as $namespace => $path) {
+    ComponentRegistrar::register(ComponentRegistrar::MODULE, $namespace, $path);
+    $loader->setPsr4(str_replace('_', '\\', $namespace) . '\\', [$path]);
+}

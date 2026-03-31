@@ -26,7 +26,8 @@
       "registration.php"
     ],
     "psr-4": {
-      "Mageplaza\\Seo\\": ""
+      "Mageplaza\\Seo\\": "",
+      "Mageplaza\\DemoTutorial\\": "DemoTutorial/"
     }
   }
 }

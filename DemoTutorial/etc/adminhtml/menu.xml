@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_DemoTutorial
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mageplaza_DemoTutorial::mptutorial"
+             title="Tutorial"
+             module="Mageplaza_DemoTutorial"
+             resource="Mageplaza_DemoTutorial::mptutorial"
+             sortOrder="150"
+             parent="Magento_Backend::system"/>
+
+        <add id="Mageplaza_DemoTutorial::tutorial_steps"
+             title="Tutorial Steps"
+             module="Mageplaza_DemoTutorial"
+             sortOrder="1"
+             resource="Mageplaza_DemoTutorial::steps"
+             parent="Mageplaza_DemoTutorial::mptutorial"
+             action="mptutorial/steps/index"/>
+    </menu>
+</config>
