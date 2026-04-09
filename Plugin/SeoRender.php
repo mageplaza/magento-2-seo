@@ -376,7 +376,7 @@ class SeoRender
                     $product->getStore()->getWebsiteId()
                 );
 
-                if ($sourceItemList = $this->sourceItemsBySku->execute($product->getSku())) {
+                if ($this->sourceItemsBySku->execute($product->getSku())) {
                     $stockQty        = 0;
                     $websiteCode     = $this->_storeManager->getWebsite()->getCode();
                     $assignedStockId = $this->assignedStock->execute($websiteCode);
