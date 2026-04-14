@@ -1,18 +1,13 @@
 <?php
 /**
  * Mageplaza
- *
  * NOTICE OF LICENSE
- *
  * This source file is subject to the Mageplaza.com license that is
  * available through the world-wide-web at this URL:
  * https://mageplaza.com/LICENSE.txt
- *
  * DISCLAIMER
- *
  * Do not edit or add to this file if you wish to upgrade this extension to newer
  * version in the future.
- *
  * @category    Mageplaza
  * @package     Mageplaza_Seo
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
@@ -22,6 +17,7 @@
 namespace Mageplaza\Seo\Plugin;
 
 use Exception;
+use Magento\Catalog\Helper\Image as ImageHelper;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
@@ -42,6 +38,9 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Page\Config as PageConfig;
 use Magento\Framework\View\Page\Config\Renderer;
+use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface as SourceItems;
+use Magento\InventorySales\Model\ResourceModel\GetAssignedStockIdForWebsite as AssignedStock;
+use Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku as SalableQuantity;
 use Magento\Review\Model\Rating;
 use Magento\Review\Model\RatingFactory;
 use Magento\Review\Model\ResourceModel\Review as ReviewResourceModel;
@@ -52,14 +51,9 @@ use Magento\Search\Helper\Data as SearchHelper;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Seo\Helper\Data as HelperData;
 use Mageplaza\Seo\Model\Config\Source\PriceValidUntil;
-use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface as SourceItems;
-use Magento\InventorySales\Model\ResourceModel\GetAssignedStockIdForWebsite as AssignedStock;
-use Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku as SalableQuantity;
-use Magento\Catalog\Helper\Image as ImageHelper;
 
 /**
  * Class SeoRender
- *
  * @package Mageplaza\Seo\Plugin
  */
 class SeoRender
@@ -68,6 +62,7 @@ class SeoRender
     const MSVALIDATE_01           = 'msvalidate.01';
     const P_DOMAIN_VERIFY         = 'p:domain_verify';
     const YANDEX_VERIFICATION     = 'yandex-verification';
+    const SCHEMA_URL              = 'https://schema.org/';
 
     /**
      * @var PageConfig
@@ -321,7 +316,6 @@ class SeoRender
 
     /**
      * Get full action name
-     *
      * @return string
      */
     public function getFullActionName()
@@ -363,9 +357,7 @@ class SeoRender
 
     /**
      * Show product structured data
-     *
      * @return string
-     *
      * Learn more: https://developers.google.com/structured-data/rich-snippets/products#single_product_page
      */
     public function showProductStructuredData()
@@ -384,7 +376,7 @@ class SeoRender
                     $product->getStore()->getWebsiteId()
                 );
 
-                if ($sourceItemList = $this->sourceItemsBySku->execute($product->getSku())) {
+                if ($this->sourceItemsBySku->execute($product->getSku())) {
                     $stockQty        = 0;
                     $websiteCode     = $this->_storeManager->getWebsite()->getCode();
                     $assignedStockId = $this->assignedStock->execute($websiteCode);
@@ -460,6 +452,14 @@ class SeoRender
                     $currentProduct,
                     $productStructuredData
                 );
+
+                if ($this->helperData->getShippingDetailConfig('enable_shipping_details')) {
+                    $productStructuredData['offers']['shippingDetails'] = $this->createShippingDetailsData($product);
+                }
+
+                if ($this->helperData->getReturnPolicyConfig('enable_mrp')) {
+                    $productStructuredData['offers']['hasMerchantReturnPolicy'] = $this->createMerchantReturnPolicy();
+                }
 
                 $priceValidType = $this->helperData->getRichsnippetsConfig('price_valid_until');
                 if (!empty($priceValidUntil)) {
@@ -579,8 +579,87 @@ class SeoRender
     }
 
     /**
-     * Get current product
+     * @param $product
      *
+     * @return array
+     */
+    public function createShippingDetailsData($product)
+    {
+        $enableFreeShipping = $this->helperData->getShippingDetailConfig('enable_free_shipping');
+        $isFreeShipping     = false;
+
+        if ($enableFreeShipping) {
+            $attribute      = $this->helperData->getShippingDetailConfig('free_shipping_attribute');
+            $isFreeShipping = $product->getData($attribute);
+        }
+
+        return [
+            '@type'               => 'OfferShippingDetails',
+            'deliveryTime'        => [
+                '@type'        => 'ShippingDeliveryTime',
+                'businessDays' => [
+                    '@type'     => 'OpeningHoursSpecification',
+                    'dayOfWeek' => $this->getDayOfWeeks()
+                ],
+                'cutoffTime'   => $this->helperData->getShippingDetailConfig('cutoff_time'),
+                'handlingTime' => [
+                    '@type'    => 'QuantitativeValue',
+                    'minValue' => $this->helperData->getShippingDetailConfig('min_handling_time'),
+                    'maxValue' => $this->helperData->getShippingDetailConfig('max_handling_time'),
+                    'unitCode' => 'd'
+                ],
+                'transitTime'  => [
+                    '@type'    => 'QuantitativeValue',
+                    'minValue' => $this->helperData->getShippingDetailConfig('min_transit_time'),
+                    'maxValue' => $this->helperData->getShippingDetailConfig('max_transit_time'),
+                    'unitCode' => 'd'
+                ]
+            ],
+            'shippingDestination' => [
+                '@type'          => 'DefinedRegion',
+                'addressCountry' => $this->helperData->getShippingDetailConfig('shipping_country'),
+            ],
+            'shippingRate'        => [
+                '@type'    => 'MonetaryAmount',
+                'value'    => $isFreeShipping ? 0 : $this->helperData->getShippingDetailConfig('shipping_fee'),
+                'currency' => $this->helperData->getShippingDetailConfig('shipping_currency'),
+            ]
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getDayOfWeeks()
+    {
+        $dayList = $this->helperData->getShippingDetailConfig('business_days');
+        $days    = explode(',', $dayList);
+
+        $formattedDays = array_map(function ($day) {
+            return self::SCHEMA_URL . trim($day);
+        }, $days);
+
+        return $formattedDays;
+    }
+
+    /**
+     * @return array
+     */
+    public function createMerchantReturnPolicy()
+    {
+        return [
+            '@type'                => 'MerchantReturnPolicy',
+            'applicableCountry'    => $this->helperData->getReturnPolicyConfig('applicable_country'),
+            'returnPolicyCategory' => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('return_policy_category'),
+            'refundType'           => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('refund_type'),
+            'returnFees'           => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('return_fees'),
+            'returnMethod'         => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('return_method'),
+            'returnLabelSource'    => self::SCHEMA_URL . $this->helperData->getReturnPolicyConfig('return_label_source')
+        ];
+    }
+
+    /**
+     * Get current product
      * @return mixed
      */
     public function getProduct()
@@ -590,7 +669,6 @@ class SeoRender
 
     /**
      * Get meta title
-     *
      * @return mixed
      */
     public function getMetaTitle()
@@ -880,7 +958,6 @@ class SeoRender
 
     /**
      * Get Logo Structured Data
-     *
      * @return string
      */
     public function showLogoStructureData()
@@ -945,7 +1022,6 @@ class SeoRender
 
     /**
      * Get Local Bussiness Structure data.
-     *
      * @return string
      * @throws NoSuchEntityException
      */
@@ -1001,7 +1077,6 @@ class SeoRender
 
     /**
      * get Social Profiles config
-     *
      * @return array|string
      */
 
@@ -1025,7 +1100,8 @@ class SeoRender
             $valueArray = array_map('trim', explode(
                 "\n",
                 $this->helperData->getSocialProfiles('custom_link')
-                ?? ''));
+                ?? ''
+            ));
             $lines      = array_merge($lines, $valueArray);
         }
 
@@ -1034,7 +1110,6 @@ class SeoRender
 
     /**
      * get Sitelinks Searchbox Structured Data
-     *
      * @return string
      */
     public function showSiteLinksStructuredData()

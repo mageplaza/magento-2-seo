@@ -103,6 +103,29 @@ class Data extends CoreHelper
     }
 
     /**
+     * @param $code
+     * @param $storeId
+     * @return array|mixed
+     */
+    public function getShippingDetailConfig($code, $storeId = null)
+    {
+        $code = ($code !== '') ? '/' . $code : '';
+
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/richsnippets/shipping_details' . $code, $storeId);
+    }
+
+    /**
+     * @param $code
+     * @param $storeId
+     * @return array|mixed
+     */
+    public function getReturnPolicyConfig($code, $storeId = null)
+    {
+        $code = ($code !== '') ? '/' . $code : '';
+        return $this->getConfigValue(self::CONFIG_MODULE_PATH . '/richsnippets/merchant_return_policy' . $code, $storeId);
+    }
+
+    /**
      * @param null $code
      * @param null $storeId
      *

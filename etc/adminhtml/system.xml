@@ -109,6 +109,141 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Learn more <a href="https://developers.google.com/search/docs/data-types/sitelinks-searchbox" target="_blank">here</a> ]]></comment>
                 </field>
+                <group id="shipping_details" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shipping Details</label>
+                    <field id="enable_shipping_details" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable Product Shipping Details</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="enable_free_shipping" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable Free Shipping</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                    </field>
+                    <field id="free_shipping_attribute" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Free Shipping Attribute</label>
+                        <depends>
+                            <field id="enable_free_shipping">1</field>
+                        </depends>
+                        <comment>Product with this attribute will be displayed as free shipping</comment>
+                        <source_model>Mageplaza\Seo\Model\Config\Source\YesNoAttribute</source_model>
+                    </field>
+                    <field id="shipping_fee" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Shipping Fee</label>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                    </field>
+                    <field id="shipping_country" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Shipping Country</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="shipping_currency" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Shipping Currency</label>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                    </field>
+                    <field id="min_handling_time" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Minimum Handling Time (Days)</label>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                    </field>
+                    <field id="max_handling_time" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Maximum Handling Time (Days)</label>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                    </field>
+                    <field id="min_transit_time" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Minimum Transit Time (Days)</label>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                    </field>
+                    <field id="max_transit_time" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Maximum Transit Time (Days)</label>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                    </field>
+                    <field id="business_days" translate="label" type="multiselect" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Business Days</label>
+                        <source_model>Mageplaza\Seo\Model\Config\Source\BusinessDays</source_model>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                    </field>
+                    <field id="cutoff_time" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Cutoff Time</label>
+                        <depends>
+                            <field id="enable_shipping_details">1</field>
+                        </depends>
+                        <comment>Example: 14:30:00-07:00</comment>
+                    </field>
+                </group>
+                <group id="merchant_return_policy" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Merchant Return Policy</label>
+                    <field id="enable_mrp" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable Merchant Return Policy</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="applicable_country" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Applicable Country</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <depends>
+                            <field id="enable_mrp">1</field>
+                        </depends>
+                    </field>
+                    <field id="return_policy_category" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Return Policy Category</label>
+                        <depends>
+                            <field id="enable_mrp">1</field>
+                        </depends>
+                        <source_model>Mageplaza\Seo\Model\Config\Source\ReturnPolicyCategory</source_model>
+                    </field>
+                    <field id="merchant_return_days" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Merchants Return Days</label>
+                        <depends>
+                            <field id="enable_mrp">1</field>
+                        </depends>
+                    </field>
+                    <field id="return_method" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Return Method</label>
+                        <depends>
+                            <field id="enable_mrp">1</field>
+                        </depends>
+                        <source_model>Mageplaza\Seo\Model\Config\Source\ReturnMethod</source_model>
+                    </field>
+                    <field id="return_fees" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Return Fees</label>
+                        <depends>
+                            <field id="enable_mrp">1</field>
+                        </depends>
+                        <source_model>Mageplaza\Seo\Model\Config\Source\ReturnFees</source_model>
+                    </field>
+                    <field id="refund_type" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Refund Type</label>
+                        <depends>
+                            <field id="enable_mrp">1</field>
+                        </depends>
+                        <source_model>Mageplaza\Seo\Model\Config\Source\RefundType</source_model>
+                    </field>
+                    <field id="return_label_source" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Return Label Source</label>
+                        <depends>
+                            <field id="enable_mrp">1</field>
+                        </depends>
+                        <source_model>Mageplaza\Seo\Model\Config\Source\ReturnLabelSource</source_model>
+                    </field>
+                </group>
             </group>
             <group id="info" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Business information</label>
