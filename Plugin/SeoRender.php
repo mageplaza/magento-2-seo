@@ -633,6 +633,9 @@ class SeoRender
     public function getDayOfWeeks()
     {
         $dayList = $this->helperData->getShippingDetailConfig('business_days');
+        if ($dayList === null || $dayList === '') {
+            return [];
+        }
         $days    = explode(',', $dayList);
 
         $formattedDays = array_map(function ($day) {
