@@ -1,32 +1,31 @@
 {
-  "name": "mageplaza/magento-2-seo-extension",
-  "description": "Magento 2 SEO extension",
-  "require": {
-    "mageplaza/module-core": "^1.5.14"
-  },
-  "type": "magento2-module",
-  "version": "4.4.8",
-  "license": "proprietary",
-  "keywords": [
-    "magento 2",
-    "mageplaza",
-    "seo",
-    "magento 2 seo"
-  ],
-  "authors": [
-    {
-      "name": "Mageplaza",
-      "email": "support@mageplaza.com",
-      "homepage": "https://www.mageplaza.com",
-      "role": "Technical Support"
-    }
-  ],
-  "autoload": {
-    "files": [
-      "registration.php"
+    "name": "mageplaza/magento-2-seo-extension",
+    "description": "Magento 2 SEO extension",
+    "require": {
+        "mageplaza/module-core": "^1.5.14"
+    },
+    "type": "magento2-module",
+    "license": "proprietary",
+    "keywords": [
+        "magento 2",
+        "mageplaza",
+        "seo",
+        "magento 2 seo"
     ],
-    "psr-4": {
-      "Mageplaza\\Seo\\": ""
+    "authors": [
+        {
+            "name": "Mageplaza",
+            "email": "support@mageplaza.com",
+            "homepage": "https://www.mageplaza.com",
+            "role": "Technical Support"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Mageplaza\\Seo\\": ""
+        }
     }
-  }
 }
