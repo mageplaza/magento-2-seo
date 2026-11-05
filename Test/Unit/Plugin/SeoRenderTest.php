@@ -23,7 +23,6 @@ declare(strict_types=1);
 
 namespace Mageplaza\Seo\Test\Unit\Plugin;
 
-use ArrayObject;
 use Magento\Framework\DataObject;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Page\Config\Renderer;
@@ -38,9 +37,9 @@ class SeoRenderTest extends TestCase
 {
     use SeoRenderFactoryTrait;
 
-    private function collectMetadata(): ArrayObject
+    private function collectMetadata(): DataObject
     {
-        $calls = new ArrayObject();
+        $calls = new DataObject();
         $this->pageConfigMock->method('setMetadata')->willReturnCallback(
             static function (string $name, mixed $content) use ($calls): void {
                 $calls[$name] = $content;
@@ -71,7 +70,7 @@ class SeoRenderTest extends TestCase
                 'p:domain_verify' => 'p-token',
                 'yandex-verification' => 'y-token',
             ],
-            $calls->getArrayCopy()
+            $calls->getData()
         );
     }
 
@@ -89,7 +88,7 @@ class SeoRenderTest extends TestCase
         if ($expectNoindex) {
             $this->assertSame('NOINDEX,NOFOLLOW', $calls['robots']);
         } else {
-            $this->assertArrayNotHasKey('robots', $calls->getArrayCopy());
+            $this->assertArrayNotHasKey('robots', $calls->getData());
         }
     }
 
