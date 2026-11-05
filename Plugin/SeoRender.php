@@ -764,7 +764,7 @@ class SeoRender
             $childrenPrice[] = $this->_priceHelper->currency($child->getFinalPrice(), false);
         }
 
-        $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
+        $productStructuredData['offers']['highPrice'] = $childrenPrice ? max($childrenPrice) : 0;
         $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
         unset($productStructuredData['offers']['price']);
 
@@ -850,8 +850,15 @@ class SeoRender
             ];
             $childrenPrice[] = $this->_priceHelper->currency($child->getPrice(), false);
         }
-        $productStructuredData['offers']['highPrice'] = array_sum($childrenPrice);
-        $productStructuredData['offers']['lowPrice']  = $childrenPrice ? min($childrenPrice) : 0;
+        $basePrice = $productStructuredData['offers']['price'] ?? 0;
+        if ($childrenPrice && $currentProduct->getLinksPurchasedSeparately()) {
+            $productStructuredData['offers']['highPrice'] = $basePrice + array_sum($childrenPrice);
+            $productStructuredData['offers']['lowPrice']  = $basePrice + min($childrenPrice);
+        } else {
+            $productStructuredData['offers']['highPrice'] = $basePrice;
+            $productStructuredData['offers']['lowPrice']  = $basePrice;
+        }
+        unset($productStructuredData['offers']['price']);
 
         if (!empty($offerData)) {
             $productStructuredData['offers']['offerCount'] = count($offerData);
@@ -904,6 +911,7 @@ class SeoRender
             $productStructuredData['offers']['highPrice'] = 0;
             $productStructuredData['offers']['lowPrice']  = 0;
         }
+        unset($productStructuredData['offers']['price']);
 
         if (!empty($offerData)) {
             $productStructuredData['offers']['offerCount'] = count($offerData);
