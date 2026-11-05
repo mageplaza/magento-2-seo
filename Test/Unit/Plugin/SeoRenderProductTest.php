@@ -110,6 +110,7 @@ class SeoRenderProductTest extends TestCase
         $offers = $data['offers'];
         $this->assertSame('AggregateOffer', $offers['@type']);
         $this->assertArrayNotHasKey('price', $offers);
+        $this->assertSame(10, $offers['highPrice']);
         $this->assertSame(4, $offers['lowPrice']);
         $this->assertSame(2, $offers['offerCount']);
         $this->assertSame('https://shop.test/media/catalog/product/a.jpg', $offers['offers'][0]['image']);
@@ -213,18 +214,37 @@ class SeoRenderProductTest extends TestCase
         ]);
 
         $data = $this->buildSeoRender()->getDownloadableProductStructuredData(
-            new ProductStub([], null, $typeInstance),
-            ['offers' => []]
+            new ProductStub(['links_purchased_separately' => 1], null, $typeInstance),
+            ['offers' => ['price' => 10]]
         );
 
         $this->assertSame('AggregateOffer', $data['offers']['@type']);
-        $this->assertSame(5, $data['offers']['lowPrice']);
-        $this->assertSame(25, $data['offers']['highPrice']);
+        $this->assertSame(15, $data['offers']['lowPrice']);
+        $this->assertSame(35, $data['offers']['highPrice']);
+        $this->assertArrayNotHasKey('price', $data['offers']);
         $this->assertSame(2, $data['offers']['offerCount']);
         $this->assertSame(
             [['@type' => 'Offer', 'name' => 'Basic', 'price' => 5], ['@type' => 'Offer', 'name' => 'Pro', 'price' => 20]],
             $data['offers']['offers']
         );
+    }
+
+    public function testDownloadableProductWithLinksNotSoldSeparatelyUsesBasePrice(): void
+    {
+        $typeInstance = $this->createStub(DownloadableType::class);
+        $typeInstance->method('getLinks')->willReturn([
+            new DataObject(['title' => 'Basic', 'price' => 5]),
+            new DataObject(['title' => 'Pro', 'price' => 20]),
+        ]);
+
+        $data = $this->buildSeoRender()->getDownloadableProductStructuredData(
+            new ProductStub(['links_purchased_separately' => 0], null, $typeInstance),
+            ['offers' => ['price' => 10]]
+        );
+
+        $this->assertSame(10, $data['offers']['lowPrice']);
+        $this->assertSame(10, $data['offers']['highPrice']);
+        $this->assertSame(2, $data['offers']['offerCount']);
     }
 
     public function testDownloadableProductWithoutLinksHasZeroPrices(): void
@@ -260,11 +280,12 @@ class SeoRenderProductTest extends TestCase
 
         $data = $render->getConfigurableProductStructuredData(
             new ProductStub([], null, $typeInstance),
-            ['offers' => []]
+            ['offers' => ['price' => 1]]
         );
 
         $this->assertSame('AggregateOffer', $data['offers']['@type']);
         $this->assertSame(30, $data['offers']['highPrice']);
+        $this->assertArrayNotHasKey('price', $data['offers']);
         $this->assertSame(12, $data['offers']['lowPrice']);
         $this->assertSame(3, $data['offers']['offerCount']);
         $this->assertSame(['c-s', 'c-m', 'c-l'], array_column($data['offers']['offers'], 'sku'));
