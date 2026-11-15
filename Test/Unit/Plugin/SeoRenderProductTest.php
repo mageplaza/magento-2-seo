@@ -39,6 +39,7 @@ use Magento\Framework\DataObject;
 use Magento\Framework\Pricing\Amount\AmountInterface;
 use Magento\Framework\Pricing\Price\PriceInterface;
 use Magento\Framework\Pricing\PriceInfoInterface;
+use Magento\Framework\UrlInterface;
 use Magento\GroupedProduct\Model\Product\Type\Grouped;
 use Magento\Review\Model\Rating;
 use Magento\Review\Model\ResourceModel\Review\Collection as ReviewCollection;
@@ -365,6 +366,7 @@ class SeoRenderProductTest extends TestCase
         $store->method('getId')->willReturn(1);
         $store->method('getCurrentCurrencyCode')->willReturn('USD');
         $store->method('getWebsiteId')->willReturn(1);
+        $store->method('getBaseUrl')->with(UrlInterface::URL_TYPE_MEDIA)->willReturn('https://shop.test/media/');
         $this->storeManagerMock->method('getStore')->willReturn($store);
 
         $attributes = [
@@ -404,7 +406,7 @@ class SeoRenderProductTest extends TestCase
             ['current_product', $product],
             ['meta_title', $options['meta_title'] ?? null],
         ]);
-        $this->urlBuilderMock->method('getUrl')->willReturn('https://shop.test/pub/media/catalog');
+        $this->urlBuilderMock->method('getUrl')->willReturn('https://shop.test/en/pub/media/catalog/');
         $this->productFactoryMock->method('create')->willReturn($product);
         $this->moduleManagerMock->method('isEnabled')->willReturn(false);
 
@@ -448,7 +450,7 @@ class SeoRenderProductTest extends TestCase
         $this->assertSame('Soft cotton', $data['description']);
         $this->assertSame('TEE-1', $data['sku']);
         $this->assertSame('https://shop.test/tee.html', $data['url']);
-        $this->assertSame('https://shop.test/pub/media/catalogproduct/t/e/tee.jpg', $data['image']);
+        $this->assertSame('https://shop.test/media/catalog/product/t/e/tee.jpg', $data['image']);
         $this->assertSame('MPN-123', $data['mpn']);
         $this->assertSame(['@type' => 'Brand', 'name' => 'Acme'], $data['brand']);
         $this->assertEquals(19.9, $data['offers']['price']);
@@ -472,6 +474,17 @@ class SeoRenderProductTest extends TestCase
 
         $this->assertSame('https://shop.test/placeholder.png', $data['image']);
         $this->assertSame('', $data['description']);
+    }
+
+    public function testShowProductStructuredDataFallsBackToImageHelperWhenImageIsNoSelection(): void
+    {
+        [$render] = $this->buildProductFlow(['product' => ['image' => 'no_selection']]);
+        $this->imageHelperMock->method('init')->willReturnSelf();
+        $this->imageHelperMock->method('getUrl')->willReturn('https://shop.test/placeholder.png');
+
+        $data = $this->extractJson($render->showProductStructuredData());
+
+        $this->assertSame('https://shop.test/placeholder.png', $data['image']);
     }
 
     public function testShowProductStructuredDataMarksUnavailableProductOutOfStock(): void
