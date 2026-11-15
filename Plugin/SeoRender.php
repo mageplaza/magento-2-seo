@@ -422,11 +422,7 @@ class SeoRender
                 }
                 $modelName = $this->helperData->getRichsnippetsConfig('model_name');
 
-                if ($currentProduct->getImage()) {
-                    $imageUrl = $this->getUrl('pub/media/catalog') . 'product' . $currentProduct->getImage();
-                } else {
-                    $imageUrl = $this->imageHelper->init($currentProduct, 'product_base_image')->getUrl();
-                }
+                $imageUrl = $this->getProductImageUrl($currentProduct);
 
                 $productStructuredData = [
                     '@context'    => 'http://schema.org/',
@@ -680,6 +676,22 @@ class SeoRender
     }
 
     /**
+     * @param Product $product
+     *
+     * @return string
+     */
+    private function getProductImageUrl($product)
+    {
+        $image = $product->getImage();
+        if ($image && $image !== 'no_selection') {
+            return $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
+                . 'catalog/product' . $image;
+        }
+
+        return $this->imageHelper->init($product, 'product_base_image')->getUrl();
+    }
+
+    /**
      * Get Url
      *
      * @param string $route
@@ -747,12 +759,7 @@ class SeoRender
         $childProductCollection                   = $typeInstance->getAssociatedProducts($currentProduct);
         foreach ($childProductCollection as $child) {
 
-            if ($child->getImage()) {
-                $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                    . 'catalog/product' . $child->getImage();
-            } else {
-                $imageUrl = $this->imageHelper->init($child, 'product_base_image')->getUrl();
-            }
+            $imageUrl = $this->getProductImageUrl($child);
 
             $offerData[]     = [
                 '@type' => 'Offer',
@@ -805,12 +812,7 @@ class SeoRender
             $currentProduct
         );
         foreach ($childProductCollection as $child) {
-            if ($child->getImage()) {
-                $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                    . 'catalog/product' . $child->getImage();
-            } else {
-                $imageUrl = $this->imageHelper->init($child, 'product_base_image')->getUrl();
-            }
+            $imageUrl = $this->getProductImageUrl($child);
             $offerData[] = [
                 '@type' => 'Offer',
                 'name'  => $child->getName(),
@@ -887,12 +889,7 @@ class SeoRender
         $allChildPrices                           = [];
         foreach ($childProductCollection as $child) {
 
-            if ($child->getImage()) {
-                $imageUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
-                    . 'catalog/product' . $child->getImage();
-            } else {
-                $imageUrl = $this->imageHelper->init($child, 'product_base_image')->getUrl();
-            }
+            $imageUrl = $this->getProductImageUrl($child);
             $childPrice       = $this->_priceHelper->currency($child->getPrice(), false);
             $allChildPrices[] = $childPrice;
             $offerData[]      = [
