@@ -28,5 +28,17 @@
             "Mageplaza\\Seo\\": ""
         }
     },
-    "version": "4.4.10"
+    "version": "4.4.10",
+    "require-dev": {
+        "magento/magento-coding-standard": "^41",
+        "phpstan/phpstan": "^2.1",
+        "bitexpert/phpstan-magento": "^0.44",
+        "phpstan/extension-installer": "^1.4"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
+    }
 }
