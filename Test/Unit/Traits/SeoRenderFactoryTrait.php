@@ -25,6 +25,7 @@ namespace Mageplaza\Seo\Test\Unit\Traits;
 
 use Magento\Catalog\Helper\Image as ImageHelper;
 use Magento\Catalog\Model\ProductFactory;
+use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
@@ -68,6 +69,8 @@ trait SeoRenderFactoryTrait
     protected UrlInterface|MockObject $urlBuilderMock;
 
     protected ProductFactory|MockObject $productFactoryMock;
+
+    protected ProductResource|MockObject $productResourceMock;
 
     protected ManagerInterface|MockObject $messageManagerMock;
 
@@ -144,6 +147,7 @@ trait SeoRenderFactoryTrait
         $this->storeManagerMock = $this->createMock(StoreManagerInterface::class);
         $this->urlBuilderMock = $this->createMock(UrlInterface::class);
         $this->productFactoryMock = $this->createMock(ProductFactory::class);
+        $this->productResourceMock = $this->createMock(ProductResource::class);
         $this->messageManagerMock = $this->createMock(ManagerInterface::class);
         $this->stockStateMock = $this->createMock(StockRegistryInterface::class);
         $this->searchHelperMock = $this->createMock(SearchHelper::class);
@@ -187,6 +191,7 @@ trait SeoRenderFactoryTrait
             $this->assignedStockMock,
             $this->salableQuantityMock,
             $this->imageHelperMock,
+            $this->productResourceMock,
         ];
     }
 

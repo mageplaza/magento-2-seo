@@ -24,6 +24,7 @@ namespace Mageplaza\Seo\Block\Adminhtml\SeoChecker;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\ProductFactory;
+use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
 use Magento\Cms\Helper\Page;
 use Magento\Cms\Model\PageFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -60,6 +61,11 @@ class CheckForm extends Template
     protected $productFactory;
 
     /**
+     * @var ProductResource
+     */
+    protected $productResource;
+
+    /**
      * @var ProductRepositoryInterface
      */
     protected $productRepository;
@@ -84,6 +90,7 @@ class CheckForm extends Template
      * @param ProductRepositoryInterface $productRepository
      * @param CategoryRepositoryInterface $categoryRepository
      * @param SeoHelperData $helper
+     * @param ProductResource $productResource
      * @param array $data
      */
     public function __construct(
@@ -94,8 +101,10 @@ class CheckForm extends Template
         ProductRepositoryInterface  $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         SeoHelperData               $helper,
+        ProductResource             $productResource,
         array                       $data = []
     ) {
+        $this->productResource    = $productResource;
         $this->helper             = $helper;
         $this->productFactory     = $productFactory;
         $this->categoryRepository = $categoryRepository;
@@ -124,7 +133,9 @@ class CheckForm extends Template
         switch ($actionName) {
             case 'catalog_product_edit':
                 $urlModel = $this->productRepository->getById($id)->getUrlModel();
-                $product  = $this->productFactory->create()->load($id)->setStoreId($storeId);
+                $product = $this->productFactory->create();
+                $this->productResource->load($product, $id);
+                $product->setStoreId($storeId);
                 $url      = $urlModel->getUrl($product);
                 break;
             case 'catalog_category_edit':

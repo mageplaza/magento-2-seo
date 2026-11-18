@@ -56,6 +56,9 @@ class ValidUrlTest extends TestCase
         );
     }
 
+    /**
+     * @dataProvider validValueProvider
+     */
     #[DataProvider('validValueProvider')]
     public function testValidValuePassesAndSaveEventIsDispatched(?string $value): void
     {
@@ -81,6 +84,9 @@ class ValidUrlTest extends TestCase
         ];
     }
 
+    /**
+     * @dataProvider invalidValueProvider
+     */
     #[DataProvider('invalidValueProvider')]
     public function testInvalidValueThrowsValidatorExceptionAndSkipsSave(string $value): void
     {

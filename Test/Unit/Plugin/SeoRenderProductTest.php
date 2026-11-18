@@ -27,7 +27,6 @@ use ArrayIterator;
 use Exception;
 use Magento\Bundle\Model\Product\Type as BundleType;
 use Magento\Bundle\Pricing\Price\FinalPrice as BundleFinalPrice;
-use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection as AttributeCollection;
 use Magento\Catalog\Model\ResourceModel\Product\Collection as ProductCollection;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
@@ -309,6 +308,9 @@ class SeoRenderProductTest extends TestCase
         $this->assertArrayNotHasKey('offerCount', $data['offers']);
     }
 
+    /**
+     * @dataProvider reviewSummaryProvider
+     */
     #[DataProvider('reviewSummaryProvider')]
     public function testReviewCountAndRatingSummaryMatchCurrentStoreOnly(
         array $summaries,
@@ -372,7 +374,7 @@ class SeoRenderProductTest extends TestCase
             'manufacturer' => 'Acme',
             'meta_title' => 'Meta brand',
         ];
-        $resource = $this->createStub(ProductResource::class);
+        $resource = $this->productResourceMock;
         $resource->method('getAttribute')->willReturnCallback(
             function (string $code) use ($attributes): AbstractAttribute {
                 $frontend = $this->createStub(AbstractFrontend::class);
@@ -406,6 +408,7 @@ class SeoRenderProductTest extends TestCase
         ]);
         $this->urlBuilderMock->method('getUrl')->willReturn('https://shop.test/pub/media/catalog');
         $this->productFactoryMock->method('create')->willReturn($product);
+        $this->productResourceMock->expects($this->once())->method('load')->with($product, $product->getId());
         $this->moduleManagerMock->method('isEnabled')->willReturn(false);
 
         $attributeCollection = $this->createStub(AttributeCollection::class);
@@ -483,6 +486,9 @@ class SeoRenderProductTest extends TestCase
         $this->assertSame('http://schema.org/OutOfStock', $data['offers']['availability']);
     }
 
+    /**
+     * @dataProvider priceValidUntilProvider
+     */
     #[DataProvider('priceValidUntilProvider')]
     public function testShowProductStructuredDataPriceValidUntil(
         string $type,
@@ -542,6 +548,9 @@ class SeoRenderProductTest extends TestCase
         $this->assertSame('https://schema.org/FullRefund', $offers['hasMerchantReturnPolicy']['refundType']);
     }
 
+    /**
+     * @dataProvider brandProvider
+     */
     #[DataProvider('brandProvider')]
     public function testShowProductStructuredDataBrandSource(
         string $brandAttribute,

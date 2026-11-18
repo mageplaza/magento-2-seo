@@ -20,6 +20,7 @@ use Exception;
 use Magento\Catalog\Helper\Image as ImageHelper;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
+use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
@@ -108,6 +109,11 @@ class SeoRender
      * @var ProductFactory
      */
     protected $productFactory;
+
+    /**
+     * @var ProductResource
+     */
+    protected $productResource;
 
     /**
      * @var ManagerInterface
@@ -217,6 +223,7 @@ class SeoRender
      * @param AssignedStock $assignedStock
      * @param SalableQuantity $salableQuantity
      * @param ImageHelper $imageHelper
+     * @param ProductResource $productResource
      */
     public function __construct(
         PageConfig $pageConfig,
@@ -243,8 +250,10 @@ class SeoRender
         SourceItems $sourceItemsBySku,
         AssignedStock $assignedStock,
         SalableQuantity $salableQuantity,
-        ImageHelper $imageHelper
+        ImageHelper $imageHelper,
+        ProductResource $productResource
     ) {
+        $this->productResource     = $productResource;
         $this->pageConfig          = $pageConfig;
         $this->request             = $request;
         $this->helperData          = $helpData;
@@ -369,7 +378,8 @@ class SeoRender
                     ->getColumnValues('attribute_code');
                 $productId       = $currentProduct->getId() ?: $this->request->getParam('id');
 
-                $product      = $this->productFactory->create()->load($productId);
+                $product = $this->productFactory->create();
+                $this->productResource->load($product, $productId);
                 $availability = $product->isAvailable() ? 'InStock' : 'OutOfStock';
                 $stockItem    = $this->stockState->getStockItem(
                     $product->getId(),
@@ -407,7 +417,7 @@ class SeoRender
 
                 $priceValidUntil = $currentProduct->getSpecialToDate();
                 $modelAttribute  = $this->helperData->getRichsnippetsConfig('model_value');
-                $modelValue      = $product->getResource()
+                $modelValue      = $this->productResource
                     ->getAttribute($modelAttribute)
                     ->getFrontend()->getValue($product);
                 if ($modelAttribute === 'quantity_and_stock_status') {
@@ -493,7 +503,7 @@ class SeoRender
                 if (!$this->_moduleManager->isEnabled('Mageplaza_Shopbybrand')
                     || !isset($productStructuredData['brand'])) {
                     $brandAttribute = $this->helperData->getRichsnippetsConfig('brand');
-                    $brandValue     = $product->getResource()
+                    $brandValue     = $this->productResource
                         ->getAttribute($brandAttribute)
                         ->getFrontend()->getValue($product);
 

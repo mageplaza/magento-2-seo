@@ -67,6 +67,9 @@ class BusinessImageTest extends TestCase
         $this->assertTrue($this->call($this->createModel('default', 0), '_addWhetherScopeInfo'));
     }
 
+    /**
+     * @dataProvider uploadDirProvider
+     */
     #[DataProvider('uploadDirProvider')]
     public function testUploadDirIsUnderMediaMageplazaSeoWithScope(string $scope, ?int $scopeId, string $expected): void
     {

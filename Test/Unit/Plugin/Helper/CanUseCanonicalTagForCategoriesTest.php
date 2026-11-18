@@ -35,6 +35,9 @@ use PHPUnit\Framework\TestCase;
 #[AllowMockObjectsWithoutExpectations]
 class CanUseCanonicalTagForCategoriesTest extends TestCase
 {
+    /**
+     * @dataProvider resultProvider
+     */
     #[DataProvider('resultProvider')]
     public function testOverridesResultWithSeoConfigForCurrentStore(
         bool $enabled,

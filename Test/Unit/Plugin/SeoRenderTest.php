@@ -74,6 +74,9 @@ class SeoRenderTest extends TestCase
         );
     }
 
+    /**
+     * @dataProvider noindexPageProvider
+     */
     #[DataProvider('noindexPageProvider')]
     public function testBeforeRenderMetadataSetsNoindexOnlyForSearchAndNoRoutePages(
         string $action,
@@ -118,6 +121,9 @@ class SeoRenderTest extends TestCase
 
     /**
      * @param array<string, mixed> $config
+     */
+    /**
+     * @dataProvider headContentProvider
      */
     #[DataProvider('headContentProvider')]
     public function testAfterRenderHeadContentAppendsBlocksPerPage(
@@ -177,6 +183,9 @@ class SeoRenderTest extends TestCase
         ];
     }
 
+    /**
+     * @dataProvider socialProfilesProvider
+     */
     #[DataProvider('socialProfilesProvider')]
     public function testGetSocialProfilesCollectsNetworksThenCustomLinks(array $social, array $expected): void
     {
@@ -332,6 +341,9 @@ class SeoRenderTest extends TestCase
         );
     }
 
+    /**
+     * @dataProvider dayOfWeeksProvider
+     */
     #[DataProvider('dayOfWeeksProvider')]
     public function testGetDayOfWeeks(mixed $configured, array $expected): void
     {
@@ -395,6 +407,9 @@ class SeoRenderTest extends TestCase
         );
     }
 
+    /**
+     * @dataProvider freeShippingProvider
+     */
     #[DataProvider('freeShippingProvider')]
     public function testCreateShippingDetailsDataRateDependsOnFreeShippingAttribute(
         mixed $attributeValue,
