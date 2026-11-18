@@ -68,6 +68,9 @@ class DataTest extends TestCase
             ->getMock();
     }
 
+    /**
+     * @dataProvider configPathProvider
+     */
     #[DataProvider('configPathProvider')]
     public function testConfigGettersBuildPathFromCode(string $method, string $code, string $expectedPath): void
     {
@@ -153,6 +156,9 @@ class DataTest extends TestCase
         $this->assertNull($this->createHelper([])->getStoreId());
     }
 
+    /**
+     * @dataProvider canonicalProvider
+     */
     #[DataProvider('canonicalProvider')]
     public function testCanUseCanonicalForCategoryAndProduct(
         ?string $config,
@@ -249,6 +255,9 @@ class DataTest extends TestCase
         $this->assertSame(10, $helper->getQtySale($product));
     }
 
+    /**
+     * @dataProvider legacyStockProvider
+     */
     #[DataProvider('legacyStockProvider')]
     public function testGetQtySaleUsesStockItemWhenMsiNotAvailable(bool $inStock, float $qty, float|int $expected): void
     {

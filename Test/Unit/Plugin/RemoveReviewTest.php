@@ -76,6 +76,9 @@ class RemoveReviewTest extends TestCase
         $this->assertStringContainsString('>3</span>', $result);
     }
 
+    /**
+     * @dataProvider untouchedProvider
+     */
     #[DataProvider('untouchedProvider')]
     public function testLeavesHtmlUntouched(bool $enabled, mixed $productSnippet, string $action): void
     {

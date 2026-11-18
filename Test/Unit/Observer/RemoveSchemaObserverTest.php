@@ -64,6 +64,9 @@ class RemoveSchemaObserverTest extends TestCase
         $this->assertSame($this->model, $this->model->execute($this->observer));
     }
 
+    /**
+     * @dataProvider noHandleProvider
+     */
     #[DataProvider('noHandleProvider')]
     public function testDoesNotAddHandle(bool $enabled, mixed $productSnippet): void
     {
